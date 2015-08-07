@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="WpfScheduler.DayScheduler"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:my="clr-namespace:WpfScheduler"
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="UserControl_Loaded">
+	<UserControl.Resources>
+		<ContextMenu x:Key="SchedulerContextMenu">
+            <MenuItem Header="Cancelar cita" Tag="CancelEvent" Click="ContextMenuItem_Click">
+				<MenuItem.Icon>
+                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/CancelEventIcon.png"
+						Width="25"
+						Height="25" />
+                </MenuItem.Icon>
+			</MenuItem>
+            <Separator />
+            <MenuItem Header="Menu item 3" />
+        </ContextMenu>
+	</UserControl.Resources>
+    <Grid x:Name="gridDays">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <my:SchedulerGrid x:Name="EventsHeaderGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0"
+                          ShowCustomGridLines="True" GridLineBrush="#555555" GridLineThickness="0.5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="69"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--Week days-->
+            <Label x:Name="dayLabel" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="Monday 27/5" FontWeight="Bold"></Label>
+
+            <!-- All day events -->
+            <StackPanel x:Name="allDayEvents" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7"
+                        Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            </StackPanel>
+
+        </my:SchedulerGrid>
+
+
+        <Border BorderBrush="#555555" BorderThickness="0.5" Grid.Row="2">
+            <ScrollViewer x:Name="ScrollEventsViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0">
+
+                <my:SchedulerGrid x:Name="EventsGrid"
+                              ShowCustomGridLines="True" GridLineBrush="#555555" GridLineThickness="0.5" Margin="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="69"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+						<!--Generate from code-->
+                    </Grid.RowDefinitions>
+
+					<!--Labels generated from code -->
+					<!--Images generated from code -->
+
+                    <!-- Start and end journey -->
+
+                    <!-- Canvas  -->
+                    <Canvas x:Name="column" Grid.Column="1" Grid.Row="0" Grid.RowSpan="22" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                        <Border Width="100" Height="100" Background="Green" VerticalAlignment="Top" Margin="0 200 0 0">
+
+                        </Border>
+
+                        <Border Width="100" Height="100" Background="Yellow" VerticalAlignment="Top" Margin="0 350 0 0">
+
+                        </Border>
+
+                    </Canvas >
+                    
+
+                </my:SchedulerGrid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

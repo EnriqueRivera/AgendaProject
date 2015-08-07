@@ -1,0 +1,4 @@
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Debug\Controllers.dll
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Debug\Controllers.pdb
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Debug\Controllers.dll
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Debug\Controllers.pdb
