@@ -21,7 +21,7 @@ namespace WpfScheduler
     {
         Event _e;
 
-        public EventUserControl(Event e, bool showTime)
+        public EventUserControl(Event e)
         {
             InitializeComponent();
 
@@ -29,42 +29,17 @@ namespace WpfScheduler
 
             this.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             this.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            //this.Subject = e.EventInfo.Treatments.Name;
             this.BorderElement.Background = e.Color;
-            if (!showTime)
-            {
-                this.DisplayDateText.Visibility = System.Windows.Visibility.Hidden;
-                this.DisplayDateText.Height = 0;
-                this.DisplayDateText.Text = String.Format("{0} - {1}", e.EventInfo.StartEvent.ToShortDateString(), e.EventInfo.EndEvent.ToShortDateString());
-            }
-            else
-            {
-                this.DisplayDateText.Text = String.Format("{0} - {1}", e.EventInfo.StartEvent.ToString("HH:mm"), e.EventInfo.EndEvent.ToString("HH:mm"));
-            }
-            this.BorderElement.ToolTip = this.DisplayDateText.Text + System.Environment.NewLine + this.DisplayText.Text;
+
+            this.txbDateAndTreatment.Text = String.Format("{2} ({0} - {1})", e.EventInfo.StartEvent.ToString("HH:mm"), e.EventInfo.EndEvent.ToString("HH:mm"), e.EventInfo.Treatment.Name);
+            this.txbPatientName.Text = "Paciente: " + e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
+            this.BorderElement.ToolTip = this.txbDateAndTreatment.Text + System.Environment.NewLine + this.txbPatientName.Text;
         }
 
         public Event Event 
         {
             get { return _e; }
         }
-
-        #region Subject
-        public static readonly DependencyProperty SubjectProperty = 
-            DependencyProperty.Register("Subject", typeof(string), typeof(EventUserControl),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(AdjustSubject)));
-
-        public string Subject
-        {
-            get { return (string)GetValue(SubjectProperty); }
-            set { SetValue(SubjectProperty, value); }
-        }
-
-        private static void AdjustSubject(DependencyObject source, DependencyPropertyChangedEventArgs e)
-        {
-            (source as EventUserControl).DisplayText.Text = (string)e.NewValue;
-        }
-        #endregion
     }
 
 

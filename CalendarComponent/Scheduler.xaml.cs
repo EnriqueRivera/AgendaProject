@@ -31,14 +31,47 @@ namespace WpfScheduler
         public event EventHandler<Event> OnEventMouseLeftButtonDown;
         public event EventHandler<DateTime> OnScheduleAddEvent;
         public event EventHandler<Event> OnScheduleCancelEvent;
-
         internal event EventHandler<Event> OnEventAdded;
         internal event EventHandler<Event> OnEventDeleted;
         internal event EventHandler OnEventsModified;
 
-        /*internal event EventHandler<TimeSpan> OnStartJourneyChanged;
-        internal event EventHandler<TimeSpan> OnEndJourneyChanged;*/
+        #region Getters And Setters
+        public int FinishFirstExtraHour { get { return DayScheduler.FinishFirstExtraHour; } }
+        public int StartSecondExtraHour { get { return DayScheduler.StartSecondExtraHour; } }
+        public int MinHour { get { return DayScheduler.MinHour; } }
+        public int MaxHour { get { return DayScheduler.MaxHour; } }
+        public int HourIntervals { get { return DayScheduler.HourIntervals; } }
 
+        public bool CanceledEventsVisible
+        {
+            get { return DayScheduler.CanceledEventsVisible; }
+            set { DayScheduler.CanceledEventsVisible = value; }
+        }
+
+        public bool ExceptionEventsVisible
+        {
+            get { return DayScheduler.ExceptionEventsVisible; }
+            set { DayScheduler.ExceptionEventsVisible = value; }
+        }
+
+        public bool PatientCameEventsVisible
+        {
+            get { return DayScheduler.PatientCameEventsVisible; }
+            set { DayScheduler.PatientCameEventsVisible = value; }
+        }
+
+        public bool PatientNotCameEventsVisible
+        {
+            get { return DayScheduler.PatientNotCameEventsVisible; }
+            set { DayScheduler.PatientNotCameEventsVisible = value; }
+        }
+
+        public bool NotCompletedEventsVisible
+        {
+            get { return DayScheduler.NotCompletedEventsVisible; }
+            set { DayScheduler.NotCompletedEventsVisible = value; }
+        }
+        #endregion
 
         #region SelectedDate
         public static readonly DependencyProperty SelectedDateProperty =
@@ -77,42 +110,6 @@ namespace WpfScheduler
         }
         #endregion
 
-        /*#region StartJourney
-        public static readonly DependencyProperty StartJourneyProperty =
-            DependencyProperty.Register("StartJourney", typeof(TimeSpan), typeof(Scheduler),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(StartJourneyChanged)));
-
-        public TimeSpan StartJourney
-        {
-            get { return (TimeSpan)GetValue(StartJourneyProperty); }
-            set { SetValue(StartJourneyProperty, value); }
-        }
-
-        private static void StartJourneyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
-        {
-            if ((source as Scheduler).OnStartJourneyChanged != null)
-                (source as Scheduler).OnStartJourneyChanged(source, (TimeSpan)e.NewValue);
-        }
-        #endregion
-
-        #region EndJourney
-        public static readonly DependencyProperty EndJourneyProperty =
-            DependencyProperty.Register("EndJourney", typeof(TimeSpan), typeof(Scheduler),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(EndJourneyChanged)));
-
-        public TimeSpan EndJourney
-        {
-            get { return (TimeSpan)GetValue(EndJourneyProperty); }
-            set { SetValue(EndJourneyProperty, value); }
-        }
-
-        private static void EndJourneyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
-        {
-            if ((source as Scheduler).OnEndJourneyChanged != null)
-                (source as Scheduler).OnEndJourneyChanged(source, (TimeSpan)e.NewValue);
-        }
-        #endregion*/
-
         #region DayScheduler
         internal static readonly DependencyProperty DaySchedulerProperty =
             DependencyProperty.Register("DayScheduler", typeof(DayScheduler), typeof(Scheduler),
@@ -144,7 +141,6 @@ namespace WpfScheduler
            	sc.DayScheduler.CurrentDay = SelectedDate;
         }*/
         #endregion
-
 
         public Scheduler()
         {

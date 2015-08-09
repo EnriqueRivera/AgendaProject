@@ -10,7 +10,7 @@ namespace WpfScheduler
     public class Event
     {
         public Guid Id { get; set; }
-        public Events EventInfo { get; set; }
+        public Model.Event EventInfo { get; set; }
         public Brush _color;
 
         public Event()
@@ -24,7 +24,12 @@ namespace WpfScheduler
             {
                 if (EventInfo.IsCanceled)
                 {
-                    return Brushes.Blue;
+                    return Brushes.OrangeRed;
+                }
+
+                if (EventInfo.IsException)
+                {
+                    return Brushes.Yellow;
                 }
 
                 if (EventInfo.IsCompleted)
@@ -35,17 +40,28 @@ namespace WpfScheduler
                 return Brushes.Orange;
             }
         }
-    }
 
-    public class Events
-    {
-        public int EventId { get; set; }
-        public DateTime StartEvent { get; set; }
-        public DateTime EndEvent { get; set; }
-        public bool IsCanceled { get; set; }
-        public bool IsCompleted { get; set; }
-        public bool PatientCame { get; set; }
-        public int PatientId { get; set; }
-        public int TreatmentId { get; set; }
+        public string EventStatus
+        {
+            get
+            {
+                if (EventInfo.IsCanceled)
+                {
+                    return "Cancelada";
+                }
+
+                if (EventInfo.IsException)
+                {
+                    return "Excepción";
+                }
+
+                if (EventInfo.IsCompleted)
+                {
+                    return (EventInfo.PatientCame) ? "Completada" : "Paciente no asisitó";
+                }
+
+                return "Sin concretar";
+            }
+        }
     }
 }

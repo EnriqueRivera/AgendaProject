@@ -20,19 +20,74 @@ namespace WpfScheduler
     /// </summary>
     public partial class DayScheduler : UserControl
     {
-        private Scheduler _scheduler;
-
+        #region Instance variables
         internal event EventHandler<Event> OnEventMouseLeftButtonDown;
         internal event EventHandler<DateTime> OnScheduleAddEvent;
         internal event EventHandler<Event> OnScheduleCancelEvent;
-        private const int finishFirstExtraHour = 9;
-        private const int startSecondExtraHour = 21;
-        private const int minHour = 8;
-        private const int maxHour = 22;
-        private const int hourIntervals = 4;
-        private const double rowHeight = 50.0;
-        private Guid eventSelected = Guid.Empty;
-        private const double selectedEventBorderThickness = 3.0;
+        private Scheduler _scheduler;
+        private const int _finishFirstExtraHour = 9;
+        private const int _startSecondExtraHour = 20;
+        private const int _minHour = 7;
+        private const int _maxHour = 22;
+        private const int _hourIntervals = 4;
+        private const double _rowHeight = 50.0;
+        private Guid _eventSelected = Guid.Empty;
+        private const double _selectedEventBorderThickness = 3.0;
+        private const double _oneHourHeight = _rowHeight * _hourIntervals;
+
+        public bool CanceledEventsVisible { get; set; }
+        public bool ExceptionEventsVisible { get; set; }
+        public bool PatientCameEventsVisible { get; set; }
+        public bool PatientNotCameEventsVisible { get; set; }
+        public bool NotCompletedEventsVisible { get; set; }
+        #endregion
+
+        #region Getters
+        public int FinishFirstExtraHour { get { return _finishFirstExtraHour; } }
+
+        public int StartSecondExtraHour { get { return _startSecondExtraHour; } }
+
+        public int MinHour { get { return _minHour; } }
+
+        public int MaxHour { get { return _maxHour; } }
+
+        public int HourIntervals { get { return _hourIntervals; } }
+
+        private IEnumerable<Event> TodayEvents
+        {
+            get
+            {
+                var result = _scheduler.Events.Where(ev => ev.EventInfo.StartEvent.Date <= CurrentDay.Date && ev.EventInfo.EndEvent.Date >= CurrentDay.Date);
+
+                if (CanceledEventsVisible == false)
+                {
+                    result = result.Where(e => e.Color != Brushes.OrangeRed);
+                }
+
+                if (ExceptionEventsVisible == false)
+                {
+                    result = result.Where(e => e.Color != Brushes.Yellow);
+                }
+
+                if (PatientCameEventsVisible == false)
+                {
+                    result = result.Where(e => e.Color != Brushes.Green);
+                }
+
+                if (PatientNotCameEventsVisible == false)
+                {
+                    result = result.Where(e => e.Color != Brushes.Red);
+                }
+
+                if (NotCompletedEventsVisible == false)
+                {
+                    result = result.Where(e => e.Color != Brushes.Orange);
+                }
+
+                return result;
+            }
+        }
+        #endregion
 
         #region CurrentDay
 
@@ -54,6 +109,7 @@ namespace WpfScheduler
         }
         #endregion
 
+        #region Constructor Methods
         public DayScheduler()
         {
             InitializeComponent();
@@ -62,14 +118,24 @@ namespace WpfScheduler
             AddExtraTime();
             AddTimeLabels();
             AddButtonsForEvents();
+            EnableFilters();
 
             column.Background = Brushes.Transparent;
         }
 
+        private void EnableFilters()
+        {
+            CanceledEventsVisible = true;
+            ExceptionEventsVisible = true;
+            PatientCameEventsVisible = true;
+            PatientNotCameEventsVisible = true;
+            NotCompletedEventsVisible = true;
+        }
+
         private void AddExtraTime()
         {
-            EventsGrid.Children.Add(GetExtraHourPanel(1, 0, (finishFirstExtraHour - minHour) * hourIntervals));
-            EventsGrid.Children.Add(GetExtraHourPanel(1, (startSecondExtraHour - minHour) * hourIntervals, (maxHour - startSecondExtraHour) * hourIntervals));
+            EventsGrid.Children.Add(GetExtraHourPanel(1, 0, (_finishFirstExtraHour - _minHour) * _hourIntervals));
+            EventsGrid.Children.Add(GetExtraHourPanel(1, (_startSecondExtraHour - _minHour) * _hourIntervals, (_maxHour - _startSecondExtraHour) * _hourIntervals));
         }
 
         private StackPanel GetExtraHourPanel(int column, int row, int rowSpan)
@@ -92,25 +158,25 @@ namespace WpfScheduler
 
         private void AddRowDefinitions()
         {
-            int rowsCount = (maxHour - minHour) * hourIntervals;
+            int rowsCount = (_maxHour - _minHour) * _hourIntervals;
             for (int i = 0; i < rowsCount; i++)
             {
-                EventsGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(rowHeight) });
+                EventsGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(_rowHeight) });
             }
         }
 
         private void AddTimeLabels()
         {
-            for (int i = minHour, k = 0; i < maxHour; i++)
+            for (int i = _minHour, k = 0; i < _maxHour; i++)
             {
-                for (int j = 0; j < hourIntervals; j++, k++)
+                for (int j = 0; j < _hourIntervals; j++, k++)
                 {
                     Label lblTime = new Label()
                     {
                         Margin = new Thickness(0.5, 0, 0, 0),
                         FontSize = 10.667,
-                        Content = string.Format("{0}:{1}", i.ToString("00"), (j * (60 / hourIntervals)).ToString("00")),
-                        FontWeight = (k % hourIntervals == 0) ? FontWeights.Bold : FontWeight
+                        Content = string.Format("{0}:{1}", i.ToString("00"), (j * (60 / _hourIntervals)).ToString("00")),
+                        FontWeight = (k % _hourIntervals == 0) ? FontWeights.Bold : FontWeight
                     };
 
                     Grid.SetColumn(lblTime, 0);
@@ -124,9 +190,9 @@ namespace WpfScheduler
 
         private void AddButtonsForEvents()
         {
-            for (int i = minHour, k = 0; i < maxHour; i++)
+            for (int i = _minHour, k = 0; i < _maxHour; i++)
             {
-                for (int j = 0; j < hourIntervals; j++, k++)
+                for (int j = 0; j < _hourIntervals; j++, k++)
                 {
                     string time = string.Format("{0}:{1}", i.ToString("00"), (j * 15).ToString("00"));
 
@@ -149,7 +215,9 @@ namespace WpfScheduler
                 }
             }
         }
+        #endregion
 
+        #region Control Events
         private void UserControl_Loaded(object sender, RoutedEventArgs ea)
         {
             DependencyObject ucParent = (sender as DayScheduler).Parent;
@@ -193,89 +261,6 @@ namespace WpfScheduler
             PaintAllEvents();
         }
 
-        private IEnumerable<Event> TodayEvents
-        {
-            get
-            {
-                return _scheduler.Events.Where(ev => ev.EventInfo.StartEvent.Date <= CurrentDay.Date && ev.EventInfo.EndEvent.Date >= CurrentDay.Date);
-            }
-        }
-
-        private void PaintAllEvents()
-        {
-            if (_scheduler == null || _scheduler.Events == null)
-            {
-                return;
-            }
-
-            IEnumerable<Event> eventList = TodayEvents.Where(ev => ev.EventInfo.StartEvent.Date == ev.EventInfo.EndEvent.Date).OrderBy(ev => ev.EventInfo.StartEvent);
-
-            column.Children.Clear();
-
-            double columnWidth = EventsGrid.ColumnDefinitions[1].Width.Value;
-
-            foreach (Event e in eventList)
-            {
-                double oneHourHeight = 200.0;
-
-                var concurrentEvents = TodayEvents.Where(e1 => ((e1.EventInfo.StartEvent <= e.EventInfo.StartEvent && e1.EventInfo.EndEvent > e.EventInfo.StartEvent) ||
-                                                                (e1.EventInfo.StartEvent > e.EventInfo.StartEvent && e1.EventInfo.StartEvent < e.EventInfo.EndEvent)) &&
-                                                                e1.EventInfo.EndEvent.Date == e1.EventInfo.StartEvent.Date).OrderBy(ev => ev.EventInfo.StartEvent);
-
-                double marginTop = oneHourHeight * ((e.EventInfo.StartEvent.Hour + (e.EventInfo.StartEvent.Minute / 60.0)) - minHour);
-                double width = columnWidth / (concurrentEvents.Count());
-                double marginLeft = width * concurrentEvents.ToList().FindIndex(ev => ev.Id == e.Id);
-
-                EventUserControl wEvent = new EventUserControl(e, true);
-                wEvent.Width = width;
-                wEvent.Height = e.EventInfo.EndEvent.Subtract(e.EventInfo.StartEvent).TotalHours * oneHourHeight;
-                wEvent.Margin = new Thickness(marginLeft, marginTop, 0, 0);
-                wEvent.BorderElement.BorderThickness = new Thickness(eventSelected == e.Id ? selectedEventBorderThickness : 1.0);
-
-                wEvent.MouseLeftButtonDown += ((object sender, MouseButtonEventArgs ea) =>
-                {
-                    ea.Handled = true;
-
-                    SelectEvent(sender as EventUserControl);
-
-                    OnEventMouseLeftButtonDown(sender, wEvent.Event);
-                });
-                wEvent.MouseRightButtonDown += ((object sender, MouseButtonEventArgs ea) =>
-                {
-                    SelectEvent(sender as EventUserControl);
-
-                    ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
-                    cm.Tag = e;
-                    cm.IsOpen = true;
-                });
-
-                column.Children.Add(wEvent);
-            }
-        }
-
-        private void SelectEvent(EventUserControl sender)
-        {
-            eventSelected = sender.Event.Id;
-
-            foreach (EventUserControl ev in column.Children)
-            {
-                ev.BorderElement.BorderThickness = new Thickness(1.0);
-            }
-
-            sender.BorderElement.BorderThickness = new Thickness(selectedEventBorderThickness);
-        }
-
-        private void ResizeGrids(Size newSize)
-        {
-            EventsGrid.Width = newSize.Width;
-            EventsHeaderGrid.Width = newSize.Width;
-
-            double columnWidth = (this.ActualWidth - EventsGrid.ColumnDefinitions[0].ActualWidth - EventsGrid.ColumnDefinitions[2].ActualWidth);
-            
-            EventsGrid.ColumnDefinitions[1].Width = new GridLength(columnWidth);
-            EventsHeaderGrid.ColumnDefinitions[1].Width = new GridLength(columnWidth);
-        }
-
         private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             string[] time = (sender as Image).Tag.ToString().Split(':');
@@ -303,10 +288,108 @@ namespace WpfScheduler
                     break;
             }
         }
+        #endregion
+
+        #region Paint Events
+        private void PaintAllEvents()
+        {
+            if (_scheduler == null || _scheduler.Events == null)
+            {
+                return;
+            }
+
+            IEnumerable<Event> eventList = TodayEvents
+                                            .Where(ev => ev.EventInfo.StartEvent.Date == ev.EventInfo.EndEvent.Date)
+                                            .OrderBy(ev => ev.EventInfo.IsCanceled)
+                                            .ThenBy(ev => ev.EventInfo.StartEvent);
+
+            column.Children.Clear();
+
+            double columnWidth = EventsGrid.ColumnDefinitions[1].Width.Value;
+
+            foreach (Event e in eventList)
+            {
+                List<Event> concurrentEvents = new List<Event>();
+                GetConcurrentEvents(e, concurrentEvents);
+                concurrentEvents = concurrentEvents
+                                    .OrderBy(ev => ev.EventInfo.IsCanceled == false)
+                                    .ThenBy(ev => ev.EventInfo.IsException == false)
+                                    .ThenBy(ev => ev.EventInfo.IsCompleted == false)
+                                    .ThenBy(ev => ev.EventInfo.StartEvent)
+                                    .ThenBy(ev => ev.EventInfo.EndEvent)
+                                    .ToList();
+
+                double marginTop = _oneHourHeight * ((e.EventInfo.StartEvent.Hour + (e.EventInfo.StartEvent.Minute / 60.0)) - _minHour);
+                double width = columnWidth / (concurrentEvents.Count());
+                double marginLeft = width * concurrentEvents.ToList().FindIndex(ev => ev.Id == e.Id);
+
+                EventUserControl wEvent = new EventUserControl(e);
+                wEvent.Width = width;
+                wEvent.Height = e.EventInfo.EndEvent.Subtract(e.EventInfo.StartEvent).TotalHours * _oneHourHeight;
+                wEvent.Margin = new Thickness(marginLeft, marginTop, 0, 0);
+                wEvent.BorderElement.BorderThickness = new Thickness(_eventSelected == e.Id ? _selectedEventBorderThickness : 1.0);
+
+                wEvent.MouseLeftButtonDown += ((object sender, MouseButtonEventArgs ea) =>
+                {
+                    ea.Handled = true;
+
+                    SelectEvent(sender as EventUserControl);
+
+                    OnEventMouseLeftButtonDown(sender, wEvent.Event);
+                });
+                wEvent.MouseRightButtonDown += ((object sender, MouseButtonEventArgs ea) =>
+                {
+                    SelectEvent(sender as EventUserControl);
+
+                    ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
+                    cm.Tag = e;
+                    cm.IsOpen = true;
+                });
+
+                column.Children.Add(wEvent);
+            }
+        }
+
+        private void GetConcurrentEvents(Event e, List<Event> concurrentEvents)
+        {
+            foreach (Event ev in TodayEvents)
+            {
+                if (Controllers.Utils.IsOverlappedTime(e.EventInfo.StartEvent, e.EventInfo.EndEvent, ev.EventInfo.StartEvent, ev.EventInfo.EndEvent) 
+                    && !concurrentEvents.Contains(ev))
+                {
+                    concurrentEvents.Add(ev);
+                    GetConcurrentEvents(ev, concurrentEvents);
+                }
+            }
+        }
+
+        private void SelectEvent(EventUserControl sender)
+        {
+            _eventSelected = sender.Event.Id;
+
+            foreach (EventUserControl ev in column.Children)
+            {
+                ev.BorderElement.BorderThickness = new Thickness(1.0);
+            }
+
+            sender.BorderElement.BorderThickness = new Thickness(_selectedEventBorderThickness);
+        }
+
+        private void ResizeGrids(Size newSize)
+        {
+            EventsGrid.Width = newSize.Width;
+            EventsHeaderGrid.Width = newSize.Width;
+
+            double columnWidth = (this.ActualWidth - EventsGrid.ColumnDefinitions[0].ActualWidth - EventsGrid.ColumnDefinitions[2].ActualWidth);
+            
+            EventsGrid.ColumnDefinitions[1].Width = new GridLength(columnWidth);
+            EventsHeaderGrid.ColumnDefinitions[1].Width = new GridLength(columnWidth);
+        }        
 
         public void RepaintEvents()
         {
             PaintAllEvents();
         }
+        #endregion
     }
 }

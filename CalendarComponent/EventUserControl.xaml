@@ -8,8 +8,8 @@
     <Border x:Name="BorderElement" CornerRadius="0" BorderBrush="Black" Background="LightGreen" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
             Opacity="0.8" Height="Auto" Margin="1">
         <StackPanel Orientation="Vertical" Height="Auto">
-            <TextBlock x:Name="DisplayDateText" FontSize="10" Padding="2" TextWrapping="Wrap"/>
-            <TextBlock x:Name="DisplayText" Text="{Binding Subject}" FontSize="10" Padding="2" TextWrapping="Wrap"/>
+            <TextBlock x:Name="txbDateAndTreatment" Padding="2" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"/>
+            <TextBlock x:Name="txbPatientName" Text="{Binding Subject}" Padding="2" TextWrapping="Wrap" TextAlignment="Center"/>
         </StackPanel>
     </Border>
 </UserControl>
