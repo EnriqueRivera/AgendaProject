@@ -12,17 +12,12 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Treatment
+    public partial class Log
     {
-        public Treatment()
-        {
-            this.Events = new HashSet<Event>();
-        }
-    
-        public int TreatmentId { get; set; }
-        public string Name { get; set; }
-        public int Duration { get; set; }
-    
-        public virtual ICollection<Event> Events { get; set; }
+        public int LogId { get; set; }
+        public string Type { get; set; }
+        public System.DateTime LogDate { get; set; }
+        public string ErrorDetail { get; set; }
+        public string MethodName { get; set; }
     }
 }

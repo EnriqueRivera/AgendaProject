@@ -1,18 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MyDentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="MyDentDBEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Event" EntityType="MyDentDBModel.Event" />
-    <EntitySet Name="Patient" EntityType="MyDentDBModel.Patient" />
-    <EntitySet Name="Treatment" EntityType="MyDentDBModel.Treatment" />
+    <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
+    <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
+    <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
+    <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
+    <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
+    <EntitySet Name="Users" EntityType="MyDentDBModel.User" />
     <AssociationSet Name="FK_Events_PatientId" Association="MyDentDBModel.FK_Events_PatientId">
-      <End Role="Patient" EntitySet="Patient" />
-      <End Role="Event" EntitySet="Event" />
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Event" EntitySet="Events" />
     </AssociationSet>
     <AssociationSet Name="FK_Events_TreatmentId" Association="MyDentDBModel.FK_Events_TreatmentId">
-      <End Role="Treatment" EntitySet="Treatment" />
-      <End Role="Event" EntitySet="Event" />
+      <End Role="Treatment" EntitySet="Treatments" />
+      <End Role="Event" EntitySet="Events" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Configuration">
+    <Key>
+      <PropertyRef Name="ConfigurationId" />
+    </Key>
+    <Property Name="ConfigurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="Event">
     <Key>
       <PropertyRef Name="EventId" />
@@ -20,14 +31,24 @@
     <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="StartEvent" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="EndEvent" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsException" Type="Boolean" Nullable="false" />
     <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
     <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
-    <Property Name="PatientCame" Type="Boolean" Nullable="false" />
+    <Property Name="PatientSkips" Type="Boolean" Nullable="false" />
     <Property Name="PatientId" Type="Int32" Nullable="false" />
     <Property Name="TreatmentId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
     <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
-    <Property Name="IsException" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ErrorDetail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MethodName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Patient">
     <Key>
@@ -42,16 +63,25 @@
     <Property Name="PatientRecordId" Type="Int32" />
     <Property Name="DataCapturerId" Type="Int32" />
     <Property Name="CaptureDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
+    <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
   </EntityType>
   <EntityType Name="Treatment">
     <Key>
       <PropertyRef Name="TreatmentId" />
     </Key>
     <Property Name="TreatmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Duration" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
+    <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK_Events_PatientId">
     <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />

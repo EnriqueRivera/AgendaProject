@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Controllers;
+using System;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Linq;
@@ -22,14 +23,72 @@ namespace MyDentApplication
     {
         public MainWindow()
         {
+            CheckGlobalConfigurations();
+
             InitializeComponent();
 
             calendar.SelectedDate = DateTime.Now;
-            rcCanceledEvents.Fill = Brushes.OrangeRed;
-            rcExceptionEvents.Fill = Brushes.Yellow;
-            rcPatientNotCameEvents.Fill = Brushes.Red;
-            rcCompletedEvents.Fill = Brushes.Green;
-            rcNotCompletedEvents.Fill = Brushes.Orange;
+
+            SetSchedulerColors();
+        }
+
+        private void SetSchedulerColors()
+        {
+            var scheduleColorsResult = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name.Contains(Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX));
+
+            if (scheduleColorsResult != null)
+	        {
+                List<Model.Configuration> scheduleColors = scheduleColorsResult.ToList();
+                Model.Configuration canceledEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.CANCELED.ToString()).FirstOrDefault();
+                Model.Configuration exceptionEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.EXCEPTION.ToString()).FirstOrDefault();
+                Model.Configuration patientSkipsEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PATIENT_SKIPS.ToString()).FirstOrDefault();
+                Model.Configuration completedEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.COMPLETED.ToString()).FirstOrDefault();
+                Model.Configuration pendingEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PENDING.ToString()).FirstOrDefault();
+
+                FillRectangleColor(cpCanceledEvents, canceledEventColor);
+                FillRectangleColor(cpExceptionEvents, exceptionEventColor);
+                FillRectangleColor(cpPatientSkipsEvents, patientSkipsEventColor);
+                FillRectangleColor(cpCompletedEvents, completedEventColor);
+                FillRectangleColor(cpPendingEvents, pendingEventColor);
+	        }
+        }
+
+        private void FillRectangleColor(Xceed.Wpf.Toolkit.ColorPicker cpEvents, Model.Configuration eventColor)
+        {
+            if (eventColor != null)
+            {
+                cpEvents.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(eventColor.Value));
+            }
+        }
+
+        private void CheckGlobalConfigurations()
+        {
+            bool configurationAddedSuccessfully = CheckSchedulerColorsConfiguration() && CheckMaxSkipsEventsConfiguration();
+            if (configurationAddedSuccessfully == false)
+            {
+                MessageBox.Show("Alguna configuración inicial de la aplicación no pudo ser creada", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private bool CheckMaxSkipsEventsConfiguration()
+        {
+            return BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION, new Model.Configuration() { Name = Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION, Value = "3" });
+        }
+
+        private bool CheckSchedulerColorsConfiguration()
+        {
+            string cancelEventConfigName = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.CANCELED.ToString();
+            string exceptionEventConfigName = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.EXCEPTION.ToString();
+            string completedEventConfigName = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.COMPLETED.ToString();
+            string patientSkipsEventConfigName = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PATIENT_SKIPS.ToString();
+            string pendingEventConfigName = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PENDING.ToString();
+
+            return
+                BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == cancelEventConfigName, new Model.Configuration() { Name = cancelEventConfigName, Value = Brushes.OrangeRed.ToString() })
+                & BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == exceptionEventConfigName, new Model.Configuration() { Name = exceptionEventConfigName, Value = Brushes.Yellow.ToString() })
+                & BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == completedEventConfigName, new Model.Configuration() { Name = completedEventConfigName, Value = Brushes.Green.ToString() })
+                & BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == patientSkipsEventConfigName, new Model.Configuration() { Name = patientSkipsEventConfigName, Value = Brushes.Red.ToString() })
+                & BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == pendingEventConfigName, new Model.Configuration() { Name = pendingEventConfigName, Value = Brushes.Orange.ToString() });
         }
 
         #region Control's events
@@ -48,17 +107,17 @@ namespace MyDentApplication
             lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
             lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
             lblEmail.Text = e.EventInfo.Patient.Email;
-            lblEventStatus.Text = e.EventStatus;
+            lblEventStatus.Text = e.EventStatusString;
         }
 
         private void scheduler_OnScheduleAddEvent(object sender, System.DateTime e)
         {
             AddEvent(e);
-        }        
+        }
 
-        private void scheduler_OnScheduleCancelEvent(object sender, WpfScheduler.Event e)
+        private void scheduler_OnScheduleContextMenuEvent(object sender, WpfScheduler.Event e)
         {
-            CancelEvent(e);
+            ModifyEventStatus(e, (EventStatus)Enum.Parse(typeof(EventStatus), (sender as MenuItem).Tag.ToString(), true));
         }
 
         private void calendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -73,7 +132,7 @@ namespace MyDentApplication
             Model.Event ev = new Model.Event()
             {
                 StartEvent = eventToAdd,
-                EndEvent = eventToAdd.AddMinutes(60.0 / scheduler.HourIntervals)
+                EndEvent = eventToAdd.AddMinutes(1.0)
             };
 
             Model.Event overlappedEvent = OverlappedWithExistingEvent(ev, scheduler.Events.ToList());
@@ -97,14 +156,16 @@ namespace MyDentApplication
 
         public static Model.Event OverlappedWithExistingEvent(Model.Event eventToAdd, List<WpfScheduler.Event> events)
         {
+            events = events.OrderBy(e => e.EventInfo.StartEvent).ToList();
+
             foreach (WpfScheduler.Event e in events.Where(e => e.EventInfo.IsCanceled == false))
             {
-                if (Controllers.Utils.IsOverlappedTime(eventToAdd.StartEvent, eventToAdd.EndEvent, e.EventInfo.StartEvent, e.EventInfo.EndEvent))
+                if (Utils.IsOverlappedTime(eventToAdd.StartEvent, eventToAdd.EndEvent, e.EventInfo.StartEvent, e.EventInfo.EndEvent))
                 {
                     return e.EventInfo;
                 }
             }
-
+            
             return null;
         }
 
@@ -113,34 +174,45 @@ namespace MyDentApplication
             scheduler.Events.Clear();
             scheduler.SelectedDate = dateToLoad;
 
-            List<Model.Event> events = Controllers.BusinessController.Instance.FindBy<Model.Event>(
+            List<Model.Event> events = BusinessController.Instance.FindBy<Model.Event>(
                                                 e => EntityFunctions.TruncateTime(e.StartEvent) == EntityFunctions.TruncateTime(dateToLoad)
                                         ).ToList();
 
-            foreach (Model.Event ev in events)
+            if (events != null)
             {
-                scheduler.AddEvent(new WpfScheduler.Event() { EventInfo = ev });
+                foreach (Model.Event ev in events)
+                {
+                    scheduler.AddEvent(new WpfScheduler.Event() { EventInfo = ev });
+                }   
             }
         }
 
-        private void CancelEvent(WpfScheduler.Event e)
+        private void ModifyEventStatus(WpfScheduler.Event e, EventStatus se)
         {
-            if (e.EventInfo.IsCanceled || e.EventInfo.IsCompleted)
+            switch (se)
             {
-                MessageBox.Show("Esta cita ya no puede ser cancelada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                case EventStatus.CANCELED:
+                    e.EventInfo.IsCanceled = true;
+                    break;
+                case EventStatus.COMPLETED:
+                    e.EventInfo.IsCompleted = true;
+                    e.EventInfo.PatientSkips = false;
+                    break;
+                case EventStatus.PATIENT_SKIPS:
+                    e.EventInfo.IsCompleted = true;
+                    e.EventInfo.PatientSkips = true;
+                    break;
+                default:
+                    return;
+            }
+
+            if (BusinessController.Instance.Update<Model.Event>(e.EventInfo))
+            {
+                scheduler.RepaintEvents();
             }
             else
             {
-                e.EventInfo.IsCanceled = true;
-
-                if (Controllers.BusinessController.Instance.Update<Model.Event>(e.EventInfo))
-                {
-                    scheduler.RepaintEvents();
-                }
-                else
-                {
-                    MessageBox.Show("No pudo ser cancelada la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show("No pudo ser modificado el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -170,23 +242,23 @@ namespace MyDentApplication
                     }
                     break;
                 case "3":
-                    if (scheduler.PatientNotCameEventsVisible != chk.IsChecked.Value)
+                    if (scheduler.PatientSkipsEventsVisible != chk.IsChecked.Value)
                     {
-                        scheduler.PatientNotCameEventsVisible = chk.IsChecked.Value;
+                        scheduler.PatientSkipsEventsVisible = chk.IsChecked.Value;
                         scheduler.RepaintEvents();
                     }
                     break;
                 case "4":
-                    if (scheduler.NotCompletedEventsVisible != chk.IsChecked.Value)
+                    if (scheduler.PendingEventsVisible != chk.IsChecked.Value)
                     {
-                        scheduler.NotCompletedEventsVisible = chk.IsChecked.Value;
+                        scheduler.PendingEventsVisible = chk.IsChecked.Value;
                         scheduler.RepaintEvents();
                     }
                     break;
                 case "5":
-                    if (scheduler.PatientCameEventsVisible != chk.IsChecked.Value)
+                    if (scheduler.CompletedEventsVisible != chk.IsChecked.Value)
                     {
-                        scheduler.PatientCameEventsVisible = chk.IsChecked.Value;
+                        scheduler.CompletedEventsVisible = chk.IsChecked.Value;
                         scheduler.RepaintEvents();
                     }
                     break;
@@ -198,6 +270,37 @@ namespace MyDentApplication
         private void btnToday_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             calendar.SelectedDate = DateTime.Now;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            BusinessController.Instance.CloseConnection();
+        }
+
+        private void cpStatusEvents_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            Xceed.Wpf.Toolkit.ColorPicker colorPicker = sender as Xceed.Wpf.Toolkit.ColorPicker;
+            string eventStatusSelected = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + colorPicker.Tag.ToString();
+            Model.Configuration statusEventColor = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == eventStatusSelected).FirstOrDefault();
+            string selectedColor = colorPicker.SelectedColor.Value.ToString();
+            bool colorAddedSuccessfully;
+
+            if (statusEventColor == null)
+            {
+                colorAddedSuccessfully = BusinessController.Instance.Add<Model.Configuration>(new Model.Configuration() { Name = eventStatusSelected, Value = selectedColor });
+            }
+            else
+            {
+                statusEventColor.Value = selectedColor;
+                colorAddedSuccessfully = BusinessController.Instance.Update<Model.Configuration>(statusEventColor);
+            }
+
+            if (colorAddedSuccessfully == false)
+            {
+                MessageBox.Show("El color seleccionado no pudo ser guardado en la configuración", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            scheduler.RepaintEvents();
         }
     }
 }

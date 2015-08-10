@@ -25,8 +25,11 @@ namespace Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Event> Event { get; set; }
-        public DbSet<Patient> Patient { get; set; }
-        public DbSet<Treatment> Treatment { get; set; }
+        public DbSet<Configuration> Configurations { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Log> Logs { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Treatment> Treatments { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -8,10 +8,22 @@ namespace Controllers
 {
     public class Utils
     {
+        public const string SCHEDULER_COLOR_CONFIGURATION_PREFIX = "SCHEDULER_COLOR_";
+        public const string PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION = "PATIENT_MAX_SKIPPED_EVENTS";
+
         public static bool IsOverlappedTime(DateTime event1Start, DateTime event1End, DateTime event2Start, DateTime event2End)
         {
-            return (event1Start >= event2Start && event1Start < event2End)
-                    || (event1End > event2Start && event1End <= event2End);
+            return ((event1Start >= event2Start && event1Start < event2End) || (event1End > event2Start && event1End <= event2End))
+                    || ((event2Start >= event1Start && event2Start < event1End) || (event2End > event1Start && event2End <= event1End));
         }
+    }
+
+    public enum EventStatus
+    {
+        CANCELED = 1,
+        COMPLETED = 2,
+        EXCEPTION = 3,
+        PATIENT_SKIPS = 4,
+        PENDING = 5
     }
 }

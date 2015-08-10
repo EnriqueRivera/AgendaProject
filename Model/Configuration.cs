@@ -12,17 +12,10 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Treatment
+    public partial class Configuration
     {
-        public Treatment()
-        {
-            this.Events = new HashSet<Event>();
-        }
-    
-        public int TreatmentId { get; set; }
+        public int ConfigurationId { get; set; }
         public string Name { get; set; }
-        public int Duration { get; set; }
-    
-        public virtual ICollection<Event> Events { get; set; }
+        public string Value { get; set; }
     }
 }

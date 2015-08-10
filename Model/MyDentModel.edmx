@@ -5,7 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MyDentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Event">
+        <EntityType Name="Configurations">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ConfigurationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Value" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Events">
           <Key>
             <PropertyRef Name="EventId" />
           </Key>
@@ -15,11 +23,21 @@
           <Property Name="IsException" Type="bit" Nullable="false" />
           <Property Name="IsCanceled" Type="bit" Nullable="false" />
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
-          <Property Name="PatientCame" Type="bit" Nullable="false" />
+          <Property Name="PatientSkips" Type="bit" Nullable="false" />
           <Property Name="PatientId" Type="int" Nullable="false" />
           <Property Name="TreatmentId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Patient">
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogDate" Type="datetime" Nullable="false" />
+          <Property Name="ErrorDetail" Type="varchar(max)" Nullable="false" />
+          <Property Name="MethodName" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patients">
           <Key>
             <PropertyRef Name="PatientId" />
           </Key>
@@ -33,49 +51,61 @@
           <Property Name="DataCapturerId" Type="int" />
           <Property Name="CaptureDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="Treatment">
+        <EntityType Name="Treatments">
           <Key>
             <PropertyRef Name="TreatmentId" />
           </Key>
           <Property Name="TreatmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Duration" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Events_PatientId">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
-          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Patient">
+            <Principal Role="Patients">
               <PropertyRef Name="PatientId" />
             </Principal>
-            <Dependent Role="Event">
+            <Dependent Role="Events">
               <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Events_TreatmentId">
-          <End Role="Treatment" Type="Self.Treatment" Multiplicity="1" />
-          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <End Role="Treatments" Type="Self.Treatments" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Treatment">
+            <Principal Role="Treatments">
               <PropertyRef Name="TreatmentId" />
             </Principal>
-            <Dependent Role="Event">
+            <Dependent Role="Events">
               <PropertyRef Name="TreatmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MyDentDBModelStoreContainer">
-          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Treatment" EntityType="Self.Treatment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Events_PatientId" Association="Self.FK_Events_PatientId">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="Event" EntitySet="Event" />
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Events" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_TreatmentId" Association="Self.FK_Events_TreatmentId">
-            <End Role="Treatment" EntitySet="Treatment" />
-            <End Role="Event" EntitySet="Event" />
+            <End Role="Treatments" EntitySet="Treatments" />
+            <End Role="Events" EntitySet="Events" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -83,18 +113,29 @@
     <edmx:ConceptualModels>
       <Schema Namespace="MyDentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MyDentDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Event" EntityType="MyDentDBModel.Event" />
-          <EntitySet Name="Patient" EntityType="MyDentDBModel.Patient" />
-          <EntitySet Name="Treatment" EntityType="MyDentDBModel.Treatment" />
+          <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
+          <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
+          <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
+          <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
+          <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
+          <EntitySet Name="Users" EntityType="MyDentDBModel.User" />
           <AssociationSet Name="FK_Events_PatientId" Association="MyDentDBModel.FK_Events_PatientId">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="Event" EntitySet="Event" />
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_TreatmentId" Association="MyDentDBModel.FK_Events_TreatmentId">
-            <End Role="Treatment" EntitySet="Treatment" />
-            <End Role="Event" EntitySet="Event" />
+            <End Role="Treatment" EntitySet="Treatments" />
+            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ConfigurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
@@ -102,14 +143,24 @@
           <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StartEvent" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndEvent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsException" Type="Boolean" Nullable="false" />
           <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
-          <Property Name="PatientCame" Type="Boolean" Nullable="false" />
+          <Property Name="PatientSkips" Type="Boolean" Nullable="false" />
           <Property Name="PatientId" Type="Int32" Nullable="false" />
           <Property Name="TreatmentId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
           <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
-          <Property Name="IsException" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ErrorDetail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MethodName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -124,16 +175,25 @@
           <Property Name="PatientRecordId" Type="Int32" />
           <Property Name="DataCapturerId" Type="Int32" />
           <Property Name="CaptureDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
         </EntityType>
         <EntityType Name="Treatment">
           <Key>
             <PropertyRef Name="TreatmentId" />
           </Key>
           <Property Name="TreatmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Duration" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Events_PatientId">
           <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
@@ -159,30 +219,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MyDentDBModelStoreContainer" CdmEntityContainer="MyDentDBEntities">
-          <EntitySetMapping Name="Event">
+          <EntitySetMapping Name="Configurations">
+            <EntityTypeMapping TypeName="MyDentDBModel.Configuration">
+              <MappingFragment StoreEntitySet="Configurations">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConfigurationId" ColumnName="ConfigurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="MyDentDBModel.Event">
-              <MappingFragment StoreEntitySet="Event">
-                <ScalarProperty Name="IsException" ColumnName="IsException" />
+              <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="PatientCame" ColumnName="PatientCame" />
+                <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+                <ScalarProperty Name="IsException" ColumnName="IsException" />
                 <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
                 <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Patient">
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="MyDentDBModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+                <ScalarProperty Name="ErrorDetail" ColumnName="ErrorDetail" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="MyDentDBModel.Patient">
-              <MappingFragment StoreEntitySet="Patient">
+              <MappingFragment StoreEntitySet="Patients">
                 <ScalarProperty Name="CaptureDate" ColumnName="CaptureDate" />
                 <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
                 <ScalarProperty Name="PatientRecordId" ColumnName="PatientRecordId" />
@@ -195,12 +275,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Treatment">
+          <EntitySetMapping Name="Treatments">
             <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
-              <MappingFragment StoreEntitySet="Treatment">
+              <MappingFragment StoreEntitySet="Treatments">
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MyDentDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -218,7 +308,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -22,45 +22,49 @@ namespace WpfScheduler
         {
             get
             {
-                if (EventInfo.IsCanceled)
-                {
-                    return Brushes.OrangeRed;
-                }
+                string configurationName = Controllers.Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.ToString();
+                Model.Configuration eventColor = Controllers.BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == configurationName).FirstOrDefault();
 
-                if (EventInfo.IsException)
-                {
-                    return Brushes.Yellow;
-                }
-
-                if (EventInfo.IsCompleted)
-                {
-                    return (EventInfo.PatientCame) ? Brushes.Green : Brushes.Red;
-                }
-
-                return Brushes.Orange;
+                return eventColor != null ? (SolidColorBrush)(new BrushConverter().ConvertFrom(eventColor.Value)) : Brushes.Transparent;
             }
         }
 
-        public string EventStatus
+        public Controllers.EventStatus EventStatus
         {
             get
             {
                 if (EventInfo.IsCanceled)
                 {
-                    return "Cancelada";
-                }
-
-                if (EventInfo.IsException)
-                {
-                    return "Excepción";
+                    return Controllers.EventStatus.CANCELED;
                 }
 
                 if (EventInfo.IsCompleted)
                 {
-                    return (EventInfo.PatientCame) ? "Completada" : "Paciente no asisitó";
+                    return (EventInfo.PatientSkips) ? Controllers.EventStatus.PATIENT_SKIPS : Controllers.EventStatus.COMPLETED;
                 }
 
-                return "Sin concretar";
+                if (EventInfo.IsException)
+                {
+                    return Controllers.EventStatus.EXCEPTION;
+                }
+
+                return Controllers.EventStatus.PENDING;
+            }
+        }
+
+        public string EventStatusString
+        {
+            get
+            {
+                switch (EventStatus)
+                {
+                    case Controllers.EventStatus.CANCELED: return "Cancelada";
+                    case Controllers.EventStatus.COMPLETED: return "Completada";
+                    case Controllers.EventStatus.EXCEPTION: return "Excepción";
+                    case Controllers.EventStatus.PATIENT_SKIPS: return "Paciente no asisitó";
+                    case Controllers.EventStatus.PENDING: return "Sin concretar";
+                    default: return string.Empty;
+                }
             }
         }
     }

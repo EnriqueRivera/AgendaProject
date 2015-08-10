@@ -12,23 +12,11 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Patient
+    public partial class User
     {
-        public Patient()
-        {
-            this.Events = new HashSet<Event>();
-        }
-    
-        public int PatientId { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string CellPhone { get; set; }
-        public string HomePhone { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> PatientRecordId { get; set; }
-        public Nullable<int> DataCapturerId { get; set; }
-        public System.DateTime CaptureDate { get; set; }
-    
-        public virtual ICollection<Event> Events { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

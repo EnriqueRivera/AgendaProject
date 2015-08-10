@@ -9,7 +9,7 @@
              Loaded="UserControl_Loaded">
 	<UserControl.Resources>
 		<ContextMenu x:Key="SchedulerContextMenu">
-            <MenuItem Header="Cancelar cita" Tag="CancelEvent" Click="ContextMenuItem_Click">
+            <MenuItem Header="Cancelar cita" Tag="CANCELED" Click="ContextMenuItem_Click">
 				<MenuItem.Icon>
                     <Image Source="pack://application:,,,/WpfScheduler;component/Images/CancelEventIcon.png"
 						Width="25"
@@ -17,7 +17,20 @@
                 </MenuItem.Icon>
 			</MenuItem>
             <Separator />
-            <MenuItem Header="Menu item 3" />
+            <MenuItem Header="Cita completada" Tag="COMPLETED" Click="ContextMenuItem_Click">
+				<MenuItem.Icon>
+                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/okIcon.ico"
+						Width="25"
+						Height="25" />
+                </MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="Paciente no asistió" Tag="PATIENT_SKIPS" Click="ContextMenuItem_Click">
+				<MenuItem.Icon>
+                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/cancelIcon.png"
+						Width="19"
+						Height="19" />
+                </MenuItem.Icon>
+			</MenuItem>
         </ContextMenu>
 	</UserControl.Resources>
     <Grid x:Name="gridDays">

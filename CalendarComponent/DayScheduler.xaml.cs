@@ -23,7 +23,7 @@ namespace WpfScheduler
         #region Instance variables
         internal event EventHandler<Event> OnEventMouseLeftButtonDown;
         internal event EventHandler<DateTime> OnScheduleAddEvent;
-        internal event EventHandler<Event> OnScheduleCancelEvent;
+        internal event EventHandler<Event> OnScheduleContextMenuEvent;
         private Scheduler _scheduler;
         private const int _finishFirstExtraHour = 9;
         private const int _startSecondExtraHour = 20;
@@ -37,9 +37,9 @@ namespace WpfScheduler
 
         public bool CanceledEventsVisible { get; set; }
         public bool ExceptionEventsVisible { get; set; }
-        public bool PatientCameEventsVisible { get; set; }
-        public bool PatientNotCameEventsVisible { get; set; }
-        public bool NotCompletedEventsVisible { get; set; }
+        public bool CompletedEventsVisible { get; set; }
+        public bool PatientSkipsEventsVisible { get; set; }
+        public bool PendingEventsVisible { get; set; }
         #endregion
 
         #region Getters
@@ -61,27 +61,27 @@ namespace WpfScheduler
 
                 if (CanceledEventsVisible == false)
                 {
-                    result = result.Where(e => e.Color != Brushes.OrangeRed);
+                    result = result.Where(e => e.EventStatus != Controllers.EventStatus.CANCELED);
                 }
 
                 if (ExceptionEventsVisible == false)
                 {
-                    result = result.Where(e => e.Color != Brushes.Yellow);
+                    result = result.Where(e => e.EventStatus != Controllers.EventStatus.EXCEPTION);
                 }
 
-                if (PatientCameEventsVisible == false)
+                if (CompletedEventsVisible == false)
                 {
-                    result = result.Where(e => e.Color != Brushes.Green);
+                    result = result.Where(e => e.EventStatus != Controllers.EventStatus.COMPLETED);
                 }
 
-                if (PatientNotCameEventsVisible == false)
+                if (PatientSkipsEventsVisible == false)
                 {
-                    result = result.Where(e => e.Color != Brushes.Red);
+                    result = result.Where(e => e.EventStatus != Controllers.EventStatus.PATIENT_SKIPS);
                 }
 
-                if (NotCompletedEventsVisible == false)
+                if (PendingEventsVisible == false)
                 {
-                    result = result.Where(e => e.Color != Brushes.Orange);
+                    result = result.Where(e => e.EventStatus != Controllers.EventStatus.PENDING);
                 }
 
                 return result;
@@ -127,9 +127,9 @@ namespace WpfScheduler
         {
             CanceledEventsVisible = true;
             ExceptionEventsVisible = true;
-            PatientCameEventsVisible = true;
-            PatientNotCameEventsVisible = true;
-            NotCompletedEventsVisible = true;
+            CompletedEventsVisible = true;
+            PatientSkipsEventsVisible = true;
+            PendingEventsVisible = true;
         }
 
         private void AddExtraTime()
@@ -194,7 +194,7 @@ namespace WpfScheduler
             {
                 for (int j = 0; j < _hourIntervals; j++, k++)
                 {
-                    string time = string.Format("{0}:{1}", i.ToString("00"), (j * 15).ToString("00"));
+                    string time = string.Format("{0}:{1}", i.ToString("00"), (j * (60 / _hourIntervals)).ToString("00"));
 
                     Image img = new Image()
                     {
@@ -278,15 +278,7 @@ namespace WpfScheduler
 
         private void ContextMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = sender as MenuItem;
-            switch (mi.Tag.ToString())
-            {
-                case "CancelEvent":
-                    OnScheduleCancelEvent(sender, (mi.Parent as ContextMenu).Tag as Event);
-                    break;
-                default:
-                    break;
-            }
+            OnScheduleContextMenuEvent(sender, ((sender as MenuItem).Parent as ContextMenu).Tag as Event);
         }
         #endregion
 
@@ -343,7 +335,7 @@ namespace WpfScheduler
 
                     ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
                     cm.Tag = e;
-                    cm.IsOpen = true;
+                    cm.IsOpen = e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted == false;
                 });
 
                 column.Children.Add(wEvent);

@@ -41,28 +41,38 @@ namespace MyDentApplication
 
         private void GetTreatments()
         {
-            _treatments = Controllers.BusinessController.Instance.GetAll<Model.Treatment>()
+            var allTreatments = Controllers.BusinessController.Instance.GetAll<Model.Treatment>();
+
+            if (allTreatments != null)
+	        {
+                _treatments = allTreatments
                             .OrderBy(t => t.Name)
                             .ThenBy(t => t.Duration)
                             .ToList();
 
-            foreach (Model.Treatment treatment in _treatments)
-            {
-                cbTratmentName.Items.Add(new ComboBoxItem() { Text = treatment.Name, Value = treatment });   
-            }
+                foreach (Model.Treatment treatment in _treatments)
+                {
+                    cbTratmentName.Items.Add(new ComboBoxItem() { Text = treatment.Name, Value = treatment });
+                }
+	        }
         }
 
         private void GetPatients()
         {
-            _patients = Controllers.BusinessController.Instance.GetAll<Model.Patient>()
+            var allPatients = Controllers.BusinessController.Instance.GetAll<Model.Patient>();
+
+            if (allPatients != null)
+            {
+                _patients = allPatients
                             .OrderBy(p => p.FirstName)
                             .ThenBy(p => p.LastName)
                             .ToList();
 
-            foreach (Model.Patient patient in _patients)
-            {
-                cbPatientName.Items.Add(new ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
-            }
+                foreach (Model.Patient patient in _patients)
+                {
+                    cbPatientName.Items.Add(new ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
+                }
+            }            
         }
 
         private void cbPatientName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -113,12 +123,57 @@ namespace MyDentApplication
         {
             if (cbPatientName.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione un paciente");
+                MessageBox.Show("Seleccione un paciente", "Informaicón", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+
             if (cbTratmentName.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione un tratamiento");
+                MessageBox.Show("Seleccione un tratamiento", "Informaicón", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            List<Model.Event> skippedEvents = ((cbPatientName.SelectedValue as ComboBoxItem).Value as Model.Patient).Events
+                                                .Where(ev => ev.PatientSkips)
+                                                .OrderBy(ev => ev.StartEvent)
+                                                .ToList();
+
+            Model.Configuration skippedEventsConfiguration = Controllers.BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == Controllers.Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION).FirstOrDefault();
+
+            int maxSkippedEvents;
+            if (int.TryParse(skippedEventsConfiguration == null ? "3" : skippedEventsConfiguration.Value, out maxSkippedEvents) == false)
+            {
+                maxSkippedEvents = 3;
+            }
+
+            if (skippedEvents.Count >= maxSkippedEvents)
+            {
+                string skippedEventsMessage = string.Empty;
+                for (int i = 0; i < skippedEvents.Count; i++)
+                {
+                    skippedEventsMessage += string.Format(
+                                                "\nFalta #{0}:" + 
+                                                "\n -Tratamiento: {1}" + 
+                                                "\n -Día de la cita: {2}" + 
+                                                "\n -Hora de inicio de la cita: {3}" + 
+                                                "\n -Hora de fin de la cita: {4}",
+                                                i + 1,
+                                                skippedEvents[i].Treatment.Name,
+                                                skippedEvents[i].StartEvent.ToString("D"),
+                                                skippedEvents[i].StartEvent.ToString("HH:mm") + " hrs",
+                                                skippedEvents[i].EndEvent.ToString("HH:mm") + " hrs" + (i == skippedEvents.Count - 1 ? "" : "\n"));
+                }
+
+                MessageBox.Show(string.Format("El paciente seleccionado no puede agendar cita, ya que cuenta con {0} {1} y el máximo permitido es de {2} {3}\n{4}",
+                                                skippedEvents.Count,
+                                                skippedEvents.Count == 1 ? "falta" : "faltas",
+                                                maxSkippedEvents,
+                                                maxSkippedEvents == 1 ? "falta" : "faltas",
+                                                skippedEventsMessage
+                                                ),
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
                 return;
             }
 
@@ -144,7 +199,7 @@ namespace MyDentApplication
             eventToAdd.IsException = false;
             eventToAdd.IsCanceled = false;
             eventToAdd.IsCompleted = false;
-            eventToAdd.PatientCame = false;
+            eventToAdd.PatientSkips = false;
             eventToAdd.PatientId = _selectedPatient.PatientId;
             eventToAdd.TreatmentId = _selectedTreatment.TreatmentId;
 
@@ -205,6 +260,6 @@ namespace MyDentApplication
             {
                 return Text;
             }
-        } 
-	}
+        }
+    }
 }

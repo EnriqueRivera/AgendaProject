@@ -30,7 +30,7 @@ namespace WpfScheduler
     {
         public event EventHandler<Event> OnEventMouseLeftButtonDown;
         public event EventHandler<DateTime> OnScheduleAddEvent;
-        public event EventHandler<Event> OnScheduleCancelEvent;
+        public event EventHandler<Event> OnScheduleContextMenuEvent;
         internal event EventHandler<Event> OnEventAdded;
         internal event EventHandler<Event> OnEventDeleted;
         internal event EventHandler OnEventsModified;
@@ -54,22 +54,22 @@ namespace WpfScheduler
             set { DayScheduler.ExceptionEventsVisible = value; }
         }
 
-        public bool PatientCameEventsVisible
+        public bool CompletedEventsVisible
         {
-            get { return DayScheduler.PatientCameEventsVisible; }
-            set { DayScheduler.PatientCameEventsVisible = value; }
+            get { return DayScheduler.CompletedEventsVisible; }
+            set { DayScheduler.CompletedEventsVisible = value; }
         }
 
-        public bool PatientNotCameEventsVisible
+        public bool PatientSkipsEventsVisible
         {
-            get { return DayScheduler.PatientNotCameEventsVisible; }
-            set { DayScheduler.PatientNotCameEventsVisible = value; }
+            get { return DayScheduler.PatientSkipsEventsVisible; }
+            set { DayScheduler.PatientSkipsEventsVisible = value; }
         }
 
-        public bool NotCompletedEventsVisible
+        public bool PendingEventsVisible
         {
-            get { return DayScheduler.NotCompletedEventsVisible; }
-            set { DayScheduler.NotCompletedEventsVisible = value; }
+            get { return DayScheduler.PendingEventsVisible; }
+            set { DayScheduler.PendingEventsVisible = value; }
         }
         #endregion
 
@@ -152,14 +152,14 @@ namespace WpfScheduler
             DayScheduler.OnEventMouseLeftButtonDown += InnerScheduler_OnEventMouseLeftButtonDown;
 
             DayScheduler.OnScheduleAddEvent += InnerScheduler_OnScheduleAddEvent;
-            DayScheduler.OnScheduleCancelEvent += InnerScheduler_OnScheduleCancelEvent;
+            DayScheduler.OnScheduleContextMenuEvent += InnerScheduler_OnScheduleContextMenuEvent;
         }
 
-        void InnerScheduler_OnScheduleCancelEvent(object sender, Event e)
+        void InnerScheduler_OnScheduleContextMenuEvent(object sender, Event e)
         {
-            if (OnScheduleCancelEvent != null)
+            if (OnScheduleContextMenuEvent != null)
             {
-                OnScheduleCancelEvent(sender, e);
+                OnScheduleContextMenuEvent(sender, e);
             }
         }
 

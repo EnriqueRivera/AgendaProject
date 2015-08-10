@@ -29,6 +29,16 @@ namespace Controllers
             return Model.Provider.Instance.Add<T>(t);
         }
 
+        public bool AddIfDoesntExist<T>(object id, T t) where T : class
+        {
+            return Model.Provider.Instance.AddIfDoesntExist<T>(id, t);
+        }
+
+        public bool AddIfDoesntExist<T>(System.Linq.Expressions.Expression<Func<T, bool>> predicate, T t) where T : class
+        {
+            return Model.Provider.Instance.AddIfDoesntExist<T>(predicate, t);
+        }
+
         public bool Delete<T>(T t) where T : class
         {
             return Model.Provider.Instance.Delete<T>(t);
@@ -52,6 +62,16 @@ namespace Controllers
         public IQueryable<T> GetAll<T>() where T : class
         {
             return Model.Provider.Instance.GetAll<T>();
+        }
+
+        public void CloseConnection()
+        {
+            Model.Provider.Instance.CloseConnection();
+        }
+
+        public void AddLog(string type, DateTime logDate, Exception e, string className, string methodName)
+        {
+            Model.Provider.Instance.AddLog(type, logDate, e, className, methodName);
         }
     }
 }

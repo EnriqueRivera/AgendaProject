@@ -17,12 +17,12 @@ namespace Model
         public int EventId { get; set; }
         public System.DateTime StartEvent { get; set; }
         public System.DateTime EndEvent { get; set; }
+        public bool IsException { get; set; }
         public bool IsCanceled { get; set; }
         public bool IsCompleted { get; set; }
-        public bool PatientCame { get; set; }
+        public bool PatientSkips { get; set; }
         public int PatientId { get; set; }
         public int TreatmentId { get; set; }
-        public bool IsException { get; set; }
     
         public virtual Patient Patient { get; set; }
         public virtual Treatment Treatment { get; set; }

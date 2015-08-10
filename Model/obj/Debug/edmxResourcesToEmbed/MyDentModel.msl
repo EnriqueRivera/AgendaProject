@@ -1,24 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MyDentDBModelStoreContainer" CdmEntityContainer="MyDentDBEntities">
-    <EntitySetMapping Name="Event">
+    <EntitySetMapping Name="Configurations">
+      <EntityTypeMapping TypeName="MyDentDBModel.Configuration">
+        <MappingFragment StoreEntitySet="Configurations">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ConfigurationId" ColumnName="ConfigurationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="MyDentDBModel.Event">
-        <MappingFragment StoreEntitySet="Event">
-          <ScalarProperty Name="IsException" ColumnName="IsException" />
+        <MappingFragment StoreEntitySet="Events">
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-          <ScalarProperty Name="PatientCame" ColumnName="PatientCame" />
+          <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
           <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
           <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+          <ScalarProperty Name="IsException" ColumnName="IsException" />
           <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
           <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
           <ScalarProperty Name="EventId" ColumnName="EventId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Patient">
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="MyDentDBModel.Log">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+          <ScalarProperty Name="ErrorDetail" ColumnName="ErrorDetail" />
+          <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="MyDentDBModel.Patient">
-        <MappingFragment StoreEntitySet="Patient">
+        <MappingFragment StoreEntitySet="Patients">
           <ScalarProperty Name="CaptureDate" ColumnName="CaptureDate" />
           <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
           <ScalarProperty Name="PatientRecordId" ColumnName="PatientRecordId" />
@@ -31,12 +51,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Treatment">
+    <EntitySetMapping Name="Treatments">
       <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
-        <MappingFragment StoreEntitySet="Treatment">
+        <MappingFragment StoreEntitySet="Treatments">
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MyDentDBModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
