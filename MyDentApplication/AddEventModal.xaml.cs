@@ -207,7 +207,7 @@ namespace MyDentApplication
             eventToAdd.EventCapturerId = _userLoggedIn.UserId;
 
 
-            Model.Event overlappedEvent = MainWindow.OverlappedWithExistingEvent(eventToAdd, _scheduler.Events.ToList());
+            Model.Event overlappedEvent = AgendaWindow.OverlappedWithExistingEvent(eventToAdd, _scheduler.Events.ToList());
             if (overlappedEvent != null)
             {
                 if (MessageBox.Show
@@ -255,7 +255,7 @@ namespace MyDentApplication
             }
 
             Model.User userResult = new Model.User();
-            new RequestAdminCredentials(userResult).ShowDialog();
+            new RequestAdminCredentialsModal(userResult).ShowDialog();
 
             return userResult.IsAdmin;
         }

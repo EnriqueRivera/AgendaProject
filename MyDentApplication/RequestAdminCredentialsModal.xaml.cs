@@ -16,11 +16,11 @@ namespace MyDentApplication
 	/// <summary>
 	/// Interaction logic for RequestAdminCredentials.xaml
 	/// </summary>
-	public partial class RequestAdminCredentials : Window
+	public partial class RequestAdminCredentialsModal : Window
 	{
         private Model.User _userResult;
 
-		public RequestAdminCredentials(Model.User userResult)
+		public RequestAdminCredentialsModal(Model.User userResult)
 		{
 			this.InitializeComponent();
 

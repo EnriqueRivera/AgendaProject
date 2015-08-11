@@ -119,18 +119,8 @@ namespace WpfScheduler
             AddExtraTime();
             AddTimeLabels();
             AddButtonsForEvents();
-            EnableFilters();
 
             column.Background = Brushes.Transparent;
-        }
-
-        private void EnableFilters()
-        {
-            CanceledEventsVisible = true;
-            ExceptionEventsVisible = true;
-            CompletedEventsVisible = true;
-            PatientSkipsEventsVisible = true;
-            PendingEventsVisible = true;
         }
 
         private void AddExtraTime()
