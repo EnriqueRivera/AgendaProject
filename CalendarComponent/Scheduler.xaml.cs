@@ -222,5 +222,16 @@ namespace WpfScheduler
         {
             DayScheduler.RepaintEvents();
         }
+
+        public void AddEventWithoutRepaint(Event e)
+        {
+            Events.Add(e);
+        }
+
+        public Model.User UserLoggedIn
+        {
+            get { return DayScheduler.UserLoggedIn; }
+            set { DayScheduler.UserLoggedIn = value; }
+        }
     }
 }

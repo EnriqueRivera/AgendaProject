@@ -7,6 +7,10 @@
     <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
     <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
     <EntitySet Name="Users" EntityType="MyDentDBModel.User" />
+    <AssociationSet Name="FK_Events_EventCapturerId" Association="MyDentDBModel.FK_Events_EventCapturerId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
     <AssociationSet Name="FK_Events_PatientId" Association="MyDentDBModel.FK_Events_PatientId">
       <End Role="Patient" EntitySet="Patients" />
       <End Role="Event" EntitySet="Events" />
@@ -14,6 +18,10 @@
     <AssociationSet Name="FK_Events_TreatmentId" Association="MyDentDBModel.FK_Events_TreatmentId">
       <End Role="Treatment" EntitySet="Treatments" />
       <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patients_DataCapturerId" Association="MyDentDBModel.FK_Patients_DataCapturerId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
@@ -37,6 +45,8 @@
     <Property Name="PatientSkips" Type="Boolean" Nullable="false" />
     <Property Name="PatientId" Type="Int32" Nullable="false" />
     <Property Name="TreatmentId" Type="Int32" Nullable="false" />
+    <Property Name="EventCapturerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="Event" ToRole="User" />
     <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
     <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
   </EntityType>
@@ -61,9 +71,10 @@
     <Property Name="HomePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="PatientRecordId" Type="Int32" />
-    <Property Name="DataCapturerId" Type="Int32" />
+    <Property Name="DataCapturerId" Type="Int32" Nullable="false" />
     <Property Name="CaptureDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
   </EntityType>
   <EntityType Name="Treatment">
     <Key>
@@ -81,8 +92,23 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
+    <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
   </EntityType>
+  <Association Name="FK_Events_EventCapturerId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="EventCapturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Events_PatientId">
     <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
     <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
@@ -104,6 +130,18 @@
       </Principal>
       <Dependent Role="Event">
         <PropertyRef Name="TreatmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patients_DataCapturerId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="DataCapturerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

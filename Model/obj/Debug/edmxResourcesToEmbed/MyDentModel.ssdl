@@ -21,6 +21,7 @@
     <Property Name="PatientSkips" Type="bit" Nullable="false" />
     <Property Name="PatientId" Type="int" Nullable="false" />
     <Property Name="TreatmentId" Type="int" Nullable="false" />
+    <Property Name="EventCapturerId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Logs">
     <Key>
@@ -43,7 +44,7 @@
     <Property Name="HomePhone" Type="varchar" MaxLength="50" />
     <Property Name="Email" Type="varchar" MaxLength="100" />
     <Property Name="PatientRecordId" Type="int" />
-    <Property Name="DataCapturerId" Type="int" />
+    <Property Name="DataCapturerId" Type="int" Nullable="false" />
     <Property Name="CaptureDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Treatments">
@@ -61,8 +62,21 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="varchar(max)" Nullable="false" />
     <Property Name="IsAdmin" Type="bit" Nullable="false" />
   </EntityType>
+  <Association Name="FK_Events_EventCapturerId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Events" Type="Self.Events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Events">
+        <PropertyRef Name="EventCapturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Events_PatientId">
     <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
     <End Role="Events" Type="Self.Events" Multiplicity="*" />
@@ -87,6 +101,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Patients_DataCapturerId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Patients">
+        <PropertyRef Name="DataCapturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -94,6 +120,10 @@
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Events" EntitySet="Events" />
+    </AssociationSet>
     <AssociationSet Name="FK_Events_PatientId" Association="Self.FK_Events_PatientId">
       <End Role="Patients" EntitySet="Patients" />
       <End Role="Events" EntitySet="Events" />
@@ -101,6 +131,10 @@
     <AssociationSet Name="FK_Events_TreatmentId" Association="Self.FK_Events_TreatmentId">
       <End Role="Treatments" EntitySet="Treatments" />
       <End Role="Events" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Patients" EntitySet="Patients" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

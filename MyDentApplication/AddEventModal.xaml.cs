@@ -24,13 +24,15 @@ namespace MyDentApplication
         private DateTime _eventStart;
         private Model.Patient _selectedPatient;
         private Model.Treatment _selectedTreatment;
+        private Model.User _userLoggedIn;
 
-		public AddEventModal(WpfScheduler.Scheduler scheduler, DateTime eventStart)
+        public AddEventModal(WpfScheduler.Scheduler scheduler, DateTime eventStart, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
             _scheduler = scheduler;
             _eventStart = eventStart;
+            _userLoggedIn = userLoggedIn;
 
             this.Title = "Agendar cita (" + eventStart.ToString("D") + ")";
             lblEventStartTime.ToolTip = lblEventStartTime.Text = eventStart.ToString("HH:mm") + " hrs";
@@ -134,7 +136,7 @@ namespace MyDentApplication
             }
 
             List<Model.Event> skippedEvents = ((cbPatientName.SelectedValue as ComboBoxItem).Value as Model.Patient).Events
-                                                .Where(ev => ev.PatientSkips)
+                                                .Where(ev => ev.IsCompleted && ev.PatientSkips)
                                                 .OrderBy(ev => ev.StartEvent)
                                                 .ToList();
 
@@ -202,6 +204,7 @@ namespace MyDentApplication
             eventToAdd.PatientSkips = false;
             eventToAdd.PatientId = _selectedPatient.PatientId;
             eventToAdd.TreatmentId = _selectedTreatment.TreatmentId;
+            eventToAdd.EventCapturerId = _userLoggedIn.UserId;
 
 
             Model.Event overlappedEvent = MainWindow.OverlappedWithExistingEvent(eventToAdd, _scheduler.Events.ToList());
@@ -219,9 +222,12 @@ namespace MyDentApplication
                                     MessageBoxImage.Information
                                 ) == MessageBoxResult.Yes)
                 {
-                    eventToAdd.EndEvent = overlappedEvent.StartEvent;
-                    eventToAdd.IsException = true;
-                    return true;
+                    if (IsValidAdminPassword())
+                    {
+                        eventToAdd.EndEvent = overlappedEvent.StartEvent;
+                        eventToAdd.IsException = true;
+                        return true;   
+                    }
                 }
 
                 return false;
@@ -229,13 +235,29 @@ namespace MyDentApplication
 
             if (IsTimeRangeException(eventToAdd.StartEvent, eventToAdd.EndEvent))
             {
-                MessageBox.Show("Pedir contraseña");
-                eventToAdd.IsException = true;
+                if (IsValidAdminPassword())
+                {
+                    eventToAdd.IsException = true;
+                    return true;   
+                }
 
-                return true;
+                return false;
             }
 
             return true;
+        }
+
+        private bool IsValidAdminPassword()
+        {
+            if (_userLoggedIn.IsAdmin)
+            {
+                return true;
+            }
+
+            Model.User userResult = new Model.User();
+            new RequestAdminCredentials(userResult).ShowDialog();
+
+            return userResult.IsAdmin;
         }
 
         private bool IsTimeRangeException(DateTime eventToAddStart, DateTime eventToAddEnd)

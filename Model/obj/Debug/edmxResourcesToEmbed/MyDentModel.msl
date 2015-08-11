@@ -13,6 +13,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="MyDentDBModel.Event">
         <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
           <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
@@ -64,6 +65,7 @@
       <EntityTypeMapping TypeName="MyDentDBModel.User">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />

@@ -34,6 +34,7 @@ namespace WpfScheduler
         private Guid _eventSelected = Guid.Empty;
         private const double _selectedEventBorderThickness = 3.0;
         private const double _oneHourHeight = _rowHeight * _hourIntervals;
+        public Model.User UserLoggedIn { get; set; }
 
         public bool CanceledEventsVisible { get; set; }
         public bool ExceptionEventsVisible { get; set; }
@@ -209,7 +210,7 @@ namespace WpfScheduler
 
                     Grid.SetColumn(img, 2);
                     Grid.SetRow(img, k);
-                    img.MouseDown += Image_MouseDown;
+                    img.MouseLeftButtonDown += Image_MouseLeftButtonDown;
 
                     EventsGrid.Children.Add(img);
                 }
@@ -261,7 +262,7 @@ namespace WpfScheduler
             PaintAllEvents();
         }
 
-        private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             string[] time = (sender as Image).Tag.ToString().Split(':');
             int hour = 0;
@@ -304,10 +305,7 @@ namespace WpfScheduler
                 List<Event> concurrentEvents = new List<Event>();
                 GetConcurrentEvents(e, concurrentEvents);
                 concurrentEvents = concurrentEvents
-                                    .OrderBy(ev => ev.EventInfo.IsCanceled == false)
-                                    .ThenBy(ev => ev.EventInfo.IsException == false)
-                                    .ThenBy(ev => ev.EventInfo.IsCompleted == false)
-                                    .ThenBy(ev => ev.EventInfo.StartEvent)
+                                    .OrderBy(ev => ev.EventInfo.StartEvent)
                                     .ThenBy(ev => ev.EventInfo.EndEvent)
                                     .ToList();
 
@@ -335,7 +333,7 @@ namespace WpfScheduler
 
                     ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
                     cm.Tag = e;
-                    cm.IsOpen = e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted == false;
+                    cm.IsOpen = (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted == false) || UserLoggedIn.IsAdmin;
                 });
 
                 column.Children.Add(wEvent);

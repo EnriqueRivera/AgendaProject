@@ -23,7 +23,9 @@ namespace Model
         public bool PatientSkips { get; set; }
         public int PatientId { get; set; }
         public int TreatmentId { get; set; }
+        public int EventCapturerId { get; set; }
     
+        public virtual User User { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Treatment Treatment { get; set; }
     }

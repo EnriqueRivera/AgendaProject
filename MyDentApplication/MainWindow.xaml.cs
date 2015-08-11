@@ -21,11 +21,17 @@ namespace MyDentApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Model.User _userLoggedIn;
+
         public MainWindow()
         {
             CheckGlobalConfigurations();
 
             InitializeComponent();
+
+            _userLoggedIn = BusinessController.Instance.FindById<Model.User>(2);
+            scheduler.UserLoggedIn = _userLoggedIn;
+            lblLoggedIn.ToolTip = lblLoggedIn.Content = _userLoggedIn.FirstName + " " + _userLoggedIn.LastName;
 
             calendar.SelectedDate = DateTime.Now;
 
@@ -100,14 +106,15 @@ namespace MyDentApplication
 
         private void LoadEventInfo(WpfScheduler.Event e)
         {
-            lblEventStartTime.Text = e.EventInfo.StartEvent.ToString("HH:mm") + " hrs";
-            lblEventEndTime.Text = e.EventInfo.EndEvent.ToString("HH:mm") + " hrs";
-            lblExpNo.Text = e.EventInfo.Patient.PatientId.ToString();
-            lblPacientName.Text = e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
-            lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
-            lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
-            lblEmail.Text = e.EventInfo.Patient.Email;
-            lblEventStatus.Text = e.EventStatusString;
+            lblEventStartTime.ToolTip = lblEventStartTime.Text = e.EventInfo.StartEvent.ToString("HH:mm") + " hrs";
+            lblEventEndTime.ToolTip = lblEventEndTime.Text = e.EventInfo.EndEvent.ToString("HH:mm") + " hrs";
+            lblExpNo.ToolTip = lblExpNo.Text = e.EventInfo.Patient.PatientId.ToString();
+            lblPacientName.ToolTip = lblPacientName.Text = e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
+            lblCellPhone.ToolTip = lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
+            lblEventStartTime.ToolTip = lblEventStartTime.ToolTip = lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
+            lblEmail.ToolTip = lblEmail.Text = e.EventInfo.Patient.Email;
+            lblEventStatus.ToolTip = lblEventStatus.Text = e.EventStatusString;
+            lblEventCapturer.ToolTip = lblEventCapturer.Text = e.EventInfo.User.FirstName + " " + e.EventInfo.User.LastName;
         }
 
         private void scheduler_OnScheduleAddEvent(object sender, System.DateTime e)
@@ -151,7 +158,7 @@ namespace MyDentApplication
                 return;
             }
                 
-            new AddEventModal(scheduler, eventToAdd).ShowDialog();   
+            new AddEventModal(scheduler, eventToAdd, _userLoggedIn).ShowDialog();   
         }
 
         public static Model.Event OverlappedWithExistingEvent(Model.Event eventToAdd, List<WpfScheduler.Event> events)
@@ -171,6 +178,8 @@ namespace MyDentApplication
 
         private void LoadScheduler(DateTime dateToLoad)
         {
+            calendar.DisplayDate = dateToLoad;
+
             scheduler.Events.Clear();
             scheduler.SelectedDate = dateToLoad;
 
@@ -182,9 +191,11 @@ namespace MyDentApplication
             {
                 foreach (Model.Event ev in events)
                 {
-                    scheduler.AddEvent(new WpfScheduler.Event() { EventInfo = ev });
-                }   
+                    scheduler.AddEventWithoutRepaint(new WpfScheduler.Event() { EventInfo = ev });
+                }
             }
+
+            scheduler.RepaintEvents();
         }
 
         private void ModifyEventStatus(WpfScheduler.Event e, EventStatus se)
@@ -192,13 +203,32 @@ namespace MyDentApplication
             switch (se)
             {
                 case EventStatus.CANCELED:
+                    if (e.EventInfo.IsCanceled && e.EventInfo.IsCompleted == false && e.EventInfo.PatientSkips == false)
+                    {
+                        return;    
+                    }
+
                     e.EventInfo.IsCanceled = true;
+                    e.EventInfo.IsCompleted = false;
+                    e.EventInfo.PatientSkips = false;
                     break;
                 case EventStatus.COMPLETED:
+                    if (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted && e.EventInfo.PatientSkips == false)
+                    {
+                        return;
+                    }
+
+                    e.EventInfo.IsCanceled = false;
                     e.EventInfo.IsCompleted = true;
                     e.EventInfo.PatientSkips = false;
                     break;
                 case EventStatus.PATIENT_SKIPS:
+                    if (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted && e.EventInfo.PatientSkips)
+                    {
+                        return;
+                    }
+
+                    e.EventInfo.IsCanceled = false;
                     e.EventInfo.IsCompleted = true;
                     e.EventInfo.PatientSkips = true;
                     break;

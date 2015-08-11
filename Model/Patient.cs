@@ -26,9 +26,10 @@ namespace Model
         public string HomePhone { get; set; }
         public string Email { get; set; }
         public Nullable<int> PatientRecordId { get; set; }
-        public Nullable<int> DataCapturerId { get; set; }
+        public int DataCapturerId { get; set; }
         public System.DateTime CaptureDate { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
+        public virtual User User { get; set; }
     }
 }
