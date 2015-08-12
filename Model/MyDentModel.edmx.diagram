@@ -7,13 +7,16 @@
       <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1">
         <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="7.5" PointY="5.25" />
         <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="7.625" />
-        <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="3" PointY="4.375" />
+        <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="3" PointY="4.5" />
         <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_EventCapturerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_PatientId" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_TreatmentId" />
+        <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_EventId" />
+        <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
       </Diagram>
     </edmx:Diagrams>

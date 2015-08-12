@@ -33,7 +33,7 @@
 		</GroupBox>
 		<GroupBox x:Name="gbEventInfo" Header="Información de la cita" Margin="10,200.966,0,190" HorizontalAlignment="Left" Width="235" FontWeight="Bold" BorderThickness="3">
 			<Grid x:Name="gridEventInfo" Margin="0,0,-2,0">
-				<GroupBox x:Name="gbPacientInfo" Header="Información del paciente" Margin="0,131,3,0" FontWeight="Bold" BorderThickness="3">
+				<GroupBox x:Name="gbPacientInfo" Header="Información del paciente" Margin="0,158,3,0" FontWeight="Bold" BorderThickness="3">
 					<ScrollViewer x:Name="svPacientInfo" Margin="0,0,-2,-2">
 						<Grid x:Name="gridPacientInfo" VerticalAlignment="Center" Height="216.114"><Label x:Name="lblExpNoCaption" Content="Exp. No:" Margin="35.612,-1,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="55.522"/>
 							<TextBlock x:Name="lblExpNo" Text="" Height="20" Margin="96.134,4,0,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
@@ -48,14 +48,16 @@
 						</Grid>
 					</ScrollViewer>
 				</GroupBox>
-				<Label x:Name="lblEventStartTimeCaption" Content="Inicia:" Margin="14.388,5,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
-				<TextBlock x:Name="lblEventStartTime" Text="" HorizontalAlignment="Left" Height="20" Margin="60.522,10,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
-				<Label x:Name="lblEventEndTimeCaption" Content="Termina:" Margin="0,30,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.522" Height="25" VerticalAlignment="Top"/>
-				<TextBlock x:Name="lblEventEndTime" Text="" HorizontalAlignment="Left" Height="20" Margin="60.522,35,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
-				<Label x:Name="lblEventStatusCaption" Content="Estado:" Margin="5,55,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.522" Height="25" VerticalAlignment="Top"/>
-				<TextBlock x:Name="lblEventStatus" Text="" HorizontalAlignment="Left" Height="20" Margin="60.522,60,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
-				<Label x:Name="lblEventCapturerCaption" Content="Usuario que registró la cita:" Margin="5,82,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="153.522" Height="27" VerticalAlignment="Top"/>
-				<TextBlock x:Name="lblEventCapturer" Text="" HorizontalAlignment="Left" Height="20" Margin="5,111,0,0" VerticalAlignment="Top" Width="205" FontWeight="Normal" FontStyle="Italic" TextAlignment="Center"/>
+				<Label x:Name="lblEventStartTimeCaption" Content="Inicia:" Margin="19.388,27,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventStartTime" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,32,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventEndTimeCaption" Content="Termina:" Margin="5,52,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.522" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventEndTime" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,57,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventStatusCaption" Content="Estado:" Margin="10,77,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.522" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventStatus" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,82,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventCapturerCaption" Content="Usuario que registró la cita:" Margin="10,104,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="153.522" Height="27" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventCapturer" Text="" HorizontalAlignment="Left" Height="20" Margin="10,133,0,0" VerticalAlignment="Top" Width="205" FontWeight="Normal" FontStyle="Italic" TextAlignment="Center"/>
+				<Label x:Name="lblEventIdCaption" Content="Cita #" Margin="19.388,2,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventId" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,7,0,0" VerticalAlignment="Top" Width="149.478" FontWeight="Normal" FontStyle="Italic"/>
 			</Grid>
 		</GroupBox>
 		<Button x:Name="btnToday" Content="Hoy" HorizontalAlignment="Left" Height="22.999" Margin="35,10,0,0" VerticalAlignment="Top" Width="179" Cursor="Hand" Click="btnToday_Click" TabIndex="1"/>

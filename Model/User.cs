@@ -17,6 +17,7 @@ namespace Model
         public User()
         {
             this.Events = new HashSet<Event>();
+            this.EventStatusChanges = new HashSet<EventStatusChanx>();
             this.Patients = new HashSet<Patient>();
         }
     
@@ -27,6 +28,7 @@ namespace Model
         public bool IsAdmin { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
     }
 }

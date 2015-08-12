@@ -28,6 +28,17 @@
           <Property Name="TreatmentId" Type="int" Nullable="false" />
           <Property Name="EventCapturerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EventStatusChanges">
+          <Key>
+            <PropertyRef Name="EventStatusChangeId" />
+          </Key>
+          <Property Name="EventStatusChangeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OldStatus" Type="varchar" MaxLength="50" />
+          <Property Name="NewStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChangeDate" Type="datetime" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="StatusChangerId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Logs">
           <Key>
             <PropertyRef Name="LogId" />
@@ -106,6 +117,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EventStatusChanges_EventId">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="EventStatusChanges" Type="Self.EventStatusChanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="EventStatusChanges">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventStatusChanges_StatusChangerId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="EventStatusChanges" Type="Self.EventStatusChanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="EventStatusChanges">
+              <PropertyRef Name="StatusChangerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Patients_DataCapturerId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -121,6 +156,7 @@
         <EntityContainer Name="MyDentDBModelStoreContainer">
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
@@ -137,6 +173,14 @@
             <End Role="Treatments" EntitySet="Treatments" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
+          <AssociationSet Name="FK_EventStatusChanges_EventId" Association="Self.FK_EventStatusChanges_EventId">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="Self.FK_EventStatusChanges_StatusChangerId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
+          </AssociationSet>
           <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
             <End Role="Users" EntitySet="Users" />
             <End Role="Patients" EntitySet="Patients" />
@@ -149,6 +193,7 @@
         <EntityContainer Name="MyDentDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
           <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
+          <EntitySet Name="EventStatusChanges" EntityType="MyDentDBModel.EventStatusChanx" />
           <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
           <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
           <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
@@ -164,6 +209,14 @@
           <AssociationSet Name="FK_Events_TreatmentId" Association="MyDentDBModel.FK_Events_TreatmentId">
             <End Role="Treatment" EntitySet="Treatments" />
             <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventStatusChanges_EventId" Association="MyDentDBModel.FK_EventStatusChanges_EventId">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
           </AssociationSet>
           <AssociationSet Name="FK_Patients_DataCapturerId" Association="MyDentDBModel.FK_Patients_DataCapturerId">
             <End Role="User" EntitySet="Users" />
@@ -195,6 +248,20 @@
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="Event" ToRole="User" />
           <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
           <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
+          <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="Event" ToRole="EventStatusChanx" />
+        </EntityType>
+        <EntityType Name="EventStatusChanx">
+          <Key>
+            <PropertyRef Name="EventStatusChangeId" />
+          </Key>
+          <Property Name="EventStatusChangeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OldStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NewStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="StatusChangerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="EventStatusChanx" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="EventStatusChanx" ToRole="User" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -241,6 +308,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
+          <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="User" ToRole="EventStatusChanx" />
           <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
         </EntityType>
         <Association Name="FK_Events_EventCapturerId">
@@ -276,6 +344,30 @@
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="TreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventStatusChanges_EventId">
+          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="MyDentDBModel.EventStatusChanx" Role="EventStatusChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="EventStatusChanx">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventStatusChanges_StatusChangerId">
+          <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MyDentDBModel.EventStatusChanx" Role="EventStatusChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="EventStatusChanx">
+              <PropertyRef Name="StatusChangerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -319,6 +411,18 @@
                 <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
                 <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventStatusChanges">
+            <EntityTypeMapping TypeName="MyDentDBModel.EventStatusChanx">
+              <MappingFragment StoreEntitySet="EventStatusChanges">
+                <ScalarProperty Name="StatusChangerId" ColumnName="StatusChangerId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
+                <ScalarProperty Name="OldStatus" ColumnName="OldStatus" />
+                <ScalarProperty Name="EventStatusChangeId" ColumnName="EventStatusChangeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

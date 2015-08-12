@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using Controllers;
 
 namespace MyDentApplication
 {
@@ -43,7 +44,7 @@ namespace MyDentApplication
 
         private void GetTreatments()
         {
-            var allTreatments = Controllers.BusinessController.Instance.GetAll<Model.Treatment>();
+            var allTreatments = BusinessController.Instance.GetAll<Model.Treatment>();
 
             if (allTreatments != null)
 	        {
@@ -61,7 +62,7 @@ namespace MyDentApplication
 
         private void GetPatients()
         {
-            var allPatients = Controllers.BusinessController.Instance.GetAll<Model.Patient>();
+            var allPatients = BusinessController.Instance.GetAll<Model.Patient>();
 
             if (allPatients != null)
             {
@@ -140,7 +141,7 @@ namespace MyDentApplication
                                                 .OrderBy(ev => ev.StartEvent)
                                                 .ToList();
 
-            Model.Configuration skippedEventsConfiguration = Controllers.BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == Controllers.Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION).FirstOrDefault();
+            Model.Configuration skippedEventsConfiguration = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION).FirstOrDefault();
 
             int maxSkippedEvents;
             if (int.TryParse(skippedEventsConfiguration == null ? "3" : skippedEventsConfiguration.Value, out maxSkippedEvents) == false)
@@ -182,9 +183,17 @@ namespace MyDentApplication
             Model.Event eventToAdd = new Model.Event();
             if (IsValidEvent(eventToAdd))
             {
-                if (Controllers.BusinessController.Instance.Add<Model.Event>(eventToAdd))
+                if (BusinessController.Instance.Add<Model.Event>(eventToAdd))
                 {
-                    _scheduler.AddEvent(new WpfScheduler.Event() { EventInfo = eventToAdd });
+                    WpfScheduler.Event eventToAddScheduler = new WpfScheduler.Event() { EventInfo = eventToAdd };
+                    _scheduler.AddEvent(eventToAddScheduler);
+
+                    bool eventStatusChangeRegistered = Utils.AddEventStatusChanges(null, eventToAddScheduler.EventStatus.ToString(), eventToAdd.EventId, _userLoggedIn.UserId);
+                    if (eventStatusChangeRegistered == false)
+                    {
+                        MessageBox.Show("No se pudo guardar un registro del cambio registrado en el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                     this.Close();
                 }
                 else
@@ -219,7 +228,7 @@ namespace MyDentApplication
                                         overlappedEvent.EndEvent.ToString("HH:mm")),
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
-                                    MessageBoxImage.Information
+                                    MessageBoxImage.Warning
                                 ) == MessageBoxResult.Yes)
                 {
                     if (IsValidAdminPassword())
@@ -268,8 +277,8 @@ namespace MyDentApplication
             DateTime secondExtraHourMaxRange = new DateTime(eventToAddStart.Year, eventToAddStart.Month, eventToAddStart.Day, _scheduler.MaxHour, 0, 0);
 
 
-            return Controllers.Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, firstExtraHourMinRange, firstExtraHourMaxRange)
-                    || Controllers.Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, secondExtraHourMinRange, secondExtraHourMaxRange);
+            return Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, firstExtraHourMinRange, firstExtraHourMaxRange)
+                    || Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, secondExtraHourMinRange, secondExtraHourMaxRange);
         }
         
 

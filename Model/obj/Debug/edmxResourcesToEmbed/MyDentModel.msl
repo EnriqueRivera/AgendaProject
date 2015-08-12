@@ -26,6 +26,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EventStatusChanges">
+      <EntityTypeMapping TypeName="MyDentDBModel.EventStatusChanx">
+        <MappingFragment StoreEntitySet="EventStatusChanges">
+          <ScalarProperty Name="StatusChangerId" ColumnName="StatusChangerId" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+          <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
+          <ScalarProperty Name="OldStatus" ColumnName="OldStatus" />
+          <ScalarProperty Name="EventStatusChangeId" ColumnName="EventStatusChangeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Logs">
       <EntityTypeMapping TypeName="MyDentDBModel.Log">
         <MappingFragment StoreEntitySet="Logs">

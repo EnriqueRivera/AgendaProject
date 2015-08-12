@@ -1,0 +1,17 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication"
+	x:Class="MyDentApplication.FinishedEventsReminderModal"
+	x:Name="Window"
+	Title="Recordatorio de citas finalizadas"
+	Width="706.888" Height="476.111" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+
+	<Grid x:Name="LayoutRoot">
+		<ScrollViewer Margin="10,47.521,10,10">
+            <StackPanel x:Name="spFinishedEvents">
+            </StackPanel>
+		</ScrollViewer>
+		<Label Content="Las siguientes citas ya han finalizado, es necesario que indique si asistió o no el paciente:" Height="32.521" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="13.333"/>
+	</Grid>
+</Window>

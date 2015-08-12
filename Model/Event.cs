@@ -14,6 +14,11 @@ namespace Model
     
     public partial class Event
     {
+        public Event()
+        {
+            this.EventStatusChanges = new HashSet<EventStatusChanx>();
+        }
+    
         public int EventId { get; set; }
         public System.DateTime StartEvent { get; set; }
         public System.DateTime EndEvent { get; set; }
@@ -28,5 +33,6 @@ namespace Model
         public virtual User User { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Treatment Treatment { get; set; }
+        public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
     }
 }

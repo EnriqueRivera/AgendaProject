@@ -16,6 +16,20 @@ namespace Controllers
             return ((event1Start >= event2Start && event1Start < event2End) || (event1End > event2Start && event1End <= event2End))
                     || ((event2Start >= event1Start && event2Start < event1End) || (event2End > event1Start && event2End <= event1End));
         }
+
+        public static bool AddEventStatusChanges(string oldEventStatus, string newEventStatus, int eventId, int userId)
+        {
+            Model.EventStatusChanx eventStatusChanged = new Model.EventStatusChanx()
+            {
+                OldStatus = oldEventStatus,
+                NewStatus = newEventStatus,
+                ChangeDate = DateTime.Now,
+                EventId = eventId,
+                StatusChangerId = userId
+            };
+
+            return BusinessController.Instance.Add<Model.EventStatusChanx>(eventStatusChanged);
+        }
     }
 
     public enum EventStatus

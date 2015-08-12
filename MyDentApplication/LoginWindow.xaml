@@ -4,13 +4,13 @@
 	x:Class="MyDentApplication.LoginWindow"
 	x:Name="Window"
 	Title="Inicio de sesión"
-	Width="404.179" Height="163.582" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+	Width="404.179" Height="163.582" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="app_icon.ico" ResizeMode="CanMinimize">
 
 	<Grid x:Name="LayoutRoot">
 		<Label x:Name="lblUserId" Content="Número de empleado:" HorizontalAlignment="Left" Height="27" Margin="108.507,17.463,0,0" VerticalAlignment="Top" Width="132"/>
 		<Label x:Name="lblPassword" Content="Contraseña:" HorizontalAlignment="Left" Height="27" Margin="166.507,49.463,0,0" VerticalAlignment="Top" Width="74"/>
-		<PasswordBox x:Name="pbPassword" HorizontalAlignment="Left" Height="27" Margin="245.507,49.463,0,0" VerticalAlignment="Top" Width="130" TabIndex="2"/>
-		<TextBox x:Name="txtUserId" HorizontalAlignment="Left" Height="27" Margin="245.507,17.463,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TabIndex="1"/>
+		<PasswordBox x:Name="pbPassword" HorizontalAlignment="Left" Height="27" Margin="245.507,49.463,0,0" VerticalAlignment="Top" Width="130" TabIndex="2" Password="12345"/>
+		<TextBox x:Name="txtUserId" HorizontalAlignment="Left" Height="27" Margin="245.507,17.463,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TabIndex="1" Text="1"/>
 		<Button x:Name="btnLogin" Content="Iniciar sesión" HorizontalAlignment="Left" Height="24.97" Margin="190.507,89.463,0,0" VerticalAlignment="Top" Width="90" Cursor="Hand" Click="btnLogin_Click" TabIndex="3"/>
 		<Button x:Name="btnClose" Content="Cerrar" HorizontalAlignment="Left" Height="24.97" Margin="285.507,89.463,0,0" VerticalAlignment="Top" Width="90" Cursor="Hand" Click="btnClose_Click" TabIndex="4"/>
 		<Image HorizontalAlignment="Left" Height="83.433" Margin="10,17.463,0,0" VerticalAlignment="Top" Width="82.507" Source="app_icon.ico"/>

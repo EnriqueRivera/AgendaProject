@@ -23,6 +23,17 @@
     <Property Name="TreatmentId" Type="int" Nullable="false" />
     <Property Name="EventCapturerId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="EventStatusChanges">
+    <Key>
+      <PropertyRef Name="EventStatusChangeId" />
+    </Key>
+    <Property Name="EventStatusChangeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OldStatus" Type="varchar" MaxLength="50" />
+    <Property Name="NewStatus" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ChangeDate" Type="datetime" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="StatusChangerId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Logs">
     <Key>
       <PropertyRef Name="LogId" />
@@ -101,6 +112,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_EventStatusChanges_EventId">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="EventStatusChanges" Type="Self.EventStatusChanges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventStatusChanges">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventStatusChanges_StatusChangerId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="EventStatusChanges" Type="Self.EventStatusChanges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="EventStatusChanges">
+        <PropertyRef Name="StatusChangerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Patients_DataCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -116,6 +151,7 @@
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
@@ -131,6 +167,14 @@
     <AssociationSet Name="FK_Events_TreatmentId" Association="Self.FK_Events_TreatmentId">
       <End Role="Treatments" EntitySet="Treatments" />
       <End Role="Events" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventStatusChanges_EventId" Association="Self.FK_EventStatusChanges_EventId">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="Self.FK_EventStatusChanges_StatusChangerId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
     </AssociationSet>
     <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
       <End Role="Users" EntitySet="Users" />

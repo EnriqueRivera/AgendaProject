@@ -4,7 +4,7 @@
 	x:Class="MyDentApplication.AddEventModal"
 	x:Name="Window"
 	Title="Agendar cita"
-	Width="582" Height="282" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+	Width="582" Height="282" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="app_icon.ico">
 
 	<Grid x:Name="LayoutRoot">
 		<GroupBox x:Name="gbPatient" Header="Datos del paciente" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="193" Width="288.697" FontWeight="Bold">

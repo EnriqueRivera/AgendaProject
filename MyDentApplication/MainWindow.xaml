@@ -4,7 +4,9 @@
 	x:Class="MyDentApplication.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="640" Height="480" WindowStartupLocation="CenterScreen">
+	Width="640" Height="480" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="app_icon.ico">
 
-	<Grid x:Name="LayoutRoot"/>
+	<Grid x:Name="LayoutRoot">
+		<Button x:Name="btnOpenAgenda" Content="Abrir agenda" HorizontalAlignment="Left" Height="63" Margin="474.5,23.5,0,0" VerticalAlignment="Top" Width="91.5" Click="btnOpenAgenda_Click" Cursor="Hand"/>
+	</Grid>
 </Window>
