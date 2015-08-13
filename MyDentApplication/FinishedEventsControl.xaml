@@ -38,7 +38,8 @@
 				<TextBlock x:Name="lblPacientName" Text="" Height="20" Margin="0,52,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
 			</Grid>
 		</GroupBox>
-		<Button x:Name="btnPatientNotSkips" Content="Asistió el paciente" HorizontalAlignment="Left" Height="35.549" Margin="509,80.451,0,0" VerticalAlignment="Top" Width="127.966" Cursor="Hand" Click="btnPatientNotSkips_Click"/>
-		<Button x:Name="btnPatientSkips" Content="No asistió el paciente" HorizontalAlignment="Left" Height="35.549" Margin="509,132.451,0,0" VerticalAlignment="Top" Width="127.966" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="btnPatientSkips_Click"/>
+        <Button x:Name="btnPatientNotSkips" Content="Asistió el paciente" HorizontalAlignment="Left" Height="35.549" Margin="509,56.451,0,0" VerticalAlignment="Top" Width="127.966" Cursor="Hand" Click="changeStatusEvent_Click" Tag="COMPLETED"/>
+        <Button x:Name="btnPatientSkips" Content="No asistió el paciente" HorizontalAlignment="Left" Height="35.549" Margin="509,108.451,0,0" VerticalAlignment="Top" Width="127.966" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="changeStatusEvent_Click" Tag="PATIENT_SKIPS"/>
+        <Button x:Name="btnPatientCancel" Content="Paciente canceló" HorizontalAlignment="Left" Height="35.549" Margin="509,159.451,0,0" VerticalAlignment="Top" Width="127.966" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="changeStatusEvent_Click" Tag="CANCELED"/>
 	</Grid>
 </UserControl>

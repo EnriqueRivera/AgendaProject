@@ -18,6 +18,8 @@
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_EventId" />
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
+        <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="12.125" />
+        <AssociationConnector Association="MyDentDBModel.FK_Logins_UserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

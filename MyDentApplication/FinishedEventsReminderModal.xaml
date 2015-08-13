@@ -5,7 +5,7 @@
 	x:Class="MyDentApplication.FinishedEventsReminderModal"
 	x:Name="Window"
 	Title="Recordatorio de citas finalizadas"
-	Width="706.888" Height="476.111" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+	Width="706.888" Height="476.111" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="app_icon.ico">
 
 	<Grid x:Name="LayoutRoot">
 		<ScrollViewer Margin="10,47.521,10,10">

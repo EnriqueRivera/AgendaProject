@@ -34,6 +34,15 @@
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="StatusChangerId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Logins">
+    <Key>
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsLogin" Type="bit" Nullable="false" />
+    <Property Name="LoginDate" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Logs">
     <Key>
       <PropertyRef Name="LogId" />
@@ -136,6 +145,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Logins_UserId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Logins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Patients_DataCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -152,6 +173,7 @@
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
@@ -175,6 +197,10 @@
     <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="Self.FK_EventStatusChanges_StatusChangerId">
       <End Role="Users" EntitySet="Users" />
       <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Logins_UserId" Association="Self.FK_Logins_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Logins" EntitySet="Logins" />
     </AssociationSet>
     <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
       <End Role="Users" EntitySet="Users" />

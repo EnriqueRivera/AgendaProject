@@ -57,6 +57,8 @@ namespace MyDentApplication
             }
             else
             {
+                MainWindow.RegisterLoginAction(true, userResult.UserId);
+
                 this.Hide();
                 new MainWindow(userResult).ShowDialog();
 

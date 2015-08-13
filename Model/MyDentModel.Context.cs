@@ -32,5 +32,6 @@ namespace Model
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Login> Logins { get; set; }
     }
 }

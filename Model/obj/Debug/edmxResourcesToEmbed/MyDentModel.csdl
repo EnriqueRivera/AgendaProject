@@ -32,6 +32,11 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
+    <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
+    <AssociationSet Name="FK_Logins_UserId" Association="MyDentDBModel.FK_Logins_UserId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Login" EntitySet="Logins" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -120,6 +125,7 @@
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
     <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="User" ToRole="EventStatusChanx" />
     <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
+    <NavigationProperty Name="Logins" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="User" ToRole="Login" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -190,6 +196,28 @@
       </Principal>
       <Dependent Role="Patient">
         <PropertyRef Name="DataCapturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsLogin" Type="Boolean" Nullable="false" />
+    <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="Login" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Logins_UserId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.Login" Role="Login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Login">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

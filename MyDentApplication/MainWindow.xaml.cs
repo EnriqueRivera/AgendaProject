@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace MyDentApplication
 {
@@ -21,9 +23,10 @@ namespace MyDentApplication
 	{
         private Model.User _userLoggedIn;
         private AgendaWindow _agendaWindow;
+        private FinishedEventsReminderModal _finishedEventsReminderModal;
         private bool _stopCheckEventStatusThread = false;
         private Thread _checkEventStatusThread;
-        delegate void ParametrizedMethodInvoker5(List<DateTime> datesUpdates);
+        delegate void RepaintSchedulerFromAnotherThreadDelegate(List<DateTime> datesUpdates);
 
         public MainWindow(Model.User userLoggedIn)
 		{
@@ -33,6 +36,8 @@ namespace MyDentApplication
 
             _checkEventStatusThread = new Thread(DoWork);
             _checkEventStatusThread.SetApartmentState(ApartmentState.STA);
+            _checkEventStatusThread.IsBackground = true;
+            _checkEventStatusThread.Name = "CheckEventStatusThread";
             _checkEventStatusThread.Start();
 		}
 
@@ -48,7 +53,9 @@ namespace MyDentApplication
                 DateTime timeBeforeOpenWindow = DateTime.Now;
                 if (finishedEvents != null && finishedEvents.Count > 0)
                 {
-                    new FinishedEventsReminderModal(finishedEvents, _userLoggedIn).ShowDialog();
+                    _finishedEventsReminderModal = new FinishedEventsReminderModal(finishedEvents, _userLoggedIn);
+                    _finishedEventsReminderModal.ShowDialog();
+                    _finishedEventsReminderModal = null;
                 }
                 DateTime timeAfterOpenWindow = DateTime.Now;
 
@@ -62,13 +69,7 @@ namespace MyDentApplication
                     RepaintSchedulerFromAnotherThread(datesUpdated);
                 }
 
-                int elapsedTime = (int)(timeAfterOpenWindow - timeBeforeOpenWindow).TotalMilliseconds;
-                int defaultWaitTime = ((1000 * 60) * 15); //15 min
-
-                if (elapsedTime < defaultWaitTime)
-                {
-                    Thread.Sleep(defaultWaitTime - elapsedTime);   
-                }
+                Thread.Sleep((1000 * 60) * 15); //15 min   
             }
         }
 
@@ -85,25 +86,80 @@ namespace MyDentApplication
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (_agendaWindow != null)
+            if (MessageBox.Show("¿Está seguro(a) que desea cerrar sesión?",
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.Yes)
             {
-                _agendaWindow.Close();
+                CloseAllWindows();
             }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void CloseAllWindows()
+        {
+            RegisterLoginAction(false, _userLoggedIn.UserId);
+
+            CloseWindow(_agendaWindow);
+            CloseWindowInAnotherThread(_finishedEventsReminderModal);
 
             _stopCheckEventStatusThread = true;
         }
+
+        public static void RegisterLoginAction(bool isLogin, int userLoggedInId)
+        {
+            Model.Login login = new Model.Login()
+            {
+                IsLogin = isLogin,
+                LoginDate = DateTime.Now,
+                UserId = userLoggedInId
+            };
+
+            if (Controllers.BusinessController.Instance.Add<Model.Login>(login) == false)
+            {
+                MessageBox.Show("No se pudo registrar el " + (isLogin ? "inicio" : "cierre") + " de sesión", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CloseWindow(Window windowToClose)
+        {
+            if (windowToClose != null)
+            {
+                windowToClose.Close();
+            }
+        }
+
 
         void RepaintSchedulerFromAnotherThread(List<DateTime> datesUpdates)
         {
             if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
             {
-                Dispatcher.Invoke(new ParametrizedMethodInvoker5(RepaintSchedulerFromAnotherThread), datesUpdates);
+                Dispatcher.Invoke(new RepaintSchedulerFromAnotherThreadDelegate(RepaintSchedulerFromAnotherThread), datesUpdates);
                 return;
             }
-
+            
             if (_agendaWindow != null)
             {
                 _agendaWindow.RepaintSchedulerFromAnotherThread(datesUpdates);
+            }
+        }
+
+        void CloseWindowInAnotherThread(Window windowToClose)
+        {
+            if (windowToClose != null)
+            {
+                if (windowToClose.Dispatcher.CheckAccess())
+                {
+                    windowToClose.Close();
+                }
+                else
+                {
+                    windowToClose.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(windowToClose.Close));
+                }
             }
         }
 	}

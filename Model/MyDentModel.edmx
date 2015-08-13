@@ -39,6 +39,15 @@
           <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="StatusChangerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsLogin" Type="bit" Nullable="false" />
+          <Property Name="LoginDate" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Logs">
           <Key>
             <PropertyRef Name="LogId" />
@@ -141,6 +150,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Logins_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Patients_DataCapturerId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -157,6 +178,7 @@
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
@@ -180,6 +202,10 @@
           <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="Self.FK_EventStatusChanges_StatusChangerId">
             <End Role="Users" EntitySet="Users" />
             <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_UserId" Association="Self.FK_Logins_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
           </AssociationSet>
           <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
             <End Role="Users" EntitySet="Users" />
@@ -221,6 +247,11 @@
           <AssociationSet Name="FK_Patients_DataCapturerId" Association="MyDentDBModel.FK_Patients_DataCapturerId">
             <End Role="User" EntitySet="Users" />
             <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
+          <AssociationSet Name="FK_Logins_UserId" Association="MyDentDBModel.FK_Logins_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Login" EntitySet="Logins" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Configuration">
@@ -310,6 +341,7 @@
           <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="User" ToRole="EventStatusChanx" />
           <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
+          <NavigationProperty Name="Logins" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="User" ToRole="Login" />
         </EntityType>
         <Association Name="FK_Events_EventCapturerId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -380,6 +412,28 @@
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="DataCapturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsLogin" Type="Boolean" Nullable="false" />
+          <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="Login" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Logins_UserId">
+          <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MyDentDBModel.Login" Role="Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,6 +523,16 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="MyDentDBModel.Login">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="IsLogin" ColumnName="IsLogin" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Controllers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -57,30 +58,23 @@ namespace MyDentApplication
             }
         }
 
-		private void btnPatientNotSkips_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-            bool? eventModified = AgendaWindow.ModifyEventStatus(_schedulerEvent, Controllers.EventStatus.COMPLETED, _userLoggedIn.UserId);
-            if (eventModified == null || eventModified == true)
-            {
-                gridBackground.Background = _schedulerEvent.Color;
-                DisableButtons();
-            }
-		}
+        private void changeStatusEvent_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            EventStatus statusToChange = (EventStatus)Enum.Parse(typeof(EventStatus), (sender as Button).Tag.ToString(), true);
 
-		private void btnPatientSkips_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-            bool? eventModified = AgendaWindow.ModifyEventStatus(_schedulerEvent, Controllers.EventStatus.PATIENT_SKIPS, _userLoggedIn.UserId);
+            bool? eventModified = AgendaWindow.ModifyEventStatus(_schedulerEvent, statusToChange, _userLoggedIn.UserId);
             if (eventModified == null || eventModified == true)
             {
                 gridBackground.Background = _schedulerEvent.Color;
                 DisableButtons();
             }
-		}
+        }
 
         private void DisableButtons()
         {
             btnPatientNotSkips.IsEnabled = false;
             btnPatientSkips.IsEnabled = false;
+            btnPatientCancel.IsEnabled = false;
         }
 	}
 }
