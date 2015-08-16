@@ -7,6 +7,8 @@
 	Width="640" Height="480" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="app_icon.ico">
 
 	<Grid x:Name="LayoutRoot">
-		<Button x:Name="btnOpenAgenda" Content="Abrir agenda" HorizontalAlignment="Left" Height="63" Margin="474.5,23.5,0,0" VerticalAlignment="Top" Width="91.5" Click="btnOpenAgenda_Click" Cursor="Hand"/>
+		<Button x:Name="btnOpenAgenda" Content="Abrir agenda" HorizontalAlignment="Left" Height="63" Margin="510.5,10,0,0" VerticalAlignment="Top" Width="91.5" Click="btnOpenAgenda_Click" Cursor="Hand"/>
+		<Button x:Name="btnChangePassword" Content="Cambiar contraseña" HorizontalAlignment="Left" Height="58.5" Margin="15.5,363.5,0,0" VerticalAlignment="Top" Width="124.5" Click="btnChangePassword_Click" Cursor="Hand"/>
+		<Button x:Name="btnManageUsers" Content="Administrar usuarios" HorizontalAlignment="Left" Height="63" Margin="10,10,0,0" VerticalAlignment="Top" Width="130" Cursor="Hand" Click="btnManageUsers_Click"/>
 	</Grid>
 </Window>

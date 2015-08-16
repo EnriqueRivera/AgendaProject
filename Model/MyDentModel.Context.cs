@@ -28,10 +28,10 @@ namespace Model
         public DbSet<Configuration> Configurations { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventStatusChanx> EventStatusChanges { get; set; }
+        public DbSet<Login> Logins { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Login> Logins { get; set; }
     }
 }

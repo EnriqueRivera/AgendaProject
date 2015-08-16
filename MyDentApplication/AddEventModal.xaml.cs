@@ -44,38 +44,28 @@ namespace MyDentApplication
 
         private void GetTreatments()
         {
-            var allTreatments = BusinessController.Instance.GetAll<Model.Treatment>();
+            _treatments = BusinessController.Instance.GetAll<Model.Treatment>()
+                        .OrderBy(t => t.Name)
+                        .ThenBy(t => t.Duration)
+                        .ToList();
 
-            if (allTreatments != null)
-	        {
-                _treatments = allTreatments
-                            .OrderBy(t => t.Name)
-                            .ThenBy(t => t.Duration)
-                            .ToList();
-
-                foreach (Model.Treatment treatment in _treatments)
-                {
-                    cbTratmentName.Items.Add(new ComboBoxItem() { Text = treatment.Name, Value = treatment });
-                }
-	        }
+            foreach (Model.Treatment treatment in _treatments)
+            {
+                cbTratmentName.Items.Add(new ComboBoxItem() { Text = treatment.Name, Value = treatment });
+            }
         }
 
         private void GetPatients()
         {
-            var allPatients = BusinessController.Instance.GetAll<Model.Patient>();
+            _patients = BusinessController.Instance.GetAll<Model.Patient>()
+                        .OrderBy(p => p.FirstName)
+                        .ThenBy(p => p.LastName)
+                        .ToList();
 
-            if (allPatients != null)
+            foreach (Model.Patient patient in _patients)
             {
-                _patients = allPatients
-                            .OrderBy(p => p.FirstName)
-                            .ThenBy(p => p.LastName)
-                            .ToList();
-
-                foreach (Model.Patient patient in _patients)
-                {
-                    cbPatientName.Items.Add(new ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
-                }
-            }            
+                cbPatientName.Items.Add(new ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
+            }        
         }
 
         private void cbPatientName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

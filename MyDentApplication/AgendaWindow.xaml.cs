@@ -52,23 +52,18 @@ namespace MyDentApplication
 
         private void SetSchedulerColors()
         {
-            var scheduleColorsResult = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name.Contains(Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX));
+            List<Model.Configuration> scheduleColors = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name.Contains(Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX)).ToList();
+            Model.Configuration canceledEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.CANCELED.ToString()).FirstOrDefault();
+            Model.Configuration exceptionEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.EXCEPTION.ToString()).FirstOrDefault();
+            Model.Configuration patientSkipsEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PATIENT_SKIPS.ToString()).FirstOrDefault();
+            Model.Configuration completedEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.COMPLETED.ToString()).FirstOrDefault();
+            Model.Configuration pendingEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PENDING.ToString()).FirstOrDefault();
 
-            if (scheduleColorsResult != null)
-	        {
-                List<Model.Configuration> scheduleColors = scheduleColorsResult.ToList();
-                Model.Configuration canceledEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.CANCELED.ToString()).FirstOrDefault();
-                Model.Configuration exceptionEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.EXCEPTION.ToString()).FirstOrDefault();
-                Model.Configuration patientSkipsEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PATIENT_SKIPS.ToString()).FirstOrDefault();
-                Model.Configuration completedEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.COMPLETED.ToString()).FirstOrDefault();
-                Model.Configuration pendingEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PENDING.ToString()).FirstOrDefault();
-
-                FillRectangleColor(cpCanceledEvents, canceledEventColor);
-                FillRectangleColor(cpExceptionEvents, exceptionEventColor);
-                FillRectangleColor(cpPatientSkipsEvents, patientSkipsEventColor);
-                FillRectangleColor(cpCompletedEvents, completedEventColor);
-                FillRectangleColor(cpPendingEvents, pendingEventColor);
-	        }
+            FillRectangleColor(cpCanceledEvents, canceledEventColor);
+            FillRectangleColor(cpExceptionEvents, exceptionEventColor);
+            FillRectangleColor(cpPatientSkipsEvents, patientSkipsEventColor);
+            FillRectangleColor(cpCompletedEvents, completedEventColor);
+            FillRectangleColor(cpPendingEvents, pendingEventColor);
         }
 
         private void FillRectangleColor(Xceed.Wpf.Toolkit.ColorPicker cpEvents, Model.Configuration eventColor)

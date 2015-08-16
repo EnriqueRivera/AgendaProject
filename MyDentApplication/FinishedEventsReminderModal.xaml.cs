@@ -32,11 +32,6 @@ namespace MyDentApplication
 
         private void LoadStackPanel()
         {
-            foreach (Model.Event e in _finishedEvents)
-            {
-                
-            }
-
             for (int i = 0; i < _finishedEvents.Count; i++)
             {
                 FinishedEventsControl controlToAdd = new FinishedEventsControl(_finishedEvents[i], _userLoggedIn)

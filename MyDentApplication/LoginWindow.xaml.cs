@@ -36,7 +36,6 @@ namespace MyDentApplication
             string userIdText = txtUserId.Text.Trim();
             string password = pbPassword.Password;
 
-
             if (string.IsNullOrEmpty(userIdText) || int.TryParse(userIdText, out userId) == false)
             {
                 MessageBox.Show("Introduzca un número de usuario válido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -49,7 +48,7 @@ namespace MyDentApplication
                 return;
             }
 
-            Model.User userResult = Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.UserId == userId && u.Password == password).FirstOrDefault();
+            Model.User userResult = Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.AssignedUserId == userId && u.Password == password && u.IsDeleted == false).FirstOrDefault();
 
             if (userResult == null)
             {

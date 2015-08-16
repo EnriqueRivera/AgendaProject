@@ -85,6 +85,12 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AddEditUsersModal.xaml.cs">
+      <DependentUpon>AddEditUsersModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePasswordModal.xaml.cs">
+      <DependentUpon>ChangePasswordModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FinishedEventsControl.xaml.cs">
       <DependentUpon>FinishedEventsControl.xaml</DependentUpon>
     </Compile>
@@ -97,9 +103,16 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManageUsersWindow.xaml.cs">
+      <DependentUpon>ManageUsersWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RequestAdminCredentialsModal.xaml.cs">
       <DependentUpon>RequestAdminCredentialsModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddEditUsersModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddEventModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -119,6 +132,10 @@
       <DependentUpon>AgendaWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ChangePasswordModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="FinishedEventsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -132,6 +149,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ManageUsersWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

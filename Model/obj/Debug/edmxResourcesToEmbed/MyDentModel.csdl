@@ -4,6 +4,7 @@
     <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
     <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
     <EntitySet Name="EventStatusChanges" EntityType="MyDentDBModel.EventStatusChanx" />
+    <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
     <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
     <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
     <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
@@ -28,14 +29,13 @@
       <End Role="User" EntitySet="Users" />
       <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
     </AssociationSet>
-    <AssociationSet Name="FK_Patients_DataCapturerId" Association="MyDentDBModel.FK_Patients_DataCapturerId">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Patient" EntitySet="Patients" />
-    </AssociationSet>
-    <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
     <AssociationSet Name="FK_Logins_UserId" Association="MyDentDBModel.FK_Logins_UserId">
       <End Role="User" EntitySet="Users" />
       <End Role="Login" EntitySet="Logins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patients_DataCapturerId" Association="MyDentDBModel.FK_Patients_DataCapturerId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
@@ -78,6 +78,16 @@
     <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="EventStatusChanx" ToRole="Event" />
     <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="EventStatusChanx" ToRole="User" />
   </EntityType>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsLogin" Type="Boolean" Nullable="false" />
+    <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="Login" ToRole="User" />
+  </EntityType>
   <EntityType Name="Log">
     <Key>
       <PropertyRef Name="LogId" />
@@ -117,15 +127,17 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AssignedUserId" Type="Int32" Nullable="false" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
     <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="User" ToRole="EventStatusChanx" />
-    <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
     <NavigationProperty Name="Logins" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="User" ToRole="Login" />
+    <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -187,28 +199,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Patients_DataCapturerId">
-    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
-    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Patient">
-        <PropertyRef Name="DataCapturerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Login">
-    <Key>
-      <PropertyRef Name="LoginId" />
-    </Key>
-    <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="IsLogin" Type="Boolean" Nullable="false" />
-    <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="Login" ToRole="User" />
-  </EntityType>
   <Association Name="FK_Logins_UserId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
     <End Type="MyDentDBModel.Login" Role="Login" Multiplicity="*" />
@@ -218,6 +208,18 @@
       </Principal>
       <Dependent Role="Login">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patients_DataCapturerId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="DataCapturerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

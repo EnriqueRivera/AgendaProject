@@ -38,6 +38,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Logins">
+      <EntityTypeMapping TypeName="MyDentDBModel.Login">
+        <MappingFragment StoreEntitySet="Logins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+          <ScalarProperty Name="IsLogin" ColumnName="IsLogin" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Logs">
       <EntityTypeMapping TypeName="MyDentDBModel.Log">
         <MappingFragment StoreEntitySet="Logs">
@@ -76,21 +86,13 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="MyDentDBModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Logins">
-      <EntityTypeMapping TypeName="MyDentDBModel.Login">
-        <MappingFragment StoreEntitySet="Logins">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
-          <ScalarProperty Name="IsLogin" ColumnName="IsLogin" />
-          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

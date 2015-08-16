@@ -18,19 +18,21 @@ namespace Model
         {
             this.Events = new HashSet<Event>();
             this.EventStatusChanges = new HashSet<EventStatusChanx>();
-            this.Patients = new HashSet<Patient>();
             this.Logins = new HashSet<Login>();
+            this.Patients = new HashSet<Patient>();
         }
     
         public int UserId { get; set; }
+        public int AssignedUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
-        public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
+        public virtual ICollection<Patient> Patients { get; set; }
     }
 }

@@ -23,8 +23,10 @@ namespace MyDentApplication
 	{
         private Model.User _userLoggedIn;
         private AgendaWindow _agendaWindow;
+        private ManageUsersWindow _manageUsersWindow;
         private FinishedEventsReminderModal _finishedEventsReminderModal;
         private bool _stopCheckEventStatusThread = false;
+        private int _timeToWait = (1000 * 60) * 15;
         private Thread _checkEventStatusThread;
         delegate void RepaintSchedulerFromAnotherThreadDelegate(List<DateTime> datesUpdates);
 
@@ -37,7 +39,6 @@ namespace MyDentApplication
             _checkEventStatusThread = new Thread(DoWork);
             _checkEventStatusThread.SetApartmentState(ApartmentState.STA);
             _checkEventStatusThread.IsBackground = true;
-            _checkEventStatusThread.Name = "CheckEventStatusThread";
             _checkEventStatusThread.Start();
 		}
 
@@ -50,14 +51,12 @@ namespace MyDentApplication
                                                     .OrderBy(e => e.EndEvent)
                                                     .ToList();
 
-                DateTime timeBeforeOpenWindow = DateTime.Now;
                 if (finishedEvents != null && finishedEvents.Count > 0)
                 {
                     _finishedEventsReminderModal = new FinishedEventsReminderModal(finishedEvents, _userLoggedIn);
                     _finishedEventsReminderModal.ShowDialog();
                     _finishedEventsReminderModal = null;
                 }
-                DateTime timeAfterOpenWindow = DateTime.Now;
 
                 List<DateTime> datesUpdated = finishedEvents
                                                 .Where(fe => fe.IsCompleted)
@@ -69,19 +68,8 @@ namespace MyDentApplication
                     RepaintSchedulerFromAnotherThread(datesUpdated);
                 }
 
-                Thread.Sleep((1000 * 60) * 15); //15 min   
+                Thread.Sleep(_timeToWait);
             }
-        }
-
-        private void btnOpenAgenda_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (_agendaWindow == null)
-            {
-                _agendaWindow = new AgendaWindow(_userLoggedIn);
-            }
-
-            _agendaWindow.Show();
-            _agendaWindow.WindowState = System.Windows.WindowState.Maximized;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -105,6 +93,7 @@ namespace MyDentApplication
             RegisterLoginAction(false, _userLoggedIn.UserId);
 
             CloseWindow(_agendaWindow);
+            CloseWindow(_manageUsersWindow);
             CloseWindowInAnotherThread(_finishedEventsReminderModal);
 
             _stopCheckEventStatusThread = true;
@@ -161,6 +150,45 @@ namespace MyDentApplication
                     windowToClose.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(windowToClose.Close));
                 }
             }
+        }
+
+        private void btnChangePassword_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            new ChangePasswordModal(_userLoggedIn).ShowDialog();
+        }
+
+        private void btnManageUsers_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageUsersWindow == null)
+            {
+                _manageUsersWindow = new ManageUsersWindow(_userLoggedIn);
+                _manageUsersWindow.Closed += ManageUsersWindow_Closed;
+            }
+
+            _manageUsersWindow.Show();
+            _manageUsersWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnOpenAgenda_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_agendaWindow == null)
+            {
+                _agendaWindow = new AgendaWindow(_userLoggedIn);
+                _agendaWindow.Closed += AgendaWindow_Closed;
+            }
+
+            _agendaWindow.Show();
+            _agendaWindow.WindowState = WindowState.Normal;
+        }
+
+        void AgendaWindow_Closed(object sender, EventArgs e)
+        {
+            _agendaWindow = null;
+        }
+
+        void ManageUsersWindow_Closed(object sender, EventArgs e)
+        {
+            _manageUsersWindow = null;
         }
 	}
 }

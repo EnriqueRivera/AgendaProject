@@ -139,7 +139,7 @@ namespace Model
             catch (Exception e)
             {
                 AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
-                return null;
+                return Enumerable.Empty<T>().AsQueryable();
             }
         }
 
@@ -153,7 +153,7 @@ namespace Model
             catch (Exception e)
             {
                 AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
-                return null;
+                return Enumerable.Empty<T>().AsQueryable();
             }
         }
 
