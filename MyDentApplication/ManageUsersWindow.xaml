@@ -9,7 +9,8 @@
 	<Grid x:Name="LayoutRoot">
 		<DataGrid x:Name="dgUsers" Margin="10,10,12.917,60" IsReadOnly="True" CanUserSortColumns="True"
 			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
-			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" TabIndex="1">
+			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+			TabIndex="1">
 			<DataGrid.Columns>
                 <DataGridTextColumn Header="No. de usuario" Binding="{Binding AssignedUserId}" Width="0.07*"/>
                 <DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.15*" />

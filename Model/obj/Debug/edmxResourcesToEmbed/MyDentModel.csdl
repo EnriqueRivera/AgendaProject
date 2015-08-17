@@ -37,6 +37,11 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
+    <EntitySet Name="Reminders" EntityType="MyDentDBModel.Reminder" />
+    <AssociationSet Name="FK_Reminders_SeenBy" Association="MyDentDBModel.FK_Reminders_SeenBy">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Reminder" EntitySet="Reminders" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -138,6 +143,7 @@
     <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="User" ToRole="EventStatusChanx" />
     <NavigationProperty Name="Logins" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="User" ToRole="Login" />
     <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
+    <NavigationProperty Name="Reminders" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="User" ToRole="Reminder" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -220,6 +226,32 @@
       </Principal>
       <Dependent Role="Patient">
         <PropertyRef Name="DataCapturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Reminder">
+    <Key>
+      <PropertyRef Name="ReminderId" />
+    </Key>
+    <Property Name="ReminderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AppearDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RequireAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="Seen" Type="Boolean" Nullable="false" />
+    <Property Name="SeenBy" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="Reminder" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Reminders_SeenBy">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.Reminder" Role="Reminder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Reminder">
+        <PropertyRef Name="SeenBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

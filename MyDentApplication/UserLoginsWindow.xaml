@@ -9,7 +9,6 @@
 
 	<Window.Resources>
 		<local:LoginActionAndTimeValueConverter x:Key="LoginActionAndTimeValueConverter" />
-		<local:EventSatusAndDateValueConverter x:Key="EventSatusAndDateValueConverter" />
 	</Window.Resources>
 
 	<Grid x:Name="LayoutRoot">
@@ -24,7 +23,7 @@
 						</MultiBinding>
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
-				<DataGridTextColumn Header="Fecha" Width="0.1*">
+				<DataGridTextColumn Header="Hora" Width="0.1*">
 					<DataGridTextColumn.Binding>
 						<MultiBinding Converter="{StaticResource LoginActionAndTimeValueConverter}">
 							<Binding Path="LoginDate"/>

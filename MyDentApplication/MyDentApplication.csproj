@@ -85,6 +85,9 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AddEditRemindersModal.xaml.cs">
+      <DependentUpon>AddEditRemindersModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddEditUsersModal.xaml.cs">
       <DependentUpon>AddEditUsersModal.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManageRemindersWindow.xaml.cs">
+      <DependentUpon>ManageRemindersWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManageUsersWindow.xaml.cs">
       <DependentUpon>ManageUsersWindow.xaml</DependentUpon>
     </Compile>
@@ -115,6 +121,13 @@
     <Compile Include="UserLoginsWindow.xaml.cs">
       <DependentUpon>UserLoginsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewReminderModal.xaml.cs">
+      <DependentUpon>ViewReminderModal.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddEditRemindersModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddEditUsersModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -162,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ManageRemindersWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ManageUsersWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -175,6 +192,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserLoginsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewReminderModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -67,6 +67,19 @@
     <Property Name="DataCapturerId" Type="int" Nullable="false" />
     <Property Name="CaptureDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Reminders">
+    <Key>
+      <PropertyRef Name="ReminderId" />
+    </Key>
+    <Property Name="ReminderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject" Type="varchar(max)" Nullable="false" />
+    <Property Name="Message" Type="varchar(max)" Nullable="false" />
+    <Property Name="AppearDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RequireAdmin" Type="bit" Nullable="false" />
+    <Property Name="Seen" Type="bit" Nullable="false" />
+    <Property Name="SeenBy" Type="int" />
+  </EntityType>
   <EntityType Name="Treatments">
     <Key>
       <PropertyRef Name="TreatmentId" />
@@ -171,6 +184,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Reminders_SeenBy">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Reminders" Type="Self.Reminders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Reminders">
+        <PropertyRef Name="SeenBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -178,6 +203,7 @@
     <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reminders" EntityType="Self.Reminders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
@@ -207,6 +233,10 @@
     <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
       <End Role="Users" EntitySet="Users" />
       <End Role="Patients" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reminders_SeenBy" Association="Self.FK_Reminders_SeenBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reminders" EntitySet="Reminders" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

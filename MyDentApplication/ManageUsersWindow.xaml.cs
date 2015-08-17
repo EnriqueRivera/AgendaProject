@@ -19,14 +19,12 @@ namespace MyDentApplication
 	/// </summary>
 	public partial class ManageUsersWindow : Window
 	{
-        private Model.User _userLoggedIn;
         private Controllers.CustomViewModel<Model.User> _usersViewModel;
 
-        public ManageUsersWindow(Model.User userLoggedIn)
+        public ManageUsersWindow()
 		{
 			this.InitializeComponent();
 
-            _userLoggedIn = userLoggedIn;
             UpdateGrid();
 		}
 

@@ -20,6 +20,8 @@
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Logins_UserId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
+        <EntityTypeShape EntityType="MyDentDBModel.Reminder" Width="1.5" PointX="3" PointY="15.125" />
+        <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

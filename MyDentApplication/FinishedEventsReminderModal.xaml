@@ -9,8 +9,7 @@
 
 	<Grid x:Name="LayoutRoot">
 		<ScrollViewer Margin="10,47.521,10,10">
-            <StackPanel x:Name="spFinishedEvents">
-            </StackPanel>
+			<StackPanel x:Name="spFinishedEvents"/>
 		</ScrollViewer>
 		<Label Content="Las siguientes citas ya han finalizado, es necesario que indique si asistió o no el paciente:" Height="32.521" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="13.333"/>
 	</Grid>

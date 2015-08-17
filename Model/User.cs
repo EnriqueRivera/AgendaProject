@@ -20,6 +20,7 @@ namespace Model
             this.EventStatusChanges = new HashSet<EventStatusChanx>();
             this.Logins = new HashSet<Login>();
             this.Patients = new HashSet<Patient>();
+            this.Reminders = new HashSet<Reminder>();
         }
     
         public int UserId { get; set; }
@@ -34,5 +35,6 @@ namespace Model
         public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
+        public virtual ICollection<Reminder> Reminders { get; set; }
     }
 }

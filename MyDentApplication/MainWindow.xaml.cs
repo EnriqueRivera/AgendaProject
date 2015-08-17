@@ -19,11 +19,12 @@ namespace MyDentApplication
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
-	{
+    public partial class MainWindow : Window
+    {
         private Model.User _userLoggedIn;
         private AgendaWindow _agendaWindow;
         private ManageUsersWindow _manageUsersWindow;
+        private ManageRemindersWindow _manageRemindersWindow;
         private FinishedEventsReminderModal _finishedEventsReminderModal;
         private bool _stopCheckEventStatusThread = false;
         private int _timeToWait = (1000 * 60) * 15;
@@ -31,8 +32,8 @@ namespace MyDentApplication
         delegate void RepaintSchedulerFromAnotherThreadDelegate(List<DateTime> datesUpdates);
 
         public MainWindow(Model.User userLoggedIn)
-		{
-			this.InitializeComponent();
+        {
+            this.InitializeComponent();
 
             _userLoggedIn = userLoggedIn;
             HideButtonsForNonAdminUsers();
@@ -43,7 +44,7 @@ namespace MyDentApplication
             _checkEventStatusThread.SetApartmentState(ApartmentState.STA);
             _checkEventStatusThread.IsBackground = true;
             _checkEventStatusThread.Start();
-		}
+        }
 
         private void HideButtonsForNonAdminUsers()
         {
@@ -105,6 +106,7 @@ namespace MyDentApplication
 
             CloseWindow(_agendaWindow);
             CloseWindow(_manageUsersWindow);
+            CloseWindow(_manageRemindersWindow);
             CloseWindowInAnotherThread(_finishedEventsReminderModal);
 
             _stopCheckEventStatusThread = true;
@@ -133,7 +135,6 @@ namespace MyDentApplication
             }
         }
 
-
         void RepaintSchedulerFromAnotherThread(List<DateTime> datesUpdates)
         {
             if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
@@ -141,7 +142,7 @@ namespace MyDentApplication
                 Dispatcher.Invoke(new RepaintSchedulerFromAnotherThreadDelegate(RepaintSchedulerFromAnotherThread), datesUpdates);
                 return;
             }
-            
+
             if (_agendaWindow != null)
             {
                 _agendaWindow.RepaintSchedulerFromAnotherThread(datesUpdates);
@@ -172,8 +173,8 @@ namespace MyDentApplication
         {
             if (_manageUsersWindow == null)
             {
-                _manageUsersWindow = new ManageUsersWindow(_userLoggedIn);
-                _manageUsersWindow.Closed += ManageUsersWindow_Closed;
+                _manageUsersWindow = new ManageUsersWindow();
+                _manageUsersWindow.Closed += Window_Closed;
             }
 
             _manageUsersWindow.Show();
@@ -185,26 +186,44 @@ namespace MyDentApplication
             if (_agendaWindow == null)
             {
                 _agendaWindow = new AgendaWindow(_userLoggedIn);
-                _agendaWindow.Closed += AgendaWindow_Closed;
+                _agendaWindow.Closed += Window_Closed;
             }
 
             _agendaWindow.Show();
             _agendaWindow.WindowState = _agendaWindow.WindowState == WindowState.Minimized ? WindowState.Normal : WindowState.Maximized;
         }
 
-        void AgendaWindow_Closed(object sender, EventArgs e)
+        private void btnManageReminders_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _agendaWindow = null;
+            if (_manageRemindersWindow == null)
+            {
+                _manageRemindersWindow = new ManageRemindersWindow();
+                _manageRemindersWindow.Closed += Window_Closed;
+            }
+
+            _manageRemindersWindow.Show();
+            _manageRemindersWindow.WindowState = WindowState.Normal;
         }
 
-        void ManageUsersWindow_Closed(object sender, EventArgs e)
+        void Window_Closed(object sender, EventArgs e)
         {
-            _manageUsersWindow = null;
+            if (sender is AgendaWindow)
+            {
+                _agendaWindow = null;
+            }
+            else if (sender is ManageUsersWindow)
+            {
+                _manageUsersWindow = null;
+            }
+            else if (sender is ManageRemindersWindow)
+            {
+                _manageRemindersWindow = null;
+            }
         }
 
         private void btnLogOut_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	this.Close();
+            this.Close();
         }
-	}
+    }
 }

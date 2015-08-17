@@ -9,9 +9,10 @@
 	<Grid x:Name="LayoutRoot">
 		<Button x:Name="btnOpenAgenda" Content="Abrir agenda" HorizontalAlignment="Left" Height="63" Margin="510.5,10,0,0" VerticalAlignment="Top" Width="91.5" Click="btnOpenAgenda_Click" Cursor="Hand"/>
 		<Button x:Name="btnChangePassword" Content="Cambiar contraseña" HorizontalAlignment="Left" Height="58.5" Margin="15.5,363.5,0,0" VerticalAlignment="Top" Width="124.5" Click="btnChangePassword_Click" Cursor="Hand"/>
-		<Button x:Name="btnManageUsers" Content="Administrar usuarios" HorizontalAlignment="Left" Height="63" Margin="10,10,0,0" VerticalAlignment="Top" Width="130" Cursor="Hand" Click="btnManageUsers_Click"/>
+		<Button x:Name="btnManageUsers" Content="Administrar usuarios" HorizontalAlignment="Left" Height="63" Margin="10,10,0,0" VerticalAlignment="Top" Width="157" Cursor="Hand" Click="btnManageUsers_Click"/>
 		<Button x:Name="btnLogOut" Content="Cerrar sesión" HorizontalAlignment="Left" Height="56.5" Margin="490.5,330.28,0,0" VerticalAlignment="Top" Width="111.5" Click="btnLogOut_Click" Cursor="Hand"/>
 		<Label x:Name="lblLoggedInCaption" Content="Sesión iniciada como:" Margin="0,0,189.5,30.001" HorizontalAlignment="Right" Width="123.5" Height="24" VerticalAlignment="Bottom"/>
 		<Label x:Name="lblLoggedIn" Content="" Margin="0,0,30,28" FontStyle="Italic" HorizontalAlignment="Right" Width="159.5" Height="26" VerticalAlignment="Bottom"/>
+		<Button x:Name="btnManageReminders" Content="Administrar recordatorios" HorizontalAlignment="Left" Height="63" Margin="10,92.5,0,0" VerticalAlignment="Top" Width="157" Cursor="Hand" Click="btnManageReminders_Click"/>
 	</Grid>
 </Window>
