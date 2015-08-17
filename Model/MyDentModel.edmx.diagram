@@ -6,13 +6,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1">
         <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="5.25" PointY="7.5" />
-        <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="7.5" PointY="6.875" />
-        <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="7.5" PointY="6.25" />
+        <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="12.125" />
         <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="10.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="3" PointY="7.5" />
-        <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.Reminder" Width="1.5" PointX="3" PointY="14.875" />
+        <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="3" PointY="8" />
+        <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="6.625" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_EventCapturerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_PatientId" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_TreatmentId" />
@@ -20,7 +21,6 @@
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Logins_UserId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
-        <EntityTypeShape EntityType="MyDentDBModel.Reminder" Width="1.5" PointX="3" PointY="15.125" />
         <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
       </Diagram>
     </edmx:Diagrams>

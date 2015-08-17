@@ -32,8 +32,8 @@
 				</DataGridTextColumn>
 			</DataGrid.Columns>
 		</DataGrid>
-		<DatePicker x:Name="dpUserLogins" Height="27" Margin="0,0,10,375" VerticalAlignment="Bottom" SelectedDateChanged="dpUserLogins_SelectedDateChanged" HorizontalAlignment="Right" Width="198"/>
-		<Label Content="Seleccione un día:" HorizontalAlignment="Right" Height="27" Margin="0,0,99,402" VerticalAlignment="Bottom" Width="109"/>
+		<DatePicker x:Name="dpUserLogins" Height="27" Margin="0,0,10,375" VerticalAlignment="Bottom" SelectedDateChanged="dpUserLogins_SelectedDateChanged" HorizontalAlignment="Right" Width="265" SelectedDateFormat="Long"/>
+		<Label Content="Seleccione un día:" HorizontalAlignment="Right" Height="27" Margin="0,0,166,402" VerticalAlignment="Bottom" Width="109"/>
 		<Label x:Name="lblUserFirstNameCaption" Content="Nombre(s):" Margin="31.134,44.926,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="71" Height="25" VerticalAlignment="Top"/>
 		<TextBlock x:Name="lblUserFirstName" Text="" HorizontalAlignment="Left" Height="20" Margin="107.134,49.926,0,0" VerticalAlignment="Top" Width="242.866" FontWeight="Normal" FontStyle="Italic"/>
 		<Label x:Name="lblUserLastNameCaption" Content="Apellido(s):" Margin="32.612,69.926,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="69.522" Height="25" VerticalAlignment="Top"/>

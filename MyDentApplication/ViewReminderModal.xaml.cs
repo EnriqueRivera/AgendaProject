@@ -29,7 +29,6 @@ namespace MyDentApplication
 
         private void LoadReminderInfo()
         {
-            txtReminderSubject.Text = _reminderToView.Subject;
             txtReminderMessage.Text = _reminderToView.Message;
         }
 	}

@@ -74,6 +74,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Reminders">
+      <EntityTypeMapping TypeName="MyDentDBModel.Reminder">
+        <MappingFragment StoreEntitySet="Reminders">
+          <ScalarProperty Name="SeenBy" ColumnName="SeenBy" />
+          <ScalarProperty Name="Seen" ColumnName="Seen" />
+          <ScalarProperty Name="RequireAdmin" ColumnName="RequireAdmin" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="AppearDate" ColumnName="AppearDate" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="ReminderId" ColumnName="ReminderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Treatments">
       <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
         <MappingFragment StoreEntitySet="Treatments">
@@ -93,20 +106,6 @@
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Reminders">
-      <EntityTypeMapping TypeName="MyDentDBModel.Reminder">
-        <MappingFragment StoreEntitySet="Reminders">
-          <ScalarProperty Name="SeenBy" ColumnName="SeenBy" />
-          <ScalarProperty Name="Seen" ColumnName="Seen" />
-          <ScalarProperty Name="RequireAdmin" ColumnName="RequireAdmin" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="AppearDate" ColumnName="AppearDate" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="ReminderId" ColumnName="ReminderId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

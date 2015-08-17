@@ -15,7 +15,6 @@ namespace Model
     public partial class Reminder
     {
         public int ReminderId { get; set; }
-        public string Subject { get; set; }
         public string Message { get; set; }
         public System.DateTime AppearDate { get; set; }
         public System.DateTime CreatedDate { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +29,7 @@ namespace MyDentApplication
 
         private void UpdateGrid()
         {
-            _remindersViewModel = new Controllers.CustomViewModel<Model.Reminder>(u => true, "AppearDate", "asc");
+            _remindersViewModel = new Controllers.CustomViewModel<Model.Reminder>(u => EntityFunctions.TruncateTime(u.AppearDate) == EntityFunctions.TruncateTime(dpReminders.SelectedDate.Value), "AppearDate", "asc");
             this.DataContext = _remindersViewModel;
         }
 

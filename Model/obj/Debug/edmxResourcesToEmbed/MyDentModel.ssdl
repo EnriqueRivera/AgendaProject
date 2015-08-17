@@ -72,7 +72,6 @@
       <PropertyRef Name="ReminderId" />
     </Key>
     <Property Name="ReminderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Subject" Type="varchar(max)" Nullable="false" />
     <Property Name="Message" Type="varchar(max)" Nullable="false" />
     <Property Name="AppearDate" Type="datetime" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />

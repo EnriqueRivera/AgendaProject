@@ -7,6 +7,7 @@
     <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
     <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
     <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
+    <EntitySet Name="Reminders" EntityType="MyDentDBModel.Reminder" />
     <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
     <EntitySet Name="Users" EntityType="MyDentDBModel.User" />
     <AssociationSet Name="FK_Events_EventCapturerId" Association="MyDentDBModel.FK_Events_EventCapturerId">
@@ -37,7 +38,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
-    <EntitySet Name="Reminders" EntityType="MyDentDBModel.Reminder" />
     <AssociationSet Name="FK_Reminders_SeenBy" Association="MyDentDBModel.FK_Reminders_SeenBy">
       <End Role="User" EntitySet="Users" />
       <End Role="Reminder" EntitySet="Reminders" />
@@ -118,6 +118,19 @@
     <Property Name="CaptureDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
     <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Reminder">
+    <Key>
+      <PropertyRef Name="ReminderId" />
+    </Key>
+    <Property Name="ReminderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AppearDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RequireAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="Seen" Type="Boolean" Nullable="false" />
+    <Property Name="SeenBy" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="Reminder" ToRole="User" />
   </EntityType>
   <EntityType Name="Treatment">
     <Key>
@@ -229,20 +242,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Reminder">
-    <Key>
-      <PropertyRef Name="ReminderId" />
-    </Key>
-    <Property Name="ReminderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Subject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="AppearDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="RequireAdmin" Type="Boolean" Nullable="false" />
-    <Property Name="Seen" Type="Boolean" Nullable="false" />
-    <Property Name="SeenBy" Type="Int32" />
-    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="Reminder" ToRole="User" />
-  </EntityType>
   <Association Name="FK_Reminders_SeenBy">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="0..1" />
     <End Type="MyDentDBModel.Reminder" Role="Reminder" Multiplicity="*" />

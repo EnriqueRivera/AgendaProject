@@ -5,20 +5,16 @@
 	x:Class="MyDentApplication.AddEditRemindersModal"
 	x:Name="Window"
 	Title="Crear recordatorio"
-	Width="350" Height="425" Icon="app_icon.ico" WindowStartupLocation="CenterScreen">
+	Width="355" Height="355" Icon="app_icon.ico" WindowStartupLocation="CenterScreen" MinWidth="355" MinHeight="355">
 
 	<Grid x:Name="LayoutRoot">
-		<Label x:Name="lblReminderSubject" Content="Asunto:" HorizontalAlignment="Left" Height="25.672" Margin="10,8.507,0,0" VerticalAlignment="Top" Width="53.408"/>
-		<Border BorderThickness="1" BorderBrush="Black" Margin="10,31.623,10,0" Height="36.97" VerticalAlignment="Top">
-			<TextBox x:Name="txtReminderSubject" Margin="0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
-		</Border>
-		<Label x:Name="lblReminderMessage" Content="Mensaje:" HorizontalAlignment="Left" Height="25.672" Margin="10,86.507,0,0" VerticalAlignment="Top" Width="60.408"/>
-		<Border BorderThickness="1" BorderBrush="Black" Margin="10,112.179,10,0" Height="96.328" VerticalAlignment="Top">
+		<Label x:Name="lblReminderMessage" Content="Mensaje:" HorizontalAlignment="Left" Height="25.672" Margin="10,10,0,0" VerticalAlignment="Top" Width="60.408"/>
+		<Border BorderThickness="1" BorderBrush="Black" Margin="10,40.672,10,0" Height="118.835" VerticalAlignment="Top">
 			<TextBox x:Name="txtReminderMessage" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
 		</Border>
-		<Label x:Name="lblReminderMessage_Copy" Content="Fecha y hora de aparición:" HorizontalAlignment="Left" Height="25.672" Margin="10,233.507,0,0" VerticalAlignment="Top" Width="149.741"/>
-		<xctk:DateTimePicker x:Name="dtpReminderAppearDate" Height="26" Margin="10,264.179,10,0" VerticalAlignment="Top" BorderBrush="Black" CultureInfo="es-MX"/>
-		<CheckBox x:Name="chkRequireAdmin" Content="Requiere aprobación" HorizontalAlignment="Left" Margin="11,309.507,0,0" VerticalAlignment="Top"/>
+		<Label x:Name="lblReminderMessage_Copy" Content="Fecha y hora de aparición:" HorizontalAlignment="Left" Height="25.672" Margin="11,176.507,0,0" VerticalAlignment="Top" Width="149.741"/>
+		<xctk:DateTimePicker x:Name="dtpReminderAppearDate" Height="26" Margin="10,207.179,10,0" VerticalAlignment="Top" BorderBrush="Black" CultureInfo="es-MX"/>
+		<CheckBox x:Name="chkRequireAdmin" Content="Requiere aprobación" HorizontalAlignment="Left" Margin="11,253.507,0,0" VerticalAlignment="Top"/>
 		<Button x:Name="btnAddUpdateReminder" Content="Agregar" Margin="0,0,106,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="91" Click="btnAddUpdateReminder_Click"/>
 		<Button x:Name="btnCancel" Content="Cancelar" Margin="0,0,10,10" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="91" Click="btnCancel_Click"/>
 	</Grid>
