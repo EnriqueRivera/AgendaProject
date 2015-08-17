@@ -20,19 +20,19 @@ namespace MyDentApplication
 	public partial class ManageUsersWindow : Window
 	{
         private Model.User _userLoggedIn;
-        private UsersViewModel _usersViewModel;
+        private Controllers.CustomViewModel<Model.User> _usersViewModel;
 
         public ManageUsersWindow(Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
             _userLoggedIn = userLoggedIn;
-            UpdateGridUsers();
+            UpdateGrid();
 		}
 
-        private void UpdateGridUsers()
+        private void UpdateGrid()
         {
-            _usersViewModel = new UsersViewModel();
+            _usersViewModel = new Controllers.CustomViewModel<Model.User>(u => u.IsDeleted == false, "AssignedUserId", "asc");
             this.DataContext = _usersViewModel;
         }
 
@@ -61,7 +61,7 @@ namespace MyDentApplication
 
                 if (Controllers.BusinessController.Instance.Update<Model.User>(userSelected))
                 {
-                    UpdateGridUsers();
+                    UpdateGrid();
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace MyDentApplication
         private void btnAddUser_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             new AddEditUsersModal(null).ShowDialog();
-            UpdateGridUsers();
+            UpdateGrid();
         }
 
         private void btnEditUser_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -87,22 +87,21 @@ namespace MyDentApplication
             else
             {
                 new AddEditUsersModal(userSelected).ShowDialog();
-                UpdateGridUsers();
+                UpdateGrid();
             }
         }
 
-        public class UsersViewModel
+        private void btnUserLogins_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            private ObservableCollection<Model.User> _allUsers = new ObservableCollection<Model.User>();
+            Model.User userSelected = dgUsers.SelectedItem == null ? null : dgUsers.SelectedItem as Model.User;
 
-            public UsersViewModel()
+            if (userSelected == null)
             {
-                _allUsers = new ObservableCollection<Model.User>(Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.IsDeleted == false).ToList().ToList());
+                MessageBox.Show("Seleccione un usuario", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
-            public ObservableCollection<Model.User> ObservableUsers
+            else
             {
-                get { return _allUsers; }
+                new UserLoginsWindow(userSelected).ShowDialog();
             }
         }
 	}

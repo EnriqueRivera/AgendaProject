@@ -56,15 +56,7 @@ namespace WpfScheduler
         {
             get
             {
-                switch (EventStatus)
-                {
-                    case Controllers.EventStatus.CANCELED: return "Cancelada";
-                    case Controllers.EventStatus.COMPLETED: return "Completada";
-                    case Controllers.EventStatus.EXCEPTION: return "Excepción";
-                    case Controllers.EventStatus.PATIENT_SKIPS: return "Paciente no asisitó";
-                    case Controllers.EventStatus.PENDING: return "Sin concretar";
-                    default: return string.Empty;
-                }
+                return Controllers.Utils.EventStatusString(EventStatus);
             }
         }
     }

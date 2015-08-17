@@ -90,7 +90,7 @@ namespace MyDentApplication
 
         private bool AreValidFields(string userIdText, string userFirstName, string userLastName, string userPassword, string userRepeatPassword, out int userId)
         {
-            if (int.TryParse(userIdText, out userId) == false)
+            if (int.TryParse(userIdText, out userId) == false || userId < 1)
             {
                 MessageBox.Show("No. de usuario inválido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;

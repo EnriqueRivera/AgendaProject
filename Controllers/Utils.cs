@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +31,50 @@ namespace Controllers
             };
 
             return BusinessController.Instance.Add<Model.EventStatusChanx>(eventStatusChanged);
+        }
+
+        public static string EventStatusString(EventStatus es)
+        {
+            switch (es)
+            {
+                case EventStatus.CANCELED: return "Cancelada";
+                case EventStatus.COMPLETED: return "Completada";
+                case EventStatus.EXCEPTION: return "Excepción";
+                case EventStatus.PATIENT_SKIPS: return "Paciente no asisitó";
+                case EventStatus.PENDING: return "Sin concretar";
+                default: return string.Empty;
+            }
+        }
+    }
+
+    public class CustomViewModel<T> where T : class
+    {
+        private ObservableCollection<T> _allData = new ObservableCollection<T>();
+
+        public CustomViewModel(System.Linq.Expressions.Expression<Func<T, bool>> findBy, string sortBy, string sortDirection)
+        {
+            var param = Expression.Parameter(typeof(T), "item");
+            var sortExpression = Expression.Lambda<Func<T, object>>
+                                    (Expression.Convert(Expression.Property(param, sortBy), typeof(object)), param);
+
+            var allData = Controllers.BusinessController.Instance.FindBy<T>(findBy).ToList();
+
+            switch (sortDirection.ToLower())
+            {
+                case "asc":
+                    allData = allData.AsQueryable<T>().OrderBy<T, object>(sortExpression).ToList();
+                    break;
+                default:
+                    allData = allData.AsQueryable<T>().OrderByDescending<T, object>(sortExpression).ToList();
+                    break;
+            }
+
+            _allData = new ObservableCollection<T>(allData.ToList());
+        }
+
+        public ObservableCollection<T> ObservableData
+        {
+            get { return _allData; }
         }
     }
 

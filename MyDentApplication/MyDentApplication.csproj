@@ -91,6 +91,9 @@
     <Compile Include="ChangePasswordModal.xaml.cs">
       <DependentUpon>ChangePasswordModal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EventStatusChangesWindow.xaml.cs">
+      <DependentUpon>EventStatusChangesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FinishedEventsControl.xaml.cs">
       <DependentUpon>FinishedEventsControl.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,9 @@
     </Compile>
     <Compile Include="RequestAdminCredentialsModal.xaml.cs">
       <DependentUpon>RequestAdminCredentialsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserLoginsWindow.xaml.cs">
+      <DependentUpon>UserLoginsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AddEditUsersModal.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -136,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EventStatusChangesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="FinishedEventsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +171,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Simple Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserLoginsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

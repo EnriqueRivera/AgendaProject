@@ -26,7 +26,15 @@
 			</MenuItem>
 			<MenuItem Header="Paciente no asistió" Tag="PATIENT_SKIPS" Click="ContextMenuItem_Click">
 				<MenuItem.Icon>
-                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/cancelIcon.png"
+                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/CancelIcon.png"
+						Width="19"
+						Height="19" />
+                </MenuItem.Icon>
+			</MenuItem>
+			<Separator />
+			<MenuItem Header="Ver cambios de estado..." Tag="VIEW_EVENT_STATUS_CHANGES" Click="ContextMenuItem_Click">
+				<MenuItem.Icon>
+                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/ViewEventStatusChangesIcon.png"
 						Width="19"
 						Height="19" />
                 </MenuItem.Icon>

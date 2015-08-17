@@ -119,7 +119,7 @@ namespace MyDentApplication
             lblExpNo.ToolTip = lblExpNo.Text = e.EventInfo.Patient.PatientId.ToString();
             lblPacientName.ToolTip = lblPacientName.Text = e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
             lblCellPhone.ToolTip = lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
-            lblEventStartTime.ToolTip = lblEventStartTime.ToolTip = lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
+            lblHomePhone.ToolTip = lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
             lblEmail.ToolTip = lblEmail.Text = e.EventInfo.Patient.Email;
             lblEventStatus.ToolTip = lblEventStatus.Text = e.EventStatusString;
             lblEventCapturer.ToolTip = lblEventCapturer.Text = e.EventInfo.User.FirstName + " " + e.EventInfo.User.LastName;
@@ -132,7 +132,15 @@ namespace MyDentApplication
 
         private void scheduler_OnScheduleContextMenuEvent(object sender, WpfScheduler.Event e)
         {
-            bool? eventModified = ModifyEventStatus(e, (EventStatus)Enum.Parse(typeof(EventStatus), (sender as MenuItem).Tag.ToString(), true), _userLoggedIn.UserId);
+            string menuEventAction = (sender as MenuItem).Tag.ToString();
+
+            if (menuEventAction == "VIEW_EVENT_STATUS_CHANGES")
+	        {
+                new EventStatusChangesWindow(e).ShowDialog();
+	            return;
+	        }
+
+            bool? eventModified = ModifyEventStatus(e, (EventStatus)Enum.Parse(typeof(EventStatus), menuEventAction, true), _userLoggedIn.UserId);
             if (eventModified == true)
             {
                 scheduler.RepaintEvents();

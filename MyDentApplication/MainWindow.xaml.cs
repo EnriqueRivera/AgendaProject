@@ -35,12 +35,23 @@ namespace MyDentApplication
 			this.InitializeComponent();
 
             _userLoggedIn = userLoggedIn;
+            HideButtonsForNonAdminUsers();
+            lblLoggedIn.ToolTip = lblLoggedIn.Content = _userLoggedIn.FirstName + " " + _userLoggedIn.LastName;
+            lblLoggedIn.FontWeight = _userLoggedIn.IsAdmin ? FontWeights.Bold : lblLoggedIn.FontWeight;
 
             _checkEventStatusThread = new Thread(DoWork);
             _checkEventStatusThread.SetApartmentState(ApartmentState.STA);
             _checkEventStatusThread.IsBackground = true;
             _checkEventStatusThread.Start();
 		}
+
+        private void HideButtonsForNonAdminUsers()
+        {
+            if (_userLoggedIn.IsAdmin == false)
+            {
+                btnManageUsers.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
 
         public void DoWork()
         {
@@ -178,7 +189,7 @@ namespace MyDentApplication
             }
 
             _agendaWindow.Show();
-            _agendaWindow.WindowState = WindowState.Normal;
+            _agendaWindow.WindowState = _agendaWindow.WindowState == WindowState.Minimized ? WindowState.Normal : WindowState.Maximized;
         }
 
         void AgendaWindow_Closed(object sender, EventArgs e)
@@ -189,6 +200,11 @@ namespace MyDentApplication
         void ManageUsersWindow_Closed(object sender, EventArgs e)
         {
             _manageUsersWindow = null;
+        }
+
+        private void btnLogOut_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	this.Close();
         }
 	}
 }

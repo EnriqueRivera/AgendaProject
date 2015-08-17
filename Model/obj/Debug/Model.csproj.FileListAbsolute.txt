@@ -3,6 +3,6 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Debug\Model.pdb
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Debug\EntityFramework.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Debug\EntityFramework.xml
-C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Debug\Model.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Debug\Model.pdb
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

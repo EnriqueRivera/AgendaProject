@@ -109,8 +109,9 @@
   <ItemGroup>
     <Resource Include="Images\AddEventIcon.png" />
     <Resource Include="Images\CancelEventIcon.png" />
-    <Resource Include="Images\cancelIcon.png" />
-    <Resource Include="Images\okIcon.ico" />
+    <Resource Include="Images\CancelIcon.png" />
+    <Resource Include="Images\OkIcon.ico" />
+    <Resource Include="Images\ViewEventStatusChangesIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controllers\Controllers.csproj">

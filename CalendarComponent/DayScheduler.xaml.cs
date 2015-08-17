@@ -322,6 +322,19 @@ namespace WpfScheduler
                     SelectEvent(sender as EventUserControl);
 
                     ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
+
+                    if (UserLoggedIn.IsAdmin == false)
+                    {
+                        foreach (var item in cm.Items)
+                        {
+                            if (item is MenuItem && (item as MenuItem).Tag.ToString() == "VIEW_EVENT_STATUS_CHANGES")
+                            {
+                                cm.Items.Remove(item as MenuItem);
+                                break;
+                            }
+                        }
+                    }
+
                     cm.Tag = e;
                     cm.IsOpen = (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted == false) || UserLoggedIn.IsAdmin;
                 });

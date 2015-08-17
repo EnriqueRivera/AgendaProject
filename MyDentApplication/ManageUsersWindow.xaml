@@ -7,8 +7,8 @@
 	Width="652" Height="496" Icon="app_icon.ico" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
-		<DataGrid x:Name="dgUsers" Margin="10,10,12.917,60" IsReadOnly="True"
-			ItemsSource="{Binding ObservableUsers}" AutoGenerateColumns="False"
+		<DataGrid x:Name="dgUsers" Margin="10,10,12.917,60" IsReadOnly="True" CanUserSortColumns="True"
+			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
 			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" TabIndex="1">
 			<DataGrid.Columns>
                 <DataGridTextColumn Header="No. de usuario" Binding="{Binding AssignedUserId}" Width="0.07*"/>
@@ -16,8 +16,9 @@
                 <DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.15*" />
             </DataGrid.Columns>
 		</DataGrid>
-		<Button x:Name="btnDeleteUser" Content="Eliminar" Margin="0,0,13.25,14.469" Click="btnDeleteUser_Click" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="103"/>
-		<Button x:Name="btnEditUser" Content="Editar" Margin="0,0,130.25,13.999" Cursor="Hand" Click="btnEditUser_Click" TabIndex="3" HorizontalAlignment="Right" Width="103" Height="29" VerticalAlignment="Bottom"/>
-		<Button x:Name="btnAddUser" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,248.25,13.999" Width="103" Cursor="Hand" Click="btnAddUser_Click" TabIndex="2" Height="29" VerticalAlignment="Bottom"/>
+		<Button x:Name="btnDeleteUser" Content="Eliminar" Margin="0,0,13.25,14.469" Click="btnDeleteUser_Click" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60"/>
+		<Button x:Name="btnEditUser" Content="Editar" Margin="0,0,78.25,14.469" Cursor="Hand" Click="btnEditUser_Click" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom"/>
+		<Button x:Name="btnAddUser" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,143.25,14.469" Width="60" Cursor="Hand" Click="btnAddUser_Click" TabIndex="2" Height="29" VerticalAlignment="Bottom"/>
+		<Button x:Name="btnUserLogins" Content="Inicios y cierres de sesión" Margin="10,0,0,14.469" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnUserLogins_Click" HorizontalAlignment="Left" Width="156.333"/>
 	</Grid>
 </Window>
