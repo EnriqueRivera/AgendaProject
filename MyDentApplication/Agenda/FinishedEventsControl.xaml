@@ -1,0 +1,45 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="MyDentApplication.FinishedEventsControl"
+	x:Name="UserControl" Height="256.057" Width="646.966" BorderThickness="1" BorderBrush="Black">
+
+	<Grid x:Name="lrFinishedEvents">
+		<Grid x:Name="gridBackground" Opacity="0.6"/>
+		<GroupBox x:Name="gbEventInfo" Header="Información de la cita" Margin="10,0,0,10" HorizontalAlignment="Left" Width="251" FontWeight="Bold" BorderThickness="1.5" BorderBrush="Black" >
+			<Grid x:Name="gridEventInfo" Margin="0,0,-2,0">
+				<Label x:Name="lblEventStartTimeCaption" Content="Inició:" Margin="19.388,72,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventStartTime" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,77,0,0" VerticalAlignment="Top" Width="165.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventEndTimeCaption" Content="Terminó:" Margin="5,97,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.522" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventEndTime" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,102,0,0" VerticalAlignment="Top" Width="165.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventStatusCaption" Content="Estado:" Margin="10,122,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.522" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventStatus" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,127,0,0" VerticalAlignment="Top" Width="165.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventCapturerCaption" Content="Usuario que registró la cita:" Margin="10,149,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="153.522" Height="27" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventCapturer" Text="" HorizontalAlignment="Left" Height="20" Margin="10,178,0,0" VerticalAlignment="Top" Width="221" FontWeight="Normal" FontStyle="Italic" TextAlignment="Center"/>
+				<Label x:Name="lblEventIdCaption" Content="Cita #" Margin="19.388,22,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventId" Text="" HorizontalAlignment="Left" Height="20" Margin="65.522,27,0,0" VerticalAlignment="Top" Width="165.478" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblEventDateCaption" Content="Día:" Margin="31.388,47,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="29.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEventDate" HorizontalAlignment="Left" Height="20" Margin="65.522,52,0,0" VerticalAlignment="Top" Width="165.478" FontWeight="Normal" FontStyle="Italic"/>
+			</Grid>
+		</GroupBox>
+		<GroupBox x:Name="gbPacientInfo" Header="Información del paciente" Margin="266,0,0,10" FontWeight="Bold" BorderThickness="1.5" HorizontalAlignment="Left" Width="231" BorderBrush="Black">
+			<Grid x:Name="gridPacientInfo" VerticalAlignment="Center" Height="216.115" Margin="0,1.991,15,-0.009"><Label x:Name="lblExpNoCaption" Content="Exp. No:" Margin="35.612,-1,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="55.522"/>
+				<TextBlock x:Name="lblExpNo" Text="" Height="20" Margin="96.134,4,0,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
+				<Label x:Name="lblCellPhoneCaption" Content="Teléfono celular:" Margin="0,74,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="97.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblCellPhone" Text="" Height="20" Margin="0,99,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+				<Label x:Name="lblHomePhoneCaption" Content="Teléfono de casa:" Margin="0,121,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="101.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblHomePhone" Text="" Height="20" Margin="0,146,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+				<Label x:Name="lblEmailCaption" Content="Email:" Margin="0,168,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblEmail" Text="" Height="20" Margin="0,193,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+				<Label x:Name="lblPacientNameCaption" Content="Nombre completo:" Margin="0,27,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="111" Height="25" VerticalAlignment="Top"/>
+				<TextBlock x:Name="lblPacientName" Text="" Height="20" Margin="0,52,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+			</Grid>
+		</GroupBox>
+        <Button x:Name="btnPatientNotSkips" Content="Asistió el paciente" HorizontalAlignment="Left" Height="35.549" Margin="509,56.451,0,0" VerticalAlignment="Top" Width="127.966" Cursor="Hand" Click="changeStatusEvent_Click" Tag="COMPLETED"/>
+        <Button x:Name="btnPatientSkips" Content="No asistió el paciente" HorizontalAlignment="Left" Height="35.549" Margin="509,108.451,0,0" VerticalAlignment="Top" Width="127.966" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="changeStatusEvent_Click" Tag="PATIENT_SKIPS"/>
+        <Button x:Name="btnPatientCancel" Content="Paciente canceló" HorizontalAlignment="Left" Height="35.549" Margin="509,159.451,0,0" VerticalAlignment="Top" Width="127.966" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="changeStatusEvent_Click" Tag="CANCELED"/>
+	</Grid>
+</UserControl>

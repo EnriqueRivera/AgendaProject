@@ -82,120 +82,134 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Compile Include="AddEditRemindersModal.xaml.cs">
+    <Compile Include="Reminders\AddEditRemindersModal.xaml.cs">
       <DependentUpon>AddEditRemindersModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddEditUsersModal.xaml.cs">
+    <Compile Include="Reminders\ShowPendingReminderModal.xaml.cs">
+      <DependentUpon>ShowPendingReminderModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reminders\ViewReminderControl.xaml.cs">
+      <DependentUpon>ViewReminderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users\AddEditUsersModal.xaml.cs">
       <DependentUpon>AddEditUsersModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ChangePasswordModal.xaml.cs">
+    <Compile Include="Users\ChangePasswordModal.xaml.cs">
       <DependentUpon>ChangePasswordModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EventStatusChangesWindow.xaml.cs">
+    <Compile Include="Agenda\EventStatusChangesWindow.xaml.cs">
       <DependentUpon>EventStatusChangesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FinishedEventsControl.xaml.cs">
+    <Compile Include="Agenda\FinishedEventsControl.xaml.cs">
       <DependentUpon>FinishedEventsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FinishedEventsReminderModal.xaml.cs">
+    <Compile Include="Agenda\FinishedEventsReminderModal.xaml.cs">
       <DependentUpon>FinishedEventsReminderModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="Main\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ManageRemindersWindow.xaml.cs">
+    <Compile Include="Reminders\ManageRemindersWindow.xaml.cs">
       <DependentUpon>ManageRemindersWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ManageUsersWindow.xaml.cs">
+    <Compile Include="Users\ManageUsersWindow.xaml.cs">
       <DependentUpon>ManageUsersWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RequestAdminCredentialsModal.xaml.cs">
+    <Compile Include="Main\RequestAdminCredentialsModal.xaml.cs">
       <DependentUpon>RequestAdminCredentialsModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserLoginsWindow.xaml.cs">
+    <Compile Include="Users\UserLoginsWindow.xaml.cs">
       <DependentUpon>UserLoginsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewReminderModal.xaml.cs">
+    <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddEditRemindersModal.xaml">
+    <Page Include="Reminders\AddEditRemindersModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AddEditUsersModal.xaml">
+    <Page Include="Reminders\ShowPendingReminderModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AddEventModal.xaml">
+    <Page Include="Reminders\ViewReminderControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AgendaWindow.xaml">
+    <Page Include="Users\AddEditUsersModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddEventModal.xaml.cs">
+    <Page Include="Agenda\AddEventModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Agenda\AgendaWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Agenda\AddEventModal.xaml.cs">
       <DependentUpon>AddEventModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="Configuration\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AgendaWindow.xaml.cs">
+    <Compile Include="Agenda\AgendaWindow.xaml.cs">
       <DependentUpon>AgendaWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ChangePasswordModal.xaml">
+    <Page Include="Users\ChangePasswordModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="EventStatusChangesWindow.xaml">
+    <Page Include="Agenda\EventStatusChangesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FinishedEventsControl.xaml">
+    <Page Include="Agenda\FinishedEventsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FinishedEventsReminderModal.xaml">
+    <Page Include="Agenda\FinishedEventsReminderModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="Main\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ManageRemindersWindow.xaml">
+    <Page Include="Reminders\ManageRemindersWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ManageUsersWindow.xaml">
+    <Page Include="Users\ManageUsersWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RequestAdminCredentialsModal.xaml">
+    <Page Include="Main\RequestAdminCredentialsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Simple Styles.xaml">
+    <Page Include="Configuration\Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserLoginsWindow.xaml">
+    <Page Include="Users\UserLoginsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ViewReminderModal.xaml">
+    <Page Include="Reminders\ViewReminderModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -218,8 +232,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
+    <None Include="Configuration\App.Config" />
+    <None Include="Configuration\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -240,11 +254,12 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Images\" />
+    <Resource Include="Configuration\app_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="app_icon.ico" />
+    <Resource Include="Images\app_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
