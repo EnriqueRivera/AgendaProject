@@ -18,22 +18,21 @@ namespace MyDentApplication
 	/// Interaction logic for ManageUsersWindow.xaml
 	/// </summary>
 	public partial class ManageUsersWindow : Window
-	{
+    {
+        #region Instance variables
         private Controllers.CustomViewModel<Model.User> _usersViewModel;
+        #endregion
 
+        #region Constructors
         public ManageUsersWindow()
 		{
 			this.InitializeComponent();
 
             UpdateGrid();
 		}
+        #endregion
 
-        private void UpdateGrid()
-        {
-            _usersViewModel = new Controllers.CustomViewModel<Model.User>(u => u.IsDeleted == false, "AssignedUserId", "asc");
-            this.DataContext = _usersViewModel;
-        }
-
+        #region Window event handlers
         private void btnDeleteUser_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Model.User userSelected = dgUsers.SelectedItem == null ? null : dgUsers.SelectedItem as Model.User;
@@ -102,5 +101,14 @@ namespace MyDentApplication
                 new UserLoginsWindow(userSelected).ShowDialog();
             }
         }
-	}
+        #endregion
+
+        #region Window's logic
+        private void UpdateGrid()
+        {
+            _usersViewModel = new Controllers.CustomViewModel<Model.User>(u => u.IsDeleted == false, "AssignedUserId", "asc");
+            this.DataContext = _usersViewModel;
+        }
+        #endregion
+    }
 }

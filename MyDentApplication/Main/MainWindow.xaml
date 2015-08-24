@@ -9,23 +9,76 @@
 	Width="640" Height="480" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized">
 
 	<Grid x:Name="LayoutRoot" OpacityMask="White">
-		<Button x:Name="btnOpenAgenda" Content="Abrir agenda" HorizontalAlignment="Left" Height="63" Margin="10,146,0,0" VerticalAlignment="Top" Width="91.5" Click="btnOpenAgenda_Click" Cursor="Hand"/>
-		<Button x:Name="btnChangePassword" Content="Cambiar contraseña" HorizontalAlignment="Left" Margin="10,0,0,78.5" Width="124.5" Click="btnChangePassword_Click" Cursor="Hand" Height="58.5" VerticalAlignment="Bottom"/>
-		<Button x:Name="btnManageUsers" Content="Administrar usuarios" HorizontalAlignment="Left" Height="63" Margin="10,10,0,0" VerticalAlignment="Top" Width="157" Cursor="Hand" Click="btnManageUsers_Click"/>
-		<Button x:Name="btnLogOut" Content="Cerrar sesión" HorizontalAlignment="Left" Margin="10,0,0,10" Width="111.5" Click="btnLogOut_Click" Cursor="Hand" Height="56.5" VerticalAlignment="Bottom"/>
 		<Label x:Name="lblLoggedInCaption" Content="Sesión iniciada como:" Margin="0,0,169.5,12.001" HorizontalAlignment="Right" Width="123.5" Height="24" VerticalAlignment="Bottom"/>
 		<Label x:Name="lblLoggedIn" Content="" Margin="0,0,10,10" FontStyle="Italic" HorizontalAlignment="Right" Width="159.5" Height="26" VerticalAlignment="Bottom"/>
-		<Button x:Name="btnManageReminders" Content="Administrar recordatorios" HorizontalAlignment="Left" Height="63" Margin="10,78,0,0" VerticalAlignment="Top" Width="157" Cursor="Hand" Click="btnManageReminders_Click"/>
-		<GroupBox x:Name="gbPacientInfo" Header="Recordatorios del día de hoy" Margin="0,10,10,41.001" FontWeight="Bold" BorderThickness="3" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Right" Width="222">
+		<GroupBox x:Name="gbPacientInfo" Header="Recordatorios del día de hoy" Margin="0,10,10,41.001" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Right" Width="222">
 			<Grid x:Name="gridPacientInfo" Margin="0,10,-2,2.245">
-				<Rectangle x:Name="rcPendingReminder" Fill="#FFB2C7EE" Height="15" Margin="0,10,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="15"/>
-				<Rectangle x:Name="rcReminderCompleted" Fill="#FFB2EEB2" Height="15" Margin="0,42.665,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="15"/>
-				<Label x:Name="lblPendingReminders" Content="Recordatorios pendientes" Height="27" Margin="0,4.05,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="169.66" FontWeight="Normal"/>
-				<Label x:Name="lblSeenReminders" Content="Recordatorios mostrados" Height="27" Margin="0,36.05,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="169.66" FontWeight="Normal"/>
-				<ScrollViewer x:Name="svReminders" Margin="0,68.05,10,10" HorizontalAlignment="Right" Width="190" BorderBrush="Black" BorderThickness="0" FontWeight="Normal">
+				<Rectangle x:Name="rcPendingReminderColor" Height="20" Margin="0,7.332,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
+					<Rectangle.Fill>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FF5AC3EA"/>
+							<GradientStop Color="#FFE0E0E0" Offset="0.5"/>
+							<GradientStop Color="#FF5AC3EA" Offset="1"/>
+						</LinearGradientBrush>
+					</Rectangle.Fill>
+				</Rectangle>
+				<Rectangle x:Name="rcReminderSeenColor" Height="20" Margin="0,39.385,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
+					<Rectangle.Fill>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FF5AEA61"/>
+							<GradientStop Color="#FFE0E0E0" Offset="0.5"/>
+							<GradientStop Color="#FF5AEA61" Offset="1"/>
+						</LinearGradientBrush>
+					</Rectangle.Fill>
+				</Rectangle>
+				<Label x:Name="lblPendingReminders" Content="Recordatorios pendientes" Height="27" Margin="0,4.05,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="174.66" FontWeight="Normal"/>
+				<Label x:Name="lblSeenReminders" Content="Recordatorios mostrados" Height="27" Margin="0,36.05,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="174.66" FontWeight="Normal"/>
+				<ScrollViewer x:Name="svReminders" Margin="0,68.05,10,10" HorizontalAlignment="Right" Width="190" BorderBrush="Black" BorderThickness="0" FontWeight="Normal" VerticalScrollBarVisibility="Auto">
 					<StackPanel x:Name="spReminders"/>
 				</ScrollViewer>
 			</Grid>
+		</GroupBox>
+		<Button x:Name="btnOpenAgenda" Margin="166,22.5,0,0" Width="85" Height="85" Click="btnOpenAgenda_Click" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top"> 
+			<StackPanel Orientation="Vertical">
+				<Image Source="/MyDentApplication;component/Images/agenda_icon.png" Width="50" Height="50"  />
+				<TextBlock Text="Agenda" TextAlignment="Center" />
+			</StackPanel>
+		</Button>
+		<Button x:Name="btnChangePassword" Margin="139.5,0,0,10" Height="85" Click="btnChangePassword_Click" Cursor="Hand" HorizontalAlignment="Left" Width="124.5" VerticalAlignment="Bottom"> 
+			<StackPanel Orientation="Vertical">
+				<Image Source="/MyDentApplication;component/Images/changePassword_icon.png" Width="50" Height="50"  />
+				<TextBlock Text="Cambiar contraseña" TextAlignment="Center" />
+			</StackPanel>
+		</Button>
+		<Button x:Name="btnLogOut" Margin="10,0,0,10" Height="85" Click="btnLogOut_Click" Cursor="Hand" HorizontalAlignment="Left" Width="124.5" VerticalAlignment="Bottom"> 
+			<StackPanel Orientation="Vertical">
+				<Image Source="/MyDentApplication;component/Images/logout_icon.png" Width="50" Height="50"  />
+				<TextBlock Text="Cerrar sesión" TextAlignment="Center" />
+			</StackPanel>
+		</Button>
+		<GroupBox x:Name="gbAdministration" Header="Administración" HorizontalAlignment="Left" Margin="10,10,0,102.001" Width="151" FontWeight="Bold" BorderBrush="Black" BorderThickness="2">
+			<ScrollViewer Margin="0,10,-2,2.019" VerticalScrollBarVisibility="Auto" FontWeight="Normal" VerticalAlignment="Center">
+				<StackPanel>
+					<Button x:Name="btnManageUsers" Width="85" Height="85" Click="btnManageUsers_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/users_icon.png" Width="50" Height="50"  />
+							<TextBlock Text="Usuarios" TextAlignment="Center" />
+						</StackPanel>
+					</Button>
+					<Button x:Name="btnManageTreatments" Width="85" Height="85" Click="btnManageTreatments_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/treatment_icon.png" Width="50" Height="50"  />
+							<TextBlock Text="Tratamientos" TextAlignment="Center" />
+						</StackPanel>
+					</Button>
+					<Button x:Name="btnManageReminders" Width="85" Height="85" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/reminder_icon.png" Width="50" Height="50"  />
+							<TextBlock Text="Recordatorios" TextAlignment="Center" />
+						</StackPanel>
+					</Button>
+				</StackPanel>
+			</ScrollViewer>
 		</GroupBox>
 	</Grid>
 </Window>

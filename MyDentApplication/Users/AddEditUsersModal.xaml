@@ -4,7 +4,7 @@
 	x:Class="MyDentApplication.AddEditUsersModal"
 	x:Name="Window"
 	Title="Agregar usuario"
-	Width="374.167" Height="267" ResizeMode="CanMinimize" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterOwner">
+	Width="374.167" Height="267" ResizeMode="CanMinimize" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
 		<Label x:Name="lblUserId" Content="No. de usuario:" HorizontalAlignment="Left" Height="27" Margin="68.667,13,0,0" VerticalAlignment="Top" Width="89.333"/>

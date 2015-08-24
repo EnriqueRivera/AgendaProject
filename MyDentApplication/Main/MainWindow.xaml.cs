@@ -23,6 +23,7 @@ namespace MyDentApplication
 	/// </summary>
     public partial class MainWindow : Window
     {
+        #region Instance variables
         private Model.User _userLoggedIn;
         private bool _stopCheckEventStatusThread = false;
         private bool _stopCheckRemindersThread = false;
@@ -33,13 +34,18 @@ namespace MyDentApplication
         private ManageUsersWindow _manageUsersWindow;
         private ManageRemindersWindow _manageRemindersWindow;
         private FinishedEventsReminderModal _finishedEventsReminderModal;
+        private ManageTreatmentsWindow _manageTreatmentsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
-        //Delegates
+        #endregion
+
+        #region Delegates
         delegate void OpenFinishedEventsReminderModalDelegate();
         delegate void RefreshRemindersDelegate();
+        #endregion
 
+        #region Constructors
         public MainWindow(Model.User userLoggedIn)
         {
             CheckGlobalConfigurations();
@@ -61,7 +67,9 @@ namespace MyDentApplication
             _checkRemindersThread.IsBackground = true;
             _checkRemindersThread.Start();
         }
+        #endregion
 
+        #region Check App Configuration
         private void CheckGlobalConfigurations()
         {
             bool configurationAddedSuccessfully = CheckSchedulerColorsConfiguration() && CheckMaxSkipsEventsConfiguration();
@@ -91,15 +99,19 @@ namespace MyDentApplication
                 & BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == patientSkipsEventConfigName, new Model.Configuration() { Name = patientSkipsEventConfigName, Value = Brushes.Red.ToString() })
                 & BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == pendingEventConfigName, new Model.Configuration() { Name = pendingEventConfigName, Value = Brushes.Orange.ToString() });
         }
+        #endregion
 
+        #region Hide/Show options based in roles
         private void HideButtonsForNonAdminUsers()
         {
             if (_userLoggedIn.IsAdmin == false)
             {
-                btnManageUsers.Visibility = System.Windows.Visibility.Collapsed;
+                gbAdministration.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
+        #endregion
 
+        #region Thread logic
         public void CheckFinishedEvents()
         {
             while (_stopCheckEventStatusThread == false)
@@ -119,23 +131,9 @@ namespace MyDentApplication
                 Thread.Sleep(_timeToWaitForReminders);
             }
         }
+        #endregion
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (MessageBox.Show("¿Está seguro(a) que desea cerrar sesión?",
-                                    "Advertencia",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Warning
-                                ) == MessageBoxResult.Yes)
-            {
-                CloseAllWindows();
-            }
-            else
-            {
-                e.Cancel = true;
-            }
-        }
-
+        #region Logic for closing windows
         private void CloseAllWindows()
         {
             RegisterLoginAction(false, _userLoggedIn.UserId);
@@ -144,12 +142,60 @@ namespace MyDentApplication
             CloseWindow(_manageUsersWindow);
             CloseWindow(_manageRemindersWindow);
             CloseWindow(_finishedEventsReminderModal);
+            CloseWindow(_manageTreatmentsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
             _stopCheckRemindersThread = true;
         }
 
+        private void CloseWindow(Window windowToClose)
+        {
+            if (windowToClose != null)
+            {
+                windowToClose.Close();
+            }
+        }
+
+        void Window_Closed(object sender, EventArgs e)
+        {
+            if (sender is AgendaWindow)
+            {
+                _agendaWindow = null;
+            }
+            else if (sender is ManageUsersWindow)
+            {
+                _manageUsersWindow = null;
+            }
+            else if (sender is ManageRemindersWindow)
+            {
+                _manageRemindersWindow = null;
+                RefreshRemindersStackPanel();
+            }
+            else if (sender is ManageTreatmentsWindow)
+            {
+                _manageTreatmentsWindow = null;
+            }
+            else if (sender is FinishedEventsReminderModal)
+            {
+                _finishedEventsReminderModal = null;
+
+                List<DateTime> datesUpdated = (sender as FinishedEventsReminderModal).FinishedEvents
+                                                .Where(fe => fe.IsCompleted || fe.IsCanceled)
+                                                .Select(fe => (new DateTime(fe.StartEvent.Year, fe.StartEvent.Month, fe.StartEvent.Day)))
+                                                .Distinct()
+                                                .ToList();
+
+                if (datesUpdated.Count > 0 && _agendaWindow != null)
+                {
+                    _agendaWindow.RepaintSchedulerIfDateModifiedIsSelected(datesUpdated);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Logic used in another window
         public static void RegisterLoginAction(bool isLogin, int userLoggedInId)
         {
             Model.Login login = new Model.Login()
@@ -165,11 +211,42 @@ namespace MyDentApplication
             }
         }
 
-        private void CloseWindow(Window windowToClose)
+        public static bool IsValidAdminPassword(Model.User userLoggedIn)
         {
-            if (windowToClose != null)
+            int adminId;
+            return IsValidAdminPassword(userLoggedIn, out adminId);
+        }
+
+        public static bool IsValidAdminPassword(Model.User userLoggedIn, out int adminId)
+        {
+            if (userLoggedIn.IsAdmin)
             {
-                windowToClose.Close();
+                adminId = userLoggedIn.UserId;
+                return true;
+            }
+
+            Model.User userResult = new Model.User();
+            new RequestAdminCredentialsModal(userResult).ShowDialog();
+
+            adminId = userResult.UserId;
+            return userResult.IsAdmin;
+        }
+        #endregion
+
+        #region Window event handlers
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("¿Está seguro(a) que desea cerrar sesión?",
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.Yes)
+            {
+                CloseAllWindows();
+            }
+            else
+            {
+                e.Cancel = true;
             }
         }
 
@@ -214,28 +291,25 @@ namespace MyDentApplication
             _manageRemindersWindow.WindowState = WindowState.Normal;
         }
 
-        void Window_Closed(object sender, EventArgs e)
+        private void btnManageTreatments_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (sender is AgendaWindow)
+            if (_manageTreatmentsWindow == null)
             {
-                _agendaWindow = null;
+                _manageTreatmentsWindow = new ManageTreatmentsWindow();
+                _manageTreatmentsWindow.Closed += Window_Closed;
             }
-            else if (sender is ManageUsersWindow)
-            {
-                _manageUsersWindow = null;
-            }
-            else if (sender is ManageRemindersWindow)
-            {
-                _manageRemindersWindow = null;
-                RefreshRemindersStackPanel();
-            }
+
+            _manageTreatmentsWindow.Show();
+            _manageTreatmentsWindow.WindowState = WindowState.Normal;
         }
 
         private void btnLogOut_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Close();
         }
+        #endregion
 
+        #region Actions to execute from another thread
         void OpenFinishedEventsReminderModalFromAnotherThread()
         {
             if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
@@ -244,10 +318,12 @@ namespace MyDentApplication
                 return;
             }
 
-            if (_finishedEventsReminderModal == null)
+            if (_finishedEventsReminderModal != null)
             {
-                OpenFinishedEventsReminderModal();
+                _finishedEventsReminderModal.Close();
             }
+
+            OpenFinishedEventsReminderModal();
         }
 
         void RefreshRemindersFromAnotherThread()
@@ -261,7 +337,9 @@ namespace MyDentApplication
             
             RefreshRemindersStackPanel();
         }
+        #endregion
 
+        #region Reminders
         private void RefreshRemindersStackPanel()
         {
             int pendingReminders = 0;
@@ -286,10 +364,7 @@ namespace MyDentApplication
             }
             else if (todayRemindersCount < spRemindersCount)
             {
-                for (int i = 0; i < spRemindersCount - todayRemindersCount; i++)
-                {
-                    spReminders.Children.RemoveRange(0, spRemindersCount - todayRemindersCount);
-                }
+                spReminders.Children.RemoveRange(0, spRemindersCount - todayRemindersCount);
             }
 
             for (int i = 0; i < todayRemindersCount; i++)
@@ -323,10 +398,13 @@ namespace MyDentApplication
 
             foreach (Model.Reminder reminder in remindersToDisplay)
             {
+                this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
                 new ShowPendingReminderModal(reminder, _userLoggedIn).ShowDialog();
             }
         }
+        #endregion
 
+        #region Finished events
         public void OpenFinishedEventsReminderModal()
         {
             List<Model.Event> finishedEvents = Controllers.BusinessController.Instance.FindBy<Model.Event>
@@ -338,41 +416,10 @@ namespace MyDentApplication
             {
                 this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
                 _finishedEventsReminderModal = new FinishedEventsReminderModal(finishedEvents, _userLoggedIn);
-                _finishedEventsReminderModal.ShowDialog();
-                _finishedEventsReminderModal = null;
-
-                List<DateTime> datesUpdated = finishedEvents
-                                                .Where(fe => fe.IsCompleted)
-                                                .Select(fe => (new DateTime(fe.StartEvent.Year, fe.StartEvent.Month, fe.StartEvent.Day)))
-                                                .Distinct()
-                                                .ToList();
-
-                if (datesUpdated.Count > 0 && _agendaWindow != null)
-                {
-                    _agendaWindow.RepaintSchedulerFromAnotherThread(datesUpdated);
-                }
+                _finishedEventsReminderModal.Closed += Window_Closed;
+                _finishedEventsReminderModal.Show();
             }
         }
-
-        public static bool IsValidAdminPassword(Model.User userLoggedIn)
-        {
-            int adminId;
-            return IsValidAdminPassword(userLoggedIn, out adminId);
-        }
-
-        public static bool IsValidAdminPassword(Model.User userLoggedIn, out int adminId)
-        {
-            if (userLoggedIn.IsAdmin)
-            {
-                adminId = userLoggedIn.UserId;
-                return true;
-            }
-
-            Model.User userResult = new Model.User();
-            new RequestAdminCredentialsModal(userResult).ShowDialog();
-
-            adminId = userResult.UserId;
-            return userResult.IsAdmin;
-        }
+        #endregion
     }
 }

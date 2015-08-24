@@ -16,17 +16,22 @@ namespace MyDentApplication
 	/// Interaction logic for ChangePasswordModal.xaml
 	/// </summary>
 	public partial class ChangePasswordModal : Window
-	{
+    {
+        #region Instance variables
         private Model.User _userLoggedIn;
+        #endregion
 
+        #region Constructors
         public ChangePasswordModal(Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
             _userLoggedIn = userLoggedIn;
 		}
+        #endregion
 
-		private void btnAccept_Click(object sender, System.Windows.RoutedEventArgs e)
+        #region Window event handlers
+        private void btnAccept_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
             string oldPassword = pbOldPassword.Password;
             string newPassword = pbNewPassword.Password;
@@ -78,6 +83,7 @@ namespace MyDentApplication
 		private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
-		}
-	}
+        }
+        #endregion
+    }
 }

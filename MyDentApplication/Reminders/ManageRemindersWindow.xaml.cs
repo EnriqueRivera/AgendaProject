@@ -17,23 +17,22 @@ namespace MyDentApplication
 	/// Interaction logic for ManageRemindersWindow.xaml
 	/// </summary>
 	public partial class ManageRemindersWindow : Window
-	{
+    {
+        #region Instance variables
         private Controllers.CustomViewModel<Model.Reminder> _remindersViewModel;
+        #endregion
 
-		public ManageRemindersWindow()
+        #region Constructors
+        public ManageRemindersWindow()
 		{
 			this.InitializeComponent();
 
             dpReminders.SelectedDate = DateTime.Now;       
 		}
+        #endregion
 
-        private void UpdateGrid()
-        {
-            _remindersViewModel = new Controllers.CustomViewModel<Model.Reminder>(u => EntityFunctions.TruncateTime(u.AppearDate) == EntityFunctions.TruncateTime(dpReminders.SelectedDate.Value), "AppearDate", "asc");
-            this.DataContext = _remindersViewModel;
-        }
-
-		private void btnViewReminder_Click(object sender, System.Windows.RoutedEventArgs e)
+        #region Window event handlers
+        private void btnViewReminder_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
             Model.Reminder reminderSelected = dgReminders.SelectedItem == null ? null : dgReminders.SelectedItem as Model.Reminder;
 
@@ -106,5 +105,14 @@ namespace MyDentApplication
 		{
             UpdateGrid();
 		}
-	}
+        #endregion
+
+        #region Window's logic
+        private void UpdateGrid()
+        {
+            _remindersViewModel = new Controllers.CustomViewModel<Model.Reminder>(u => EntityFunctions.TruncateTime(u.AppearDate) == EntityFunctions.TruncateTime(dpReminders.SelectedDate.Value), "AppearDate", "asc");
+            this.DataContext = _remindersViewModel;
+        }
+        #endregion
+    }
 }

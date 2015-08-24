@@ -18,11 +18,14 @@ namespace MyDentApplication
 	/// Interaction logic for EventStatusChangesWindow.xaml
 	/// </summary>
 	public partial class EventStatusChangesWindow : Window
-	{
+    {
+        #region Instance variables
         private Controllers.CustomViewModel<Model.EventStatusChanx> _eventStatusChangesViewModel;
         private WpfScheduler.Event _eventToCheck;
+        #endregion
 
-		public EventStatusChangesWindow(WpfScheduler.Event eventToCheck)
+        #region Constructors
+        public EventStatusChangesWindow(WpfScheduler.Event eventToCheck)
 		{
 			this.InitializeComponent();
 
@@ -30,7 +33,9 @@ namespace MyDentApplication
             LoadEventInfo();
             UpdateGrid();
 		}
+        #endregion
 
+        #region Window's logic
         private void LoadEventInfo()
         {
             lblEventId.ToolTip = lblEventId.Text =_eventToCheck.EventInfo.EventId.ToString();
@@ -45,7 +50,8 @@ namespace MyDentApplication
             _eventStatusChangesViewModel = new Controllers.CustomViewModel<Model.EventStatusChanx>(ec => ec.EventId == _eventToCheck.EventInfo.EventId, "ChangeDate", "asc");
             this.DataContext = _eventStatusChangesViewModel;
         }
-	}
+        #endregion
+    }
 
     public class EventSatusAndDateValueConverter : IMultiValueConverter
     {

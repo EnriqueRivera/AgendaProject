@@ -140,6 +140,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Duration" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>

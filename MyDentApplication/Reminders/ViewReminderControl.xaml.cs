@@ -17,9 +17,14 @@ namespace MyDentApplication
 	/// Interaction logic for ViewReminderControl.xaml
 	/// </summary>
 	public partial class ViewReminderControl : UserControl
-	{
+    {
+        #region Instance variables
         private Model.Reminder _reminder;
+        private GradientBrush _reminderSeenColor;
+        private GradientBrush _reminderPendingColor;
+        #endregion
 
+        #region Getters and setters
         public Model.Reminder Reminder
         {
             get { return _reminder; }
@@ -31,36 +36,39 @@ namespace MyDentApplication
             }
 
         }
+        #endregion
 
-		public ViewReminderControl()
+        #region Constructors
+        public ViewReminderControl()
 		{
 			this.InitializeComponent();
+
+            _reminderSeenColor = (GradientBrush)rcReminderSeenColor.Fill;
+            _reminderPendingColor = (GradientBrush)rcPendingReminderColor.Fill;
 		}
+        #endregion
 
-        public ViewReminderControl(Model.Reminder reminder)
-        {
-            this.InitializeComponent();
-
-            Reminder = reminder;
-        }
-
-        private void UpdateReminderFields()
-        {
-            if (_reminder != null)
-	        {
-                lrReminder.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(_reminder.Seen ? "#FFB2EEB2" : "#FFB2C7EE"));
-                lblReminderTime.ToolTip = lblReminderTime.Content = _reminder.AppearDate.ToString("HH:mm:ss") + " hrs.";
-                lblReminderMessage.ToolTip = _reminder.Message;
-                lblReminderMessage.Content = (_reminder.Message.Length > 10) ? _reminder.Message.Substring(0, 10) + "..." : _reminder.Message;
-	        }
-        }
-
-		private void btnViewReminder_Click(object sender, System.Windows.RoutedEventArgs e)
+        #region Window event handlers
+        private void btnViewReminder_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
             if (_reminder != null)
             {
                 new ViewReminderModal(_reminder).ShowDialog();    
             }
-		}   
-	}
+		}
+        #endregion
+
+        #region Window's logic
+        private void UpdateReminderFields()
+        {
+            if (_reminder != null)
+            {
+                lrReminder.Background = _reminder.Seen ? _reminderSeenColor : _reminderPendingColor;
+                lblReminderTime.ToolTip = lblReminderTime.Content = _reminder.AppearDate.ToString("HH:mm") + " hrs.";
+                lblReminderMessage.ToolTip = _reminder.Message;
+                lblReminderMessage.Content = (_reminder.Message.Length > 10) ? _reminder.Message.Substring(0, 10) + "..." : _reminder.Message;
+            }
+        }
+        #endregion
+    }
 }

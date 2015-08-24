@@ -17,11 +17,14 @@ namespace MyDentApplication
 	/// Interaction logic for AddEditUsersModal.xaml
 	/// </summary>
 	public partial class AddEditUsersModal : Window
-	{
+    {
+        #region Instance variables
         private Model.User _userToUpdate;
         private bool _isUpdateUserInfo;
+        #endregion
 
-		public AddEditUsersModal(Model.User userToUpdate)
+        #region Constructors
+        public AddEditUsersModal(Model.User userToUpdate)
 		{
 			this.InitializeComponent();
 
@@ -33,17 +36,9 @@ namespace MyDentApplication
                 PrepareWindowForUpdates();
             }
 		}
+        #endregion
 
-        private void PrepareWindowForUpdates()
-        {
-            this.Title = "Actualizar información de usuario";
-            btnAddUpdateUser.Content = "Actualizar";
-            txtUserId.Text = _userToUpdate.AssignedUserId.ToString();
-            txtUserFirstName.Text = _userToUpdate.FirstName;
-            txtUserLastName.Text = _userToUpdate.LastName;
-            pbRepeatPassword.Password = pbPassword.Password = _userToUpdate.Password;
-        }
-
+        #region Window event handlers
         private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
         	this.Close();
@@ -86,6 +81,18 @@ namespace MyDentApplication
 
                 AddUser(userToAdd);
             }
+        }
+        #endregion
+
+        #region Window's logic
+        private void PrepareWindowForUpdates()
+        {
+            this.Title = "Actualizar información de usuario";
+            btnAddUpdateUser.Content = "Actualizar";
+            txtUserId.Text = _userToUpdate.AssignedUserId.ToString();
+            txtUserFirstName.Text = _userToUpdate.FirstName;
+            txtUserLastName.Text = _userToUpdate.LastName;
+            pbRepeatPassword.Password = pbPassword.Password = _userToUpdate.Password;
         }
 
         private bool AreValidFields(string userIdText, string userFirstName, string userLastName, string userPassword, string userRepeatPassword, out int userId)
@@ -164,5 +171,6 @@ namespace MyDentApplication
                 MessageBox.Show("No se pudo agregar el usuario", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-	}
+        #endregion
+    }
 }

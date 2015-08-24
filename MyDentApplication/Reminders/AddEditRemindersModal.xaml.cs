@@ -16,11 +16,14 @@ namespace MyDentApplication
 	/// Interaction logic for AddEditRemindersModal.xaml
 	/// </summary>
 	public partial class AddEditRemindersModal : Window
-	{
+    {
+        #region Instance variables
         private Model.Reminder _reminderToUpdate;
         private bool _isUpdateReminderInfo;
+        #endregion
 
-		public AddEditRemindersModal(Model.Reminder reminderToUpdate)
+        #region Constructors
+        public AddEditRemindersModal(Model.Reminder reminderToUpdate)
 		{
 			this.InitializeComponent();
 
@@ -34,16 +37,9 @@ namespace MyDentApplication
                 PrepareWindowForUpdates();
             }
 		}
+        #endregion
 
-        private void PrepareWindowForUpdates()
-        {
-            this.Title = "Actualizar información del recordatorio";
-            btnAddUpdateReminder.Content = "Actualizar";
-            txtReminderMessage.Text = _reminderToUpdate.Message;
-            dtpReminderAppearDate.Value = _reminderToUpdate.AppearDate;
-            chkRequireAdmin.IsChecked = _reminderToUpdate.RequireAdmin;
-        }
-
+        #region Window event handlers
         private void btnAddUpdateReminder_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string reminderMessage = txtReminderMessage.Text.Trim();
@@ -77,7 +73,14 @@ namespace MyDentApplication
                 AddReminder(reminderToAdd);
             }
         }
+        
+        private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
 
+        #region Window's logic
         private void AddReminder(Model.Reminder reminderToAdd)
         {
             if (Controllers.BusinessController.Instance.Add<Model.Reminder>(reminderToAdd))
@@ -118,10 +121,15 @@ namespace MyDentApplication
 
             return true;
         }
-
-        private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
+        
+        private void PrepareWindowForUpdates()
         {
-            this.Close();
+            this.Title = "Actualizar información del recordatorio";
+            btnAddUpdateReminder.Content = "Actualizar";
+            txtReminderMessage.Text = _reminderToUpdate.Message;
+            dtpReminderAppearDate.Value = _reminderToUpdate.AppearDate;
+            chkRequireAdmin.IsChecked = _reminderToUpdate.RequireAdmin;
         }
-	}
+        #endregion
+    }
 }

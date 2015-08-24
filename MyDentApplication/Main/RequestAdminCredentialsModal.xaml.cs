@@ -17,17 +17,22 @@ namespace MyDentApplication
 	/// Interaction logic for RequestAdminCredentials.xaml
 	/// </summary>
 	public partial class RequestAdminCredentialsModal : Window
-	{
+    {
+        #region Instance variables
         private Model.User _userResult;
+        #endregion
 
-		public RequestAdminCredentialsModal(Model.User userResult)
+        #region Constructors
+        public RequestAdminCredentialsModal(Model.User userResult)
 		{
 			this.InitializeComponent();
 
             _userResult = userResult;
 		}
+        #endregion
 
-		private void btnAccept_Click(object sender, System.Windows.RoutedEventArgs e)
+        #region Window event handlers
+        private void btnAccept_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
             int userId;
             string userIdText = txtUserId.Text.Trim();
@@ -71,6 +76,7 @@ namespace MyDentApplication
 		private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
-		}
-	}
+        }
+        #endregion
+    }
 }

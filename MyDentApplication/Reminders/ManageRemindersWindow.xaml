@@ -34,7 +34,7 @@
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
 				<DataGridCheckBoxColumn Header="Requiere aprobación" Binding="{Binding RequireAdmin}" Width="0.15*" />
-				<DataGridCheckBoxColumn Header="Visto" Binding="{Binding Seen}" Width="0.05*" />
+				<DataGridCheckBoxColumn Header="Mostrado" Binding="{Binding Seen}" Width="0.08*" />
 				<DataGridTextColumn Header="Visto por" Width="0.15*" >
 					<DataGridTextColumn.Binding>
 						<MultiBinding StringFormat="{}{0} {1}">

@@ -94,6 +94,12 @@
     <Compile Include="Reminders\ViewReminderControl.xaml.cs">
       <DependentUpon>ViewReminderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Treatments\AddEditTreatmentsModal.xaml.cs">
+      <DependentUpon>AddEditTreatmentsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Treatments\ManageTreatmentsWindow.xaml.cs">
+      <DependentUpon>ManageTreatmentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users\AddEditUsersModal.xaml.cs">
       <DependentUpon>AddEditUsersModal.xaml</DependentUpon>
     </Compile>
@@ -139,6 +145,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reminders\ViewReminderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Treatments\AddEditTreatmentsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Treatments\ManageTreatmentsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -254,9 +268,14 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Configuration\app_icon.ico" />
+    <Resource Include="Images\agenda_icon.png" />
+    <Resource Include="Images\changePassword_icon.png" />
+    <Resource Include="Images\logout_icon.png" />
+    <Resource Include="Images\reminder_icon.png" />
+    <Resource Include="Images\treatment_icon.png" />
+    <Resource Include="Images\users_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\app_icon.ico" />

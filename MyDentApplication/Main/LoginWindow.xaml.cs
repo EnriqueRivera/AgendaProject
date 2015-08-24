@@ -17,15 +17,18 @@ namespace MyDentApplication
 	/// Interaction logic for LoginWindow.xaml
 	/// </summary>
 	public partial class LoginWindow : Window
-	{
-		public LoginWindow()
+    {
+        #region Constructors
+        public LoginWindow()
 		{
 			this.InitializeComponent();
 
             txtUserId.Focus();
 		}
+        #endregion
 
-		private void btnClose_Click(object sender, System.Windows.RoutedEventArgs e)
+        #region Window event handlers
+        private void btnClose_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
             this.Close();
 		}
@@ -67,6 +70,13 @@ namespace MyDentApplication
             }
 		}
 
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Controllers.BusinessController.Instance.CloseConnection();
+		}
+        #endregion
+
+        #region Window's logic
         private void CenterWindowOnScreen()
         {
             double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
@@ -76,10 +86,6 @@ namespace MyDentApplication
             this.Left = (screenWidth / 2) - (windowWidth / 2);
             this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
-
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			Controllers.BusinessController.Instance.CloseConnection();
-		}
-	}
+        #endregion
+    }
 }

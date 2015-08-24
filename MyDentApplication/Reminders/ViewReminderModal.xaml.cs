@@ -16,9 +16,12 @@ namespace MyDentApplication
 	/// Interaction logic for ViewReminderModal.xaml
 	/// </summary>
 	public partial class ViewReminderModal : Window
-	{
+    {
+        #region Instance variables
         private Model.Reminder _reminderToView;
+        #endregion
 
+        #region Constructors
         public ViewReminderModal(Model.Reminder reminderToView)
 		{
 			this.InitializeComponent();
@@ -26,10 +29,13 @@ namespace MyDentApplication
             _reminderToView = reminderToView;
             LoadReminderInfo();
 		}
+        #endregion
 
+        #region Window's logic
         private void LoadReminderInfo()
         {
             txtReminderMessage.Text = _reminderToView.Message;
         }
-	}
+        #endregion
+    }
 }

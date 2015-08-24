@@ -21,8 +21,11 @@ namespace MyDentApplication
     /// </summary>
     public partial class AgendaWindow : Window
     {
+        #region Instance variables
         private Model.User _userLoggedIn;
+        #endregion
 
+        #region Constructors
         public AgendaWindow(Model.User userLoggedIn)
         {
             InitializeComponent();
@@ -38,7 +41,139 @@ namespace MyDentApplication
 
             SetSchedulerColors();
         }
+        #endregion
 
+        #region Window event handlers
+        private void scheduler_OnEventMouseLeftButtonDown(object sender, WpfScheduler.Event e)
+        {
+            LoadEventInfo(e);
+        }
+
+        private void LoadEventInfo(WpfScheduler.Event e)
+        {
+            lblEventId.ToolTip = lblEventId.Text = e.EventInfo.EventId.ToString();
+            lblEventStartTime.ToolTip = lblEventStartTime.Text = e.EventInfo.StartEvent.ToString("HH:mm") + " hrs";
+            lblEventEndTime.ToolTip = lblEventEndTime.Text = e.EventInfo.EndEvent.ToString("HH:mm") + " hrs";
+            lblExpNo.ToolTip = lblExpNo.Text = e.EventInfo.Patient.PatientId.ToString();
+            lblPacientName.ToolTip = lblPacientName.Text = e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
+            lblCellPhone.ToolTip = lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
+            lblHomePhone.ToolTip = lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
+            lblEmail.ToolTip = lblEmail.Text = e.EventInfo.Patient.Email;
+            lblEventStatus.ToolTip = lblEventStatus.Text = e.EventStatusString;
+            lblEventCapturer.ToolTip = lblEventCapturer.Text = e.EventInfo.User.FirstName + " " + e.EventInfo.User.LastName;
+        }
+
+        private void scheduler_OnScheduleAddEvent(object sender, System.DateTime e)
+        {
+            AddEvent(e);
+        }
+
+        private void scheduler_OnScheduleContextMenuEvent(object sender, WpfScheduler.Event e)
+        {
+            string menuEventAction = (sender as MenuItem).Tag.ToString();
+
+            if (menuEventAction == "VIEW_EVENT_STATUS_CHANGES")
+            {
+                new EventStatusChangesWindow(e).ShowDialog();
+                return;
+            }
+
+            bool? eventModified = ModifyEventStatus(e, (EventStatus)Enum.Parse(typeof(EventStatus), menuEventAction, true), _userLoggedIn.UserId);
+            if (eventModified == true)
+            {
+                scheduler.RepaintEvents();
+            }
+        }
+
+        private void calendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            LoadScheduler(calendar.SelectedDate.Value);
+        }
+
+        private void btnToday_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            calendar.SelectedDate = DateTime.Now;
+        }
+
+        private void filterEvents_CheckedUnchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CheckBox chk = (sender as CheckBox);
+
+            if (chk.Tag == null)
+            {
+                return;
+            }
+
+            switch (chk.Tag.ToString())
+            {
+                case "1":
+                    if (scheduler.CanceledEventsVisible != chk.IsChecked.Value)
+                    {
+                        scheduler.CanceledEventsVisible = chk.IsChecked.Value;
+                        scheduler.RepaintEvents();
+                    }
+                    break;
+                case "2":
+                    if (scheduler.ExceptionEventsVisible != chk.IsChecked.Value)
+                    {
+                        scheduler.ExceptionEventsVisible = chk.IsChecked.Value;
+                        scheduler.RepaintEvents();
+                    }
+                    break;
+                case "3":
+                    if (scheduler.PatientSkipsEventsVisible != chk.IsChecked.Value)
+                    {
+                        scheduler.PatientSkipsEventsVisible = chk.IsChecked.Value;
+                        scheduler.RepaintEvents();
+                    }
+                    break;
+                case "4":
+                    if (scheduler.PendingEventsVisible != chk.IsChecked.Value)
+                    {
+                        scheduler.PendingEventsVisible = chk.IsChecked.Value;
+                        scheduler.RepaintEvents();
+                    }
+                    break;
+                case "5":
+                    if (scheduler.CompletedEventsVisible != chk.IsChecked.Value)
+                    {
+                        scheduler.CompletedEventsVisible = chk.IsChecked.Value;
+                        scheduler.RepaintEvents();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void cpStatusEvents_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            Xceed.Wpf.Toolkit.ColorPicker colorPicker = sender as Xceed.Wpf.Toolkit.ColorPicker;
+            string eventStatusSelected = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + colorPicker.Tag.ToString();
+            Model.Configuration statusEventColor = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == eventStatusSelected).FirstOrDefault();
+            string selectedColor = colorPicker.SelectedColor.Value.ToString();
+            bool colorAddedSuccessfully;
+
+            if (statusEventColor == null)
+            {
+                colorAddedSuccessfully = BusinessController.Instance.Add<Model.Configuration>(new Model.Configuration() { Name = eventStatusSelected, Value = selectedColor });
+            }
+            else
+            {
+                statusEventColor.Value = selectedColor;
+                colorAddedSuccessfully = BusinessController.Instance.Update<Model.Configuration>(statusEventColor);
+            }
+
+            if (colorAddedSuccessfully == false)
+            {
+                MessageBox.Show("El color seleccionado no pudo ser guardado en la configuración", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            scheduler.RepaintEvents();
+        }
+        #endregion
+
+        #region Window's logic
         private void InitializeEventStatusFilters()
         {
             scheduler.CanceledEventsVisible = chkCanceledEvents.IsChecked.Value;
@@ -72,56 +207,6 @@ namespace MyDentApplication
             }
         }
 
-        #region Control's events
-
-        private void scheduler_OnEventMouseLeftButtonDown(object sender, WpfScheduler.Event e)
-        {
-            LoadEventInfo(e);
-        }
-
-        private void LoadEventInfo(WpfScheduler.Event e)
-        {
-            lblEventId.ToolTip = lblEventId.Text = e.EventInfo.EventId.ToString();
-            lblEventStartTime.ToolTip = lblEventStartTime.Text = e.EventInfo.StartEvent.ToString("HH:mm") + " hrs";
-            lblEventEndTime.ToolTip = lblEventEndTime.Text = e.EventInfo.EndEvent.ToString("HH:mm") + " hrs";
-            lblExpNo.ToolTip = lblExpNo.Text = e.EventInfo.Patient.PatientId.ToString();
-            lblPacientName.ToolTip = lblPacientName.Text = e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
-            lblCellPhone.ToolTip = lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
-            lblHomePhone.ToolTip = lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
-            lblEmail.ToolTip = lblEmail.Text = e.EventInfo.Patient.Email;
-            lblEventStatus.ToolTip = lblEventStatus.Text = e.EventStatusString;
-            lblEventCapturer.ToolTip = lblEventCapturer.Text = e.EventInfo.User.FirstName + " " + e.EventInfo.User.LastName;
-        }
-
-        private void scheduler_OnScheduleAddEvent(object sender, System.DateTime e)
-        {
-            AddEvent(e);
-        }
-
-        private void scheduler_OnScheduleContextMenuEvent(object sender, WpfScheduler.Event e)
-        {
-            string menuEventAction = (sender as MenuItem).Tag.ToString();
-
-            if (menuEventAction == "VIEW_EVENT_STATUS_CHANGES")
-	        {
-                new EventStatusChangesWindow(e).ShowDialog();
-	            return;
-	        }
-
-            bool? eventModified = ModifyEventStatus(e, (EventStatus)Enum.Parse(typeof(EventStatus), menuEventAction, true), _userLoggedIn.UserId);
-            if (eventModified == true)
-            {
-                scheduler.RepaintEvents();
-            }
-        }
-
-        private void calendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            LoadScheduler(calendar.SelectedDate.Value);
-        }
-
-        #endregion
-
         private void AddEvent(System.DateTime eventToAdd)
         {
             Model.Event ev = new Model.Event()
@@ -149,21 +234,6 @@ namespace MyDentApplication
             new AddEventModal(scheduler, eventToAdd, _userLoggedIn).ShowDialog();   
         }
 
-        public static Model.Event OverlappedWithExistingEvent(Model.Event eventToAdd, List<WpfScheduler.Event> events)
-        {
-            events = events.OrderBy(e => e.EventInfo.StartEvent).ToList();
-
-            foreach (WpfScheduler.Event e in events.Where(e => e.EventInfo.IsCanceled == false))
-            {
-                if (Utils.IsOverlappedTime(eventToAdd.StartEvent, eventToAdd.EndEvent, e.EventInfo.StartEvent, e.EventInfo.EndEvent))
-                {
-                    return e.EventInfo;
-                }
-            }
-            
-            return null;
-        }
-
         private void LoadScheduler(DateTime dateToLoad)
         {
             calendar.DisplayDate = dateToLoad;
@@ -184,6 +254,16 @@ namespace MyDentApplication
             }
 
             scheduler.RepaintEvents();
+        }
+        #endregion
+
+        #region Logic used in another window
+        public void RepaintSchedulerIfDateModifiedIsSelected(List<DateTime> datesUpdates)
+        {
+            if (datesUpdates.Count(du => du.Date == scheduler.SelectedDate.Date) > 0)
+            {
+                LoadScheduler(scheduler.SelectedDate.Date);
+            }
         }
 
         public static bool? ModifyEventStatus(WpfScheduler.Event e, EventStatus es, int userLoggedInId)
@@ -258,99 +338,25 @@ namespace MyDentApplication
 
                 return true;
             }
-            
+
             MessageBox.Show("No pudo ser modificado el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return false;
         }
 
-        private void filterEvents_CheckedUnchecked(object sender, System.Windows.RoutedEventArgs e)
+        public static Model.Event OverlappedWithExistingEvent(Model.Event eventToAdd, List<WpfScheduler.Event> events)
         {
-            CheckBox chk = (sender as CheckBox);
+            events = events.OrderBy(e => e.EventInfo.StartEvent).ToList();
 
-            if (chk.Tag == null)
+            foreach (WpfScheduler.Event e in events.Where(e => e.EventInfo.IsCanceled == false))
             {
-                return;
+                if (Utils.IsOverlappedTime(eventToAdd.StartEvent, eventToAdd.EndEvent, e.EventInfo.StartEvent, e.EventInfo.EndEvent))
+                {
+                    return e.EventInfo;
+                }
             }
 
-            switch (chk.Tag.ToString())
-            {
-                case "1":
-                    if (scheduler.CanceledEventsVisible != chk.IsChecked.Value)
-                    {
-                        scheduler.CanceledEventsVisible = chk.IsChecked.Value;
-                        scheduler.RepaintEvents();
-                    }
-                    break;
-                case "2":
-                    if (scheduler.ExceptionEventsVisible != chk.IsChecked.Value)
-                    {
-                        scheduler.ExceptionEventsVisible = chk.IsChecked.Value;
-                        scheduler.RepaintEvents();
-                    }
-                    break;
-                case "3":
-                    if (scheduler.PatientSkipsEventsVisible != chk.IsChecked.Value)
-                    {
-                        scheduler.PatientSkipsEventsVisible = chk.IsChecked.Value;
-                        scheduler.RepaintEvents();
-                    }
-                    break;
-                case "4":
-                    if (scheduler.PendingEventsVisible != chk.IsChecked.Value)
-                    {
-                        scheduler.PendingEventsVisible = chk.IsChecked.Value;
-                        scheduler.RepaintEvents();
-                    }
-                    break;
-                case "5":
-                    if (scheduler.CompletedEventsVisible != chk.IsChecked.Value)
-                    {
-                        scheduler.CompletedEventsVisible = chk.IsChecked.Value;
-                        scheduler.RepaintEvents();
-                    }
-                    break;
-                default:
-                    break;
-            }
+            return null;
         }
-
-        private void btnToday_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            calendar.SelectedDate = DateTime.Now;
-        }
-		
-        private void cpStatusEvents_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            Xceed.Wpf.Toolkit.ColorPicker colorPicker = sender as Xceed.Wpf.Toolkit.ColorPicker;
-            string eventStatusSelected = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + colorPicker.Tag.ToString();
-            Model.Configuration statusEventColor = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == eventStatusSelected).FirstOrDefault();
-            string selectedColor = colorPicker.SelectedColor.Value.ToString();
-            bool colorAddedSuccessfully;
-
-            if (statusEventColor == null)
-            {
-                colorAddedSuccessfully = BusinessController.Instance.Add<Model.Configuration>(new Model.Configuration() { Name = eventStatusSelected, Value = selectedColor });
-            }
-            else
-            {
-                statusEventColor.Value = selectedColor;
-                colorAddedSuccessfully = BusinessController.Instance.Update<Model.Configuration>(statusEventColor);
-            }
-
-            if (colorAddedSuccessfully == false)
-            {
-                MessageBox.Show("El color seleccionado no pudo ser guardado en la configuración", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            scheduler.RepaintEvents();
-        }
-
-        public void RepaintSchedulerFromAnotherThread(List<DateTime> datesUpdates)
-        {
-            if (datesUpdates.Count(du => du.Date == scheduler.SelectedDate.Date) > 0)
-            {
-                LoadScheduler(scheduler.SelectedDate.Date);
-            }
-        }
+        #endregion
     }
 }

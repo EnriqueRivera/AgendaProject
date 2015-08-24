@@ -18,11 +18,14 @@ namespace MyDentApplication
 	/// Interaction logic for FinishedEventsControl.xaml
 	/// </summary>
 	public partial class FinishedEventsControl : UserControl
-	{
+    {
+        #region Instance variables
         private Model.Event _eventToRender;
         private WpfScheduler.Event _schedulerEvent;
         private Model.User _userLoggedIn;
+        #endregion
 
+        #region Constructors
         public FinishedEventsControl(Model.Event eventToRender, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
@@ -33,7 +36,23 @@ namespace MyDentApplication
 
             LoadEventInfo();
 		}
+        #endregion
 
+        #region Window event handlers
+        private void changeStatusEvent_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            EventStatus statusToChange = (EventStatus)Enum.Parse(typeof(EventStatus), (sender as Button).Tag.ToString(), true);
+
+            bool? eventModified = AgendaWindow.ModifyEventStatus(_schedulerEvent, statusToChange, _userLoggedIn.UserId);
+            if (eventModified == null || eventModified == true)
+            {
+                gridBackground.Background = _schedulerEvent.Color;
+                DisableButtons();
+            }
+        }
+        #endregion
+
+        #region Window's logic
         private void LoadEventInfo()
         {
             if (_eventToRender != null)
@@ -58,23 +77,12 @@ namespace MyDentApplication
             }
         }
 
-        private void changeStatusEvent_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            EventStatus statusToChange = (EventStatus)Enum.Parse(typeof(EventStatus), (sender as Button).Tag.ToString(), true);
-
-            bool? eventModified = AgendaWindow.ModifyEventStatus(_schedulerEvent, statusToChange, _userLoggedIn.UserId);
-            if (eventModified == null || eventModified == true)
-            {
-                gridBackground.Background = _schedulerEvent.Color;
-                DisableButtons();
-            }
-        }
-
         private void DisableButtons()
         {
             btnPatientNotSkips.IsEnabled = false;
             btnPatientSkips.IsEnabled = false;
             btnPatientCancel.IsEnabled = false;
         }
-	}
+        #endregion
+    }
 }

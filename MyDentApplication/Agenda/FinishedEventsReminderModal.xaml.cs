@@ -16,33 +16,36 @@ namespace MyDentApplication
 	/// Interaction logic for FinishedEventsReminderModal.xaml
 	/// </summary>
 	public partial class FinishedEventsReminderModal : Window
-	{
-        List<Model.Event> _finishedEvents;
+    {
+        #region Instance variables
+        public List<Model.Event> FinishedEvents { get; set; }
         private Model.User _userLoggedIn;
+        #endregion
 
+        #region Constructors
         public FinishedEventsReminderModal(List<Model.Event> finishedEvents, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
-            _finishedEvents = finishedEvents;
+            FinishedEvents = finishedEvents;
             _userLoggedIn = userLoggedIn;
 
             LoadStackPanel();
 		}
+        #endregion
 
+        #region Window's logic
         private void LoadStackPanel()
         {
-            for (int i = 0; i < _finishedEvents.Count; i++)
+            for (int i = 0; i < FinishedEvents.Count; i++)
             {
-                FinishedEventsControl controlToAdd = new FinishedEventsControl(_finishedEvents[i], _userLoggedIn)
-                {
-                    BorderBrush = Brushes.Black
-                };
+                FinishedEventsControl controlToAdd = new FinishedEventsControl(FinishedEvents[i], _userLoggedIn);
 
                 controlToAdd.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
 
                 spFinishedEvents.Children.Add(controlToAdd);
             }
         }
-	}
+        #endregion
+    }
 }

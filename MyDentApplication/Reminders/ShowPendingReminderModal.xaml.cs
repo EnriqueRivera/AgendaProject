@@ -16,11 +16,14 @@ namespace MyDentApplication
 	/// Interaction logic for ShowPendingReminderModal.xaml
 	/// </summary>
 	public partial class ShowPendingReminderModal : Window
-	{
+    {
+        #region Instance variables
         private Model.Reminder _reminderToShow;
         private Model.User _userLoggedIn;
+        #endregion
 
-		public ShowPendingReminderModal(Model.Reminder reminderToShow, Model.User userLoggedIn)
+        #region Constructors
+        public ShowPendingReminderModal(Model.Reminder reminderToShow, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
@@ -28,19 +31,21 @@ namespace MyDentApplication
             _userLoggedIn = userLoggedIn;
             UpdateReminderFields();
 		}
+        #endregion
 
-        private void UpdateReminderFields()
+        #region Window event handlers
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            lblReminderTime.ToolTip = lblReminderTime.Content = _reminderToShow.AppearDate.ToLongDateString() + " a las " + _reminderToShow.AppearDate.ToString("HH:mm") + " hrs.";
-            txtReminderMessage.ToolTip = txtReminderMessage.Text = _reminderToShow.Message;
-            lblRequireAdmin.Visibility = _reminderToShow.RequireAdmin ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            e.Cancel = !MarkReminderAsSeen();
         }
 
 		private void btnAccept_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
             this.Close();
 		}
+        #endregion
 
+        #region Window's logic
         private bool MarkReminderAsSeen()
         {
             int seenByUserId;
@@ -71,9 +76,12 @@ namespace MyDentApplication
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void UpdateReminderFields()
         {
-            e.Cancel = !MarkReminderAsSeen();
+            lblReminderTime.ToolTip = lblReminderTime.Content = _reminderToShow.AppearDate.ToLongDateString() + " a las " + _reminderToShow.AppearDate.ToString("HH:mm") + " hrs.";
+            txtReminderMessage.ToolTip = txtReminderMessage.Text = _reminderToShow.Message;
+            lblRequireAdmin.Visibility = _reminderToShow.RequireAdmin ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         }
-	}
+        #endregion
+    }
 }

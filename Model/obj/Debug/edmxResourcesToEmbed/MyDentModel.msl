@@ -90,6 +90,7 @@
     <EntitySetMapping Name="Treatments">
       <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
         <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />

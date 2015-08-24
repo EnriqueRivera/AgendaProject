@@ -5,13 +5,38 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	x:Class="MyDentApplication.ViewReminderControl"
-	x:Name="UserControl" Width="155" Height="175" BorderBrush="Black" BorderThickness="1">
+	x:Name="UserControl" Width="155" Height="152" BorderBrush="Black" BorderThickness="1">
 
-	<Grid x:Name="lrReminder" Background="#FFB2EEB2">
-		<Label Content="Hora del recordatorio:" Height="28" Margin="10,10,10,0" VerticalAlignment="Top"/>
-		<Label x:Name="lblReminderTime" Content="" Height="28" Margin="10,38,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>
-		<Label Content="Mensaje:" Height="28" Margin="10,78.5,10,0" VerticalAlignment="Top"/>
-		<Label x:Name="lblReminderMessage" Content="" Height="28" Margin="10,106.5,10,0" VerticalAlignment="Top" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>
+	<Grid x:Name="lrReminder">
+		<Grid.Background>
+			<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+				<GradientStop Color="White" Offset="0.5"/>
+				<GradientStop Color="#FF5AC3EA" Offset="1"/>
+				<GradientStop Color="#FF5AC3EA"/>
+			</LinearGradientBrush>
+		</Grid.Background>
+		<Label Content="Hora del recordatorio:" Height="28" Margin="0,0,20,0" VerticalAlignment="Top"/>
+		<Label x:Name="lblReminderTime" Content="" Height="28" Margin="10,22.5,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>
+		<Label Content="Mensaje:" Height="28" Margin="0,55.5,20,0" VerticalAlignment="Top"/>
+		<Label x:Name="lblReminderMessage" Content="" Height="28" Margin="10,79,10,0" VerticalAlignment="Top" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>
 		<Button x:Name="btnViewReminder" Content="Ver" Margin="0,0,10,10" HorizontalAlignment="Right" Width="34" Height="23.833" VerticalAlignment="Bottom" Cursor="Hand" Click="btnViewReminder_Click"/>
+		<Rectangle x:Name="rcPendingReminderColor" Height="20" Margin="-66.66,38.665,199.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#FF5AC3EA"/>
+					<GradientStop Color="#FFE0E0E0" Offset="0.5"/>
+					<GradientStop Color="#FF5AC3EA" Offset="1"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+		<Rectangle x:Name="rcReminderSeenColor" Height="20" Margin="-66.66,70.718,199.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#FF5AEA61"/>
+					<GradientStop Color="#FFE0E0E0" Offset="0.5"/>
+					<GradientStop Color="#FF5AEA61" Offset="1"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
 	</Grid>
 </UserControl>

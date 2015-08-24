@@ -18,11 +18,14 @@ namespace MyDentApplication
 	/// Interaction logic for UserLoginsWindow.xaml
 	/// </summary>
 	public partial class UserLoginsWindow : Window
-	{
+    {
+        #region Instance variables
         private Controllers.CustomViewModel<Model.Login> _userLoginsViewModel;
         private Model.User _userToCheck;
+        #endregion
 
-		public UserLoginsWindow(Model.User userToCheck)
+        #region Constructors
+        public UserLoginsWindow(Model.User userToCheck)
 		{
 			this.InitializeComponent();
 
@@ -31,7 +34,16 @@ namespace MyDentApplication
 
             dpUserLogins.SelectedDate = DateTime.Now;
 		}
+        #endregion
 
+        #region Window event handlers
+        private void dpUserLogins_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            UpdateGrid();
+        }
+        #endregion
+
+        #region Window's logic
         private void LoadEventInfo()
         {
             lblUserId.ToolTip = lblUserId.Text = _userToCheck.AssignedUserId.ToString();
@@ -48,12 +60,8 @@ namespace MyDentApplication
 
             this.DataContext = _userLoginsViewModel;
         }
-
-        private void dpUserLogins_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            UpdateGrid();
-        }
-	}
+        #endregion
+    }
 
     public class LoginActionAndTimeValueConverter : IMultiValueConverter
     {

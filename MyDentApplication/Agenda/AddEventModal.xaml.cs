@@ -18,7 +18,8 @@ namespace MyDentApplication
 	/// Interaction logic for AddEventModal.xaml
 	/// </summary>
 	public partial class AddEventModal : Window
-	{
+    {
+        #region Instance variables
         private WpfScheduler.Scheduler _scheduler;
         private List<Model.Patient> _patients;
         private List<Model.Treatment> _treatments;
@@ -26,7 +27,9 @@ namespace MyDentApplication
         private Model.Patient _selectedPatient;
         private Model.Treatment _selectedTreatment;
         private Model.User _userLoggedIn;
+        #endregion
 
+        #region Constructors
         public AddEventModal(WpfScheduler.Scheduler scheduler, DateTime eventStart, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
@@ -41,70 +44,23 @@ namespace MyDentApplication
             GetPatients();
             GetTreatments();
 		}
+        #endregion
 
-        private void GetTreatments()
-        {
-            _treatments = BusinessController.Instance.GetAll<Model.Treatment>()
-                        .OrderBy(t => t.Name)
-                        .ThenBy(t => t.Duration)
-                        .ToList();
-
-            foreach (Model.Treatment treatment in _treatments)
-            {
-                cbTratmentName.Items.Add(new ComboBoxItem() { Text = treatment.Name, Value = treatment });
-            }
-        }
-
-        private void GetPatients()
-        {
-            _patients = BusinessController.Instance.GetAll<Model.Patient>()
-                        .OrderBy(p => p.FirstName)
-                        .ThenBy(p => p.LastName)
-                        .ToList();
-
-            foreach (Model.Patient patient in _patients)
-            {
-                cbPatientName.Items.Add(new ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
-            }        
-        }
-
+        #region Window event handlers
         private void cbPatientName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            _selectedPatient = (cbPatientName.SelectedValue as ComboBoxItem).Value as Model.Patient;
+            _selectedPatient = (cbPatientName.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient;
 
             FillPatientFields(_selectedPatient);
         }
 
         private void cbTratmentName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            _selectedTreatment = (cbTratmentName.SelectedValue as ComboBoxItem).Value as Model.Treatment;
+            _selectedTreatment = (cbTratmentName.SelectedValue as Controllers.ComboBoxItem).Value as Model.Treatment;
 
             FillTreatmentFields(_selectedTreatment);
 
             lblEventEndTime.ToolTip = lblEventEndTime.Text = _eventStart.AddMinutes(_selectedTreatment.Duration).ToString("HH:mm") + " hrs";
-        }
-		
-		private void FillPatientFields(Model.Patient selectedPatient) 
-		{
-			if (selectedPatient == null) 
-			{
-                lblExpNo.ToolTip = lblExpNo.Text = string.Empty;
-                lblCellphone.ToolTip = lblCellphone.Text = string.Empty;
-                lblHomePhone.ToolTip = lblHomePhone.Text = string.Empty;
-                lblEmail.ToolTip = lblEmail.Text = string.Empty;
-			}
-			else
-			{
-                lblExpNo.ToolTip = lblExpNo.Text = selectedPatient.PatientId.ToString();
-                lblCellphone.ToolTip = lblCellphone.Text = selectedPatient.CellPhone;
-                lblHomePhone.ToolTip = lblHomePhone.Text = selectedPatient.HomePhone;
-                lblEmail.ToolTip = lblEmail.Text = selectedPatient.Email;
-			}
-		}
-
-        private void FillTreatmentFields(Model.Treatment selectedTreatment)
-        {
-            lblDuration.ToolTip = lblDuration.Text = selectedTreatment == null ? string.Empty : selectedTreatment.Duration.ToString() + " minutos";
         }
 
         private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -126,7 +82,7 @@ namespace MyDentApplication
                 return;
             }
 
-            List<Model.Event> skippedEvents = ((cbPatientName.SelectedValue as ComboBoxItem).Value as Model.Patient).Events
+            List<Model.Event> skippedEvents = ((cbPatientName.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient).Events
                                                 .Where(ev => ev.IsCompleted && ev.PatientSkips)
                                                 .OrderBy(ev => ev.StartEvent)
                                                 .ToList();
@@ -145,10 +101,10 @@ namespace MyDentApplication
                 for (int i = 0; i < skippedEvents.Count; i++)
                 {
                     skippedEventsMessage += string.Format(
-                                                "\nFalta #{0}:" + 
-                                                "\n -Tratamiento: {1}" + 
-                                                "\n -Día de la cita: {2}" + 
-                                                "\n -Hora de inicio de la cita: {3}" + 
+                                                "\nFalta #{0}:" +
+                                                "\n -Tratamiento: {1}" +
+                                                "\n -Día de la cita: {2}" +
+                                                "\n -Hora de inicio de la cita: {3}" +
                                                 "\n -Hora de fin de la cita: {4}",
                                                 i + 1,
                                                 skippedEvents[i].Treatment.Name,
@@ -191,6 +147,31 @@ namespace MyDentApplication
                     MessageBox.Show("No pudo ser agendada la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+        #endregion
+
+        #region Window's logic
+        private void FillPatientFields(Model.Patient selectedPatient) 
+		{
+			if (selectedPatient == null) 
+			{
+                lblExpNo.ToolTip = lblExpNo.Text = string.Empty;
+                lblCellphone.ToolTip = lblCellphone.Text = string.Empty;
+                lblHomePhone.ToolTip = lblHomePhone.Text = string.Empty;
+                lblEmail.ToolTip = lblEmail.Text = string.Empty;
+			}
+			else
+			{
+                lblExpNo.ToolTip = lblExpNo.Text = selectedPatient.PatientId.ToString();
+                lblCellphone.ToolTip = lblCellphone.Text = selectedPatient.CellPhone;
+                lblHomePhone.ToolTip = lblHomePhone.Text = selectedPatient.HomePhone;
+                lblEmail.ToolTip = lblEmail.Text = selectedPatient.Email;
+			}
+		}
+
+        private void FillTreatmentFields(Model.Treatment selectedTreatment)
+        {
+            lblDuration.ToolTip = lblDuration.Text = selectedTreatment == null ? string.Empty : selectedTreatment.Duration.ToString() + " minutos";
         }
 
         private bool IsValidEvent(Model.Event eventToAdd)
@@ -237,6 +218,13 @@ namespace MyDentApplication
                 if (MainWindow.IsValidAdminPassword(_userLoggedIn))
                 {
                     eventToAdd.IsException = true;
+
+                    DateTime secondExtraHourMaxRange = new DateTime(eventToAdd.StartEvent.Year, eventToAdd.StartEvent.Month, eventToAdd.StartEvent.Day, _scheduler.MaxHour, 0, 0);
+                    if (eventToAdd.EndEvent > secondExtraHourMaxRange)
+                    {
+                        eventToAdd.EndEvent = secondExtraHourMaxRange;
+                    }
+
                     return true;   
                 }
 
@@ -257,17 +245,32 @@ namespace MyDentApplication
             return Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, firstExtraHourMinRange, firstExtraHourMaxRange)
                     || Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, secondExtraHourMinRange, secondExtraHourMaxRange);
         }
-        
 
-        private class ComboBoxItem
+        private void GetTreatments()
         {
-            public string Text { get; set; }
-            public object Value { get; set; }
+            _treatments = BusinessController.Instance.GetAll<Model.Treatment>()
+                        .OrderBy(t => t.Name)
+                        .ThenBy(t => t.Duration)
+                        .ToList();
 
-            public override string ToString()
+            foreach (Model.Treatment treatment in _treatments)
             {
-                return Text;
+                cbTratmentName.Items.Add(new Controllers.ComboBoxItem() { Text = treatment.Name, Value = treatment });
             }
         }
+
+        private void GetPatients()
+        {
+            _patients = BusinessController.Instance.GetAll<Model.Patient>()
+                        .OrderBy(p => p.FirstName)
+                        .ThenBy(p => p.LastName)
+                        .ToList();
+
+            foreach (Model.Patient patient in _patients)
+            {
+                cbPatientName.Items.Add(new Controllers.ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
+            }
+        }
+        #endregion
     }
 }
