@@ -39,6 +39,31 @@
           <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="StatusChangerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Invoices">
+          <Key>
+            <PropertyRef Name="InvoiceId" />
+          </Key>
+          <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceDate" Type="date" Nullable="false" />
+          <Property Name="PurchaseDate" Type="date" Nullable="false" />
+          <Property Name="Folio" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ProviderId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LaboratoryWorks">
+          <Key>
+            <PropertyRef Name="LaboratoryWorkId" />
+          </Key>
+          <Property Name="LaboratoryWorkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkName" Type="varchar(max)" Nullable="false" />
+          <Property Name="DeliveryDate" Type="date" Nullable="false" />
+          <Property Name="ReceivedDate" Type="date" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="TechnicalId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Logins">
           <Key>
             <PropertyRef Name="LoginId" />
@@ -83,6 +108,22 @@
           <Property Name="RequireAdmin" Type="bit" Nullable="false" />
           <Property Name="Seen" Type="bit" Nullable="false" />
           <Property Name="SeenBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ResourceProviders">
+          <Key>
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Name="ProviderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Technicals">
+          <Key>
+            <PropertyRef Name="TechnicalId" />
+          </Key>
+          <Property Name="TechnicalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Treatments">
           <Key>
@@ -165,6 +206,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Invoices_ProviderId">
+          <End Role="ResourceProviders" Type="Self.ResourceProviders" Multiplicity="1" />
+          <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResourceProviders">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaboratoryWorks_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="LaboratoryWorks" Type="Self.LaboratoryWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="LaboratoryWorks">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaboratoryWorks_TechnicalId">
+          <End Role="Technicals" Type="Self.Technicals" Multiplicity="1" />
+          <End Role="LaboratoryWorks" Type="Self.LaboratoryWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Technicals">
+              <PropertyRef Name="TechnicalId" />
+            </Principal>
+            <Dependent Role="LaboratoryWorks">
+              <PropertyRef Name="TechnicalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Logins_UserId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
@@ -205,10 +282,14 @@
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LaboratoryWorks" EntityType="Self.LaboratoryWorks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reminders" EntityType="Self.Reminders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResourceProviders" EntityType="Self.ResourceProviders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
@@ -231,6 +312,18 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
           </AssociationSet>
+          <AssociationSet Name="FK_Invoices_ProviderId" Association="Self.FK_Invoices_ProviderId">
+            <End Role="ResourceProviders" EntitySet="ResourceProviders" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaboratoryWorks_PatientId" Association="Self.FK_LaboratoryWorks_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="LaboratoryWorks" EntitySet="LaboratoryWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaboratoryWorks_TechnicalId" Association="Self.FK_LaboratoryWorks_TechnicalId">
+            <End Role="Technicals" EntitySet="Technicals" />
+            <End Role="LaboratoryWorks" EntitySet="LaboratoryWorks" />
+          </AssociationSet>
           <AssociationSet Name="FK_Logins_UserId" Association="Self.FK_Logins_UserId">
             <End Role="Users" EntitySet="Users" />
             <End Role="Logins" EntitySet="Logins" />
@@ -252,10 +345,13 @@
           <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
           <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
           <EntitySet Name="EventStatusChanges" EntityType="MyDentDBModel.EventStatusChanx" />
+          <EntitySet Name="Invoices" EntityType="MyDentDBModel.Invoice" />
           <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
           <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
           <EntitySet Name="Patients" EntityType="MyDentDBModel.Patient" />
           <EntitySet Name="Reminders" EntityType="MyDentDBModel.Reminder" />
+          <EntitySet Name="ResourceProviders" EntityType="MyDentDBModel.ResourceProvider" />
+          <EntitySet Name="Technicals" EntityType="MyDentDBModel.Technical" />
           <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
           <EntitySet Name="Users" EntityType="MyDentDBModel.User" />
           <AssociationSet Name="FK_Events_EventCapturerId" Association="MyDentDBModel.FK_Events_EventCapturerId">
@@ -278,6 +374,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
           </AssociationSet>
+          <AssociationSet Name="FK_Invoices_ProviderId" Association="MyDentDBModel.FK_Invoices_ProviderId">
+            <End Role="ResourceProvider" EntitySet="ResourceProviders" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
           <AssociationSet Name="FK_Logins_UserId" Association="MyDentDBModel.FK_Logins_UserId">
             <End Role="User" EntitySet="Users" />
             <End Role="Login" EntitySet="Logins" />
@@ -290,7 +390,16 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Reminder" EntitySet="Reminders" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="LaboratoryWorks" EntityType="MyDentDBModel.LaboratoryWork" />
+          <AssociationSet Name="FK_LaboratoryWorks_PatientId" Association="MyDentDBModel.FK_LaboratoryWorks_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="LaboratoryWork" EntitySet="LaboratoryWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaboratoryWorks_TechnicalId" Association="MyDentDBModel.FK_LaboratoryWorks_TechnicalId">
+            <End Role="Technical" EntitySet="Technicals" />
+            <End Role="LaboratoryWork" EntitySet="LaboratoryWorks" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Configuration">
           <Key>
             <PropertyRef Name="ConfigurationId" />
@@ -331,6 +440,20 @@
           <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="EventStatusChanx" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="EventStatusChanx" ToRole="User" />
         </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceId" />
+          </Key>
+          <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Folio" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="ProviderId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ResourceProvider" Relationship="MyDentDBModel.FK_Invoices_ProviderId" FromRole="Invoice" ToRole="ResourceProvider" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="LoginId" />
@@ -366,6 +489,7 @@
           <Property Name="CaptureDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
+          <NavigationProperty Name="LaboratoryWorks" Relationship="MyDentDBModel.FK_LaboratoryWorks_PatientId" FromRole="Patient" ToRole="LaboratoryWork" />
         </EntityType>
         <EntityType Name="Reminder">
           <Key>
@@ -380,6 +504,24 @@
           <Property Name="SeenBy" Type="Int32" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="Reminder" ToRole="User" />
         </EntityType>
+        <EntityType Name="ResourceProvider">
+          <Key>
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Name="ProviderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Invoices" Relationship="MyDentDBModel.FK_Invoices_ProviderId" FromRole="ResourceProvider" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="Technical">
+          <Key>
+            <PropertyRef Name="TechnicalId" />
+          </Key>
+          <Property Name="TechnicalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="LaboratoryWorks" Relationship="MyDentDBModel.FK_LaboratoryWorks_TechnicalId" FromRole="Technical" ToRole="LaboratoryWork" />
+        </EntityType>
         <EntityType Name="Treatment">
           <Key>
             <PropertyRef Name="TreatmentId" />
@@ -387,8 +529,8 @@
           <Property Name="TreatmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Duration" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -467,6 +609,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Invoices_ProviderId">
+          <End Type="MyDentDBModel.ResourceProvider" Role="ResourceProvider" Multiplicity="1" />
+          <End Type="MyDentDBModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResourceProvider">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Logins_UserId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
           <End Type="MyDentDBModel.Login" Role="Login" Multiplicity="*" />
@@ -500,6 +654,44 @@
             </Principal>
             <Dependent Role="Reminder">
               <PropertyRef Name="SeenBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LaboratoryWork">
+          <Key>
+            <PropertyRef Name="LaboratoryWorkId" />
+          </Key>
+          <Property Name="LaboratoryWorkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ReceivedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="TechnicalId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_LaboratoryWorks_PatientId" FromRole="LaboratoryWork" ToRole="Patient" />
+          <NavigationProperty Name="Technical" Relationship="MyDentDBModel.FK_LaboratoryWorks_TechnicalId" FromRole="LaboratoryWork" ToRole="Technical" />
+        </EntityType>
+        <Association Name="FK_LaboratoryWorks_PatientId">
+          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="MyDentDBModel.LaboratoryWork" Role="LaboratoryWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="LaboratoryWork">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaboratoryWorks_TechnicalId">
+          <End Type="MyDentDBModel.Technical" Role="Technical" Multiplicity="1" />
+          <End Type="MyDentDBModel.LaboratoryWork" Role="LaboratoryWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Technical">
+              <PropertyRef Name="TechnicalId" />
+            </Principal>
+            <Dependent Role="LaboratoryWork">
+              <PropertyRef Name="TechnicalId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -543,6 +735,20 @@
                 <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
                 <ScalarProperty Name="OldStatus" ColumnName="OldStatus" />
                 <ScalarProperty Name="EventStatusChangeId" ColumnName="EventStatusChangeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="MyDentDBModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoices">
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -595,6 +801,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ResourceProviders">
+            <EntityTypeMapping TypeName="MyDentDBModel.ResourceProvider">
+              <MappingFragment StoreEntitySet="ResourceProviders">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Technicals">
+            <EntityTypeMapping TypeName="MyDentDBModel.Technical">
+              <MappingFragment StoreEntitySet="Technicals">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TechnicalId" ColumnName="TechnicalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Treatments">
             <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
               <MappingFragment StoreEntitySet="Treatments">
@@ -615,6 +839,19 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LaboratoryWorks">
+            <EntityTypeMapping TypeName="MyDentDBModel.LaboratoryWork">
+              <MappingFragment StoreEntitySet="LaboratoryWorks">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="TechnicalId" ColumnName="TechnicalId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="WorkName" ColumnName="WorkName" />
+                <ScalarProperty Name="LaboratoryWorkId" ColumnName="LaboratoryWorkId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

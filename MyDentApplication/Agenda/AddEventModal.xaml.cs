@@ -249,9 +249,10 @@ namespace MyDentApplication
         private void GetTreatments()
         {
             _treatments = BusinessController.Instance.GetAll<Model.Treatment>()
-                        .OrderBy(t => t.Name)
-                        .ThenBy(t => t.Duration)
-                        .ToList();
+                            .Where(t => t.IsDeleted == false)
+                            .OrderBy(t => t.Name)
+                            .ThenBy(t => t.Duration)
+                            .ToList();
 
             foreach (Model.Treatment treatment in _treatments)
             {
@@ -262,6 +263,7 @@ namespace MyDentApplication
         private void GetPatients()
         {
             _patients = BusinessController.Instance.GetAll<Model.Patient>()
+                        //.Where(p => p.IsDeleted == false)
                         .OrderBy(p => p.FirstName)
                         .ThenBy(p => p.LastName)
                         .ToList();

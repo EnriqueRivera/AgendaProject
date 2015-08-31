@@ -1,0 +1,26 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:System="clr-namespace:System;assembly=mscorlib"
+	x:Class="MyDentApplication.AddEditLaboratoryWorksModal"
+	x:Name="Window"
+	Title="Agregar trabajo de laboratorio"
+	Width="390" Height="299" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="LayoutRoot">
+		<Label x:Name="lblPatient" Content="Paciente:" HorizontalAlignment="Left" Height="27" Margin="85.5,12,0,0" VerticalAlignment="Top" Width="62.5"/>
+		<Label x:Name="lblWorkName" Content="Trabajo:" HorizontalAlignment="Left" Height="27" Margin="96.167,45,0,0" VerticalAlignment="Top" Width="51.833"/>
+		<Button x:Name="btnAddUpdateLaboratoryWork" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="90.67,214.197,0,0" VerticalAlignment="Top" Width="91" Click="btnAddUpdateLaboratoryWork_Click" Cursor="Hand" TabIndex="7"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="199.67,214.197,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="8"/>
+		<Label x:Name="lblReceivedDate" Content="Fecha de recepción:" HorizontalAlignment="Left" Height="27" Margin="31,136.668,0,0" VerticalAlignment="Top" Width="117"/>
+		<ComboBox x:Name="cbPatients" Height="26" Margin="153,13,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="194.5"/>
+		<DatePicker x:Name="dtpReceivedDate" HorizontalAlignment="Left" Height="27" Margin="153,136.668,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="2" IsEnabled="False"/>
+		<Label x:Name="lblDeliveryDate" Content="Fecha de entrega:" HorizontalAlignment="Left" Height="27" Margin="41.667,76,0,0" VerticalAlignment="Top" Width="106.333"/>
+		<DatePicker x:Name="dtpDeliveryDate" HorizontalAlignment="Left" Height="27" Margin="153,77,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="3"/>
+		<TextBox x:Name="txtWorkName" HorizontalAlignment="Left" Height="27" Margin="153,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="4" BorderThickness="1" BorderBrush="Black"/>
+		<Label x:Name="lblTechnical" Content="Técnico:" HorizontalAlignment="Left" Height="27" Margin="93.003,168.668,0,0" VerticalAlignment="Top" Width="54.997"/>
+		<ComboBox x:Name="cbTechnical" Height="26" Margin="153,168.668,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="5" HorizontalAlignment="Left" Width="194.5"/>
+		<Label x:Name="lblReceivedWork" Content="Trabajo recibido:" HorizontalAlignment="Left" Height="27" Margin="47,108,0,0" VerticalAlignment="Top" Width="101"/>
+		<CheckBox x:Name="chkReceivedWork" Content="" HorizontalAlignment="Left" Height="18" Margin="153,113.668,0,0" VerticalAlignment="Top" Width="15.333" Checked="chkReceivedWork_CheckedUnchecked" Unchecked="chkReceivedWork_CheckedUnchecked"/>
+	</Grid>
+</Window>

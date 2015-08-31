@@ -22,7 +22,7 @@
 		<TextBlock x:Name="lblEventCapturer" Text="" Margin="115,126.926,0,0" FontWeight="Normal" FontStyle="Italic" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="494"/>
 		<Label x:Name="lblEventIdCaption" Content="Cita #" Margin="68.866,13.926,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
 		<TextBlock x:Name="lblEventId" HorizontalAlignment="Left" Height="20" Margin="115,18.5,0,0" VerticalAlignment="Top" Width="494" FontWeight="Normal" FontStyle="Italic"/>
-		<DataGrid Margin="11.5,167.593,23,21" IsReadOnly="True"
+		<DataGrid Margin="11.5,167.593,10,21" IsReadOnly="True"
 			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
 			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" TabIndex="1">
 			<DataGrid.Columns>

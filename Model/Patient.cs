@@ -17,6 +17,7 @@ namespace Model
         public Patient()
         {
             this.Events = new HashSet<Event>();
+            this.LaboratoryWorks = new HashSet<LaboratoryWork>();
         }
     
         public int PatientId { get; set; }
@@ -31,5 +32,6 @@ namespace Model
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }
     }
 }

@@ -35,6 +35,10 @@ namespace MyDentApplication
         private ManageRemindersWindow _manageRemindersWindow;
         private FinishedEventsReminderModal _finishedEventsReminderModal;
         private ManageTreatmentsWindow _manageTreatmentsWindow;
+        private ManageInvoicesWindow _manageInvoicesWindow;
+        private ManageProvidersWindow _manageProvidersWindow;
+        private ManageTechnicalsWindow _manageTechnicalsWindow;
+        private ManageLaboratoryWorksWindow _manageLaboratoryWorksWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -143,6 +147,10 @@ namespace MyDentApplication
             CloseWindow(_manageRemindersWindow);
             CloseWindow(_finishedEventsReminderModal);
             CloseWindow(_manageTreatmentsWindow);
+            CloseWindow(_manageInvoicesWindow);
+            CloseWindow(_manageProvidersWindow);
+            CloseWindow(_manageTechnicalsWindow);
+            CloseWindow(_manageLaboratoryWorksWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -175,6 +183,22 @@ namespace MyDentApplication
             else if (sender is ManageTreatmentsWindow)
             {
                 _manageTreatmentsWindow = null;
+            }
+            else if (sender is ManageInvoicesWindow)
+            {
+                _manageInvoicesWindow = null;
+            }
+            else if (sender is ManageProvidersWindow)
+            {
+                _manageProvidersWindow = null;
+            }
+            else if (sender is ManageTechnicalsWindow)
+            {
+                _manageTechnicalsWindow = null;
+            }
+            else if (sender is ManageLaboratoryWorksWindow)
+            {
+                _manageLaboratoryWorksWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -306,6 +330,54 @@ namespace MyDentApplication
         private void btnLogOut_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnManageInvoices_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageInvoicesWindow == null)
+            {
+                _manageInvoicesWindow = new ManageInvoicesWindow();
+                _manageInvoicesWindow.Closed += Window_Closed;
+            }
+
+            _manageInvoicesWindow.Show();
+            _manageInvoicesWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageProviders_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageProvidersWindow == null)
+            {
+                _manageProvidersWindow = new ManageProvidersWindow();
+                _manageProvidersWindow.Closed += Window_Closed;
+            }
+
+            _manageProvidersWindow.Show();
+            _manageProvidersWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageTechnicals_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageTechnicalsWindow == null)
+            {
+                _manageTechnicalsWindow = new ManageTechnicalsWindow();
+                _manageTechnicalsWindow.Closed += Window_Closed;
+            }
+
+            _manageTechnicalsWindow.Show();
+            _manageTechnicalsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageLaboratoryWorks_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageLaboratoryWorksWindow == null)
+            {
+                _manageLaboratoryWorksWindow = new ManageLaboratoryWorksWindow();
+                _manageLaboratoryWorksWindow.Closed += Window_Closed;
+            }
+
+            _manageLaboratoryWorksWindow.Show();
+            _manageLaboratoryWorksWindow.WindowState = WindowState.Normal;
         }
         #endregion
 

@@ -85,6 +85,24 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Invoices\AddEditInvoicesModal.xaml.cs">
+      <DependentUpon>AddEditInvoicesModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Invoices\ManageInvoicesWindow.xaml.cs">
+      <DependentUpon>ManageInvoicesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaboratoryWorks\AddEditLaboratoryWorksModal.xaml.cs">
+      <DependentUpon>AddEditLaboratoryWorksModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaboratoryWorks\ManageLaboratoryWorksWindow.xaml.cs">
+      <DependentUpon>ManageLaboratoryWorksWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\AddEditProvidersModal.xaml.cs">
+      <DependentUpon>AddEditProvidersModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\ManageProvidersWindow.xaml.cs">
+      <DependentUpon>ManageProvidersWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reminders\AddEditRemindersModal.xaml.cs">
       <DependentUpon>AddEditRemindersModal.xaml</DependentUpon>
     </Compile>
@@ -93,6 +111,12 @@
     </Compile>
     <Compile Include="Reminders\ViewReminderControl.xaml.cs">
       <DependentUpon>ViewReminderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Technicals\AddEditTechnicalsModal.xaml.cs">
+      <DependentUpon>AddEditTechnicalsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Technicals\ManageTechnicalsWindow.xaml.cs">
+      <DependentUpon>ManageTechnicalsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Treatments\AddEditTreatmentsModal.xaml.cs">
       <DependentUpon>AddEditTreatmentsModal.xaml</DependentUpon>
@@ -136,6 +160,30 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="Invoices\AddEditInvoicesModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Invoices\ManageInvoicesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LaboratoryWorks\AddEditLaboratoryWorksModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LaboratoryWorks\ManageLaboratoryWorksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Providers\AddEditProvidersModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Providers\ManageProvidersWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reminders\AddEditRemindersModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +193,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reminders\ViewReminderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Technicals\AddEditTechnicalsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Technicals\ManageTechnicalsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -272,8 +328,12 @@
     <Resource Include="Configuration\app_icon.ico" />
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\changePassword_icon.png" />
+    <Resource Include="Images\invoice_icon.png" />
+    <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />
+    <Resource Include="Images\provider_icon.png" />
     <Resource Include="Images\reminder_icon.png" />
+    <Resource Include="Images\technical_icon.png" />
     <Resource Include="Images\treatment_icon.png" />
     <Resource Include="Images\users_icon.png" />
   </ItemGroup>

@@ -56,6 +56,12 @@
     <Compile Include="EventStatusChanx.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Invoice.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LaboratoryWork.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>
@@ -83,6 +89,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Reminder.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceProvider.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Technical.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Treatment.cs">

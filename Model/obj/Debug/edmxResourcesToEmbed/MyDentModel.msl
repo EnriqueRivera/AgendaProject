@@ -38,6 +38,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="MyDentDBModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Logins">
       <EntityTypeMapping TypeName="MyDentDBModel.Login">
         <MappingFragment StoreEntitySet="Logins">
@@ -87,6 +101,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ResourceProviders">
+      <EntityTypeMapping TypeName="MyDentDBModel.ResourceProvider">
+        <MappingFragment StoreEntitySet="ResourceProviders">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Technicals">
+      <EntityTypeMapping TypeName="MyDentDBModel.Technical">
+        <MappingFragment StoreEntitySet="Technicals">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TechnicalId" ColumnName="TechnicalId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Treatments">
       <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
         <MappingFragment StoreEntitySet="Treatments">
@@ -107,6 +139,19 @@
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LaboratoryWorks">
+      <EntityTypeMapping TypeName="MyDentDBModel.LaboratoryWork">
+        <MappingFragment StoreEntitySet="LaboratoryWorks">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="TechnicalId" ColumnName="TechnicalId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+          <ScalarProperty Name="WorkName" ColumnName="WorkName" />
+          <ScalarProperty Name="LaboratoryWorkId" ColumnName="LaboratoryWorkId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

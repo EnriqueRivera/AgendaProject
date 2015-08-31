@@ -34,6 +34,31 @@
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="StatusChangerId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceDate" Type="date" Nullable="false" />
+    <Property Name="PurchaseDate" Type="date" Nullable="false" />
+    <Property Name="Folio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="ProviderId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LaboratoryWorks">
+    <Key>
+      <PropertyRef Name="LaboratoryWorkId" />
+    </Key>
+    <Property Name="LaboratoryWorkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkName" Type="varchar(max)" Nullable="false" />
+    <Property Name="DeliveryDate" Type="date" Nullable="false" />
+    <Property Name="ReceivedDate" Type="date" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="TechnicalId" Type="int" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Logins">
     <Key>
       <PropertyRef Name="LoginId" />
@@ -78,6 +103,22 @@
     <Property Name="RequireAdmin" Type="bit" Nullable="false" />
     <Property Name="Seen" Type="bit" Nullable="false" />
     <Property Name="SeenBy" Type="int" />
+  </EntityType>
+  <EntityType Name="ResourceProviders">
+    <Key>
+      <PropertyRef Name="ProviderId" />
+    </Key>
+    <Property Name="ProviderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Technicals">
+    <Key>
+      <PropertyRef Name="TechnicalId" />
+    </Key>
+    <Property Name="TechnicalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Treatments">
     <Key>
@@ -160,6 +201,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Invoices_ProviderId">
+    <End Role="ResourceProviders" Type="Self.ResourceProviders" Multiplicity="1" />
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ResourceProviders">
+        <PropertyRef Name="ProviderId" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LaboratoryWorks_PatientId">
+    <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+    <End Role="LaboratoryWorks" Type="Self.LaboratoryWorks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="LaboratoryWorks">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LaboratoryWorks_TechnicalId">
+    <End Role="Technicals" Type="Self.Technicals" Multiplicity="1" />
+    <End Role="LaboratoryWorks" Type="Self.LaboratoryWorks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Technicals">
+        <PropertyRef Name="TechnicalId" />
+      </Principal>
+      <Dependent Role="LaboratoryWorks">
+        <PropertyRef Name="TechnicalId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Logins_UserId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
@@ -200,10 +277,14 @@
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LaboratoryWorks" EntityType="Self.LaboratoryWorks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reminders" EntityType="Self.Reminders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ResourceProviders" EntityType="Self.ResourceProviders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
@@ -225,6 +306,18 @@
     <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="Self.FK_EventStatusChanges_StatusChangerId">
       <End Role="Users" EntitySet="Users" />
       <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoices_ProviderId" Association="Self.FK_Invoices_ProviderId">
+      <End Role="ResourceProviders" EntitySet="ResourceProviders" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LaboratoryWorks_PatientId" Association="Self.FK_LaboratoryWorks_PatientId">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="LaboratoryWorks" EntitySet="LaboratoryWorks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LaboratoryWorks_TechnicalId" Association="Self.FK_LaboratoryWorks_TechnicalId">
+      <End Role="Technicals" EntitySet="Technicals" />
+      <End Role="LaboratoryWorks" EntitySet="LaboratoryWorks" />
     </AssociationSet>
     <AssociationSet Name="FK_Logins_UserId" Association="Self.FK_Logins_UserId">
       <End Role="Users" EntitySet="Users" />
