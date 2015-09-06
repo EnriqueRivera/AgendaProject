@@ -97,8 +97,8 @@ namespace MyDentApplication
         {
             DateTime selectedDate = dtudSelectedMonth.Value.Value;
 
-            _invoicesViewModel = cbFilter.SelectedIndex == 0 
-                                ? new Controllers.CustomViewModel<Model.Invoice>(i => i.IsDeleted == false && i.InvoiceDate.Month == selectedDate.Month && i.InvoiceDate.Year == selectedDate.Year, "InvoiceDate", "asc")
+            _invoicesViewModel = cbFilter.SelectedIndex == 0
+                                ? new Controllers.CustomViewModel<Model.Invoice>(i => i.IsDeleted == false && i.InvoiceDate.Value.Month == selectedDate.Month && i.InvoiceDate.Value.Year == selectedDate.Year, "InvoiceDate", "asc")
                                 : new Controllers.CustomViewModel<Model.Invoice>(i => i.IsDeleted == false && i.PurchaseDate.Month == selectedDate.Month && i.PurchaseDate.Year == selectedDate.Year, "PurchaseDate", "asc");   
             
             

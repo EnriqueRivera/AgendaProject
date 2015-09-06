@@ -26,12 +26,13 @@ namespace Model
         public string CellPhone { get; set; }
         public string HomePhone { get; set; }
         public string Email { get; set; }
-        public Nullable<int> PatientRecordId { get; set; }
-        public int DataCapturerId { get; set; }
         public System.DateTime CaptureDate { get; set; }
+        public bool HasHealthInsurance { get; set; }
+        public Nullable<int> ClinicHistoryId { get; set; }
+        public int DataCapturerId { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
-        public virtual User User { get; set; }
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }
+        public virtual User User { get; set; }
     }
 }

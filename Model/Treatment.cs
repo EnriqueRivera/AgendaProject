@@ -22,6 +22,7 @@ namespace Model
         public int TreatmentId { get; set; }
         public string Name { get; set; }
         public int Duration { get; set; }
+        public Nullable<int> Recurrent { get; set; }
         public bool IsDeleted { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }

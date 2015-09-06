@@ -57,11 +57,12 @@ namespace MyDentApplication
             if (_isUpdateInvoice)
             {
                 _invoiceToUpdate.ProviderId = providerId;
-                _invoiceToUpdate.InvoiceDate = dtpInvoiceDate.SelectedDate.Value;
+                _invoiceToUpdate.InvoiceDate = dtpInvoiceDate.SelectedDate;
                 _invoiceToUpdate.PurchaseDate = dtpPurchaseDate.SelectedDate.Value;
                 _invoiceToUpdate.Folio = folio;
                 _invoiceToUpdate.PaidMethod = cbPaidMethod.SelectedValue.ToString();
                 _invoiceToUpdate.TotalAmount = Convert.ToDecimal(totalAmount);
+                _invoiceToUpdate.IsPaid = chkIsPaid.IsChecked.Value;
 
                 UpdateInvoice(_invoiceToUpdate);
             }
@@ -70,12 +71,13 @@ namespace MyDentApplication
                 Model.Invoice invoiceToAdd = new Model.Invoice()
                 {
                     ProviderId = providerId,
-                    InvoiceDate = dtpInvoiceDate.SelectedDate.Value,
+                    InvoiceDate = dtpInvoiceDate.SelectedDate,
                     PurchaseDate = dtpPurchaseDate.SelectedDate.Value,
                     Folio = folio,
                     PaidMethod = cbPaidMethod.SelectedValue.ToString(),
                     TotalAmount = Convert.ToDecimal(totalAmount),
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsPaid = chkIsPaid.IsChecked.Value
                 };
 
                 AddInvoice(invoiceToAdd);
@@ -85,6 +87,22 @@ namespace MyDentApplication
         private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void chkIsInvoiced_CheckedUnchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (chkIsInvoiced.IsChecked.Value)
+            {
+                dtpInvoiceDate.IsEnabled = true;
+                dtpInvoiceDate.SelectedDate = _isUpdateInvoice && _invoiceToUpdate.InvoiceDate != null
+                                                ? _invoiceToUpdate.InvoiceDate
+                                                : DateTime.Now;
+            }
+            else
+            {
+                dtpInvoiceDate.IsEnabled = false;
+                dtpInvoiceDate.SelectedDate = null;
+            }
         }
         #endregion
 
@@ -117,11 +135,14 @@ namespace MyDentApplication
         {
             this.Title = "Actualizar información de la factura";
             btnAddUpdateInvoice.Content = "Actualizar";
-            dtpInvoiceDate.SelectedDate = _invoiceToUpdate.InvoiceDate;
+            
             dtpPurchaseDate.SelectedDate = _invoiceToUpdate.PurchaseDate;
             txtFolio.Text = _invoiceToUpdate.Folio;
             txtTotalAmount.Text = _invoiceToUpdate.TotalAmount.ToString();
             cbPaidMethod.SelectedValue = _invoiceToUpdate.PaidMethod;
+            chkIsPaid.IsChecked = _invoiceToUpdate.IsPaid;
+            chkIsInvoiced.IsChecked = _invoiceToUpdate.InvoiceDate != null;
+            dtpInvoiceDate.SelectedDate = _invoiceToUpdate.InvoiceDate;
 
             //Select Paid method
             for (int i = 0; i < cbPaidMethod.Items.Count; i++)
@@ -168,7 +189,7 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (dtpInvoiceDate.SelectedDate == null)
+            if (chkIsInvoiced.IsChecked.Value && dtpInvoiceDate.SelectedDate == null)
             {
                 MessageBox.Show("Seleccione una fecha de facturación válida", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;

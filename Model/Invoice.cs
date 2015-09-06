@@ -15,11 +15,12 @@ namespace Model
     public partial class Invoice
     {
         public int InvoiceId { get; set; }
-        public System.DateTime InvoiceDate { get; set; }
+        public Nullable<System.DateTime> InvoiceDate { get; set; }
         public System.DateTime PurchaseDate { get; set; }
         public string Folio { get; set; }
         public string PaidMethod { get; set; }
         public decimal TotalAmount { get; set; }
+        public bool IsPaid { get; set; }
         public bool IsDeleted { get; set; }
         public int ProviderId { get; set; }
     

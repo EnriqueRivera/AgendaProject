@@ -46,11 +46,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -329,6 +331,7 @@
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\changePassword_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
+    <Resource Include="Images\Justificante.PNG" />
     <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />
     <Resource Include="Images\provider_icon.png" />
@@ -339,6 +342,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\app_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PrintableDocuments\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -38,10 +38,10 @@
 				</ScrollViewer>
 			</Grid>
 		</GroupBox>
-		<Button x:Name="btnOpenAgenda" Margin="166,22.5,0,0" Width="85" Height="85" Click="btnOpenAgenda_Click" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top"> 
+		<Button x:Name="btnOpenAgenda" Margin="166,22.5,0,0" Width="90" Height="90" Click="btnOpenAgenda_Click" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top"> 
 			<StackPanel Orientation="Vertical">
 				<Image Source="/MyDentApplication;component/Images/agenda_icon.png" Width="50" Height="50"  />
-				<TextBlock Text="Agenda" TextAlignment="Center" />
+				<TextBlock TextAlignment="Center" ><Run Text="Agenda"/><Run Text=" de"/><LineBreak/><Run Text="c"/><Run Text="itas"/></TextBlock>
 			</StackPanel>
 		</Button>
 		<Button x:Name="btnChangePassword" Margin="139.5,0,0,10" Height="85" Click="btnChangePassword_Click" Cursor="Hand" HorizontalAlignment="Left" Width="124.5" VerticalAlignment="Bottom"> 
@@ -59,19 +59,19 @@
 		<GroupBox x:Name="gbAdministration" Header="Administración" HorizontalAlignment="Left" Margin="10,10,0,102.001" Width="151" FontWeight="Bold" BorderBrush="Black" BorderThickness="2">
 			<ScrollViewer Margin="0,10,-2,2.019" VerticalScrollBarVisibility="Auto" FontWeight="Normal" VerticalAlignment="Center">
 				<StackPanel>
-					<Button x:Name="btnManageUsers" Width="85" Height="85" Click="btnManageUsers_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
+					<Button x:Name="btnManageUsers" Width="90" Height="90" Click="btnManageUsers_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/users_icon.png" Width="50" Height="50"  />
 							<TextBlock Text="Usuarios" TextAlignment="Center" />
 						</StackPanel>
 					</Button>
-					<Button x:Name="btnManageTreatments" Width="85" Height="85" Click="btnManageTreatments_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
+					<Button x:Name="btnManageTreatments" Width="90" Height="90" Click="btnManageTreatments_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/treatment_icon.png" Width="50" Height="50"  />
 							<TextBlock Text="Tratamientos" TextAlignment="Center" />
 						</StackPanel>
 					</Button>
-					<Button x:Name="btnManageReminders" Width="85" Height="85" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
+					<Button x:Name="btnManageReminders" Width="90" Height="90" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/reminder_icon.png" Width="50" Height="50"  />
 							<TextBlock Text="Recordatorios" TextAlignment="Center" />
@@ -80,29 +80,29 @@
 				</StackPanel>
 			</ScrollViewer>
 		</GroupBox>
-		<Button x:Name="btnManageInvoices" Width="85" Height="85" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="166,112.5,0,0" Click="btnManageInvoices_Click"> 
+		<Button x:Name="btnManageInvoices" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="166,117.5,0,0" Click="btnManageInvoices_Click"> 
 			<StackPanel Orientation="Vertical">
 				<Image Source="/MyDentApplication;component/Images/invoice_icon.png" Width="50" Height="50"  />
 				<TextBlock Text="Facturas" TextAlignment="Center" />
 			</StackPanel>
 		</Button>
-		<Button x:Name="btnManageProviders" Width="85" Height="85" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="256,22.5,0,0" Click="btnManageProviders_Click" > 
+		<Button x:Name="btnManageProviders" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,22.5,0,0" Click="btnManageProviders_Click" > 
 			<StackPanel Orientation="Vertical">
 				<Image Source="/MyDentApplication;component/Images/provider_icon.png" Width="50" Height="50"  />
 				<TextBlock Text="Proveedores" TextAlignment="Center" />
 			</StackPanel>
 		</Button>
-		<Button x:Name="btnManageTechnicals" Width="85" Height="85" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="256,112.5,0,0" Click="btnManageTechnicals_Click" > 
+		<Button x:Name="btnManageTechnicals" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,117.5,0,0" Click="btnManageTechnicals_Click" > 
 			<StackPanel Orientation="Vertical">
 				<Image Source="/MyDentApplication;component/Images/technical_icon.png" Width="50" Height="50"  />
 				<TextBlock Text="Técnicos" TextAlignment="Center" />
 			</StackPanel>
 		</Button>
-		<Button x:Name="btnManageLaboratoryWorks" Width="85" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="166,202.5,0,0" Click="btnManageLaboratoryWorks_Click" > 
-			<StackPanel Orientation="Vertical">
-				<Image Source="/MyDentApplication;component/Images/laboratoryWork_icon.png" Width="50" Height="50"  />
-				<TextBlock TextAlignment="Center" Height="34.627" ><Run Text="Trabajos de "/><LineBreak/><Run Text="laboratorio"/></TextBlock>
-			</StackPanel>
-		</Button>
-	</Grid>
+        <Button x:Name="btnManageLaboratoryWorks" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="166,212.5,0,0" Click="btnManageLaboratoryWorks_Click" >
+            <StackPanel Orientation="Vertical">
+                <Image Source="/MyDentApplication;component/Images/laboratoryWork_icon.png" Width="50" Height="50"  />
+                <TextBlock TextAlignment="Center" Height="34.627" ><Run Text="Trabajos de "/><LineBreak/><Run Text="laboratorio"/></TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
 </Window>

@@ -44,8 +44,9 @@ namespace MyDentApplication
         private void btnAddUpdateTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string treatmentName = txtTreatmentName.Text.Trim();
+            int? recurrentDays;
 
-            if (AreValidFields(treatmentName) == false)
+            if (AreValidFields(treatmentName, out recurrentDays) == false)
             {
                 return;
             }
@@ -56,6 +57,7 @@ namespace MyDentApplication
             {
                 _treatmentToUpdate.Name = treatmentName;
                 _treatmentToUpdate.Duration = duration;
+                _treatmentToUpdate.Recurrent = recurrentDays;
 
                 UpdateTreatment(_treatmentToUpdate);
             }
@@ -65,7 +67,8 @@ namespace MyDentApplication
                 {
                     Name = treatmentName,
                     Duration = duration,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Recurrent = recurrentDays
                 };
 
                 AddTreatment(treatmentToAdd);
@@ -76,6 +79,22 @@ namespace MyDentApplication
         {
             this.Close();
         }
+
+        private void chkIsRecurrent_CheckedUnchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (chkIsRecurrent.IsChecked.Value)
+            {
+                txtRecurrentDays.IsEnabled = true;
+                txtRecurrentDays.ToolTip = txtRecurrentDays.Text = _isUpdateTreatmentInfo && _treatmentToUpdate.Recurrent != null
+                                                                    ? _treatmentToUpdate.Recurrent.ToString()
+                                                                    : string.Empty;
+            }
+            else
+            {
+                txtRecurrentDays.IsEnabled = false;
+                txtRecurrentDays.ToolTip = txtRecurrentDays.Text = string.Empty;
+            }
+        }
         #endregion
 
         #region Window's logic
@@ -83,8 +102,10 @@ namespace MyDentApplication
         {
             this.Title = "Actualizar información del tratamiento";
             btnAddUpdateTreatment.Content = "Actualizar";
-            txtTreatmentName.Text = _treatmentToUpdate.Name;
+            txtTreatmentName.ToolTip = txtTreatmentName.Text = _treatmentToUpdate.Name;
             cbTreatmentDuration.SelectedIndex = (_treatmentToUpdate.Duration / _treatmentIntervalDuration) - 1;
+            chkIsRecurrent.IsChecked = txtRecurrentDays.IsEnabled = _treatmentToUpdate.Recurrent != null;
+            txtRecurrentDays.ToolTip = txtRecurrentDays.Text = _treatmentToUpdate.Recurrent == null ? string.Empty : _treatmentToUpdate.Recurrent.Value.ToString();
         }
 
         private void FillComboBoxDuration()
@@ -99,8 +120,12 @@ namespace MyDentApplication
             }
         }
 
-        private bool AreValidFields(string treatmentName)
+        private bool AreValidFields(string treatmentName, out int? recurrentDays)
         {
+            int auxRecurrentDays;
+            int.TryParse(txtRecurrentDays.Text.Trim(), out auxRecurrentDays);
+            recurrentDays = auxRecurrentDays;
+
             if (string.IsNullOrEmpty(treatmentName))
             {
                 MessageBox.Show("Ingrese el nombre del tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -111,6 +136,19 @@ namespace MyDentApplication
             {
                 MessageBox.Show("Seleccione la duración del tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
+            }
+
+            if (chkIsRecurrent.IsChecked.Value)
+            {
+                if (recurrentDays <= 0)
+	            {
+		            MessageBox.Show("Indique un número válido para los días de recurrencia", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return false;
+	            }
+            }
+            else
+            {
+                recurrentDays = null;
             }
 
             return true;
