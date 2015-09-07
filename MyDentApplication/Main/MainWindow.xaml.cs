@@ -39,6 +39,7 @@ namespace MyDentApplication
         private ManageProvidersWindow _manageProvidersWindow;
         private ManageTechnicalsWindow _manageTechnicalsWindow;
         private ManageLaboratoryWorksWindow _manageLaboratoryWorksWindow;
+        private ManageMedicinesWindow _manageMedicinesWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -60,6 +61,8 @@ namespace MyDentApplication
             HideButtonsForNonAdminUsers();
             lblLoggedIn.ToolTip = lblLoggedIn.Content = _userLoggedIn.FirstName + " " + _userLoggedIn.LastName;
             lblLoggedIn.FontWeight = _userLoggedIn.IsAdmin ? FontWeights.Bold : lblLoggedIn.FontWeight;
+
+            RefreshMedicinesStackPanel();
 
             _checkFinishedEventsThread = new Thread(CheckFinishedEvents);
             _checkFinishedEventsThread.SetApartmentState(ApartmentState.STA);
@@ -151,6 +154,7 @@ namespace MyDentApplication
             CloseWindow(_manageProvidersWindow);
             CloseWindow(_manageTechnicalsWindow);
             CloseWindow(_manageLaboratoryWorksWindow);
+            CloseWindow(_manageMedicinesWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -179,6 +183,11 @@ namespace MyDentApplication
             {
                 _manageRemindersWindow = null;
                 RefreshRemindersStackPanel();
+            }
+            else if (sender is ManageMedicinesWindow)
+            {
+                _manageMedicinesWindow = null;
+                RefreshMedicinesStackPanel();
             }
             else if (sender is ManageTreatmentsWindow)
             {
@@ -379,6 +388,28 @@ namespace MyDentApplication
             _manageLaboratoryWorksWindow.Show();
             _manageLaboratoryWorksWindow.WindowState = WindowState.Normal;
         }
+
+        private void btnRefreshMedicines_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            RefreshMedicinesStackPanel();
+        }
+
+        private void btnRefreshReminders_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            RefreshRemindersStackPanel();
+        }
+
+        private void btnManageMedicines_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageMedicinesWindow == null)
+            {
+                _manageMedicinesWindow = new ManageMedicinesWindow(_userLoggedIn);
+                _manageMedicinesWindow.Closed += Window_Closed;
+            }
+
+            _manageMedicinesWindow.Show();
+            _manageMedicinesWindow.WindowState = WindowState.Normal;
+        }
         #endregion
 
         #region Actions to execute from another thread
@@ -457,8 +488,8 @@ namespace MyDentApplication
                 }
             }
 
-            lblPendingReminders.ToolTip = lblPendingReminders.Content = "Recordatorios pendientes (" + pendingReminders + ")";
-            lblSeenReminders.ToolTip = lblSeenReminders.Content = "Recordatorios mostrados (" + seenReminders + ")";
+            lblPendingReminders.ToolTip = lblPendingReminders.Content = "Pendientes (" + pendingReminders + ")";
+            lblSeenReminders.ToolTip = lblSeenReminders.Content = "Mostrados (" + seenReminders + ")";
         }
 
         private void DisplayReminders(List<Model.Reminder> todayReminders)
@@ -473,6 +504,65 @@ namespace MyDentApplication
                 this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
                 new ShowPendingReminderModal(reminder, _userLoggedIn).ShowDialog();
             }
+        }
+        #endregion
+
+        #region Medicines
+        private void RefreshMedicinesStackPanel()
+        {
+            int expiredMedicines = 0;
+            int replacedMedicines = 0;
+            DateTime today = DateTime.Now;
+
+            List<Model.Medicine> monthlyMedicines = BusinessController.Instance.FindBy<Model.Medicine>
+                                                    (m => m.IsDeleted == false && m.ExpiredDate.Year == today.Year && m.ExpiredDate.Month == today.Month)
+                                                    .OrderBy(m => m.WasReplaced == false)
+                                                    .ThenBy(m => m.Name)
+                                                    .ToList();
+
+            int medicinesCount = monthlyMedicines.Count;
+            int spMedicinesCount = spMedicines.Children.Count;
+
+            if (medicinesCount > spMedicinesCount)
+            {
+                for (int i = 0; i < medicinesCount - spMedicinesCount; i++)
+                {
+                    ViewMedicineControl viewMedicineControl = new ViewMedicineControl();
+                    viewMedicineControl.OnMedicineUpdated += viewMedicineControl_OnMedicineUpdated;
+
+                    spMedicines.Children.Add(viewMedicineControl);
+                }
+            }
+            else if (medicinesCount < spMedicinesCount)
+            {
+                spMedicines.Children.RemoveRange(0, spMedicinesCount - medicinesCount);
+            }
+
+            for (int i = 0; i < medicinesCount; i++)
+            {
+                ViewMedicineControl medicineControl = (spMedicines.Children[i] as ViewMedicineControl);
+
+                medicineControl.Medicine = monthlyMedicines[i];
+
+                medicineControl.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
+
+                if (monthlyMedicines[i].WasReplaced)
+                {
+                    replacedMedicines++;
+                }
+                else
+                {
+                    expiredMedicines++;
+                }
+            }
+
+            lblExpiredMedicine.ToolTip = lblExpiredMedicine.Content = "Sin reemplazar (" + expiredMedicines + ")";
+            lblReplacedMedicine.ToolTip = lblReplacedMedicine.Content = "Reemplazado (" + replacedMedicines + ")";
+        }
+
+        void viewMedicineControl_OnMedicineUpdated(object sender, bool e)
+        {
+            RefreshMedicinesStackPanel();
         }
         #endregion
 

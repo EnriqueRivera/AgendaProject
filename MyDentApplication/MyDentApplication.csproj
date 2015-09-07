@@ -99,6 +99,15 @@
     <Compile Include="LaboratoryWorks\ManageLaboratoryWorksWindow.xaml.cs">
       <DependentUpon>ManageLaboratoryWorksWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Medicines\AddEditMedicinesModal.xaml.cs">
+      <DependentUpon>AddEditMedicinesModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Medicines\ManageMedicinesWindow.xaml.cs">
+      <DependentUpon>ManageMedicinesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Medicines\ViewMedicineControl.xaml.cs">
+      <DependentUpon>ViewMedicineControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Providers\AddEditProvidersModal.xaml.cs">
       <DependentUpon>AddEditProvidersModal.xaml</DependentUpon>
     </Compile>
@@ -175,6 +184,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LaboratoryWorks\ManageLaboratoryWorksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Medicines\AddEditMedicinesModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Medicines\ManageMedicinesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Medicines\ViewMedicineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -334,7 +355,9 @@
     <Resource Include="Images\Justificante.PNG" />
     <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />
+    <Resource Include="Images\medicine_icon.png" />
     <Resource Include="Images\provider_icon.png" />
+    <Resource Include="Images\refresh_icon.png" />
     <Resource Include="Images\reminder_icon.png" />
     <Resource Include="Images\technical_icon.png" />
     <Resource Include="Images\treatment_icon.png" />

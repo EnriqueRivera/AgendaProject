@@ -21,6 +21,7 @@ namespace Model
             this.Logins = new HashSet<Login>();
             this.Patients = new HashSet<Patient>();
             this.Reminders = new HashSet<Reminder>();
+            this.Medicines = new HashSet<Medicine>();
         }
     
         public int UserId { get; set; }
@@ -36,5 +37,6 @@ namespace Model
         public virtual ICollection<Login> Logins { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<Reminder> Reminders { get; set; }
+        public virtual ICollection<Medicine> Medicines { get; set; }
     }
 }

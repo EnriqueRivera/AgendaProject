@@ -58,6 +58,11 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Reminder" EntitySet="Reminders" />
     </AssociationSet>
+    <EntitySet Name="Medicines" EntityType="MyDentDBModel.Medicine" />
+    <AssociationSet Name="FK_Medicines_DataCapturerId" Association="MyDentDBModel.FK_Medicines_DataCapturerId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Medicine" EntitySet="Medicines" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -225,6 +230,7 @@
     <NavigationProperty Name="Logins" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="User" ToRole="Login" />
     <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
     <NavigationProperty Name="Reminders" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="User" ToRole="Reminder" />
+    <NavigationProperty Name="Medicines" Relationship="MyDentDBModel.FK_Medicines_DataCapturerId" FromRole="User" ToRole="Medicine" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -355,6 +361,33 @@
       </Principal>
       <Dependent Role="Reminder">
         <PropertyRef Name="SeenBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="MedicineId" />
+    </Key>
+    <Property Name="MedicineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Brand" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ExpiredDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="WasReplaced" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="DataCapturerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Medicines_DataCapturerId" FromRole="Medicine" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Medicines_DataCapturerId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.Medicine" Role="Medicine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Medicine">
+        <PropertyRef Name="DataCapturerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

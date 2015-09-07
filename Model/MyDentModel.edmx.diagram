@@ -29,6 +29,8 @@
         <AssociationConnector Association="MyDentDBModel.FK_Logins_UserId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
+        <EntityTypeShape EntityType="MyDentDBModel.Medicine" Width="1.5" PointX="3" PointY="22.25" />
+        <AssociationConnector Association="MyDentDBModel.FK_Medicines_DataCapturerId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
