@@ -18,6 +18,7 @@ namespace Model
         {
             this.Events = new HashSet<Event>();
             this.LaboratoryWorks = new HashSet<LaboratoryWork>();
+            this.OutgoingInvoices = new HashSet<OutgoingInvoice>();
         }
     
         public int PatientId { get; set; }
@@ -30,9 +31,11 @@ namespace Model
         public bool HasHealthInsurance { get; set; }
         public Nullable<int> ClinicHistoryId { get; set; }
         public int DataCapturerId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }
+        public virtual ICollection<OutgoingInvoice> OutgoingInvoices { get; set; }
         public virtual User User { get; set; }
     }
 }

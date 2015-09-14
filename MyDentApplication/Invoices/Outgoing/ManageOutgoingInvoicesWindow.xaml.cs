@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Objects;
-using System.Globalization;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,16 +14,16 @@ using System.Linq;
 namespace MyDentApplication
 {
 	/// <summary>
-	/// Interaction logic for ManageInvoicesWindow.xaml
+	/// Interaction logic for ManageOutgoingInvoicesWindow.xaml
 	/// </summary>
-	public partial class ManageInvoicesWindow : Window
+	public partial class ManageOutgoingInvoicesWindow : Window
 	{
-        #region Instance variables
-        private Controllers.CustomViewModel<Model.Invoice> _invoicesViewModel;
+		#region Instance variables
+        private Controllers.CustomViewModel<Model.OutgoingInvoice> _invoicesViewModel;
         #endregion
 
         #region Constructors
-        public ManageInvoicesWindow()
+        public ManageOutgoingInvoicesWindow()
 		{
 			this.InitializeComponent();
 
@@ -38,13 +35,13 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnAddInvoice_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            new AddEditInvoicesModal(null).ShowDialog();
+            new AddEditOutgoingInvoicesModal(null).ShowDialog();
             UpdateGrid();
 		}
 
 		private void btnEditInvoice_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            Model.Invoice invoiceSelected = dgInvoices.SelectedItem == null ? null : dgInvoices.SelectedItem as Model.Invoice;
+            Model.OutgoingInvoice invoiceSelected = dgInvoices.SelectedItem == null ? null : dgInvoices.SelectedItem as Model.OutgoingInvoice;
 
             if (invoiceSelected == null)
             {
@@ -52,14 +49,14 @@ namespace MyDentApplication
             }
             else
             {
-                new AddEditInvoicesModal(invoiceSelected).ShowDialog();
+                new AddEditOutgoingInvoicesModal(invoiceSelected).ShowDialog();
                 UpdateGrid();
             }
 		}
 
 		private void btnDeleteInvoice_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            Model.Invoice invoiceSelected = dgInvoices.SelectedItem == null ? null : dgInvoices.SelectedItem as Model.Invoice;
+            Model.OutgoingInvoice invoiceSelected = dgInvoices.SelectedItem == null ? null : dgInvoices.SelectedItem as Model.OutgoingInvoice;
 
             if (invoiceSelected == null)
             {
@@ -75,7 +72,7 @@ namespace MyDentApplication
             {
                 invoiceSelected.IsDeleted = true;
 
-                if (Controllers.BusinessController.Instance.Update<Model.Invoice>(invoiceSelected))
+                if (Controllers.BusinessController.Instance.Update<Model.OutgoingInvoice>(invoiceSelected))
                 {
                     UpdateGrid();
                 }
@@ -98,8 +95,8 @@ namespace MyDentApplication
             DateTime selectedDate = dtudSelectedMonth.Value.Value;
 
             _invoicesViewModel = cbFilter.SelectedIndex == 0
-                                ? new Controllers.CustomViewModel<Model.Invoice>(i => i.IsDeleted == false && i.InvoiceDate.Value.Month == selectedDate.Month && i.InvoiceDate.Value.Year == selectedDate.Year, "InvoiceDate", "asc")
-                                : new Controllers.CustomViewModel<Model.Invoice>(i => i.IsDeleted == false && i.PurchaseDate.Month == selectedDate.Month && i.PurchaseDate.Year == selectedDate.Year, "PurchaseDate", "asc");   
+                                ? new Controllers.CustomViewModel<Model.OutgoingInvoice>(i => i.IsDeleted == false && i.InvoiceDate.Value.Month == selectedDate.Month && i.InvoiceDate.Value.Year == selectedDate.Year, "InvoiceDate", "asc")
+                                : new Controllers.CustomViewModel<Model.OutgoingInvoice>(i => i.IsDeleted == false && i.PaidDate.Month == selectedDate.Month && i.PaidDate.Year == selectedDate.Year, "PaidDate", "asc");   
             
             
             this.DataContext = _invoicesViewModel;
@@ -109,25 +106,4 @@ namespace MyDentApplication
         }
         #endregion
 	}
-
-    public class DateValueConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length == 1)
-            {
-                if (values[0] is DateTime)
-                {
-                    return ((DateTime)values[0]).ToString("dd/MMMM/yyyy");
-                }
-            }
-
-            return string.Empty;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

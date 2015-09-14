@@ -35,11 +35,15 @@ namespace MyDentApplication
         private ManageRemindersWindow _manageRemindersWindow;
         private FinishedEventsReminderModal _finishedEventsReminderModal;
         private ManageTreatmentsWindow _manageTreatmentsWindow;
-        private ManageInvoicesWindow _manageInvoicesWindow;
+        private ManageReceivedInvoicesWindow _manageReceivedInvoicesWindow;
+        private ManageOutgoingInvoicesWindow _manageOutgoingInvoicesWindow;
         private ManageProvidersWindow _manageProvidersWindow;
         private ManageTechnicalsWindow _manageTechnicalsWindow;
         private ManageLaboratoryWorksWindow _manageLaboratoryWorksWindow;
         private ManageMedicinesWindow _manageMedicinesWindow;
+        private MedicalProofDocument _medicalProofDocumentWindow;
+        private TotalInvoicesWindow _totalInvoicesWindow;
+        private ManageGeneralPaidsWindow _manageGeneralPaidsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -79,16 +83,11 @@ namespace MyDentApplication
         #region Check App Configuration
         private void CheckGlobalConfigurations()
         {
-            bool configurationAddedSuccessfully = CheckSchedulerColorsConfiguration() && CheckMaxSkipsEventsConfiguration();
+            bool configurationAddedSuccessfully = CheckSchedulerColorsConfiguration();
             if (configurationAddedSuccessfully == false)
             {
                 MessageBox.Show("Alguna configuración inicial de la aplicación no pudo ser creada", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private bool CheckMaxSkipsEventsConfiguration()
-        {
-            return BusinessController.Instance.AddIfDoesntExist<Model.Configuration>(c => c.Name == Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION, new Model.Configuration() { Name = Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION, Value = "3" });
         }
 
         private bool CheckSchedulerColorsConfiguration()
@@ -150,11 +149,15 @@ namespace MyDentApplication
             CloseWindow(_manageRemindersWindow);
             CloseWindow(_finishedEventsReminderModal);
             CloseWindow(_manageTreatmentsWindow);
-            CloseWindow(_manageInvoicesWindow);
+            CloseWindow(_manageReceivedInvoicesWindow);
+            CloseWindow(_manageOutgoingInvoicesWindow);
             CloseWindow(_manageProvidersWindow);
             CloseWindow(_manageTechnicalsWindow);
             CloseWindow(_manageLaboratoryWorksWindow);
             CloseWindow(_manageMedicinesWindow);
+            CloseWindow(_medicalProofDocumentWindow);
+            CloseWindow(_totalInvoicesWindow);
+            CloseWindow(_manageGeneralPaidsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -193,9 +196,17 @@ namespace MyDentApplication
             {
                 _manageTreatmentsWindow = null;
             }
-            else if (sender is ManageInvoicesWindow)
+            else if (sender is ManageReceivedInvoicesWindow)
             {
-                _manageInvoicesWindow = null;
+                _manageReceivedInvoicesWindow = null;
+            }
+            else if (sender is ManageOutgoingInvoicesWindow)
+            {
+                _manageOutgoingInvoicesWindow = null;
+            }
+            else if (sender is TotalInvoicesWindow)
+            {
+                _totalInvoicesWindow = null;
             }
             else if (sender is ManageProvidersWindow)
             {
@@ -208,6 +219,14 @@ namespace MyDentApplication
             else if (sender is ManageLaboratoryWorksWindow)
             {
                 _manageLaboratoryWorksWindow = null;
+            }
+            else if (sender is MedicalProofDocument)
+            {
+                _medicalProofDocumentWindow = null;
+            }
+            else if (sender is ManageGeneralPaidsWindow)
+            {
+                _manageGeneralPaidsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -341,16 +360,40 @@ namespace MyDentApplication
             this.Close();
         }
 
-        private void btnManageInvoices_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnManageReceivedInvoices_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (_manageInvoicesWindow == null)
+            if (_manageReceivedInvoicesWindow == null)
             {
-                _manageInvoicesWindow = new ManageInvoicesWindow();
-                _manageInvoicesWindow.Closed += Window_Closed;
+                _manageReceivedInvoicesWindow = new ManageReceivedInvoicesWindow();
+                _manageReceivedInvoicesWindow.Closed += Window_Closed;
             }
 
-            _manageInvoicesWindow.Show();
-            _manageInvoicesWindow.WindowState = WindowState.Normal;
+            _manageReceivedInvoicesWindow.Show();
+            _manageReceivedInvoicesWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageOutgoingInvoices_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageOutgoingInvoicesWindow == null)
+            {
+                _manageOutgoingInvoicesWindow = new ManageOutgoingInvoicesWindow();
+                _manageOutgoingInvoicesWindow.Closed += Window_Closed;
+            }
+
+            _manageOutgoingInvoicesWindow.Show();
+            _manageOutgoingInvoicesWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnTotalInvoices_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_totalInvoicesWindow == null)
+            {
+                _totalInvoicesWindow = new TotalInvoicesWindow();
+                _totalInvoicesWindow.Closed += Window_Closed;
+            }
+
+            _totalInvoicesWindow.Show();
+            _totalInvoicesWindow.WindowState = WindowState.Normal;
         }
 
         private void btnManageProviders_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -409,6 +452,30 @@ namespace MyDentApplication
 
             _manageMedicinesWindow.Show();
             _manageMedicinesWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnPrintDocuments_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_medicalProofDocumentWindow == null)
+            {
+                _medicalProofDocumentWindow = new MedicalProofDocument();
+                _medicalProofDocumentWindow.Closed += Window_Closed;
+            }
+
+            _medicalProofDocumentWindow.Show();
+            _medicalProofDocumentWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnGeneralPaids_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageGeneralPaidsWindow == null)
+            {
+                _manageGeneralPaidsWindow = new ManageGeneralPaidsWindow();
+                _manageGeneralPaidsWindow.Closed += Window_Closed;
+            }
+
+            _manageGeneralPaidsWindow.Show();
+            _manageGeneralPaidsWindow.WindowState = WindowState.Normal;
         }
         #endregion
 

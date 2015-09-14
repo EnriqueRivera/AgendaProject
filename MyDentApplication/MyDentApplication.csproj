@@ -87,11 +87,26 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Compile Include="Invoices\AddEditInvoicesModal.xaml.cs">
-      <DependentUpon>AddEditInvoicesModal.xaml</DependentUpon>
+    <Compile Include="GeneralPaids\AddEditGeneralPaidsModal.xaml.cs">
+      <DependentUpon>AddEditGeneralPaidsModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Invoices\ManageInvoicesWindow.xaml.cs">
-      <DependentUpon>ManageInvoicesWindow.xaml</DependentUpon>
+    <Compile Include="GeneralPaids\ManageGeneralPaidsWindow.xaml.cs">
+      <DependentUpon>ManageGeneralPaidsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Invoices\Outgoing\AddEditOutgoingInvoicesModal.xaml.cs">
+      <DependentUpon>AddEditOutgoingInvoicesModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Invoices\Outgoing\ManageOutgoingInvoicesWindow.xaml.cs">
+      <DependentUpon>ManageOutgoingInvoicesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Invoices\Received\AddEditReceivedInvoicesModal.xaml.cs">
+      <DependentUpon>AddEditReceivedInvoicesModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Invoices\Received\ManageReceivedInvoicesWindow.xaml.cs">
+      <DependentUpon>ManageReceivedInvoicesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Invoices\Total\TotalInvoicesWindow.xaml.cs">
+      <DependentUpon>TotalInvoicesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LaboratoryWorks\AddEditLaboratoryWorksModal.xaml.cs">
       <DependentUpon>AddEditLaboratoryWorksModal.xaml</DependentUpon>
@@ -107,6 +122,9 @@
     </Compile>
     <Compile Include="Medicines\ViewMedicineControl.xaml.cs">
       <DependentUpon>ViewMedicineControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrintableDocuments\MedicalProofDocument.xaml.cs">
+      <DependentUpon>MedicalProofDocument.xaml</DependentUpon>
     </Compile>
     <Compile Include="Providers\AddEditProvidersModal.xaml.cs">
       <DependentUpon>AddEditProvidersModal.xaml</DependentUpon>
@@ -171,11 +189,31 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
-    <Page Include="Invoices\AddEditInvoicesModal.xaml">
+    <Page Include="GeneralPaids\AddEditGeneralPaidsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Invoices\ManageInvoicesWindow.xaml">
+    <Page Include="GeneralPaids\ManageGeneralPaidsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Invoices\Outgoing\AddEditOutgoingInvoicesModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Invoices\Outgoing\ManageOutgoingInvoicesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Invoices\Received\AddEditReceivedInvoicesModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Invoices\Received\ManageReceivedInvoicesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Invoices\Total\TotalInvoicesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -196,6 +234,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Medicines\ViewMedicineControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PrintableDocuments\MedicalProofDocument.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -350,13 +392,20 @@
   <ItemGroup>
     <Resource Include="Configuration\app_icon.ico" />
     <Resource Include="Images\agenda_icon.png" />
+    <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\changePassword_icon.png" />
+    <Resource Include="Images\general_paids_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
     <Resource Include="Images\Justificante.PNG" />
     <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />
+    <Resource Include="Images\MedicalProofDocument_1.PNG" />
+    <Resource Include="Images\MedicalProofDocument_2.PNG" />
     <Resource Include="Images\medicine_icon.png" />
+    <Resource Include="Images\outgoing_invoice_icon.png" />
+    <Resource Include="Images\print_icon.png" />
     <Resource Include="Images\provider_icon.png" />
+    <Resource Include="Images\received_invoice_icon.png" />
     <Resource Include="Images\refresh_icon.png" />
     <Resource Include="Images\reminder_icon.png" />
     <Resource Include="Images\technical_icon.png" />
@@ -367,7 +416,33 @@
     <Resource Include="Images\app_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PrintableDocuments\" />
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Outlook">
+      <Guid>{00062FFF-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

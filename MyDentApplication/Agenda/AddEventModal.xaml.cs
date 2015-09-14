@@ -27,6 +27,7 @@ namespace MyDentApplication
         private Model.Patient _selectedPatient;
         private Model.Treatment _selectedTreatment;
         private Model.User _userLoggedIn;
+        private const int maxSkippedEvents = 3;
         #endregion
 
         #region Constructors
@@ -87,14 +88,7 @@ namespace MyDentApplication
                                                 .OrderBy(ev => ev.StartEvent)
                                                 .ToList();
 
-            Model.Configuration skippedEventsConfiguration = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == Utils.PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION).FirstOrDefault();
-
-            int maxSkippedEvents;
-            if (int.TryParse(skippedEventsConfiguration == null ? "3" : skippedEventsConfiguration.Value, out maxSkippedEvents) == false)
-            {
-                maxSkippedEvents = 3;
-            }
-
+            
             if (skippedEvents.Count >= maxSkippedEvents)
             {
                 string skippedEventsMessage = string.Empty;

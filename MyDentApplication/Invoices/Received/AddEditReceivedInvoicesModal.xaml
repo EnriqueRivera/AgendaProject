@@ -2,26 +2,26 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:System="clr-namespace:System;assembly=mscorlib"
-	x:Class="MyDentApplication.AddEditInvoicesModal"
+	x:Class="MyDentApplication.AddEditReceivedInvoicesModal"
 	x:Name="Window"
-	Title="Agregar factura"
+	Title="Agregar factura recibida"
 	Width="390" Height="361" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
 		<Label x:Name="lblProvider" Content="Proveedor:" HorizontalAlignment="Left" Height="27" Margin="77.667,13,0,0" VerticalAlignment="Top" Width="70.333"/>
 		<Label x:Name="lblInvoiceDate" Content="Fecha de facturación:" HorizontalAlignment="Left" Height="27" Margin="23.667,77,0,0" VerticalAlignment="Top" Width="124.333"/>
-		<Button x:Name="btnAddUpdateInvoice" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="100.67,280.697,0,0" VerticalAlignment="Top" Width="91" Click="btnAddUpdateInvoice_Click" Cursor="Hand" TabIndex="7"/>
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="209.67,280.697,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="8"/>
+		<Button x:Name="btnAddUpdateInvoice" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="100.67,280.697,0,0" VerticalAlignment="Top" Width="91" Click="btnAddUpdateInvoice_Click" Cursor="Hand" TabIndex="9"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="209.67,280.697,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="10"/>
 		<Label x:Name="lblFolio" Content="Folio:" HorizontalAlignment="Left" Height="27" Margin="105.667,141,0,0" VerticalAlignment="Top" Width="42.333"/>
 		<Label x:Name="lblTotalAmount" Content="Total:" HorizontalAlignment="Left" Height="27" Margin="107.333,205,0,0" VerticalAlignment="Top" Width="40.667"/>
 		<ComboBox x:Name="cbProviders" Height="26" Margin="153,13,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="194.5"/>
-		<DatePicker x:Name="dtpInvoiceDate" HorizontalAlignment="Left" Height="27" Margin="153,77,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="2" IsEnabled="False"/>
+		<DatePicker x:Name="dtpInvoiceDate" HorizontalAlignment="Left" Height="27" Margin="153,77,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="3" IsEnabled="False"/>
 		<Label x:Name="lbPurchaseDate" Content="Fecha de compra:" HorizontalAlignment="Left" Height="27" Margin="41.667,109,0,0" VerticalAlignment="Top" Width="106.333"/>
-		<DatePicker x:Name="dtpPurchaseDate" HorizontalAlignment="Left" Height="27" Margin="153,110,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="3"/>
-		<TextBox x:Name="txtFolio" HorizontalAlignment="Left" Height="27" Margin="153,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="4" BorderThickness="1" BorderBrush="Black"/>
-		<TextBox x:Name="txtTotalAmount" HorizontalAlignment="Left" Height="27" Margin="153,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="6" BorderThickness="1" BorderBrush="Black"/>
+		<DatePicker x:Name="dtpPurchaseDate" HorizontalAlignment="Left" Height="27" Margin="153,110,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="4"/>
+		<TextBox x:Name="txtFolio" HorizontalAlignment="Left" Height="27" Margin="153,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="5" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtTotalAmount" HorizontalAlignment="Left" Height="27" Margin="153,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="7" BorderThickness="1" BorderBrush="Black"/>
 		<Label x:Name="lblPaidMethod" Content="Método de pago:" HorizontalAlignment="Left" Height="27" Margin="41.667,173,0,0" VerticalAlignment="Top" Width="106.333"/>
-		<ComboBox x:Name="cbPaidMethod" Height="26" Margin="153,173,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="5" HorizontalAlignment="Left" Width="194.5">
+		<ComboBox x:Name="cbPaidMethod" Height="26" Margin="153,173,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="6" HorizontalAlignment="Left" Width="194.5">
 			<System:String>Efectivo</System:String>
 			<System:String>Cheque</System:String>
 			<System:String>Transferencia bancaria</System:String>
@@ -30,8 +30,8 @@
 			<System:String>Especie</System:String>
 		</ComboBox>
 		<Label x:Name="lblIsInvoiced" Content="Facturado:" HorizontalAlignment="Left" Height="27" Margin="81.042,45,0,0" VerticalAlignment="Top" Width="66.958"/>
-		<CheckBox x:Name="chkIsInvoiced" Content="" HorizontalAlignment="Left" Height="18" Margin="153,51.332,0,0" VerticalAlignment="Top" Width="15.333" Checked="chkIsInvoiced_CheckedUnchecked" Unchecked="chkIsInvoiced_CheckedUnchecked"/>
+		<CheckBox x:Name="chkIsInvoiced" Content="" HorizontalAlignment="Left" Height="18" Margin="153,51.332,0,0" VerticalAlignment="Top" Width="15.333" Checked="chkIsInvoiced_CheckedUnchecked" Unchecked="chkIsInvoiced_CheckedUnchecked" TabIndex="2"/>
 		<Label x:Name="lblIsPaid" Content="Pagado:" HorizontalAlignment="Left" Height="27" Margin="92.042,237,0,0" VerticalAlignment="Top" Width="55.958"/>
-		<CheckBox x:Name="chkIsPaid" Content="" HorizontalAlignment="Left" Height="18" Margin="153,243,0,0" VerticalAlignment="Top" Width="15.333" />
+		<CheckBox x:Name="chkIsPaid" Content="" HorizontalAlignment="Left" Height="18" Margin="153,243,0,0" VerticalAlignment="Top" Width="15.333" TabIndex="8" />
 	</Grid>
 </Window>

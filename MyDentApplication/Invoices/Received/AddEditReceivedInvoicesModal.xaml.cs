@@ -17,15 +17,15 @@ namespace MyDentApplication
 	/// <summary>
 	/// Interaction logic for AddEditInvoicesModal.xaml
 	/// </summary>
-	public partial class AddEditInvoicesModal : Window
+	public partial class AddEditReceivedInvoicesModal : Window
 	{
         #region Instance variables
-        private Model.Invoice _invoiceToUpdate;
+        private Model.ReceivedInvoice _invoiceToUpdate;
         private bool _isUpdateInvoice;
         #endregion
 
         #region Constructors
-        public AddEditInvoicesModal(Model.Invoice invoiceToUpdate)
+        public AddEditReceivedInvoicesModal(Model.ReceivedInvoice invoiceToUpdate)
 		{
 			this.InitializeComponent();
 
@@ -61,14 +61,14 @@ namespace MyDentApplication
                 _invoiceToUpdate.PurchaseDate = dtpPurchaseDate.SelectedDate.Value;
                 _invoiceToUpdate.Folio = folio;
                 _invoiceToUpdate.PaidMethod = cbPaidMethod.SelectedValue.ToString();
-                _invoiceToUpdate.TotalAmount = Convert.ToDecimal(totalAmount);
+                _invoiceToUpdate.TotalAmount = totalAmount;
                 _invoiceToUpdate.IsPaid = chkIsPaid.IsChecked.Value;
-
+                
                 UpdateInvoice(_invoiceToUpdate);
             }
             else
             {
-                Model.Invoice invoiceToAdd = new Model.Invoice()
+                Model.ReceivedInvoice invoiceToAdd = new Model.ReceivedInvoice()
                 {
                     ProviderId = providerId,
                     InvoiceDate = dtpInvoiceDate.SelectedDate,
@@ -107,9 +107,9 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        private void UpdateInvoice(Model.Invoice invoiceToUpdate)
+        private void UpdateInvoice(Model.ReceivedInvoice invoiceToUpdate)
         {
-            if (Controllers.BusinessController.Instance.Update<Model.Invoice>(invoiceToUpdate))
+            if (Controllers.BusinessController.Instance.Update<Model.ReceivedInvoice>(invoiceToUpdate))
             {
                 this.Close();
             }
@@ -119,9 +119,9 @@ namespace MyDentApplication
             }
         }
 
-        private void AddInvoice(Model.Invoice invoiceToAdd)
+        private void AddInvoice(Model.ReceivedInvoice invoiceToAdd)
         {
-            if (Controllers.BusinessController.Instance.Add<Model.Invoice>(invoiceToAdd))
+            if (Controllers.BusinessController.Instance.Add<Model.ReceivedInvoice>(invoiceToAdd))
             {
                 this.Close();
             }

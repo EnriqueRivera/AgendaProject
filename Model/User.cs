@@ -19,9 +19,9 @@ namespace Model
             this.Events = new HashSet<Event>();
             this.EventStatusChanges = new HashSet<EventStatusChanx>();
             this.Logins = new HashSet<Login>();
+            this.Medicines = new HashSet<Medicine>();
             this.Patients = new HashSet<Patient>();
             this.Reminders = new HashSet<Reminder>();
-            this.Medicines = new HashSet<Medicine>();
         }
     
         public int UserId { get; set; }
@@ -35,8 +35,8 @@ namespace Model
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
+        public virtual ICollection<Medicine> Medicines { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<Reminder> Reminders { get; set; }
-        public virtual ICollection<Medicine> Medicines { get; set; }
     }
 }

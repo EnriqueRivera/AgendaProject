@@ -38,21 +38,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Invoices">
-      <EntityTypeMapping TypeName="MyDentDBModel.Invoice">
-        <MappingFragment StoreEntitySet="Invoices">
-          <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
-          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
-          <ScalarProperty Name="Folio" ColumnName="Folio" />
-          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
-          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="LaboratoryWorks">
       <EntityTypeMapping TypeName="MyDentDBModel.LaboratoryWork">
         <MappingFragment StoreEntitySet="LaboratoryWorks">
@@ -87,9 +72,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Medicines">
+      <EntityTypeMapping TypeName="MyDentDBModel.Medicine">
+        <MappingFragment StoreEntitySet="Medicines">
+          <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="WasReplaced" ColumnName="WasReplaced" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="Batch" ColumnName="Batch" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OutgoingInvoices">
+      <EntityTypeMapping TypeName="MyDentDBModel.OutgoingInvoice">
+        <MappingFragment StoreEntitySet="OutgoingInvoices">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="MyDentDBModel.Patient">
         <MappingFragment StoreEntitySet="Patients">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
           <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />
           <ScalarProperty Name="HasHealthInsurance" ColumnName="HasHealthInsurance" />
@@ -100,6 +115,21 @@
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceivedInvoices">
+      <EntityTypeMapping TypeName="MyDentDBModel.ReceivedInvoice">
+        <MappingFragment StoreEntitySet="ReceivedInvoices">
+          <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -159,18 +189,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Medicines">
-      <EntityTypeMapping TypeName="MyDentDBModel.Medicine">
-        <MappingFragment StoreEntitySet="Medicines">
-          <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="WasReplaced" ColumnName="WasReplaced" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
-          <ScalarProperty Name="Batch" ColumnName="Batch" />
-          <ScalarProperty Name="Brand" ColumnName="Brand" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+    <EntitySetMapping Name="GeneralPaids">
+      <EntityTypeMapping TypeName="MyDentDBModel.GeneralPaid">
+        <MappingFragment StoreEntitySet="GeneralPaids">
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+          <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+          <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+          <ScalarProperty Name="GeneralPaidId" ColumnName="GeneralPaidId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

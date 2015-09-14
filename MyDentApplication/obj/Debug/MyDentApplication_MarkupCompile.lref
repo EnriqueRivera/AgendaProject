@@ -1,6 +1,9 @@
-﻿C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
+﻿
 
-FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\ManageInvoicesWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\GeneralPaids\ManageGeneralPaidsWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\Outgoing\ManageOutgoingInvoicesWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\Received\ManageReceivedInvoicesWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\Total\TotalInvoicesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\LaboratoryWorks\ManageLaboratoryWorksWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Medicines\ManageMedicinesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Providers\ManageProvidersWindow.xaml;;

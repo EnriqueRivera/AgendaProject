@@ -34,19 +34,16 @@
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="StatusChangerId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Invoices">
+  <EntityType Name="GeneralPaids">
     <Key>
-      <PropertyRef Name="InvoiceId" />
+      <PropertyRef Name="GeneralPaidId" />
     </Key>
-    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="InvoiceDate" Type="date" />
+    <Property Name="GeneralPaidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProviderName" Type="varchar(max)" Nullable="false" />
     <Property Name="PurchaseDate" Type="date" Nullable="false" />
-    <Property Name="Folio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TicketNumber" Type="varchar(max)" Nullable="false" />
     <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="IsPaid" Type="bit" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="ProviderId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LaboratoryWorks">
     <Key>
@@ -93,6 +90,19 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="DataCapturerId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="OutgoingInvoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceDate" Type="date" />
+    <Property Name="PaidDate" Type="date" Nullable="false" />
+    <Property Name="Folio" Type="varchar(max)" Nullable="false" />
+    <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Patients">
     <Key>
       <PropertyRef Name="PatientId" />
@@ -107,6 +117,21 @@
     <Property Name="HasHealthInsurance" Type="bit" Nullable="false" />
     <Property Name="ClinicHistoryId" Type="int" />
     <Property Name="DataCapturerId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReceivedInvoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceDate" Type="date" />
+    <Property Name="PurchaseDate" Type="date" Nullable="false" />
+    <Property Name="Folio" Type="varchar(max)" Nullable="false" />
+    <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsPaid" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="ProviderId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Reminders">
     <Key>
@@ -219,18 +244,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoices_ProviderId">
-    <End Role="ResourceProviders" Type="Self.ResourceProviders" Multiplicity="1" />
-    <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ResourceProviders">
-        <PropertyRef Name="ProviderId" />
-      </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="ProviderId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_LaboratoryWorks_PatientId">
     <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
     <End Role="LaboratoryWorks" Type="Self.LaboratoryWorks" Multiplicity="*" />
@@ -279,6 +292,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_OutgoingInvoices_PatientId">
+    <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+    <End Role="OutgoingInvoices" Type="Self.OutgoingInvoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="OutgoingInvoices">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Patients_DataCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -288,6 +313,18 @@
       </Principal>
       <Dependent Role="Patients">
         <PropertyRef Name="DataCapturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceivedInvoices_ProviderId">
+    <End Role="ResourceProviders" Type="Self.ResourceProviders" Multiplicity="1" />
+    <End Role="ReceivedInvoices" Type="Self.ReceivedInvoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ResourceProviders">
+        <PropertyRef Name="ProviderId" />
+      </Principal>
+      <Dependent Role="ReceivedInvoices">
+        <PropertyRef Name="ProviderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -307,12 +344,14 @@
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LaboratoryWorks" EntityType="Self.LaboratoryWorks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Medicines" EntityType="Self.Medicines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OutgoingInvoices" EntityType="Self.OutgoingInvoices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceivedInvoices" EntityType="Self.ReceivedInvoices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reminders" EntityType="Self.Reminders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ResourceProviders" EntityType="Self.ResourceProviders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
@@ -338,10 +377,6 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="EventStatusChanges" EntitySet="EventStatusChanges" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoices_ProviderId" Association="Self.FK_Invoices_ProviderId">
-      <End Role="ResourceProviders" EntitySet="ResourceProviders" />
-      <End Role="Invoices" EntitySet="Invoices" />
-    </AssociationSet>
     <AssociationSet Name="FK_LaboratoryWorks_PatientId" Association="Self.FK_LaboratoryWorks_PatientId">
       <End Role="Patients" EntitySet="Patients" />
       <End Role="LaboratoryWorks" EntitySet="LaboratoryWorks" />
@@ -358,9 +393,17 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="Medicines" EntitySet="Medicines" />
     </AssociationSet>
+    <AssociationSet Name="FK_OutgoingInvoices_PatientId" Association="Self.FK_OutgoingInvoices_PatientId">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="OutgoingInvoices" EntitySet="OutgoingInvoices" />
+    </AssociationSet>
     <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
       <End Role="Users" EntitySet="Users" />
       <End Role="Patients" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceivedInvoices_ProviderId" Association="Self.FK_ReceivedInvoices_ProviderId">
+      <End Role="ResourceProviders" EntitySet="ResourceProviders" />
+      <End Role="ReceivedInvoices" EntitySet="ReceivedInvoices" />
     </AssociationSet>
     <AssociationSet Name="FK_Reminders_SeenBy" Association="Self.FK_Reminders_SeenBy">
       <End Role="Users" EntitySet="Users" />

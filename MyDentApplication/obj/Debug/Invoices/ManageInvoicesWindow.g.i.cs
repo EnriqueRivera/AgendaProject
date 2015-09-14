@@ -52,12 +52,12 @@ namespace MyDentApplication {
     /// <summary>
     /// ManageInvoicesWindow
     /// </summary>
-    public partial class ManageInvoicesWindow : System.Windows.Window, System.Windows.Markup.IComponentConnector {
+    public partial class ManageReceivedInvoicesWindow : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
         
         #line 8 "..\..\..\Invoices\ManageInvoicesWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal MyDentApplication.ManageInvoicesWindow Window;
+        internal MyDentApplication.ManageReceivedInvoicesWindow Window;
         
         #line default
         #line hidden
@@ -165,7 +165,7 @@ namespace MyDentApplication {
             switch (connectionId)
             {
             case 1:
-            this.Window = ((MyDentApplication.ManageInvoicesWindow)(target));
+            this.Window = ((MyDentApplication.ManageReceivedInvoicesWindow)(target));
             return;
             case 2:
             this.LayoutRoot = ((System.Windows.Controls.Grid)(target));

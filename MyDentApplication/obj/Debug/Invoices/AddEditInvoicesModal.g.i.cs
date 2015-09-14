@@ -37,12 +37,12 @@ namespace MyDentApplication {
     /// <summary>
     /// AddEditInvoicesModal
     /// </summary>
-    public partial class AddEditInvoicesModal : System.Windows.Window, System.Windows.Markup.IComponentConnector {
+    public partial class AddEditReceivedInvoicesModal : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
         
         #line 6 "..\..\..\Invoices\AddEditInvoicesModal.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal MyDentApplication.AddEditInvoicesModal Window;
+        internal MyDentApplication.AddEditReceivedInvoicesModal Window;
         
         #line default
         #line hidden
@@ -230,7 +230,7 @@ namespace MyDentApplication {
             switch (connectionId)
             {
             case 1:
-            this.Window = ((MyDentApplication.AddEditInvoicesModal)(target));
+            this.Window = ((MyDentApplication.AddEditReceivedInvoicesModal)(target));
             return;
             case 2:
             this.LayoutRoot = ((System.Windows.Controls.Grid)(target));

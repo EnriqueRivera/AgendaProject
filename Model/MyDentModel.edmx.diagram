@@ -5,32 +5,35 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1">
-        <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="5.25" PointY="8.875" />
-        <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="7.5" PointY="8.5" />
-        <EntityTypeShape EntityType="MyDentDBModel.Invoice" Width="1.5" PointX="8" PointY="1" />
-        <EntityTypeShape EntityType="MyDentDBModel.LaboratoryWork" Width="1.5" PointX="5.25" PointY="13.375" />
-        <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="3.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="11" />
-        <EntityTypeShape EntityType="MyDentDBModel.Reminder" Width="1.5" PointX="3" PointY="15.25" />
-        <EntityTypeShape EntityType="MyDentDBModel.ResourceProvider" Width="1.5" PointX="5.75" PointY="1.5" />
-        <EntityTypeShape EntityType="MyDentDBModel.Technical" Width="1.5" PointX="3" PointY="18.875" />
-        <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="3" PointY="7.625" />
-        <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="8.25" PointY="9.625" />
+        <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="10.5" PointY="10.5" />
+        <EntityTypeShape EntityType="MyDentDBModel.LaboratoryWork" Width="1.5" PointX="5.25" PointY="9.5" />
+        <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="18.125" />
+        <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.Medicine" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="MyDentDBModel.OutgoingInvoice" Width="1.5" PointX="5.25" PointY="13" />
+        <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="MyDentDBModel.ReceivedInvoice" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="MyDentDBModel.Reminder" Width="1.5" PointX="3" PointY="20.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.ResourceProvider" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="MyDentDBModel.Technical" Width="1.5" PointX="3" PointY="14" />
+        <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="6" PointY="6.375" />
+        <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="10.375" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_EventCapturerId" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_PatientId" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_TreatmentId" />
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_EventId" />
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" />
-        <AssociationConnector Association="MyDentDBModel.FK_Invoices_ProviderId" />
         <AssociationConnector Association="MyDentDBModel.FK_LaboratoryWorks_PatientId" />
         <AssociationConnector Association="MyDentDBModel.FK_LaboratoryWorks_TechnicalId" />
         <AssociationConnector Association="MyDentDBModel.FK_Logins_UserId" />
-        <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
-        <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
-        <EntityTypeShape EntityType="MyDentDBModel.Medicine" Width="1.5" PointX="3" PointY="22.25" />
         <AssociationConnector Association="MyDentDBModel.FK_Medicines_DataCapturerId" />
+        <AssociationConnector Association="MyDentDBModel.FK_OutgoingInvoices_PatientId" />
+        <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
+        <AssociationConnector Association="MyDentDBModel.FK_ReceivedInvoices_ProviderId" />
+        <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
+        <EntityTypeShape EntityType="MyDentDBModel.GeneralPaid" Width="1.5" PointX="8.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

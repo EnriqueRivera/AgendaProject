@@ -12,18 +12,13 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Invoice
+    public partial class GeneralPaid
     {
-        public int InvoiceId { get; set; }
-        public Nullable<System.DateTime> InvoiceDate { get; set; }
+        public int GeneralPaidId { get; set; }
+        public string ProviderName { get; set; }
         public System.DateTime PurchaseDate { get; set; }
-        public string Folio { get; set; }
+        public string TicketNumber { get; set; }
         public string PaidMethod { get; set; }
         public decimal TotalAmount { get; set; }
-        public bool IsPaid { get; set; }
-        public bool IsDeleted { get; set; }
-        public int ProviderId { get; set; }
-    
-        public virtual ResourceProvider ResourceProvider { get; set; }
     }
 }

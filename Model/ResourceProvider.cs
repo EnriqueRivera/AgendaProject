@@ -16,13 +16,13 @@ namespace Model
     {
         public ResourceProvider()
         {
-            this.Invoices = new HashSet<Invoice>();
+            this.ReceivedInvoices = new HashSet<ReceivedInvoice>();
         }
     
         public int ProviderId { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
     
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<ReceivedInvoice> ReceivedInvoices { get; set; }
     }
 }
