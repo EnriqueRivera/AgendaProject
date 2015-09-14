@@ -50,6 +50,9 @@
     <Compile Include="Configuration.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Contact.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Event.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>

@@ -1,0 +1,37 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication" xmlns:System="clr-namespace:System;assembly=mscorlib"
+	x:Class="MyDentApplication.ManageContactsWindow"
+	x:Name="Window"
+	Title="Administrar contactos"
+	Width="696.716" Height="480" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
+	<Grid x:Name="LayoutRoot">
+		<DataGrid x:Name="dgContacts" Margin="10,52,10,46" IsReadOnly="True" CanUserSortColumns="True"
+			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+			TabIndex="1">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.11*" />
+				<DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.11*" />
+				<DataGridTextColumn Header="Dirección" Binding="{Binding Address}" Width="0.2*" />
+				<DataGridTextColumn Header="Teléfono celular" Binding="{Binding CellPhone}" Width="0.11*" />
+				<DataGridTextColumn Header="Teléfono de casa" Binding="{Binding HomePhone}" Width="0.11*" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button x:Name="btnDeleteContact" Content="Eliminar" Margin="0,0,10,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteContact_Click"/>
+		<Button x:Name="btnEditContact" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="4" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditContact_Click"/>
+		<Button x:Name="btnAddContact" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,140,10" Width="60" Cursor="Hand" TabIndex="3" Height="29" VerticalAlignment="Bottom" Click="btnAddContact_Click"/>
+		<Button x:Name="btnViewAllContacts" Content="Ver todo" Height="25" Margin="0,14.5,10,0" VerticalAlignment="Top" Click="btnViewAllContacts_Click" HorizontalAlignment="Right" Width="63.333" Cursor="Hand"/>
+		<ComboBox x:Name="cbFilter" Height="26" Margin="84,16.02,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="100.5" SelectedIndex="0">
+			<System:String>Nombre(s)</System:String>
+			<System:String>Apellido(s)</System:String>
+			<System:String>Dirección</System:String>
+		</ComboBox>
+		<Label Width="69" VerticalAlignment="Top" Margin="10,14.02,0,0" Height="27" HorizontalAlignment="Left" Content="Buscar por:"/>
+		<TextBox x:Name="txtSearchTerm" HorizontalAlignment="Left" Height="25.02" Margin="192,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" BorderBrush="Black"/>
+		<Button x:Name="btnRefreshContacts" Margin="363,16,0,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" TabIndex="2" Click="btnRefreshContacts_Click">
+			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
+		</Button>
+	</Grid>
+</Window>

@@ -1,0 +1,25 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+	x:Class="MyDentApplication.AddEditContactsModal"
+	x:Name="Window"
+	Title="Agregar contacto"
+	Width="380" Height="347" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+	<Grid x:Name="LayoutRoot" Margin="0,0,2,2">
+		<Label x:Name="lblMedicineNotes" Content="Dirección:" HorizontalAlignment="Left" Height="25.672" Margin="10,142.657,0,0" VerticalAlignment="Top" Width="95.408"/>
+		<Border BorderThickness="1" BorderBrush="Black" Margin="10,168.329,10,52.667">
+			<TextBox x:Name="txtContactAddress" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" TabIndex="5"/>
+		</Border>
+		<Label x:Name="lblContactFirstName" Content="Nombre(s):" HorizontalAlignment="Left" Height="27" Margin="46.5,10,0,0" VerticalAlignment="Top" Width="68"/>
+		<TextBox x:Name="txtContactFirstName" Height="27" Margin="119.5,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
+		<Label x:Name="lblContactLastName" Content="Apellido(s):" HorizontalAlignment="Left" Height="27" Margin="46.5,42,0,0" VerticalAlignment="Top" Width="68"/>
+		<Label x:Name="lblContactCellPhone" Content="Teléfono celular:" HorizontalAlignment="Left" Height="27" Margin="16.333,74,0,0" VerticalAlignment="Top" Width="98.167"/>
+		<TextBox x:Name="txtContactLastName" Height="27" Margin="119.5,42,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="2" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="1"/>
+		<TextBox x:Name="txtContactCellPhone" Height="27" Margin="119.5,74,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="3" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="3"/>
+		<Button x:Name="btnAddUpdateContact" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,106,10" Width="91" Click="btnAddUpdateContact_Click" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="6"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Right" Margin="0,0,10,10" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="7"/>
+		<Label x:Name="lblContactHomePhone" Content="Teléfono de casa:" HorizontalAlignment="Left" Height="27" Margin="11,106,0,0" VerticalAlignment="Top" Width="103.5"/>
+		<TextBox x:Name="txtContactHomePhone" Height="27" Margin="119.5,106,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="4" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="3"/>
+	</Grid>
+</Window>

@@ -87,6 +87,12 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Contacts\AddEditContactsModal.xaml.cs">
+      <DependentUpon>AddEditContactsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Contacts\ManageContactsWindow.xaml.cs">
+      <DependentUpon>ManageContactsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GeneralPaids\AddEditGeneralPaidsModal.xaml.cs">
       <DependentUpon>AddEditGeneralPaidsModal.xaml</DependentUpon>
     </Compile>
@@ -189,6 +195,14 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="Contacts\AddEditContactsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Contacts\ManageContactsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GeneralPaids\AddEditGeneralPaidsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -394,6 +408,7 @@
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\changePassword_icon.png" />
+    <Resource Include="Images\contacts_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
     <Resource Include="Images\Justificante.PNG" />

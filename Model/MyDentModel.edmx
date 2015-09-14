@@ -13,6 +13,17 @@
           <Property Name="Name" Type="varchar(max)" Nullable="false" />
           <Property Name="Value" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="varchar(max)" Nullable="false" />
+          <Property Name="CellPhone" Type="varchar(max)" />
+          <Property Name="HomePhone" Type="varchar(max)" />
+          <Property Name="Address" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Events">
           <Key>
             <PropertyRef Name="EventId" />
@@ -33,8 +44,8 @@
             <PropertyRef Name="EventStatusChangeId" />
           </Key>
           <Property Name="EventStatusChangeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OldStatus" Type="varchar" MaxLength="50" />
-          <Property Name="NewStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OldStatus" Type="varchar(max)" />
+          <Property Name="NewStatus" Type="varchar(max)" Nullable="false" />
           <Property Name="ChangeDate" Type="datetime" Nullable="false" />
           <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="StatusChangerId" Type="int" Nullable="false" />
@@ -47,7 +58,7 @@
           <Property Name="ProviderName" Type="varchar(max)" Nullable="false" />
           <Property Name="PurchaseDate" Type="date" Nullable="false" />
           <Property Name="TicketNumber" Type="varchar(max)" Nullable="false" />
-          <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaidMethod" Type="varchar(max)" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="LaboratoryWorks">
@@ -76,7 +87,7 @@
             <PropertyRef Name="LogId" />
           </Key>
           <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="varchar(max)" Nullable="false" />
           <Property Name="LogDate" Type="datetime" Nullable="false" />
           <Property Name="ErrorDetail" Type="varchar(max)" Nullable="false" />
           <Property Name="MethodName" Type="varchar(max)" Nullable="false" />
@@ -103,7 +114,7 @@
           <Property Name="InvoiceDate" Type="date" />
           <Property Name="PaidDate" Type="date" Nullable="false" />
           <Property Name="Folio" Type="varchar(max)" Nullable="false" />
-          <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaidMethod" Type="varchar(max)" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="PatientId" Type="int" Nullable="false" />
@@ -113,11 +124,11 @@
             <PropertyRef Name="PatientId" />
           </Key>
           <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CellPhone" Type="varchar" MaxLength="50" />
-          <Property Name="HomePhone" Type="varchar" MaxLength="50" />
-          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="FirstName" Type="varchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="varchar(max)" Nullable="false" />
+          <Property Name="CellPhone" Type="varchar(max)" />
+          <Property Name="HomePhone" Type="varchar(max)" />
+          <Property Name="Email" Type="varchar(max)" />
           <Property Name="CaptureDate" Type="datetime" Nullable="false" />
           <Property Name="HasHealthInsurance" Type="bit" Nullable="false" />
           <Property Name="ClinicHistoryId" Type="int" />
@@ -132,7 +143,7 @@
           <Property Name="InvoiceDate" Type="date" />
           <Property Name="PurchaseDate" Type="date" Nullable="false" />
           <Property Name="Folio" Type="varchar(max)" Nullable="false" />
-          <Property Name="PaidMethod" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaidMethod" Type="varchar(max)" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IsPaid" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -172,7 +183,7 @@
             <PropertyRef Name="TreatmentId" />
           </Key>
           <Property Name="TreatmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
           <Property Name="Duration" Type="int" Nullable="false" />
           <Property Name="Recurrent" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -183,8 +194,8 @@
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AssignedUserId" Type="int" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="varchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="varchar(max)" Nullable="false" />
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -347,6 +358,7 @@
         </Association>
         <EntityContainer Name="MyDentDBModelStoreContainer">
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
@@ -421,8 +433,10 @@
       <Schema Namespace="MyDentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MyDentDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
+          <EntitySet Name="Contacts" EntityType="MyDentDBModel.Contact" />
           <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
           <EntitySet Name="EventStatusChanges" EntityType="MyDentDBModel.EventStatusChanx" />
+          <EntitySet Name="GeneralPaids" EntityType="MyDentDBModel.GeneralPaid" />
           <EntitySet Name="LaboratoryWorks" EntityType="MyDentDBModel.LaboratoryWork" />
           <EntitySet Name="Logins" EntityType="MyDentDBModel.Login" />
           <EntitySet Name="Logs" EntityType="MyDentDBModel.Log" />
@@ -487,7 +501,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Reminder" EntitySet="Reminders" />
           </AssociationSet>
-          <EntitySet Name="GeneralPaids" EntityType="MyDentDBModel.GeneralPaid" />
         </EntityContainer>
         <EntityType Name="Configuration">
           <Key>
@@ -496,6 +509,17 @@
           <Property Name="ConfigurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -521,13 +545,24 @@
             <PropertyRef Name="EventStatusChangeId" />
           </Key>
           <Property Name="EventStatusChangeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OldStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NewStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OldStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NewStatus" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ChangeDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EventId" Type="Int32" Nullable="false" />
           <Property Name="StatusChangerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="EventStatusChanx" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="EventStatusChanx" ToRole="User" />
+        </EntityType>
+        <EntityType Name="GeneralPaid">
+          <Key>
+            <PropertyRef Name="GeneralPaidId" />
+          </Key>
+          <Property Name="GeneralPaidId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProviderName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TicketNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="LaboratoryWork">
           <Key>
@@ -558,7 +593,7 @@
             <PropertyRef Name="LogId" />
           </Key>
           <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ErrorDetail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MethodName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -586,7 +621,7 @@
           <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
           <Property Name="PaidDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Folio" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="PatientId" Type="Int32" Nullable="false" />
@@ -597,11 +632,11 @@
             <PropertyRef Name="PatientId" />
           </Key>
           <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HomePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CaptureDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HasHealthInsurance" Type="Boolean" Nullable="false" />
           <Property Name="ClinicHistoryId" Type="Int32" />
@@ -620,7 +655,7 @@
           <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
           <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Folio" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="IsPaid" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -664,7 +699,7 @@
             <PropertyRef Name="TreatmentId" />
           </Key>
           <Property Name="TreatmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Duration" Type="Int32" Nullable="false" />
           <Property Name="Recurrent" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -676,8 +711,8 @@
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AssignedUserId" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -844,17 +879,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="GeneralPaid">
-          <Key>
-            <PropertyRef Name="GeneralPaidId" />
-          </Key>
-          <Property Name="GeneralPaidId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProviderName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TicketNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PaidMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -867,6 +891,18 @@
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ConfigurationId" ColumnName="ConfigurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="MyDentDBModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -895,6 +931,18 @@
                 <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
                 <ScalarProperty Name="OldStatus" ColumnName="OldStatus" />
                 <ScalarProperty Name="EventStatusChangeId" ColumnName="EventStatusChangeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneralPaids">
+            <EntityTypeMapping TypeName="MyDentDBModel.GeneralPaid">
+              <MappingFragment StoreEntitySet="GeneralPaids">
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="GeneralPaidId" ColumnName="GeneralPaidId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1046,18 +1094,6 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GeneralPaids">
-            <EntityTypeMapping TypeName="MyDentDBModel.GeneralPaid">
-              <MappingFragment StoreEntitySet="GeneralPaids">
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
-                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
-                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
-                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
-                <ScalarProperty Name="GeneralPaidId" ColumnName="GeneralPaidId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

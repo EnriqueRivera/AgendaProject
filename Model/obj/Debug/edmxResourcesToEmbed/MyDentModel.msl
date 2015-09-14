@@ -10,6 +10,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="MyDentDBModel.Contact">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="MyDentDBModel.Event">
         <MappingFragment StoreEntitySet="Events">
@@ -35,6 +47,18 @@
           <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
           <ScalarProperty Name="OldStatus" ColumnName="OldStatus" />
           <ScalarProperty Name="EventStatusChangeId" ColumnName="EventStatusChangeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GeneralPaids">
+      <EntityTypeMapping TypeName="MyDentDBModel.GeneralPaid">
+        <MappingFragment StoreEntitySet="GeneralPaids">
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
+          <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+          <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+          <ScalarProperty Name="GeneralPaidId" ColumnName="GeneralPaidId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -186,18 +210,6 @@
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GeneralPaids">
-      <EntityTypeMapping TypeName="MyDentDBModel.GeneralPaid">
-        <MappingFragment StoreEntitySet="GeneralPaids">
-          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-          <ScalarProperty Name="PaidMethod" ColumnName="PaidMethod" />
-          <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
-          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
-          <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
-          <ScalarProperty Name="GeneralPaidId" ColumnName="GeneralPaidId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

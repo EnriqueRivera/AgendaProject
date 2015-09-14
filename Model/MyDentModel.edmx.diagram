@@ -6,11 +6,13 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1">
         <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.Contact" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="8.25" PointY="9.625" />
         <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="10.5" PointY="10.5" />
+        <EntityTypeShape EntityType="MyDentDBModel.GeneralPaid" Width="1.5" PointX="8.75" PointY="3.75" />
         <EntityTypeShape EntityType="MyDentDBModel.LaboratoryWork" Width="1.5" PointX="5.25" PointY="9.5" />
         <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="18.125" />
-        <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="8.75" PointY="6.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Medicine" Width="1.5" PointX="3" PointY="5.25" />
         <EntityTypeShape EntityType="MyDentDBModel.OutgoingInvoice" Width="1.5" PointX="5.25" PointY="13" />
         <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="9" />
@@ -33,7 +35,6 @@
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
         <AssociationConnector Association="MyDentDBModel.FK_ReceivedInvoices_ProviderId" />
         <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
-        <EntityTypeShape EntityType="MyDentDBModel.GeneralPaid" Width="1.5" PointX="8.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

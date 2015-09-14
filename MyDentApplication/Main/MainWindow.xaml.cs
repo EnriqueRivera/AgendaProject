@@ -44,6 +44,7 @@ namespace MyDentApplication
         private MedicalProofDocument _medicalProofDocumentWindow;
         private TotalInvoicesWindow _totalInvoicesWindow;
         private ManageGeneralPaidsWindow _manageGeneralPaidsWindow;
+        private ManageContactsWindow _manageContactsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -158,6 +159,7 @@ namespace MyDentApplication
             CloseWindow(_medicalProofDocumentWindow);
             CloseWindow(_totalInvoicesWindow);
             CloseWindow(_manageGeneralPaidsWindow);
+            CloseWindow(_manageContactsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -227,6 +229,10 @@ namespace MyDentApplication
             else if (sender is ManageGeneralPaidsWindow)
             {
                 _manageGeneralPaidsWindow = null;
+            }
+            else if (sender is ManageContactsWindow)
+            {
+                _manageContactsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -476,6 +482,18 @@ namespace MyDentApplication
 
             _manageGeneralPaidsWindow.Show();
             _manageGeneralPaidsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageContacts_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageContactsWindow == null)
+            {
+                _manageContactsWindow = new ManageContactsWindow();
+                _manageContactsWindow.Closed += Window_Closed;
+            }
+
+            _manageContactsWindow.Show();
+            _manageContactsWindow.WindowState = WindowState.Normal;
         }
         #endregion
 

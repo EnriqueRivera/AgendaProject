@@ -26,8 +26,10 @@ namespace Model
         }
     
         public DbSet<Configuration> Configurations { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventStatusChanx> EventStatusChanges { get; set; }
+        public DbSet<GeneralPaid> GeneralPaids { get; set; }
         public DbSet<LaboratoryWork> LaboratoryWorks { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DbSet<Log> Logs { get; set; }
@@ -40,6 +42,5 @@ namespace Model
         public DbSet<Technical> Technicals { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<GeneralPaid> GeneralPaids { get; set; }
     }
 }

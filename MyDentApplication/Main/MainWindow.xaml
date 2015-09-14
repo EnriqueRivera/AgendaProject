@@ -44,7 +44,7 @@
 		<Button x:Name="btnOpenAgenda" Margin="166,22.5,0,0" Width="90" Height="90" Click="btnOpenAgenda_Click" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top"> 
 			<StackPanel Orientation="Vertical">
 				<Image Source="/MyDentApplication;component/Images/agenda_icon.png" Width="50" Height="50"  />
-				<TextBlock TextAlignment="Center" ><Run Text="Agenda"/><Run Text=" de"/><LineBreak/><Run Text="c"/><Run Text="itas"/></TextBlock>
+				<TextBlock TextAlignment="Center" ><Run Text="Agenda"/><Run Text=" de"/><LineBreak/><Run Text="citas"/></TextBlock>
 			</StackPanel>
 		</Button>
 		<Button x:Name="btnChangePassword" Margin="139.5,0,0,10" Height="85" Click="btnChangePassword_Click" Cursor="Hand" HorizontalAlignment="Left" Width="124.5" VerticalAlignment="Bottom"> 
@@ -165,6 +165,12 @@
         	<StackPanel Orientation="Vertical">
         		<Image Source="/MyDentApplication;component/Images/general_paids_icon.png" Width="50" Height="50"  />
         		<TextBlock TextAlignment="Center" ><Run Text="Gastos"/><LineBreak/><Run Text="generales"/></TextBlock>
+        	</StackPanel>
+        </Button>
+        <Button x:Name="btnManageContacts" Margin="166,497.5,0,0" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnManageContacts_Click"> 
+        	<StackPanel Orientation="Vertical">
+        		<Image Source="/MyDentApplication;component/Images/contacts_icon.png" Width="50" Height="50"  />
+        		<TextBlock TextAlignment="Center" ><Run Text="Agenda"/><Run Text=" de"/><LineBreak/><Run Text="contactos"/></TextBlock>
         	</StackPanel>
         </Button>
     </Grid>

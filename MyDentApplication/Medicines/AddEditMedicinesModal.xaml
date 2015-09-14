@@ -17,7 +17,7 @@
 		<Label x:Name="lblMedicineBrand" Content="Marca:" HorizontalAlignment="Left" Height="27" Margin="83.333,42,0,0" VerticalAlignment="Top" Width="48.167"/>
 		<xctk:DateTimeUpDown x:Name="dtudExpiredDate" Height="25.5" Margin="136.5,74,16,0" VerticalAlignment="Top" Format="YearMonth" Panel.ZIndex="2" BorderBrush="Black"/>
 		<Label x:Name="lblExpiredDate" Content="Fecha de caducidad:" HorizontalAlignment="Left" Height="27" Margin="10,74,0,0" VerticalAlignment="Top" Width="121.5"/>
-		<Label x:Name="lblMedicineBatch" Content="Lote:" HorizontalAlignment="Left" Height="27" Margin="91.333,101,0,0" VerticalAlignment="Top" Width="40.167"/>
+		<Label x:Name="lblMedicineBatch" Content="Lote:" HorizontalAlignment="Left" Height="27" Margin="91.333,104.5,0,0" VerticalAlignment="Top" Width="40.167"/>
 		<Label x:Name="lblWasMedicineChanged" Content="Reemplazado:" HorizontalAlignment="Left" Margin="42.092,0,0,63.336" Width="89.408" Height="27" VerticalAlignment="Bottom"/>
 		<TextBox x:Name="txtMedicineBrand" Height="27" Margin="136.5,42,16,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="4" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="1"/>
 		<TextBox x:Name="txtMedicineBatch" Height="27" Margin="136.5,104.5,16,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="4" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="3"/>
