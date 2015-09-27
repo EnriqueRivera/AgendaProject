@@ -42,5 +42,7 @@ namespace Model
         public DbSet<Technical> Technicals { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<CleanedMaterial> CleanedMaterials { get; set; }
+        public DbSet<CleanedAction> CleanedActions { get; set; }
     }
 }

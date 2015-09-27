@@ -1,0 +1,76 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="MyDentApplication.CleanedMaterialsDetailsModal"
+	x:Name="Window"
+	Title="Detalles de la limpieza"
+	Width="413" Height="481.3" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="LayoutRoot">
+		<Button x:Name="btnClose" Content="Cerrar" Margin="0,0,10,10" Cursor="Hand" TabIndex="8" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="91" Click="btnClose_Click"/>
+		<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Margin="10,10,10,44">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+				<GroupBox x:Name="gbGeneralInfo" Header="Información general" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" Height="372.999" Width="357.5">
+					<Grid x:Name="gridGeneralInfo" Margin="0,10,-2,2.245">
+						<Label Content="Fecha:" HorizontalAlignment="Left" Height="30" Margin="55,10,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label Content="Grupo:" HorizontalAlignment="Left" Height="30" Margin="55,45,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label Content="Observaciones:" HorizontalAlignment="Left" Height="30" Margin="10,80,0,0" VerticalAlignment="Top" Width="93.667" FontWeight="Normal"/>
+						<Border BorderThickness="1" BorderBrush="Black" Margin="10,110,10,0" Height="118.835" VerticalAlignment="Top">
+							<TextBox x:Name="txtGeneralInfoObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True" FontWeight="Normal"/>
+						</Border>
+						<Label Content="Lavado:" HorizontalAlignment="Left" Height="30" Margin="47.333,233.835,0,0" VerticalAlignment="Top" Width="56.334" FontWeight="Normal"/>
+						<Label Content="Empaquetado:" HorizontalAlignment="Left" Height="30" Margin="10,268.835,0,0" VerticalAlignment="Top" Width="93.667" FontWeight="Normal"/>
+						<Label Content="Esterilizado:" HorizontalAlignment="Left" Height="30" Margin="22,303.835,0,0" VerticalAlignment="Top" Width="81.667" FontWeight="Normal"/>
+						<CheckBox x:Name="chkCleaned" HorizontalAlignment="Left" Height="15" Margin="108.667,240.835,0,0" VerticalAlignment="Top" Width="13.5" IsEnabled="False"/>
+						<CheckBox x:Name="chkPackaging" HorizontalAlignment="Left" Height="15" Margin="108.667,276.166,0,0" VerticalAlignment="Top" Width="13.5" IsEnabled="False"/>
+						<CheckBox x:Name="chkSterilized" HorizontalAlignment="Left" Height="15" Margin="108.667,311.166,0,0" VerticalAlignment="Top" Width="13.5" IsEnabled="False"/>
+						<Label x:Name="txtGeneralInfoDate" Content="" HorizontalAlignment="Left" Height="30" Margin="115,10,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label x:Name="txtGroupLetter" Content="" HorizontalAlignment="Left" Height="30" Margin="115,45,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+					</Grid>
+				</GroupBox>
+				<GroupBox x:Name="gbClean" Header="Lavado" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" Height="372.999" Width="357.5" Visibility="Collapsed">
+					<Grid x:Name="gridClean" Margin="0,10,-2,2.245">
+						<Label Content="Fecha:" HorizontalAlignment="Left" Height="30" Margin="55,38.5,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label Content="Usuario:" HorizontalAlignment="Left" Height="30" Margin="47.333,108.5,0,0" VerticalAlignment="Top" Width="56.334" FontWeight="Normal"/>
+						<Label Content="Observaciones:" HorizontalAlignment="Left" Height="30" Margin="10,143.5,0,0" VerticalAlignment="Top" Width="93.667" FontWeight="Normal"/>
+						<Border BorderThickness="1" BorderBrush="Black" Margin="10,173.5,10,0" Height="118.835" VerticalAlignment="Top">
+							<TextBox x:Name="txtCleanObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True" FontWeight="Normal"/>
+						</Border>
+						<Label x:Name="txtCleanDate" Content="" HorizontalAlignment="Left" Height="30" Margin="115,38.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label x:Name="txtCleanShift" Content="" HorizontalAlignment="Left" Height="30" Margin="115,73.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label Content="Turno:" HorizontalAlignment="Left" Height="30" Margin="55,73.5,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label x:Name="txtCleanUser" Content="" HorizontalAlignment="Left" Height="30" Margin="115,108.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+					</Grid>
+				</GroupBox>
+				<GroupBox x:Name="gbPackaged" Header="Empaquetado" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" Height="372.999" Width="357.5" Visibility="Collapsed">
+					<Grid x:Name="gridClean1" Margin="0,10,-2,2.245">
+						<Label Content="Fecha:" HorizontalAlignment="Left" Height="30" Margin="55,38.5,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label Content="Usuario:" HorizontalAlignment="Left" Height="30" Margin="47.333,108.5,0,0" VerticalAlignment="Top" Width="56.334" FontWeight="Normal"/>
+						<Label Content="Observaciones:" HorizontalAlignment="Left" Height="30" Margin="10,143.5,0,0" VerticalAlignment="Top" Width="93.667" FontWeight="Normal"/>
+						<Border BorderThickness="1" BorderBrush="Black" Margin="10,173.5,10,0" Height="118.835" VerticalAlignment="Top">
+							<TextBox x:Name="txtPackagedObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True" FontWeight="Normal"/>
+						</Border>
+						<Label x:Name="txtPackagedDate" Content="" HorizontalAlignment="Left" Height="30" Margin="115,38.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label x:Name="txtPackagedShift" Content="" HorizontalAlignment="Left" Height="30" Margin="115,73.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label Content="Turno:" HorizontalAlignment="Left" Height="30" Margin="55,73.5,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label x:Name="txtPackagedUser" Content="" HorizontalAlignment="Left" Height="30" Margin="115,108.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+					</Grid>
+				</GroupBox>
+				<GroupBox x:Name="gbSterilized" Header="Esterilizado" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" Height="372.999" Width="357.5" Visibility="Collapsed">
+					<Grid x:Name="gridClean2" Margin="0,10,-2,2.245">
+						<Label Content="Fecha:" HorizontalAlignment="Left" Height="30" Margin="55,38.5,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label Content="Usuario:" HorizontalAlignment="Left" Height="30" Margin="47.333,108.5,0,0" VerticalAlignment="Top" Width="56.334" FontWeight="Normal"/>
+						<Label Content="Observaciones:" HorizontalAlignment="Left" Height="30" Margin="10,143.5,0,0" VerticalAlignment="Top" Width="93.667" FontWeight="Normal"/>
+						<Border BorderThickness="1" BorderBrush="Black" Margin="10,173.5,10,0" Height="118.835" VerticalAlignment="Top">
+							<TextBox x:Name="txtSterilizedObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True" FontWeight="Normal"/>
+						</Border>
+						<Label x:Name="txtSterilizedDate" Content="" HorizontalAlignment="Left" Height="30" Margin="115,38.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label x:Name="txtSterilizedShift" Content="" HorizontalAlignment="Left" Height="30" Margin="115,73.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+						<Label Content="Turno:" HorizontalAlignment="Left" Height="30" Margin="55,73.5,0,0" VerticalAlignment="Top" Width="48.667" FontWeight="Normal"/>
+						<Label x:Name="txtSterilizedUser" Content="" HorizontalAlignment="Left" Height="30" Margin="115,108.5,0,0" VerticalAlignment="Top" Width="222.5" FontWeight="Normal" FontStyle="Italic"/>
+					</Grid>
+				</GroupBox>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</Window>

@@ -1,5 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MyDentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CleanedActions">
+    <Key>
+      <PropertyRef Name="CleanedActionId" />
+    </Key>
+    <Property Name="CleanedActionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Shift" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ActionDate" Type="date" Nullable="false" />
+    <Property Name="Observations" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CleanedMaterials">
+    <Key>
+      <PropertyRef Name="CleanedMaterialId" />
+    </Key>
+    <Property Name="CleanedMaterialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="GroupLetter" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Cleaned" Type="int" />
+    <Property Name="Packaged" Type="int" />
+    <Property Name="Sterilized" Type="int" />
+    <Property Name="Observations" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="Configurations">
     <Key>
       <PropertyRef Name="ConfigurationId" />
@@ -195,6 +218,54 @@
     <Property Name="IsAdmin" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
+  <Association Name="FK_CleanedActions_UserId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="CleanedActions" Type="Self.CleanedActions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CleanedActions">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CleanedMaterials_Cleaned">
+    <End Role="CleanedActions" Type="Self.CleanedActions" Multiplicity="0..1" />
+    <End Role="CleanedMaterials" Type="Self.CleanedMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CleanedActions">
+        <PropertyRef Name="CleanedActionId" />
+      </Principal>
+      <Dependent Role="CleanedMaterials">
+        <PropertyRef Name="Cleaned" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CleanedMaterials_Packaged">
+    <End Role="CleanedActions" Type="Self.CleanedActions" Multiplicity="0..1" />
+    <End Role="CleanedMaterials" Type="Self.CleanedMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CleanedActions">
+        <PropertyRef Name="CleanedActionId" />
+      </Principal>
+      <Dependent Role="CleanedMaterials">
+        <PropertyRef Name="Packaged" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CleanedMaterials_Sterilized">
+    <End Role="CleanedActions" Type="Self.CleanedActions" Multiplicity="0..1" />
+    <End Role="CleanedMaterials" Type="Self.CleanedMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CleanedActions">
+        <PropertyRef Name="CleanedActionId" />
+      </Principal>
+      <Dependent Role="CleanedMaterials">
+        <PropertyRef Name="Sterilized" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Events_EventCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Events" Type="Self.Events" Multiplicity="*" />
@@ -352,6 +423,8 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="MyDentDBModelStoreContainer">
+    <EntitySet Name="CleanedActions" EntityType="Self.CleanedActions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -369,6 +442,22 @@
     <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CleanedActions_UserId" Association="Self.FK_CleanedActions_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="CleanedActions" EntitySet="CleanedActions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CleanedMaterials_Cleaned" Association="Self.FK_CleanedMaterials_Cleaned">
+      <End Role="CleanedActions" EntitySet="CleanedActions" />
+      <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CleanedMaterials_Packaged" Association="Self.FK_CleanedMaterials_Packaged">
+      <End Role="CleanedActions" EntitySet="CleanedActions" />
+      <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CleanedMaterials_Sterilized" Association="Self.FK_CleanedMaterials_Sterilized">
+      <End Role="CleanedActions" EntitySet="CleanedActions" />
+      <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+    </AssociationSet>
     <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
       <End Role="Users" EntitySet="Users" />
       <End Role="Events" EntitySet="Events" />

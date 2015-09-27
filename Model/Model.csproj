@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CleanedAction.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CleanedMaterial.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Configuration.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>

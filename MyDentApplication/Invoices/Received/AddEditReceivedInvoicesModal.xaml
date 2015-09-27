@@ -4,7 +4,7 @@
 	xmlns:System="clr-namespace:System;assembly=mscorlib"
 	x:Class="MyDentApplication.AddEditReceivedInvoicesModal"
 	x:Name="Window"
-	Title="Agregar factura recibida"
+	Title="Agregar factura"
 	Width="390" Height="361" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">

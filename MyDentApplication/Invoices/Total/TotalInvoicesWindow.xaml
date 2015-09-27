@@ -4,7 +4,7 @@
 	xmlns:local="clr-namespace:MyDentApplication" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	x:Class="MyDentApplication.TotalInvoicesWindow"
 	x:Name="Window"
-	Title="TotalInvoicesWindow"
+	Title="Facturacion mensual"
 	Width="696.716" Height="480" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Images/app_icon.ico">
 
 	<Window.Resources>
@@ -16,9 +16,9 @@
 			<RowDefinition Height="113*"/>
 			<RowDefinition Height="112*"/>
 		</Grid.RowDefinitions>
-		<DataGrid x:Name="dgReceivedInvoices" TabIndex="3" SelectionMode="Single" Margin="10,71.5,10,6.5" 
+		<DataGrid x:Name="dgReceivedInvoices" TabIndex="3" SelectionMode="Single" Margin="10,31.5,10,44.5" 
 			ItemsSource="{Binding ObservableData}" IsReadOnly="True" CanUserAddRows="False" 
-			CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+			CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False" Grid.Row="1">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding ResourceProvider.Name}" Header="Proveedor" Width="0.15*"/>
 				<DataGridTextColumn Header="Fecha de fact." Width="0.1*">
@@ -43,12 +43,12 @@
 		</DataGrid>
 		<Label Width="118" VerticalAlignment="Top" Margin="10,10,0,0" Height="27" HorizontalAlignment="Left" Content="Seleccione un mes:"/>
 		<xctk:DateTimeUpDown x:Name="dtudSelectedMonth" HorizontalAlignment="Left" Height="25.5" Margin="133,11.5,0,0" VerticalAlignment="Top" Width="187.5" Format="YearMonth" Panel.ZIndex="1" TabIndex="1"/>
-		<Label x:Name="lblTotalMonth" Content="" Margin="10,0,10,10" HorizontalContentAlignment="Right" Height="29" VerticalAlignment="Bottom" Grid.Row="1"/>
-		<Label Width="118" VerticalAlignment="Top" Margin="10,44.5,0,0" Height="27" HorizontalAlignment="Left" Content="Recibidas:"/>
-		<Label Width="118" VerticalAlignment="Top" Margin="10,4.5,0,0" Height="27" HorizontalAlignment="Left" Content="Emitidas:" Grid.Row="1"/>
-		<DataGrid x:Name="dgOutgoingInvoices" TabIndex="4" SelectionMode="Single" Margin="10,31.5,10,44" 
+		<Label x:Name="lblTotalMonth" Content="" Margin="114.333,0,10,10" HorizontalContentAlignment="Right" Height="29" VerticalAlignment="Bottom" Grid.Row="1"/>
+		<Label Width="218" VerticalAlignment="Top" Margin="10,44.5,0,0" Height="27" HorizontalAlignment="Left" Content="Recibos de honorarios:"/>
+		<Label Width="118" VerticalAlignment="Top" Margin="10,4.5,0,0" Height="27" HorizontalAlignment="Left" Content="Facturas:" Grid.Row="1"/>
+		<DataGrid x:Name="dgOutgoingInvoices" TabIndex="4" SelectionMode="Single" Margin="10,71.5,10,6" 
 			ItemsSource="{Binding ObservableData}" IsReadOnly="True" CanUserAddRows="False" 
-			CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False" Grid.Row="1">
+			CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Paciente" Width="0.15*" >
 					<DataGridTextColumn.Binding>
@@ -81,5 +81,6 @@
 		<Button x:Name="btnRefreshInvoices" Margin="325.5,12,0,0" Click="btnRefreshInvoices_Click" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" TabIndex="2">
 			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
 		</Button>
+		<Button x:Name="btnExportToPdf" Content="Exportar a PDF" Margin="10,0,0,10" Cursor="Hand" TabIndex="3" Height="29" VerticalAlignment="Bottom" Grid.Row="1" Click="btnExportToPdf_Click" HorizontalAlignment="Left" Width="99.333"/>
 	</Grid>
 </Window>

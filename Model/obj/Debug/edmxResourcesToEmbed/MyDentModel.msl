@@ -213,5 +213,30 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CleanedMaterials">
+      <EntityTypeMapping TypeName="MyDentDBModel.CleanedMaterial">
+        <MappingFragment StoreEntitySet="CleanedMaterials">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Observations" ColumnName="Observations" />
+          <ScalarProperty Name="Sterilized" ColumnName="Sterilized" />
+          <ScalarProperty Name="Packaged" ColumnName="Packaged" />
+          <ScalarProperty Name="Cleaned" ColumnName="Cleaned" />
+          <ScalarProperty Name="GroupLetter" ColumnName="GroupLetter" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CleanedMaterialId" ColumnName="CleanedMaterialId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CleanedActions">
+      <EntityTypeMapping TypeName="MyDentDBModel.CleanedAction">
+        <MappingFragment StoreEntitySet="CleanedActions">
+          <ScalarProperty Name="Observations" ColumnName="Observations" />
+          <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Shift" ColumnName="Shift" />
+          <ScalarProperty Name="CleanedActionId" ColumnName="CleanedActionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -6,7 +6,7 @@
 	xmlns:System="clr-namespace:System;assembly=mscorlib"
 	x:Class="MyDentApplication.ManageReceivedInvoicesWindow"
 	x:Name="Window"
-	Title="Administrar facturas recibidas"
+	Title="Administrar facturas"
 	Width="696.716" Height="480" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
 
 	<Window.Resources>

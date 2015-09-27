@@ -70,6 +70,24 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Reminder" EntitySet="Reminders" />
     </AssociationSet>
+    <EntitySet Name="CleanedMaterials" EntityType="MyDentDBModel.CleanedMaterial" />
+    <EntitySet Name="CleanedActions" EntityType="MyDentDBModel.CleanedAction" />
+    <AssociationSet Name="FK_CleanedMaterials_Cleaned" Association="MyDentDBModel.FK_CleanedMaterials_Cleaned">
+      <End Role="CleanedAction" EntitySet="CleanedActions" />
+      <End Role="CleanedMaterial" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CleanedMaterials_Packaged" Association="MyDentDBModel.FK_CleanedMaterials_Packaged">
+      <End Role="CleanedAction" EntitySet="CleanedActions" />
+      <End Role="CleanedMaterial" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CleanedMaterials_Sterilized" Association="MyDentDBModel.FK_CleanedMaterials_Sterilized">
+      <End Role="CleanedAction" EntitySet="CleanedActions" />
+      <End Role="CleanedMaterial" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CleanedActions_UserId" Association="MyDentDBModel.FK_CleanedActions_UserId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="CleanedAction" EntitySet="CleanedActions" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -291,6 +309,7 @@
     <NavigationProperty Name="Medicines" Relationship="MyDentDBModel.FK_Medicines_DataCapturerId" FromRole="User" ToRole="Medicine" />
     <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
     <NavigationProperty Name="Reminders" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="User" ToRole="Reminder" />
+    <NavigationProperty Name="CleanedActions" Relationship="MyDentDBModel.FK_CleanedActions_UserId" FromRole="User" ToRole="CleanedAction" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -445,6 +464,84 @@
       </Principal>
       <Dependent Role="Reminder">
         <PropertyRef Name="SeenBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CleanedMaterial">
+    <Key>
+      <PropertyRef Name="CleanedMaterialId" />
+    </Key>
+    <Property Name="CleanedMaterialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GroupLetter" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Cleaned" Type="Int32" />
+    <Property Name="Packaged" Type="Int32" />
+    <Property Name="Sterilized" Type="Int32" />
+    <Property Name="Observations" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CleanedAction" Relationship="MyDentDBModel.FK_CleanedMaterials_Cleaned" FromRole="CleanedMaterial" ToRole="CleanedAction" />
+    <NavigationProperty Name="PackagedAction" Relationship="MyDentDBModel.FK_CleanedMaterials_Packaged" FromRole="CleanedMaterial" ToRole="CleanedAction" />
+    <NavigationProperty Name="SterilizedAction" Relationship="MyDentDBModel.FK_CleanedMaterials_Sterilized" FromRole="CleanedMaterial" ToRole="CleanedAction" />
+  </EntityType>
+  <EntityType Name="CleanedAction">
+    <Key>
+      <PropertyRef Name="CleanedActionId" />
+    </Key>
+    <Property Name="CleanedActionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Shift" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ActionDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="CleanedMaterials" Relationship="MyDentDBModel.FK_CleanedMaterials_Cleaned" FromRole="CleanedAction" ToRole="CleanedMaterial" />
+    <NavigationProperty Name="CleanedMaterials1" Relationship="MyDentDBModel.FK_CleanedMaterials_Packaged" FromRole="CleanedAction" ToRole="CleanedMaterial" />
+    <NavigationProperty Name="CleanedMaterials2" Relationship="MyDentDBModel.FK_CleanedMaterials_Sterilized" FromRole="CleanedAction" ToRole="CleanedMaterial" />
+    <Property Name="Observations" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_CleanedActions_UserId" FromRole="CleanedAction" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_CleanedMaterials_Cleaned">
+    <End Type="MyDentDBModel.CleanedAction" Role="CleanedAction" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.CleanedMaterial" Role="CleanedMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CleanedAction">
+        <PropertyRef Name="CleanedActionId" />
+      </Principal>
+      <Dependent Role="CleanedMaterial">
+        <PropertyRef Name="Cleaned" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CleanedMaterials_Packaged">
+    <End Type="MyDentDBModel.CleanedAction" Role="CleanedAction" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.CleanedMaterial" Role="CleanedMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CleanedAction">
+        <PropertyRef Name="CleanedActionId" />
+      </Principal>
+      <Dependent Role="CleanedMaterial">
+        <PropertyRef Name="Packaged" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CleanedMaterials_Sterilized">
+    <End Type="MyDentDBModel.CleanedAction" Role="CleanedAction" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.CleanedMaterial" Role="CleanedMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CleanedAction">
+        <PropertyRef Name="CleanedActionId" />
+      </Principal>
+      <Dependent Role="CleanedMaterial">
+        <PropertyRef Name="Sterilized" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CleanedActions_UserId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.CleanedAction" Role="CleanedAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CleanedAction">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

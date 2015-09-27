@@ -257,7 +257,7 @@ namespace MyDentApplication
         private void GetPatients()
         {
             _patients = BusinessController.Instance.GetAll<Model.Patient>()
-                        //.Where(p => p.IsDeleted == false)
+                        .Where(p => p.IsDeleted == false)
                         .OrderBy(p => p.FirstName)
                         .ThenBy(p => p.LastName)
                         .ToList();

@@ -4,7 +4,7 @@
 	xmlns:local="clr-namespace:MyDentApplication" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib"
 	x:Class="MyDentApplication.ManageOutgoingInvoicesWindow"
 	x:Name="Window"
-	Title="Administrar facturas emitidas"
+	Title="Administrar recibos de honorarios"
 	Width="696.716" Height="480" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
 	<Window.Resources>
 		<local:DateValueConverter x:Key="DateValueConverter" />

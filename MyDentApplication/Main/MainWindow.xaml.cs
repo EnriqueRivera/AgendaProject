@@ -45,6 +45,7 @@ namespace MyDentApplication
         private TotalInvoicesWindow _totalInvoicesWindow;
         private ManageGeneralPaidsWindow _manageGeneralPaidsWindow;
         private ManageContactsWindow _manageContactsWindow;
+        private ManageCleanedMaterialsWindow _manageCleanedMaterialsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -144,7 +145,7 @@ namespace MyDentApplication
         private void CloseAllWindows()
         {
             RegisterLoginAction(false, _userLoggedIn.UserId);
-
+            
             CloseWindow(_agendaWindow);
             CloseWindow(_manageUsersWindow);
             CloseWindow(_manageRemindersWindow);
@@ -160,6 +161,7 @@ namespace MyDentApplication
             CloseWindow(_totalInvoicesWindow);
             CloseWindow(_manageGeneralPaidsWindow);
             CloseWindow(_manageContactsWindow);
+            CloseWindow(_manageCleanedMaterialsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -234,6 +236,10 @@ namespace MyDentApplication
             {
                 _manageContactsWindow = null;
             }
+            else if (sender is ManageCleanedMaterialsWindow)
+            {
+                _manageCleanedMaterialsWindow = null;
+            }
             else if (sender is FinishedEventsReminderModal)
             {
                 _finishedEventsReminderModal = null;
@@ -288,6 +294,178 @@ namespace MyDentApplication
 
             adminId = userResult.UserId;
             return userResult.IsAdmin;
+        }
+        #endregion
+
+        #region Actions to execute from another thread
+        void OpenFinishedEventsReminderModalFromAnotherThread()
+        {
+            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
+            {
+                Dispatcher.Invoke(new OpenFinishedEventsReminderModalDelegate(OpenFinishedEventsReminderModalFromAnotherThread));
+                return;
+            }
+
+            if (_finishedEventsReminderModal != null)
+            {
+                _finishedEventsReminderModal.Close();
+            }
+
+            OpenFinishedEventsReminderModal();
+        }
+
+        void RefreshRemindersFromAnotherThread()
+        {
+            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
+            {
+                Dispatcher.Invoke(new RefreshRemindersDelegate(RefreshRemindersFromAnotherThread));
+                return;
+            }
+
+            
+            RefreshRemindersStackPanel();
+        }
+        #endregion
+
+        #region Reminders
+        private void RefreshRemindersStackPanel()
+        {
+            int pendingReminders = 0;
+            int seenReminders = 0;
+
+            List<Model.Reminder> todayReminders = BusinessController.Instance.FindBy<Model.Reminder>
+                                                    (r => EntityFunctions.TruncateTime(r.AppearDate) == EntityFunctions.TruncateTime(DateTime.Now))
+                                                    .OrderBy(r => r.AppearDate)
+                                                    .ToList();
+
+            DisplayReminders(todayReminders);
+
+            int todayRemindersCount = todayReminders.Count;
+            int spRemindersCount = spReminders.Children.Count;
+
+            if (todayRemindersCount > spRemindersCount)
+            {
+                for (int i = 0; i < todayRemindersCount - spRemindersCount; i++)
+                {
+                    spReminders.Children.Add(new ViewReminderControl());
+                }
+            }
+            else if (todayRemindersCount < spRemindersCount)
+            {
+                spReminders.Children.RemoveRange(0, spRemindersCount - todayRemindersCount);
+            }
+
+            for (int i = 0; i < todayRemindersCount; i++)
+            {
+                ViewReminderControl reminderControl = (spReminders.Children[i] as ViewReminderControl);
+
+                reminderControl.Reminder = todayReminders[i];
+
+                reminderControl.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
+
+                if (todayReminders[i].Seen)
+                {
+                    seenReminders++;
+                }
+                else
+                {
+                    pendingReminders++;
+                }
+            }
+
+            lblPendingReminders.ToolTip = lblPendingReminders.Content = "Pendientes (" + pendingReminders + ")";
+            lblSeenReminders.ToolTip = lblSeenReminders.Content = "Mostrados (" + seenReminders + ")";
+        }
+
+        private void DisplayReminders(List<Model.Reminder> todayReminders)
+        {
+            List<Model.Reminder> remindersToDisplay = todayReminders
+                                                        .Where(r => r.AppearDate <= DateTime.Now && r.Seen == false)
+                                                        .OrderBy(r => r.AppearDate)
+                                                        .ToList();
+
+            foreach (Model.Reminder reminder in remindersToDisplay)
+            {
+                this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
+                new ShowPendingReminderModal(reminder, _userLoggedIn).ShowDialog();
+            }
+        }
+        #endregion
+
+        #region Medicines
+        private void RefreshMedicinesStackPanel()
+        {
+            int expiredMedicines = 0;
+            int replacedMedicines = 0;
+            DateTime today = DateTime.Now;
+
+            List<Model.Medicine> monthlyMedicines = BusinessController.Instance.FindBy<Model.Medicine>
+                                                    (m => m.IsDeleted == false && m.ExpiredDate.Year == today.Year && m.ExpiredDate.Month == today.Month)
+                                                    .OrderBy(m => m.WasReplaced == false)
+                                                    .ThenBy(m => m.Name)
+                                                    .ToList();
+
+            int medicinesCount = monthlyMedicines.Count;
+            int spMedicinesCount = spMedicines.Children.Count;
+
+            if (medicinesCount > spMedicinesCount)
+            {
+                for (int i = 0; i < medicinesCount - spMedicinesCount; i++)
+                {
+                    ViewMedicineControl viewMedicineControl = new ViewMedicineControl();
+                    viewMedicineControl.OnMedicineUpdated += viewMedicineControl_OnMedicineUpdated;
+
+                    spMedicines.Children.Add(viewMedicineControl);
+                }
+            }
+            else if (medicinesCount < spMedicinesCount)
+            {
+                spMedicines.Children.RemoveRange(0, spMedicinesCount - medicinesCount);
+            }
+
+            for (int i = 0; i < medicinesCount; i++)
+            {
+                ViewMedicineControl medicineControl = (spMedicines.Children[i] as ViewMedicineControl);
+
+                medicineControl.Medicine = monthlyMedicines[i];
+
+                medicineControl.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
+
+                if (monthlyMedicines[i].WasReplaced)
+                {
+                    replacedMedicines++;
+                }
+                else
+                {
+                    expiredMedicines++;
+                }
+            }
+
+            lblExpiredMedicine.ToolTip = lblExpiredMedicine.Content = "Sin reemplazar (" + expiredMedicines + ")";
+            lblReplacedMedicine.ToolTip = lblReplacedMedicine.Content = "Reemplazado (" + replacedMedicines + ")";
+        }
+
+        void viewMedicineControl_OnMedicineUpdated(object sender, bool e)
+        {
+            RefreshMedicinesStackPanel();
+        }
+        #endregion
+
+        #region Finished events
+        public void OpenFinishedEventsReminderModal()
+        {
+            List<Model.Event> finishedEvents = Controllers.BusinessController.Instance.FindBy<Model.Event>
+                                                    (e => e.EndEvent <= DateTime.Now && e.IsCanceled == false && e.IsCompleted == false)
+                                                    .OrderBy(e => e.EndEvent)
+                                                    .ToList();
+
+            if (finishedEvents != null && finishedEvents.Count > 0)
+            {
+                this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
+                _finishedEventsReminderModal = new FinishedEventsReminderModal(finishedEvents, _userLoggedIn);
+                _finishedEventsReminderModal.Closed += Window_Closed;
+                _finishedEventsReminderModal.Show();
+            }
         }
         #endregion
 
@@ -495,177 +673,17 @@ namespace MyDentApplication
             _manageContactsWindow.Show();
             _manageContactsWindow.WindowState = WindowState.Normal;
         }
-        #endregion
 
-        #region Actions to execute from another thread
-        void OpenFinishedEventsReminderModalFromAnotherThread()
+        private void btnManageCleanedMaterials_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
+            if (_manageCleanedMaterialsWindow == null)
             {
-                Dispatcher.Invoke(new OpenFinishedEventsReminderModalDelegate(OpenFinishedEventsReminderModalFromAnotherThread));
-                return;
+                _manageCleanedMaterialsWindow = new ManageCleanedMaterialsWindow(_userLoggedIn);
+                _manageCleanedMaterialsWindow.Closed += Window_Closed;
             }
 
-            if (_finishedEventsReminderModal != null)
-            {
-                _finishedEventsReminderModal.Close();
-            }
-
-            OpenFinishedEventsReminderModal();
-        }
-
-        void RefreshRemindersFromAnotherThread()
-        {
-            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
-            {
-                Dispatcher.Invoke(new RefreshRemindersDelegate(RefreshRemindersFromAnotherThread));
-                return;
-            }
-
-            
-            RefreshRemindersStackPanel();
-        }
-        #endregion
-
-        #region Reminders
-        private void RefreshRemindersStackPanel()
-        {
-            int pendingReminders = 0;
-            int seenReminders = 0;
-
-            List<Model.Reminder> todayReminders = BusinessController.Instance.FindBy<Model.Reminder>
-                                                    (r => EntityFunctions.TruncateTime(r.AppearDate) == EntityFunctions.TruncateTime(DateTime.Now))
-                                                    .OrderBy(r => r.AppearDate)
-                                                    .ToList();
-
-            DisplayReminders(todayReminders);
-
-            int todayRemindersCount = todayReminders.Count;
-            int spRemindersCount = spReminders.Children.Count;
-
-            if (todayRemindersCount > spRemindersCount)
-            {
-                for (int i = 0; i < todayRemindersCount - spRemindersCount; i++)
-                {
-                    spReminders.Children.Add(new ViewReminderControl());
-                }
-            }
-            else if (todayRemindersCount < spRemindersCount)
-            {
-                spReminders.Children.RemoveRange(0, spRemindersCount - todayRemindersCount);
-            }
-
-            for (int i = 0; i < todayRemindersCount; i++)
-            {
-                ViewReminderControl reminderControl = (spReminders.Children[i] as ViewReminderControl);
-
-                reminderControl.Reminder = todayReminders[i];
-
-                reminderControl.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
-
-                if (todayReminders[i].Seen)
-                {
-                    seenReminders++;
-                }
-                else
-                {
-                    pendingReminders++;
-                }
-            }
-
-            lblPendingReminders.ToolTip = lblPendingReminders.Content = "Pendientes (" + pendingReminders + ")";
-            lblSeenReminders.ToolTip = lblSeenReminders.Content = "Mostrados (" + seenReminders + ")";
-        }
-
-        private void DisplayReminders(List<Model.Reminder> todayReminders)
-        {
-            List<Model.Reminder> remindersToDisplay = todayReminders
-                                                        .Where(r => r.AppearDate <= DateTime.Now && r.Seen == false)
-                                                        .OrderBy(r => r.AppearDate)
-                                                        .ToList();
-
-            foreach (Model.Reminder reminder in remindersToDisplay)
-            {
-                this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
-                new ShowPendingReminderModal(reminder, _userLoggedIn).ShowDialog();
-            }
-        }
-        #endregion
-
-        #region Medicines
-        private void RefreshMedicinesStackPanel()
-        {
-            int expiredMedicines = 0;
-            int replacedMedicines = 0;
-            DateTime today = DateTime.Now;
-
-            List<Model.Medicine> monthlyMedicines = BusinessController.Instance.FindBy<Model.Medicine>
-                                                    (m => m.IsDeleted == false && m.ExpiredDate.Year == today.Year && m.ExpiredDate.Month == today.Month)
-                                                    .OrderBy(m => m.WasReplaced == false)
-                                                    .ThenBy(m => m.Name)
-                                                    .ToList();
-
-            int medicinesCount = monthlyMedicines.Count;
-            int spMedicinesCount = spMedicines.Children.Count;
-
-            if (medicinesCount > spMedicinesCount)
-            {
-                for (int i = 0; i < medicinesCount - spMedicinesCount; i++)
-                {
-                    ViewMedicineControl viewMedicineControl = new ViewMedicineControl();
-                    viewMedicineControl.OnMedicineUpdated += viewMedicineControl_OnMedicineUpdated;
-
-                    spMedicines.Children.Add(viewMedicineControl);
-                }
-            }
-            else if (medicinesCount < spMedicinesCount)
-            {
-                spMedicines.Children.RemoveRange(0, spMedicinesCount - medicinesCount);
-            }
-
-            for (int i = 0; i < medicinesCount; i++)
-            {
-                ViewMedicineControl medicineControl = (spMedicines.Children[i] as ViewMedicineControl);
-
-                medicineControl.Medicine = monthlyMedicines[i];
-
-                medicineControl.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
-
-                if (monthlyMedicines[i].WasReplaced)
-                {
-                    replacedMedicines++;
-                }
-                else
-                {
-                    expiredMedicines++;
-                }
-            }
-
-            lblExpiredMedicine.ToolTip = lblExpiredMedicine.Content = "Sin reemplazar (" + expiredMedicines + ")";
-            lblReplacedMedicine.ToolTip = lblReplacedMedicine.Content = "Reemplazado (" + replacedMedicines + ")";
-        }
-
-        void viewMedicineControl_OnMedicineUpdated(object sender, bool e)
-        {
-            RefreshMedicinesStackPanel();
-        }
-        #endregion
-
-        #region Finished events
-        public void OpenFinishedEventsReminderModal()
-        {
-            List<Model.Event> finishedEvents = Controllers.BusinessController.Instance.FindBy<Model.Event>
-                                                    (e => e.EndEvent <= DateTime.Now && e.IsCanceled == false && e.IsCompleted == false)
-                                                    .OrderBy(e => e.EndEvent)
-                                                    .ToList();
-
-            if (finishedEvents != null && finishedEvents.Count > 0)
-            {
-                this.WindowState = this.WindowState == WindowState.Minimized ? WindowState.Normal : this.WindowState;
-                _finishedEventsReminderModal = new FinishedEventsReminderModal(finishedEvents, _userLoggedIn);
-                _finishedEventsReminderModal.Closed += Window_Closed;
-                _finishedEventsReminderModal.Show();
-            }
+            _manageCleanedMaterialsWindow.Show();
+            _manageCleanedMaterialsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

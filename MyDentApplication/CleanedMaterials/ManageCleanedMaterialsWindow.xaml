@@ -1,0 +1,61 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:System="clr-namespace:System;assembly=mscorlib"
+	xmlns:local="clr-namespace:MyDentApplication" 
+	x:Class="MyDentApplication.ManageCleanedMaterialsWindow"
+	x:Name="Window"
+	Title="Administrar limpieza de instrumentos"
+	Width="696.716" Height="440" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Images/app_icon.ico">
+	<Window.Resources>
+		<local:DateValueConverter x:Key="DateValueConverter" />
+        <local:BoolValueConverter x:Key="BoolValueConverter" />
+	</Window.Resources>
+	<Grid x:Name="LayoutRoot">
+		<DataGrid x:Name="dgCleanedMaterials" Margin="10,10,10,44" IsReadOnly="True" CanUserSortColumns="True"
+			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+			TabIndex="1" SelectionChanged="dgCleanedMaterials_SelectionChanged">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Fecha" Width="0.1*">
+					<DataGridTextColumn.Binding>
+						<MultiBinding Converter="{StaticResource DateValueConverter}">
+							<Binding Path="CreatedDate"/>
+						</MultiBinding>
+					</DataGridTextColumn.Binding>
+				</DataGridTextColumn>
+				<DataGridTextColumn Header="Grupo" Binding="{Binding GroupLetter}" Width="0.04*" />
+				<DataGridTextColumn Header="Observaciones" Binding="{Binding Observations}" Width="0.2*" />
+				<DataGridCheckBoxColumn Header="Lavado" Width="0.07*">
+					<DataGridCheckBoxColumn.Binding>
+						<MultiBinding Converter="{StaticResource BoolValueConverter}">
+							<Binding Path="Cleaned"/>
+						</MultiBinding>
+					</DataGridCheckBoxColumn.Binding>
+				</DataGridCheckBoxColumn>
+				<DataGridCheckBoxColumn Header="Empaquetado" Width="0.07*">
+					<DataGridCheckBoxColumn.Binding>
+						<MultiBinding Converter="{StaticResource BoolValueConverter}">
+							<Binding Path="Packaged"/>
+						</MultiBinding>
+					</DataGridCheckBoxColumn.Binding>
+				</DataGridCheckBoxColumn>
+				<DataGridCheckBoxColumn Header="Esterilizado" Width="0.07*">
+					<DataGridCheckBoxColumn.Binding>
+						<MultiBinding Converter="{StaticResource BoolValueConverter}">
+							<Binding Path="Sterilized"/>
+						</MultiBinding>
+					</DataGridCheckBoxColumn.Binding>
+				</DataGridCheckBoxColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button x:Name="btnDeleteCleanedMaterial" Content="Eliminar" Margin="0,0,10,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteCleanedMaterial_Click" />
+		<Button x:Name="btnAddCleanedMaterial" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,140,10" Width="60" Cursor="Hand" TabIndex="3" Height="29" VerticalAlignment="Bottom" Click="btnAddCleanedMaterial_Click" />
+		<Button x:Name="btnEditCleanedMaterial" Content="Editar" HorizontalAlignment="Right" Margin="0,0,75,10" Width="60" Cursor="Hand" TabIndex="3" Height="29" VerticalAlignment="Bottom" Click="btnEditCleanedMaterial_Click" />
+		<Button x:Name="btnMarkSterilized" Content="Esterilizado" Margin="244,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="76" Click="btnMarkSterilized_Click" />
+		<Button x:Name="btnMarkCleaned" Content="Lavado" HorizontalAlignment="Left" Margin="94,0,0,10" Width="60" Cursor="Hand" TabIndex="3" Click="btnMarkCleaned_Click" Height="29" VerticalAlignment="Bottom" />
+		<Button x:Name="btnMarkPackaged" Content="Empaquetado" HorizontalAlignment="Left" Margin="159,0,0,10" Width="80" Cursor="Hand" TabIndex="3" Click="btnMarkPackaged_Click" Height="29" VerticalAlignment="Bottom" />
+		<Label Content="Marcar como:" HorizontalAlignment="Left" Margin="10,0,0,10" Width="84" Height="29" VerticalAlignment="Bottom"/>
+		<Button x:Name="btnViewCleanedMaterial" Content="Ver detalles" HorizontalAlignment="Right" Margin="0,0,205,10" Width="74" Cursor="Hand" TabIndex="3" Height="29" VerticalAlignment="Bottom" Click="btnViewCleanedMaterial_Click" />
+	</Grid>
+</Window>

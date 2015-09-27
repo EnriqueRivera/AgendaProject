@@ -46,6 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.7\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -53,6 +56,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -87,6 +91,18 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="CleanedMaterials\AddEditCleanedMaterialsModal.xaml.cs">
+      <DependentUpon>AddEditCleanedMaterialsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CleanedMaterials\ChangeCleanedActionModal.xaml.cs">
+      <DependentUpon>ChangeCleanedActionModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CleanedMaterials\CleanedMaterialsDetailsModal.xaml.cs">
+      <DependentUpon>CleanedMaterialsDetailsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CleanedMaterials\ManageCleanedMaterialsWindow.xaml.cs">
+      <DependentUpon>ManageCleanedMaterialsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contacts\AddEditContactsModal.xaml.cs">
       <DependentUpon>AddEditContactsModal.xaml</DependentUpon>
     </Compile>
@@ -195,6 +211,22 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="CleanedMaterials\AddEditCleanedMaterialsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CleanedMaterials\ChangeCleanedActionModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CleanedMaterials\CleanedMaterialsDetailsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CleanedMaterials\ManageCleanedMaterialsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Contacts\AddEditContactsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -383,6 +415,7 @@
     </EmbeddedResource>
     <None Include="Configuration\App.Config" />
     <None Include="Configuration\packages.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -408,6 +441,7 @@
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\changePassword_icon.png" />
+    <Resource Include="Images\cleanedMaterials_icon.png" />
     <Resource Include="Images\contacts_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
@@ -429,35 +463,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\app_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core">
-      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>4</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Outlook">
-      <Guid>{00062FFF-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>9</VersionMajor>
-      <VersionMinor>3</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="stdole">
-      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

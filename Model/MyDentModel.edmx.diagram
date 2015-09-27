@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="MyDentDBModel.GeneralPaid" Width="1.5" PointX="8.75" PointY="3.75" />
         <EntityTypeShape EntityType="MyDentDBModel.LaboratoryWork" Width="1.5" PointX="5.25" PointY="9.5" />
         <EntityTypeShape EntityType="MyDentDBModel.Login" Width="1.5" PointX="3" PointY="18.125" />
-        <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.Log" Width="1.5" PointX="9.25" PointY="6.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Medicine" Width="1.5" PointX="3" PointY="5.25" />
         <EntityTypeShape EntityType="MyDentDBModel.OutgoingInvoice" Width="1.5" PointX="5.25" PointY="13" />
         <EntityTypeShape EntityType="MyDentDBModel.Patient" Width="1.5" PointX="3" PointY="9" />
@@ -35,7 +35,13 @@
         <AssociationConnector Association="MyDentDBModel.FK_Patients_DataCapturerId" />
         <AssociationConnector Association="MyDentDBModel.FK_ReceivedInvoices_ProviderId" />
         <AssociationConnector Association="MyDentDBModel.FK_Reminders_SeenBy" />
-      </Diagram>
+        <EntityTypeShape EntityType="MyDentDBModel.CleanedMaterial" Width="1.5" PointX="13.625" PointY="1" />
+        <EntityTypeShape EntityType="MyDentDBModel.CleanedAction" Width="1.5" PointX="11.375" PointY="1.375" />
+        <AssociationConnector Association="MyDentDBModel.FK_CleanedMaterials_Cleaned" />
+        <AssociationConnector Association="MyDentDBModel.FK_CleanedMaterials_Packaged" />
+        <AssociationConnector Association="MyDentDBModel.FK_CleanedMaterials_Sterilized" />
+        <AssociationConnector Association="MyDentDBModel.FK_CleanedActions_UserId" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
