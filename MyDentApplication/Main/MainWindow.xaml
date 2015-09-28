@@ -6,7 +6,7 @@
 	x:Class="MyDentApplication.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="898" Height="774" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized">
+	Width="984" Height="774" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized">
 
 	<Grid x:Name="LayoutRoot" OpacityMask="White">
 		<Label x:Name="lblLoggedInCaption" Content="Sesión iniciada como:" Margin="0,0,169.5,12.001" HorizontalAlignment="Right" Width="123.5" Height="24" VerticalAlignment="Bottom"/>
@@ -177,6 +177,12 @@
         	<StackPanel Orientation="Vertical">
         		<Image Source="/MyDentApplication;component/Images/cleanedMaterials_icon.png" Width="50" Height="50"  />
         		<TextBlock TextAlignment="Center" Height="34.627" ><Run Text="Limpieza de"/><LineBreak/><Run Text="instrumentos"/></TextBlock>
+        	</StackPanel>
+        </Button>
+        <Button x:Name="btnSendMails" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,22.5,0,0" Click="btnSendMails_Click" > 
+        	<StackPanel Orientation="Vertical">
+        		<Image Source="/MyDentApplication;component/Images/sendEmail_icon.png" Width="50" Height="50"  />
+        		<TextBlock Text="Enviar correos" TextAlignment="Center" />
         	</StackPanel>
         </Button>
     </Grid>

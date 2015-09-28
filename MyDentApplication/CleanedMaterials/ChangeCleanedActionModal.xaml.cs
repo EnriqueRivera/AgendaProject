@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
 using System.Globalization;
+using Controllers;
 
 namespace MyDentApplication
 {
@@ -38,13 +39,13 @@ namespace MyDentApplication
 
             switch (_cleaningTypeToUpdate)
             {
-                case CleaningType.Cleaned:
+                case CleaningType.CLEANED:
                     this.Title += "Lavado";
                     break;
-                case CleaningType.Packaged:
+                case CleaningType.PACKAGED:
                     this.Title += "Empaquetado";
                     break;
-                case CleaningType.Sterilized:
+                case CleaningType.STERILIZED:
                     this.Title += "Esterilizado";
                     txtGroup.ToolTip = txtGroup.Text = GetNextGroupLetter();
                     break;
@@ -69,13 +70,13 @@ namespace MyDentApplication
             {
                 switch (_cleaningTypeToUpdate)
                 {
-                    case CleaningType.Cleaned:
+                    case CleaningType.CLEANED:
                         _cleanedMaterialToUpdate.Cleaned = cleanedAction.CleanedActionId;
                         break;
-                    case CleaningType.Packaged:
+                    case CleaningType.PACKAGED:
                         _cleanedMaterialToUpdate.Packaged = cleanedAction.CleanedActionId;
                         break;
-                    case CleaningType.Sterilized:
+                    case CleaningType.STERILIZED:
                         _cleanedMaterialToUpdate.Sterilized = cleanedAction.CleanedActionId;
                         _cleanedMaterialToUpdate.GroupLetter = txtGroup.Text;
                         break;
@@ -109,15 +110,15 @@ namespace MyDentApplication
         {
             if (_cleanedMaterialToUpdate.Cleaned == null)
             {
-                return CleaningType.Cleaned;
+                return CleaningType.CLEANED;
             }
             else if (_cleanedMaterialToUpdate.Packaged == null)
             {
-                return CleaningType.Packaged;
+                return CleaningType.PACKAGED;
             }
             else
             {
-                return CleaningType.Sterilized;
+                return CleaningType.STERILIZED;
             }
         }
 
@@ -144,13 +145,6 @@ namespace MyDentApplication
             return nextLetter;
         }
         #endregion
-
-        enum CleaningType
-        {
-            Cleaned,
-            Packaged,
-            Sterilized
-        }
 	}
 
     public class BoolValueConverter : IMultiValueConverter

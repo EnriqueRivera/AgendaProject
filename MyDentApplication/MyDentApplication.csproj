@@ -68,22 +68,31 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock">
+    <Reference Include="WpfRichText">
+      <HintPath>..\packages\WpfRichText2.1.0.17\lib\net45\WpfRichText.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid">
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit">
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -108,6 +117,18 @@
     </Compile>
     <Compile Include="Contacts\ManageContactsWindow.xaml.cs">
       <DependentUpon>ManageContactsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Emails\AddEmailModal.xaml.cs">
+      <DependentUpon>AddEmailModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Emails\EmailContactControl.xaml.cs">
+      <DependentUpon>EmailContactControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Emails\FindPatientEmailModal.xaml.cs">
+      <DependentUpon>FindPatientEmailModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Emails\SendEmailWindow.xaml.cs">
+      <DependentUpon>SendEmailWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GeneralPaids\AddEditGeneralPaidsModal.xaml.cs">
       <DependentUpon>AddEditGeneralPaidsModal.xaml</DependentUpon>
@@ -232,6 +253,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Contacts\ManageContactsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Emails\AddEmailModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Emails\EmailContactControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Emails\FindPatientEmailModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Emails\SendEmailWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -438,14 +475,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Configuration\app_icon.ico" />
+    <Resource Include="Images\addEmail_icon.png" />
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\background_money_icon.png" />
+    <Resource Include="Images\CancelIcon.png" />
     <Resource Include="Images\changePassword_icon.png" />
     <Resource Include="Images\cleanedMaterials_icon.png" />
     <Resource Include="Images\contacts_icon.png" />
+    <Resource Include="Images\findEmail_icon.png" />
+    <Resource Include="Images\findFile_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
-    <Resource Include="Images\Justificante.PNG" />
     <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />
     <Resource Include="Images\MedicalProofDocument_1.PNG" />
@@ -457,6 +497,7 @@
     <Resource Include="Images\received_invoice_icon.png" />
     <Resource Include="Images\refresh_icon.png" />
     <Resource Include="Images\reminder_icon.png" />
+    <Resource Include="Images\sendEmail_icon.png" />
     <Resource Include="Images\technical_icon.png" />
     <Resource Include="Images\treatment_icon.png" />
     <Resource Include="Images\users_icon.png" />

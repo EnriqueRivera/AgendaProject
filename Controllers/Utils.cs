@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,6 +46,20 @@ namespace Controllers
                 default: return string.Empty;
             }
         }
+
+        public static bool IsValidEmail(string emailAddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailAddress);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 
     public class ComboBoxItem
@@ -56,6 +71,22 @@ namespace Controllers
         {
             return Text;
         }
+    }
+
+    public class EmailElement { }
+
+    public class EmailContact : EmailElement
+    {
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public bool IsPatient { get; set; }
+        public bool IsValid { get; set; }
+    }
+
+    public class EmailAttachment : EmailElement
+    {
+        public string Path { get; set; }
+        public string FileName { get; set; }
     }
 
     public class CustomViewModel<T> where T : class
@@ -96,5 +127,12 @@ namespace Controllers
         EXCEPTION = 3,
         PATIENT_SKIPS = 4,
         PENDING = 5
+    }
+
+    public enum CleaningType
+    {
+        CLEANED,
+        PACKAGED,
+        STERILIZED
     }
 }

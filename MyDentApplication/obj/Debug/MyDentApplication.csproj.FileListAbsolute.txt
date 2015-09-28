@@ -5,6 +5,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\EntityFramework.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\itextsharp.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\Model.dll
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\WpfRichText.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\WpfScheduler.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\Xceed.Wpf.AvalonDock.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
@@ -17,6 +18,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\Model.pdb
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\EntityFramework.xml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\itextsharp.xml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\WpfRichText.xml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
@@ -32,6 +34,9 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ChangeCleanedActionModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\CleanedMaterialsDetailsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\AddEditContactsModal.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\AddEmailModal.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\EmailContactControl.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\FindPatientEmailModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneralPaids\AddEditGeneralPaidsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Invoices\Outgoing\AddEditOutgoingInvoicesModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Invoices\Received\AddEditReceivedInvoicesModal.baml
@@ -64,6 +69,10 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ManageCleanedMaterialsWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\AddEditContactsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\ManageContactsWindow.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\AddEmailModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\EmailContactControl.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\FindPatientEmailModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\SendEmailWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneralPaids\AddEditGeneralPaidsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneralPaids\ManageGeneralPaidsWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Invoices\Outgoing\AddEditOutgoingInvoicesModal.g.cs
@@ -106,6 +115,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication_MarkupCompile.lref
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ManageCleanedMaterialsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\ManageContactsWindow.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\SendEmailWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneralPaids\ManageGeneralPaidsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Invoices\Outgoing\ManageOutgoingInvoicesWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Invoices\Received\ManageReceivedInvoicesWindow.baml

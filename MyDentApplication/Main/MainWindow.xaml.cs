@@ -46,6 +46,7 @@ namespace MyDentApplication
         private ManageGeneralPaidsWindow _manageGeneralPaidsWindow;
         private ManageContactsWindow _manageContactsWindow;
         private ManageCleanedMaterialsWindow _manageCleanedMaterialsWindow;
+        private SendEmailWindow _sendEmailWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -162,6 +163,7 @@ namespace MyDentApplication
             CloseWindow(_manageGeneralPaidsWindow);
             CloseWindow(_manageContactsWindow);
             CloseWindow(_manageCleanedMaterialsWindow);
+            CloseWindow(_sendEmailWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -239,6 +241,10 @@ namespace MyDentApplication
             else if (sender is ManageCleanedMaterialsWindow)
             {
                 _manageCleanedMaterialsWindow = null;
+            }
+            else if (sender is SendEmailWindow)
+            {
+                _sendEmailWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -684,6 +690,18 @@ namespace MyDentApplication
 
             _manageCleanedMaterialsWindow.Show();
             _manageCleanedMaterialsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnSendMails_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_sendEmailWindow == null)
+            {
+                _sendEmailWindow = new SendEmailWindow();
+                _sendEmailWindow.Closed += Window_Closed;
+            }
+
+            _sendEmailWindow.Show();
+            _sendEmailWindow.WindowState = _sendEmailWindow.WindowState == WindowState.Minimized ? WindowState.Normal : WindowState.Maximized;
         }
         #endregion
     }

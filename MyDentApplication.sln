@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDentApplication", "MyDentApplication\MyDentApplication.csproj", "{DA2B92B6-B1D1-44DF-AD67-6C00A505ED68}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfScheduler", "CalendarComponent\WpfScheduler.csproj", "{F9954C26-6234-43F5-8D96-8EC6E03C03B9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Layer", "Data Layer", "{5072976F-8477-45C1-9901-A14D91CEEB65}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{988A7795-360C-4F38-B006-DF11A40CDE6C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Layer", "Business Layer", "{F7E0F3F9-9862-4B42-9526-3D5F17D419E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDentApplication", "MyDentApplication\MyDentApplication.csproj", "{DA2B92B6-B1D1-44DF-AD67-6C00A505ED68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfScheduler", "CalendarComponent\WpfScheduler.csproj", "{F9954C26-6234-43F5-8D96-8EC6E03C03B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{D27E8587-9743-4323-9592-782B47163C67}"
 EndProject
