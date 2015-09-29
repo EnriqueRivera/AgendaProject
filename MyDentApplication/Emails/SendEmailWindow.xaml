@@ -6,7 +6,7 @@
 	x:Class="MyDentApplication.SendEmailWindow"
 	x:Name="Window"
 	Title="Enviar correo"
-	Width="640" Height="544.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+	Width="640" Height="544.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
@@ -14,35 +14,36 @@
 			<RowDefinition Height="26*"/>
 		</Grid.RowDefinitions>
 		<Border BorderBrush="Black" BorderThickness="1" Margin="73.16,138.5,10,4.5">
-			<WpfRichText:RichTextEditor x:Name="rteBody" Margin="-1,-1,0.25,-1"/>
+			<WpfRichText:RichTextEditor x:Name="rteBody" Margin="-1,-1,0.25,-1" TabIndex="6"/>
 		</Border>
-		<Button x:Name="btnSendEmail" Content="Enviar correo" HorizontalAlignment="Right" Margin="0,0,10,10" Width="91" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="6" Click="btnSendEmail_Click" Grid.Row="1" />
+		<Button x:Name="btnSendEmail" Content="Enviar correo" HorizontalAlignment="Right" Margin="0,0,67,10" Width="91" Cursor="Hand" TabIndex="9" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="6" Click="btnSendEmail_Click" Grid.Row="1" />
 		<Label x:Name="lblExpiredMedicine" Content="Para:" Height="27" Margin="25.832,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39.66" FontWeight="Normal"/>
 		<Label x:Name="lblExpiredMedicine_Copy2" Content="De:" Height="27" Margin="35.832,10,0,0" VerticalAlignment="Top" FontWeight="Normal" HorizontalAlignment="Left" Width="29.66"/>
-		<TextBox x:Name="txtFrom" Height="27" Margin="73.16,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
+		<TextBox x:Name="txtFrom" Height="27" Margin="73.16,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" TabIndex="0"/>
 		<Label x:Name="lblExpiredMedicine_Copy3" Content="Asunto:" Height="27" Margin="13.832,106.5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="51.66" FontWeight="Normal"/>
-		<TextBox x:Name="txtSubject" Height="27" Margin="73.16,106.5,10,0" TextWrapping="Wrap" VerticalAlignment="Top" BorderBrush="Black"/>
+		<TextBox x:Name="txtSubject" Height="27" Margin="73.16,106.5,10,0" TextWrapping="Wrap" VerticalAlignment="Top" BorderBrush="Black" TabIndex="5"/>
 		<Border BorderBrush="Black" BorderThickness="1" Height="59.5" Margin="73.16,42,138.667,0" VerticalAlignment="Top">
-			<ScrollViewer Margin="0,0,-1,-1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" BorderThickness="0">
+			<ScrollViewer Margin="0,0,-1,-1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" BorderThickness="0" TabIndex="1">
 				<StackPanel x:Name="spEmailTo" Orientation="Horizontal"/>
 			</ScrollViewer>
 		</Border>
-		<Button x:Name="btnSearchFiles" HorizontalAlignment="Right" Height="30" Margin="0,21.78,10,0" VerticalAlignment="Top" Width="30" Click="btnSearchFiles_Click" Grid.Row="1" Cursor="Hand">
+		<Button x:Name="btnSearchFiles" HorizontalAlignment="Right" Height="30" Margin="0,21.78,10,0" VerticalAlignment="Top" Width="30" Click="btnSearchFiles_Click" Grid.Row="1" Cursor="Hand" TabIndex="8">
 			<Image Source="/MyDentApplication;component/Images/findFile_icon.png" Stretch="Fill"/>
 		</Button>
 		<Label x:Name="lblExpiredMedicine_Copy" Content="Adjuntar:" Height="27" Margin="10,6.5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58.16" FontWeight="Normal" Grid.Row="1"/>
 		<Border BorderBrush="Black" BorderThickness="1" Height="59.5" Margin="73.16,6.5,45,0" VerticalAlignment="Top" Grid.Row="1">
-			<ScrollViewer Margin="0,0,-1,-1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" BorderThickness="0">
+			<ScrollViewer Margin="0,0,-1,-1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" BorderThickness="0" TabIndex="7">
 				<StackPanel x:Name="spAttachedFiles" Orientation="Horizontal"/>
 			</ScrollViewer>
 		</Border>
-		<Button x:Name="btnAddEmail" HorizontalAlignment="Right" Height="30" Margin="0,69.499,74.664,0" VerticalAlignment="Top" Width="30" Cursor="Hand" Click="btnAddEmail_Click">
+		<Button x:Name="btnAddEmail" HorizontalAlignment="Right" Height="30" Margin="0,69.499,74.664,0" VerticalAlignment="Top" Width="30" Cursor="Hand" Click="btnAddEmail_Click" TabIndex="3">
 			<Image Source="/MyDentApplication;component/Images/addEmail_icon.png" Stretch="Fill"/>
 		</Button>
-		<Button x:Name="btnFindEmail" HorizontalAlignment="Right" Height="30" Margin="0,69.499,39.664,0" VerticalAlignment="Top" Width="30" Cursor="Hand" Click="btnFindEmail_Click" >
+		<Button x:Name="btnFindEmail" HorizontalAlignment="Right" Height="30" Margin="0,69.499,39.664,0" VerticalAlignment="Top" Width="30" Cursor="Hand" Click="btnFindEmail_Click" TabIndex="4" >
 			<Image Source="/MyDentApplication;component/Images/findEmail_icon.png" Stretch="Fill"/>
 		</Button>
-		<CheckBox x:Name="chkAllPatients" Content="Todos los pacientes" Height="16" Margin="0,44.001,10,0" VerticalAlignment="Top" Unchecked="chkAllPatients_Checked_Unchecked" Checked="chkAllPatients_Checked_Unchecked" HorizontalAlignment="Right" Width="123.667"/>
+		<CheckBox x:Name="chkAllPatients" Content="Todos los pacientes" Height="16" Margin="0,44.001,10,0" VerticalAlignment="Top" Unchecked="chkAllPatients_Checked_Unchecked" Checked="chkAllPatients_Checked_Unchecked" HorizontalAlignment="Right" Width="123.667" TabIndex="2"/>
 		<Label x:Name="lblExpiredMedicine_Copy1" Content="Mensaje:" Height="27" Margin="10,138.5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58.16" FontWeight="Normal"/>
+		<Button x:Name="btnClose" Content="Cerrar" HorizontalAlignment="Right" Margin="0,0,10,10" Width="52" Cursor="Hand" TabIndex="10" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="6" Grid.Row="1" Click="btnClose_Click" />
 	</Grid>
 </Window>

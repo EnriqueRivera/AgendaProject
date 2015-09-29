@@ -175,5 +175,28 @@ namespace Model
             _db.Logs.Add(logToAdd);
             _db.SaveChanges();
         }
+
+        public bool AddUpdateConfiguration(string configurationName, string configurationValue)
+        {
+            try
+            {
+                Model.Configuration configuration = FindBy<Model.Configuration>(c => c.Name == configurationName).FirstOrDefault();
+
+                if (configuration == null)
+                {
+                    return Add<Model.Configuration>(new Model.Configuration() { Name = configurationName, Value = configurationValue });
+                }
+                else
+                {
+                    configuration.Value = configurationValue;
+                    return Update<Model.Configuration>(configuration);
+                }
+            }
+            catch (Exception e)
+            {
+                AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                return false;
+            }
+        }
     }
 }

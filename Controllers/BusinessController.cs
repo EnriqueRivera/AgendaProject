@@ -73,5 +73,10 @@ namespace Controllers
         {
             Model.Provider.Instance.AddLog(type, logDate, e, className, methodName);
         }
+
+        public bool AddUpdateConfiguration(string configurationName, string configurationValue)
+        {
+            return Model.Provider.Instance.AddUpdateConfiguration(configurationName, configurationValue);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace MyDentApplication
 	public partial class EmailContactControl : UserControl
     {
         #region Instance variables
-        Controllers.EmailElement _emailElement;
+        public Controllers.EmailElement EmailElement { get; set; }
         internal event EventHandler<bool> OnRemove;
         #endregion
 
@@ -28,7 +28,7 @@ namespace MyDentApplication
         public EmailContactControl(Controllers.EmailElement emailElement)
 		{
 			this.InitializeComponent();
-            _emailElement = emailElement;
+            EmailElement = emailElement;
 
             UpdateControlInfo();
 		}
@@ -37,23 +37,23 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnRemoveEmail_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            OnRemove(this, _emailElement is Controllers.EmailContact);
+            OnRemove(this, EmailElement is Controllers.EmailContact);
         }
         #endregion
 
         #region Window's logic
         private void UpdateControlInfo()
         {
-            if (_emailElement is Controllers.EmailContact)
+            if (EmailElement is Controllers.EmailContact)
             {
-                Controllers.EmailContact emailContact = _emailElement as Controllers.EmailContact;
+                Controllers.EmailContact emailContact = EmailElement as Controllers.EmailContact;
                 rcBackground.Fill = emailContact.IsPatient ? rcIsPatient.Fill : rcIsNotPatient.Fill;
                 lblEmailName.Content = string.IsNullOrEmpty(emailContact.FullName) ? emailContact.Email : emailContact.FullName;
                 lblEmailName.ToolTip = string.Format("{0} <{1}>", emailContact.FullName, emailContact.Email);
             }
             else
             {
-                Controllers.EmailAttachment emailAttachment = _emailElement as Controllers.EmailAttachment;
+                Controllers.EmailAttachment emailAttachment = EmailElement as Controllers.EmailAttachment;
                 rcBackground.Fill = rcAttachment.Fill;
                 lblEmailName.Content = emailAttachment.FileName;
                 lblEmailName.ToolTip = emailAttachment.Path;

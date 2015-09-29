@@ -35,6 +35,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\CleanedMaterialsDetailsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\AddEditContactsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\AddEmailModal.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\ConfigureEmailWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\EmailContactControl.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\FindPatientEmailModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneralPaids\AddEditGeneralPaidsModal.baml
@@ -70,6 +71,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\AddEditContactsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\ManageContactsWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\AddEmailModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\ConfigureEmailWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\EmailContactControl.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\FindPatientEmailModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Emails\SendEmailWindow.g.cs

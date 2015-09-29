@@ -121,6 +121,9 @@
     <Compile Include="Emails\AddEmailModal.xaml.cs">
       <DependentUpon>AddEmailModal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Emails\ConfigureEmailWindow.xaml.cs">
+      <DependentUpon>ConfigureEmailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Emails\EmailContactControl.xaml.cs">
       <DependentUpon>EmailContactControl.xaml</DependentUpon>
     </Compile>
@@ -257,6 +260,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Emails\AddEmailModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Emails\ConfigureEmailWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -481,6 +488,7 @@
     <Resource Include="Images\CancelIcon.png" />
     <Resource Include="Images\changePassword_icon.png" />
     <Resource Include="Images\cleanedMaterials_icon.png" />
+    <Resource Include="Images\configureEmail_icon.png" />
     <Resource Include="Images\contacts_icon.png" />
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />

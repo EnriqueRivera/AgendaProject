@@ -149,20 +149,10 @@ namespace MyDentApplication
         private void cpStatusEvents_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             Xceed.Wpf.Toolkit.ColorPicker colorPicker = sender as Xceed.Wpf.Toolkit.ColorPicker;
-            string eventStatusSelected = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + colorPicker.Tag.ToString();
-            Model.Configuration statusEventColor = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name == eventStatusSelected).FirstOrDefault();
             string selectedColor = colorPicker.SelectedColor.Value.ToString();
-            bool colorAddedSuccessfully;
-
-            if (statusEventColor == null)
-            {
-                colorAddedSuccessfully = BusinessController.Instance.Add<Model.Configuration>(new Model.Configuration() { Name = eventStatusSelected, Value = selectedColor });
-            }
-            else
-            {
-                statusEventColor.Value = selectedColor;
-                colorAddedSuccessfully = BusinessController.Instance.Update<Model.Configuration>(statusEventColor);
-            }
+            string colorConfigurationName = Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + colorPicker.Tag.ToString();
+            
+            bool colorAddedSuccessfully = BusinessController.Instance.AddUpdateConfiguration(colorConfigurationName, selectedColor);
 
             if (colorAddedSuccessfully == false)
             {

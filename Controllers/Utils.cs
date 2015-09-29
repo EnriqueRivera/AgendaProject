@@ -12,6 +12,12 @@ namespace Controllers
     public class Utils
     {
         public const string SCHEDULER_COLOR_CONFIGURATION_PREFIX = "SCHEDULER_COLOR_";
+        public const string EMAIL_CONFIGURATION_PREFIX = "EMAIL_CONFIGURATION_";
+        public const string PORT = "PORT";
+        public const string HOST = "HOST";
+        public const string ENABLE_SSL = "ENABLE_SSL";
+        public const string USERNAME = "USERNAME";
+        public const string PASSWORD = "PASSWORD";
         //public const string PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION = "PATIENT_MAX_SKIPPED_EVENTS";
 
         public static bool IsOverlappedTime(DateTime event1Start, DateTime event1End, DateTime event2Start, DateTime event2End)

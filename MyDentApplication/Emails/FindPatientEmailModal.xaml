@@ -10,7 +10,7 @@
 	<Grid x:Name="LayoutRoot">
 		<DataGrid x:Name="dgPatients" Margin="10,58,10,44" IsReadOnly="True" CanUserSortColumns="True"
 			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False" CanUserAddRows="False" 
-			CanUserDeleteRows="False" TabIndex="1">
+			CanUserDeleteRows="False" TabIndex="4">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Exp. No." Binding="{Binding PatientId}" Width="0.07*"/>
 				<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.15*" />
@@ -18,16 +18,16 @@
 				<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.15*" />
 			</DataGrid.Columns>
 		</DataGrid>
-		<Button x:Name="btnAccept" Content="Aceptar" Margin="0,0,75,10" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnAccept_Click"/>
-		<Button x:Name="btnCancel" Content="Cancelar" Margin="0,0,10,10" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnCancel_Click"/>
-		<Button x:Name="btnViewAllPatients" Width="63.333" VerticalAlignment="Top" Margin="0,14.5,10,0" Height="25" HorizontalAlignment="Right" Content="Ver todo" Cursor="Hand" Click="btnViewAllPatients_Click"/>
+		<Button x:Name="btnAccept" Content="Aceptar" Margin="0,0,75,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnAccept_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" Margin="0,0,10,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnCancel_Click"/>
+		<Button x:Name="btnViewAllPatients" Width="63.333" VerticalAlignment="Top" Margin="0,14.5,10,0" Height="25" HorizontalAlignment="Right" Content="Ver todo" Cursor="Hand" Click="btnViewAllPatients_Click" TabIndex="3"/>
 		<ComboBox x:Name="cbFilter" Height="26" Margin="84,16.02,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="100.5" SelectedIndex="0">
 			<System:String>Nombre(s)</System:String>
 			<System:String>Apellido(s)</System:String>
 			<System:String>Email</System:String>
 		</ComboBox>
 		<Label Width="69" VerticalAlignment="Top" Margin="10,14.02,0,0" Height="27" HorizontalAlignment="Left" Content="Buscar por:"/>
-		<TextBox x:Name="txtSearchTerm" HorizontalAlignment="Left" Height="25.02" Margin="192,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" BorderBrush="Black"/>
+		<TextBox x:Name="txtSearchTerm" HorizontalAlignment="Left" Height="25.02" Margin="192,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" BorderBrush="Black" TabIndex="1"/>
 		<Button x:Name="btnRefreshPatients" Margin="363,16,0,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" TabIndex="2" Click="btnRefreshPatients_Click" >
 			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
 		</Button>
