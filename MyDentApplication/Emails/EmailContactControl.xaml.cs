@@ -54,8 +54,9 @@ namespace MyDentApplication
             else
             {
                 Controllers.EmailAttachment emailAttachment = EmailElement as Controllers.EmailAttachment;
+                string fileSizeFormatted = Controllers.Utils.SizeSuffix(emailAttachment.FileSize);
                 rcBackground.Fill = rcAttachment.Fill;
-                lblEmailName.Content = emailAttachment.FileName;
+                lblEmailName.Content = string.Format("{0} - {1}", emailAttachment.FileName, fileSizeFormatted);
                 lblEmailName.ToolTip = emailAttachment.Path;
             }
 

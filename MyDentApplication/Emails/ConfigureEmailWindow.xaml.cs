@@ -91,7 +91,7 @@ namespace MyDentApplication
             Model.Configuration password = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PASSWORD).FirstOrDefault();
 
             txtHost.Text = host == null ? string.Empty : host.Value;
-            txtPort.Text = host == null ? string.Empty : port.Value;
+            txtPort.Text = port == null ? string.Empty : port.Value;
             chkSsl.IsChecked = ssl == null ? false : Convert.ToBoolean(ssl.Value);
             txtUsername.Text = username == null ? string.Empty : username.Value;
             pbPassword.Password = pbRepeatPassword.Password = password == null ? string.Empty : password.Value;

@@ -333,8 +333,7 @@ namespace MyDentApplication
                 Dispatcher.Invoke(new RefreshRemindersDelegate(RefreshRemindersFromAnotherThread));
                 return;
             }
-
-            
+                        
             RefreshRemindersStackPanel();
         }
         #endregion

@@ -19,6 +19,7 @@ namespace Controllers
         public const string USERNAME = "USERNAME";
         public const string PASSWORD = "PASSWORD";
         //public const string PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION = "PATIENT_MAX_SKIPPED_EVENTS";
+        private static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
         public static bool IsOverlappedTime(DateTime event1Start, DateTime event1End, DateTime event2Start, DateTime event2End)
         {
@@ -66,6 +67,21 @@ namespace Controllers
                 return false;
             }
         }
+
+        public static string SizeSuffix(Int64 value)
+        {
+            if (value < 0) { return "-" + SizeSuffix(-value); }
+
+            int i = 0;
+            decimal dValue = (decimal)value;
+            while (Math.Round(dValue / 1024) >= 1)
+            {
+                dValue /= 1024;
+                i++;
+            }
+
+            return string.Format("{0:n1} {1}", dValue, SizeSuffixes[i]);
+        }
     }
 
     public class ComboBoxItem
@@ -93,6 +109,7 @@ namespace Controllers
     {
         public string Path { get; set; }
         public string FileName { get; set; }
+        public long FileSize { get; set; }
     }
 
     public class CustomViewModel<T> where T : class

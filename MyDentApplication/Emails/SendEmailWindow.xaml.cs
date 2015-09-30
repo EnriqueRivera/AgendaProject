@@ -15,6 +15,7 @@ using Controllers;
 using System.Net.Mail;
 using System.Net;
 using System.Net.Mime;
+using System.Threading;
 
 namespace MyDentApplication
 {
@@ -29,12 +30,20 @@ namespace MyDentApplication
         private bool _enableSsl;
         private string _username;
         private string _password;
+        private Thread _sendEmailThread;
+        private const double _mailMaxFileSize = 25 * (1024 * 1024.0);
+        #endregion
+
+        #region Delegates
+        delegate void RefreshRemindersDelegate(string errorMessage);
         #endregion
 
         #region Constructors
         public SendEmailWindow()
 		{
 			this.InitializeComponent();
+
+            UpdateFileSizeStatus();
 
             if (LoadEmailConfiguration() == false)
             {
@@ -84,10 +93,11 @@ namespace MyDentApplication
                 AddEmailsTo(mail, allPatientEmails);
                 AddAttachments(mail);
 
-                client.Send(mail);
+                lblStatus.Visibility = System.Windows.Visibility.Visible;
+                btnSendEmail.IsEnabled = false;
 
-                MessageBox.Show("Correo enviado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                EmptyForm();
+                _sendEmailThread = new Thread(() => SendEmailThread(client, mail));
+                _sendEmailThread.Start();
             }
             catch (Exception ex)
             {
@@ -136,6 +146,7 @@ namespace MyDentApplication
         void emailControl_OnRemoveAttachFile(object sender, bool e)
         {
             spAttachedFiles.Children.Remove(sender as EmailContactControl);
+            UpdateFileSizeStatus();
         }
 
         private void btnFindEmail_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -171,9 +182,73 @@ namespace MyDentApplication
         {
             this.Close();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_sendEmailThread != null)
+            {
+                MessageBox.Show("No puede cerrar la ventana hasta que finalice el envío del correo", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                e.Cancel = true;
+            }
+        }
         #endregion
 
         #region Window's logic
+        private void UpdateFileSizeStatus()
+        {
+            long totalFileSize = 0;
+
+            foreach (EmailContactControl emailControl in spAttachedFiles.Children)
+            {
+                totalFileSize += (emailControl.EmailElement as Controllers.EmailAttachment).FileSize;
+            }
+
+            lblFileSizeStatus.Content = "Lleva " + Controllers.Utils.SizeSuffix(totalFileSize) + " de los 25 MB disponibles";
+            lblFileSizeStatus.Foreground = totalFileSize > _mailMaxFileSize ? Brushes.Red : Brushes.Black;
+        }
+
+        private void SendEmailThread(SmtpClient client, MailMessage mail)
+        {
+            try
+            {
+                client.Send(mail);
+                EmailSentNotify(string.Empty);
+            }
+            catch(Exception ex)
+            {
+                EmailSentNotify(ex.Message);
+            }
+        }
+
+        void EmailSentNotify(string errorMessage)
+        {
+            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
+            {
+                Dispatcher.Invoke(new RefreshRemindersDelegate(EmailSentNotify), errorMessage);
+                return;
+            }
+
+            EmailSent(errorMessage);
+        }
+
+        private void EmailSent(string errorMessage)
+        {
+            _sendEmailThread = null;
+            lblStatus.Visibility = System.Windows.Visibility.Hidden;
+
+            if (string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show("Correo enviado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                EmptyForm();
+            }
+            else
+            {
+                MessageBox.Show("No se pudo enviar el correo.\n\nDetalle del error:\n" + errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            btnSendEmail.IsEnabled = true;            
+        }
+
         private void AddEmailsTo(MailMessage mail, List<Model.Patient> allPatientEmails)
         {
             foreach (Model.Patient patient in allPatientEmails)
@@ -210,6 +285,12 @@ namespace MyDentApplication
                     MessageBox.Show("Ningún paciente registrado posee un correo válido, por favor proporcione al menos un correo", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;   
                 }
+            }
+
+            if (lblFileSizeStatus.Foreground == Brushes.Red)
+            {
+                MessageBox.Show("No se puede enviar el correo porque los archivos adjuntos superan el límite de 25 MB", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
             }
 
             string warningMessage = string.Empty;
@@ -280,7 +361,8 @@ namespace MyDentApplication
                 Controllers.EmailAttachment file = new Controllers.EmailAttachment()
                 {
                     Path = path,
-                    FileName = System.IO.Path.GetFileName(path)
+                    FileName = System.IO.Path.GetFileName(path),
+                    FileSize = new System.IO.FileInfo(path).Length
                 };
 
                 EmailContactControl emailControl = new EmailContactControl(file);
@@ -289,6 +371,8 @@ namespace MyDentApplication
 
                 spAttachedFiles.Children.Add(emailControl);
             }
+
+            UpdateFileSizeStatus();
         }
         #endregion
     }
