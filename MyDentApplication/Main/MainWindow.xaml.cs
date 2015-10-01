@@ -48,6 +48,7 @@ namespace MyDentApplication
         private ManageCleanedMaterialsWindow _manageCleanedMaterialsWindow;
         private SendEmailWindow _sendEmailWindow;
         private ConfigureEmailWindow _configureEmailWindow;
+        private ManagePatientsWindow _managePatientsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -166,6 +167,7 @@ namespace MyDentApplication
             CloseWindow(_manageCleanedMaterialsWindow);
             CloseWindow(_sendEmailWindow);
             CloseWindow(_configureEmailWindow);
+            CloseWindow(_managePatientsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -251,6 +253,10 @@ namespace MyDentApplication
             else if (sender is ConfigureEmailWindow)
             {
                 _configureEmailWindow = null;
+            }
+            else if (sender is ManagePatientsWindow)
+            {
+                _managePatientsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -719,6 +725,18 @@ namespace MyDentApplication
 
             _configureEmailWindow.Show();
             _configureEmailWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManagePatients_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_managePatientsWindow == null)
+            {
+                _managePatientsWindow = new ManagePatientsWindow();
+                _managePatientsWindow.Closed += Window_Closed;
+            }
+
+            _managePatientsWindow.Show();
+            _managePatientsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

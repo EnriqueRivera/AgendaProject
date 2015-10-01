@@ -169,6 +169,9 @@
     <Compile Include="Medicines\ViewMedicineControl.xaml.cs">
       <DependentUpon>ViewMedicineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Patients\ManagePatientsWindow.xaml.cs">
+      <DependentUpon>ManagePatientsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PrintableDocuments\MedicalProofDocument.xaml.cs">
       <DependentUpon>MedicalProofDocument.xaml</DependentUpon>
     </Compile>
@@ -324,6 +327,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Medicines\ViewMedicineControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Patients\ManagePatientsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -500,6 +507,7 @@
     <Resource Include="Images\MedicalProofDocument_2.PNG" />
     <Resource Include="Images\medicine_icon.png" />
     <Resource Include="Images\outgoing_invoice_icon.png" />
+    <Resource Include="Images\patient_icon.png" />
     <Resource Include="Images\print_icon.png" />
     <Resource Include="Images\provider_icon.png" />
     <Resource Include="Images\received_invoice_icon.png" />

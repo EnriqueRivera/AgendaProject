@@ -4,7 +4,7 @@
 	x:Class="MyDentApplication.ManageTechnicalsWindow"
 	x:Name="Window"
 	Title="Administrar técnicos"
-	Width="528.06" Height="439.701" Icon="/MyDentApplication;component/Images/app_icon.ico">
+	Width="528.06" Height="439.701" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
 		<DataGrid x:Name="dgTechnicals" TabIndex="1" SelectionMode="Single" Margin="10,10,10,44" ItemsSource="{Binding ObservableData}" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False">

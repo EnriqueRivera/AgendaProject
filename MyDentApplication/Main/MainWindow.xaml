@@ -191,5 +191,11 @@
         		<TextBlock TextAlignment="Center" ><Run Text="Configurar"/><LineBreak/><Run Text="correo"/></TextBlock>
         	</StackPanel>
         </Button>
+        <Button x:Name="btnManagePatients" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,212.5,0,0" Click="btnManagePatients_Click" > 
+        	<StackPanel Orientation="Vertical">
+        		<Image Source="/MyDentApplication;component/Images/patient_icon.png" Width="50" Height="50"  />
+        		<TextBlock TextAlignment="Center" Text="Pacientes" />
+        	</StackPanel>
+        </Button>
     </Grid>
 </Window>
