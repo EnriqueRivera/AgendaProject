@@ -321,9 +321,9 @@ namespace MyDentApplication
             if (es == EventStatus.COMPLETED && e.EventInfo.Treatment.Recurrent != null)
             {
                 string reminderMessage = "El paciente '" + e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName + "'"
-                                        + " tomó el tratamiento de '" + e.EventInfo.Treatment.Name + "' el día "
+                                        + " con Exp. No. " + e.EventInfo.Patient.PatientId + " tomó el tratamiento de '" + e.EventInfo.Treatment.Name + "' el día "
                                         + e.EventInfo.StartEvent.ToString("D") + " a las " + e.EventInfo.StartEvent.ToString("HH:mm") + " hrs. "
-                                        + "Dado que este tratamiento es recurrente es necesario que llame al paciente para agendar de nuevo una cita.";
+                                        + "\nDado que este tratamiento es recurrente es necesario que llame al paciente para agendar de nuevo una cita.";
 
                 Model.Reminder reminderToAdd = new Model.Reminder()
                 {

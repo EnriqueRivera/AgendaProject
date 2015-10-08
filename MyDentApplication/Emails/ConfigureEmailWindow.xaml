@@ -6,31 +6,31 @@
 	Title="Configurar cuenta de correo"
 	Width="593.5" Height="282" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
-	<Grid x:Name="LayoutRoot">
-		<Button x:Name="btnAccept" Content="Aceptar" Margin="0,0,75,10" Cursor="Hand" TabIndex="8" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnAccept_Click"/>
-		<Button x:Name="btnCancel" Content="Cancelar" Margin="0,0,10,10" Cursor="Hand" TabIndex="9" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnCancel_Click"/>
-		<GroupBox Margin="10,10,0,10" Header="Información del servidor de correos" FontWeight="Bold" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Left" Width="230.667">
-			<Grid Margin="0,10,0,0">
-				<Label x:Name="lblExpiredMedicine_Copy3" Margin="16.5,13.04,0,0" FontWeight="Normal" Content="Host:" HorizontalAlignment="Left" Width="37.66" Height="27" VerticalAlignment="Top"/>
-				<TextBox TextWrapping="Wrap" x:Name="txtHost" Margin="59.16,13.04,0,0" HorizontalContentAlignment="Center" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Width="149.507" TabIndex="0"/>
-				<Label x:Name="lblExpiredMedicine_Copy" Margin="7.167,45.04,0,0" FontWeight="Normal" Content="Puerto:" HorizontalAlignment="Left" Width="46.993" Height="27" VerticalAlignment="Top"/>
-				<Label x:Name="lblExpiredMedicine_Copy1" Margin="21.834,77.04,0,0" FontWeight="Normal" Content="SSL:" HorizontalAlignment="Left" Width="32.326" Height="27" VerticalAlignment="Top"/>
-				<TextBox TextWrapping="Wrap" x:Name="txtPort" Margin="59.16,45.04,0,0" HorizontalContentAlignment="Center" BorderBrush="Black" FontWeight="Normal" HorizontalAlignment="Left" Width="149.507" Height="27" VerticalAlignment="Top" TabIndex="1"/>
-				<CheckBox x:Name="chkSsl" Margin="59.16,84.04,0,0" Content="CheckBox" HorizontalAlignment="Left" Width="13.757" Height="15.25" VerticalAlignment="Top" TabIndex="2"/>
-				<Label x:Name="lblExpiredMedicine_Copy6" Margin="7.167,121.04,0,0" FontWeight="Normal" Content="Utilizar información por defecto de:" HorizontalAlignment="Left" Width="201.5" Height="27" VerticalAlignment="Top"/>
-				<Button x:Name="btnGmailDefaultInfo" Content="Gmail" Margin="120.667,153.04,0,0" Cursor="Hand" TabIndex="4" Click="btnGmailDefaultInfo_Click" FontWeight="Normal" HorizontalAlignment="Left" Width="60" Height="29" VerticalAlignment="Top" />
-				<Button x:Name="btnHotmailDefaultInfo" Content="Hotmail" Margin="34,153.04,0,0" Cursor="Hand" TabIndex="3" Click="btnHotmailDefaultInfo_Click" FontWeight="Normal" HorizontalAlignment="Left" Width="60" Height="29" VerticalAlignment="Top" />
-			</Grid>
-		</GroupBox>
-		<GroupBox Header="Información de la cuenta de correo" Margin="245.667,10,10,44" FontWeight="Bold" BorderBrush="Black" Foreground="Black">
-			<Grid x:Name="grdEmailAccountInfo" Margin="0,10,0,0">
-				<TextBox x:Name="txtUsername" Margin="87.667,26.04,22.667,0" TextWrapping="Wrap" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top" TabIndex="5"/>
-				<Label x:Name="lblExpiredMedicine_Copy2" Content="Usuario:" Margin="29.507,26.04,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="55.16" Height="25" VerticalAlignment="Top"/>
-				<Label x:Name="lblExpiredMedicine_Copy4" Content="Contraseña:" Margin="9.174,62.043,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="75.493" Height="25" VerticalAlignment="Top"/>
-				<PasswordBox x:Name="pbPassword" Margin="87.667,62.043,22.667,0" TabIndex="6" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top"/>
-				<Label x:Name="lblExpiredMedicine_Copy5" Content="Repetir&#xD;&#xA;contraseña:" Margin="9.174,90.04,0,0" FontWeight="Normal" Height="43" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75.493"/>
-				<PasswordBox x:Name="pbRepeatPassword" Margin="87.667,98.04,22.667,0" TabIndex="7" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top"/>
-			</Grid>
-		</GroupBox>
-	</Grid>
+    <Grid x:Name="LayoutRoot">
+        <Button x:Name="btnAccept" Content="Aceptar" Margin="0,0,75,10" Cursor="Hand" TabIndex="8" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnAccept_Click"/>
+        <Button x:Name="btnCancel" Content="Cancelar" Margin="0,0,10,10" Cursor="Hand" TabIndex="9" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnCancel_Click"/>
+        <GroupBox Margin="10,10,0,10" Header="Información del servidor de correos" FontWeight="Bold" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Left" Width="230.667">
+            <Grid Margin="0,10,0,0">
+                <Label x:Name="lblExpiredMedicine_Copy3" Margin="16.5,13.04,0,0" FontWeight="Normal" Content="Host:" HorizontalAlignment="Left" Width="37.66" Height="27" VerticalAlignment="Top"/>
+                <TextBox TextWrapping="Wrap" x:Name="txtHost" Margin="59.16,13.04,0,0" HorizontalContentAlignment="Center" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Width="149.507" TabIndex="0"/>
+                <Label x:Name="lblExpiredMedicine_Copy" Margin="7.167,45.04,0,0" FontWeight="Normal" Content="Puerto:" HorizontalAlignment="Left" Width="46.993" Height="27" VerticalAlignment="Top"/>
+                <Label x:Name="lblExpiredMedicine_Copy1" Margin="21.834,77.04,0,0" FontWeight="Normal" Content="SSL:" HorizontalAlignment="Left" Width="32.326" Height="27" VerticalAlignment="Top"/>
+                <TextBox TextWrapping="Wrap" x:Name="txtPort" Margin="59.16,45.04,0,0" HorizontalContentAlignment="Center" BorderBrush="Black" FontWeight="Normal" HorizontalAlignment="Left" Width="149.507" Height="27" VerticalAlignment="Top" TabIndex="1"/>
+                <CheckBox x:Name="chkSsl" Margin="59.16,84.04,0,0" Content="CheckBox" HorizontalAlignment="Left" Width="13.757" Height="15.25" VerticalAlignment="Top" TabIndex="2"/>
+                <Label x:Name="lblExpiredMedicine_Copy6" Margin="7.167,121.04,0,0" FontWeight="Normal" Content="Utilizar información por defecto de:" HorizontalAlignment="Left" Width="201.5" Height="27" VerticalAlignment="Top"/>
+                <Button x:Name="btnGmailDefaultInfo" Content="Gmail" Margin="120.667,153.04,0,0" Cursor="Hand" TabIndex="4" Click="btnGmailDefaultInfo_Click" FontWeight="Normal" HorizontalAlignment="Left" Width="60" Height="29" VerticalAlignment="Top" />
+                <Button x:Name="btnHotmailDefaultInfo" Content="Hotmail" Margin="34,153.04,0,0" Cursor="Hand" TabIndex="3" Click="btnHotmailDefaultInfo_Click" FontWeight="Normal" HorizontalAlignment="Left" Width="60" Height="29" VerticalAlignment="Top" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Información de la cuenta de correo" Margin="245.667,10,10,44" FontWeight="Bold" BorderBrush="Black" Foreground="Black">
+            <Grid x:Name="grdEmailAccountInfo" Margin="0,10,0,0">
+                <TextBox x:Name="txtUsername" Margin="87.667,26.04,22.667,0" TextWrapping="Wrap" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top" TabIndex="5"/>
+                <Label x:Name="lblExpiredMedicine_Copy2" Content="Correo:" Margin="32,26,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="51" Height="25" VerticalAlignment="Top"/>
+                <Label x:Name="lblExpiredMedicine_Copy4" Content="Contraseña:" Margin="9.174,62.043,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="75.493" Height="25" VerticalAlignment="Top"/>
+                <PasswordBox x:Name="pbPassword" Margin="87.667,62.043,22.667,0" TabIndex="6" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top"/>
+                <Label x:Name="lblExpiredMedicine_Copy5" Content="Repetir&#xD;&#xA;contraseña:" Margin="9.174,90.04,0,0" FontWeight="Normal" Height="43" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75.493"/>
+                <PasswordBox x:Name="pbRepeatPassword" Margin="87.667,98.04,22.667,0" TabIndex="7" BorderBrush="Black" FontWeight="Normal" Height="27" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
 </Window>

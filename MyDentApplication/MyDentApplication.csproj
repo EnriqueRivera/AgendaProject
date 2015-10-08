@@ -169,6 +169,9 @@
     <Compile Include="Medicines\ViewMedicineControl.xaml.cs">
       <DependentUpon>ViewMedicineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Patients\AddEditPatientsModal.xaml.cs">
+      <DependentUpon>AddEditPatientsModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Patients\ManagePatientsWindow.xaml.cs">
       <DependentUpon>ManagePatientsWindow.xaml</DependentUpon>
     </Compile>
@@ -327,6 +330,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Medicines\ViewMedicineControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Patients\AddEditPatientsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

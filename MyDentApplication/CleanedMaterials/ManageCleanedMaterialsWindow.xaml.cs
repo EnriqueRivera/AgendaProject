@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Controllers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -81,19 +82,14 @@ namespace MyDentApplication
             }
         }
 
+        private void btnMarkReSterilized_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MarkAsSterelized();
+        }
+
         private void btnMarkSterilized_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.CleanedMaterial cleanedMaterialSelected = dgCleanedMaterials.SelectedItem == null ? null : dgCleanedMaterials.SelectedItem as Model.CleanedMaterial;
-
-            if (cleanedMaterialSelected == null)
-            {
-                MessageBox.Show("Seleccione un registro de limpieza", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                new ChangeCleanedActionModal(cleanedMaterialSelected, _userLoggedIn).ShowDialog();
-                UpdateGrid();
-            }
+            MarkAsSterelized();
         }
 
         private void btnMarkCleaned_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -106,7 +102,7 @@ namespace MyDentApplication
             }
             else
             {
-                new ChangeCleanedActionModal(cleanedMaterialSelected, _userLoggedIn).ShowDialog();
+                new ChangeCleanedActionModal(cleanedMaterialSelected, CleaningType.CLEANED, _userLoggedIn).ShowDialog();
                 UpdateGrid();
             }
         }
@@ -121,7 +117,7 @@ namespace MyDentApplication
             }
             else
             {
-                new ChangeCleanedActionModal(cleanedMaterialSelected, _userLoggedIn).ShowDialog();
+                new ChangeCleanedActionModal(cleanedMaterialSelected, CleaningType.PACKAGED, _userLoggedIn).ShowDialog();
                 UpdateGrid();
             }
         }
@@ -156,11 +152,12 @@ namespace MyDentApplication
             UpdateMarkButtonsLogic();
         }
 
-        private void EnableMarkButtons(bool enableCleaned, bool enablePackaged, bool enableSterilized)
+        private void EnableMarkButtons(bool enableCleaned, bool enablePackaged, bool enableSterilized, bool enableReSterilized)
         {
             btnMarkCleaned.IsEnabled = enableCleaned;
             btnMarkPackaged.IsEnabled = enablePackaged;
             btnMarkSterilized.IsEnabled = enableSterilized;
+            btnMarkReSterilized.IsEnabled = enableReSterilized;
         }
 
         private void UpdateMarkButtonsLogic()
@@ -169,23 +166,38 @@ namespace MyDentApplication
 
             if (cleanedMaterialSelected == null)
             {
-                EnableMarkButtons(false, false, false);
+                EnableMarkButtons(false, false, false, false);
             }
-            else if (cleanedMaterialSelected.Cleaned == null)
+            else if (cleanedMaterialSelected.Cleaned == null && cleanedMaterialSelected.Sterilized == null)
             {
-                EnableMarkButtons(true, false, false);
+                EnableMarkButtons(true, false, false, true);
             }
-            else if (cleanedMaterialSelected.Packaged == null)
+            else if (cleanedMaterialSelected.Packaged == null && cleanedMaterialSelected.Sterilized == null)
             {
-                EnableMarkButtons(false, true, false);
+                EnableMarkButtons(false, true, false, false);
             }
             else if (cleanedMaterialSelected.Sterilized == null)
             {
-                EnableMarkButtons(false, false, true);
+                EnableMarkButtons(false, false, true, false);
             }
             else
             {
-                EnableMarkButtons(false, false, false);
+                EnableMarkButtons(false, false, false, false);
+            }
+        }
+
+        private void MarkAsSterelized()
+        {
+            Model.CleanedMaterial cleanedMaterialSelected = dgCleanedMaterials.SelectedItem == null ? null : dgCleanedMaterials.SelectedItem as Model.CleanedMaterial;
+
+            if (cleanedMaterialSelected == null)
+            {
+                MessageBox.Show("Seleccione un registro de limpieza", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                new ChangeCleanedActionModal(cleanedMaterialSelected, CleaningType.STERILIZED, _userLoggedIn).ShowDialog();
+                UpdateGrid();
             }
         }
         #endregion

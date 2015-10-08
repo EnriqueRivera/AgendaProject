@@ -5,16 +5,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	x:Class="MyDentApplication.ViewMedicineControl"
-	x:Name="UserControl" Width="155" Height="152" BorderBrush="Black" BorderThickness="1">
+	x:Name="UserControl" Width="155" Height="152" BorderThickness="0" Foreground="{x:Null}">
 
 	<Grid x:Name="lrMedicine">
-		<Grid.Background>
-			<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-				<GradientStop Color="White" Offset="0.5"/>
-				<GradientStop Color="#FFEA5A5A" Offset="1"/>
-				<GradientStop Color="#FFEA5A5A"/>
-			</LinearGradientBrush>
-		</Grid.Background>
+		<Rectangle x:Name="rcColorMedicine" Stroke="Black" RadiusX="10" RadiusY="10" StrokeThickness="2"/>
 		<Label Content="Nombre del medicamento:" Height="28" VerticalAlignment="Top"/>
 		<Label x:Name="lblMedicineName" Content="" Height="28" Margin="10,22.5,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>
 		<Label Content="Marca:" Height="28" Margin="0,55.5,20,0" VerticalAlignment="Top"/>

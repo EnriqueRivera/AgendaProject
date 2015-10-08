@@ -74,10 +74,16 @@
 							<TextBlock Text="Tratamientos" TextAlignment="Center" />
 						</StackPanel>
 					</Button>
-					<Button x:Name="btnManageReminders" Width="90" Height="90" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
+					<Button x:Name="btnManageReminders" Width="90" Height="90" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/reminder_icon.png" Width="50" Height="50"  />
 							<TextBlock Text="Recordatorios" TextAlignment="Center" />
+						</StackPanel>
+					</Button>
+					<Button x:Name="btnConfigureEmail" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnConfigureEmail_Click" > 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/configureEmail_icon.png" Width="50" Height="50"  />
+							<TextBlock TextAlignment="Center" ><Run Text="Configurar"/><LineBreak/><Run Text="correo"/></TextBlock>
 						</StackPanel>
 					</Button>
 				</StackPanel>
@@ -174,10 +180,10 @@
         	</StackPanel>
         </Button>
         <Button x:Name="btnManageCleanedMaterials" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,497.5,0,0" Click="btnManageCleanedMaterials_Click" >
-        	<StackPanel Orientation="Vertical">
-        		<Image Source="/MyDentApplication;component/Images/cleanedMaterials_icon.png" Width="50" Height="50"  />
-        		<TextBlock TextAlignment="Center" Height="34.627" ><Run Text="Limpieza de"/><LineBreak/><Run Text="instrumentos"/></TextBlock>
-        	</StackPanel>
+			<StackPanel Orientation="Vertical">
+				<Image Source="/MyDentApplication;component/Images/cleanedMaterials_icon.png" Width="50" Height="50"  />
+				<TextBlock Text="Esterilizado" TextAlignment="Center" />
+			</StackPanel>
         </Button>
         <Button x:Name="btnSendMails" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,22.5,0,0" Click="btnSendMails_Click" > 
         	<StackPanel Orientation="Vertical">
@@ -185,13 +191,7 @@
         		<TextBlock Text="Enviar correos" TextAlignment="Center" />
         	</StackPanel>
         </Button>
-        <Button x:Name="btnConfigureEmail" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,117.5,0,0" Click="btnConfigureEmail_Click" > 
-        	<StackPanel Orientation="Vertical">
-        		<Image Source="/MyDentApplication;component/Images/configureEmail_icon.png" Width="50" Height="50"  />
-        		<TextBlock TextAlignment="Center" ><Run Text="Configurar"/><LineBreak/><Run Text="correo"/></TextBlock>
-        	</StackPanel>
-        </Button>
-        <Button x:Name="btnManagePatients" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,212.5,0,0" Click="btnManagePatients_Click" > 
+        <Button x:Name="btnManagePatients" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,117.5,0,0" Click="btnManagePatients_Click" > 
         	<StackPanel Orientation="Vertical">
         		<Image Source="/MyDentApplication;component/Images/patient_icon.png" Width="50" Height="50"  />
         		<TextBlock TextAlignment="Center" Text="Pacientes" />

@@ -10,7 +10,7 @@
 		<Label x:Name="lblUserId" Content="No. de usuario:" HorizontalAlignment="Left" Height="27" Margin="68.667,13,0,0" VerticalAlignment="Top" Width="89.333"/>
 		<Label x:Name="lblUserFirstName" Content="Nombre(s):" HorizontalAlignment="Left" Height="27" Margin="88.667,45,0,0" VerticalAlignment="Top" Width="69.333"/>
 		<Label x:Name="lblUserLastName" Content="Apellido(s):" HorizontalAlignment="Left" Height="27" Margin="88.667,77,0,0" VerticalAlignment="Top" Width="69.333"/>
-		<TextBox x:Name="txtUserId" HorizontalAlignment="Left" Height="27" Margin="167.5,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtUserId" HorizontalAlignment="Left" Height="27" Margin="167.5,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
 		<TextBox x:Name="txtUserFirstName" HorizontalAlignment="Left" Height="27" Margin="167.5,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" TabIndex="2" BorderBrush="Black"/>
 		<TextBox x:Name="txtUserLastName" HorizontalAlignment="Left" Height="27" Margin="167.5,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" TabIndex="3" BorderBrush="Black"/>
 		<Button x:Name="btnAddUpdateUser" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="91.67,187.667,0,0" VerticalAlignment="Top" Width="91" Click="btnAddUpdateUser_Click" Cursor="Hand" TabIndex="6"/>

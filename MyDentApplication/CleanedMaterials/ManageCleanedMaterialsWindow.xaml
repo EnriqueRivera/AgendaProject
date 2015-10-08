@@ -6,7 +6,7 @@
 	x:Class="MyDentApplication.ManageCleanedMaterialsWindow"
 	x:Name="Window"
 	Title="Administrar limpieza de instrumentos"
-	Width="696.716" Height="440" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Images/app_icon.ico">
+	Width="814.716" Height="459" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Images/app_icon.ico">
 	<Window.Resources>
 		<local:DateValueConverter x:Key="DateValueConverter" />
         <local:BoolValueConverter x:Key="BoolValueConverter" />
@@ -57,5 +57,6 @@
 		<Button x:Name="btnMarkPackaged" Content="Empaquetado" HorizontalAlignment="Left" Margin="159,0,0,10" Width="80" Cursor="Hand" TabIndex="3" Click="btnMarkPackaged_Click" Height="29" VerticalAlignment="Bottom" />
 		<Label Content="Marcar como:" HorizontalAlignment="Left" Margin="10,0,0,10" Width="84" Height="29" VerticalAlignment="Bottom"/>
 		<Button x:Name="btnViewCleanedMaterial" Content="Ver detalles" HorizontalAlignment="Right" Margin="0,0,205,10" Width="74" Cursor="Hand" TabIndex="3" Height="29" VerticalAlignment="Bottom" Click="btnViewCleanedMaterial_Click" />
+		<Button x:Name="btnMarkReSterilized" Content="Re-Esterilizado" Margin="325,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="93" Click="btnMarkReSterilized_Click" />
 	</Grid>
 </Window>

@@ -65,7 +65,7 @@ namespace MyDentApplication
         {
             if (_medicine != null)
             {
-                lrMedicine.Background = _medicine.WasReplaced ? _replacedMedicineColor : _expiredMedicineColor;
+                rcColorMedicine.Fill = _medicine.WasReplaced ? _replacedMedicineColor : _expiredMedicineColor;
                 lblMedicineName.ToolTip = lblMedicineName.Content = _medicine.Name;
                 lblMedicineBrand.ToolTip = lblMedicineBrand.Content = _medicine.Brand;
             }

@@ -113,9 +113,9 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (string.IsNullOrEmpty(username))
+            if (Utils.IsValidEmail(username) == false)
             {
-                MessageBox.Show("Ingrese un usuario", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Correo inválido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 

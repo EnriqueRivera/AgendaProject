@@ -67,7 +67,7 @@ namespace MyDentApplication
                     allPatientEmails = Controllers.BusinessController.Instance.FindBy<Model.Patient>(u => u.IsDeleted == false && string.IsNullOrEmpty(u.Email) == false).ToList();
                 }
 
-                if (AreValidFields(subject, body, allPatientEmails) == false)
+                if (AreValidFields(subject, allPatientEmails) == false)
                 {
                     return;
                 }
@@ -271,7 +271,7 @@ namespace MyDentApplication
             }
         }
 
-        private bool AreValidFields(string subject, string body, List<Model.Patient> allPatientEmails)
+        private bool AreValidFields(string subject, List<Model.Patient> allPatientEmails)
         {
             if (spEmailTo.Children.Count == 0)
             {
@@ -295,7 +295,6 @@ namespace MyDentApplication
 
             string warningMessage = string.Empty;
             warningMessage += string.IsNullOrEmpty(subject) ? "\n-Asunto" : string.Empty;
-            warningMessage += string.IsNullOrEmpty(body) ? "\n-Mensaje" : string.Empty;
             warningMessage += spAttachedFiles.Children.Count == 0 ? "\n-Archivos adjuntos" : string.Empty;
 
             if (string.IsNullOrEmpty(warningMessage))

@@ -731,7 +731,7 @@ namespace MyDentApplication
         {
             if (_managePatientsWindow == null)
             {
-                _managePatientsWindow = new ManagePatientsWindow();
+                _managePatientsWindow = new ManagePatientsWindow(_userLoggedIn);
                 _managePatientsWindow.Closed += Window_Closed;
             }
 

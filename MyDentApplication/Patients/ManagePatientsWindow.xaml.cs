@@ -19,34 +19,98 @@ namespace MyDentApplication
 	{
         #region Instance variables
         private Controllers.CustomViewModel<Model.Patient> _patientsViewModel;
+        private bool _lastSearchAllPatients = true;
+        private Model.User _userLoggedIn;
         #endregion    
 
         #region Constructors
-        public ManagePatientsWindow()
+        public ManagePatientsWindow(Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
-            UpdateGridAllPatients();
+
+            _userLoggedIn = userLoggedIn;
+
+            UpdateGrid();
 		}
         #endregion
 
         #region Window event handlers
         private void btnRefreshPatients_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            UpdateGridFilteredPatients();
+            _lastSearchAllPatients = false;
+            UpdateGrid();
 		}
 
 		private void btnViewAllPatients_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            UpdateGridAllPatients();
+            _lastSearchAllPatients = true;
+            UpdateGrid();
 		}
 
-		private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-            this.Close();
-		}
+        private void btnAddPatient_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            new AddEditPatientsModal(null, _userLoggedIn).ShowDialog();
+            UpdateGrid();
+        }
+
+        private void btnEditPatient_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Model.Patient patientSelected = dgPatients.SelectedItem == null ? null : dgPatients.SelectedItem as Model.Patient;
+
+            if (patientSelected == null)
+            {
+                MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                new AddEditPatientsModal(patientSelected, _userLoggedIn).ShowDialog();
+                UpdateGrid();
+            }
+        }
+
+        private void btnDelete_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Model.Patient patientSelected = dgPatients.SelectedItem == null ? null : dgPatients.SelectedItem as Model.Patient;
+
+            if (patientSelected == null)
+            {
+                MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (MessageBox.Show
+                                (string.Format("¿Está seguro(a) que desea eliminar el paciente con el Exp. No. {0}?",
+                                        patientSelected.PatientId),
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.Yes)
+            {
+                patientSelected.IsDeleted = true;
+
+                if (Controllers.BusinessController.Instance.Update<Model.Patient>(patientSelected))
+                {
+                    UpdateGrid();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo eliminar el paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
         #endregion
 
         #region Window's logic
+        private void UpdateGrid()
+        {
+            if (_lastSearchAllPatients)
+            {
+                UpdateGridAllPatients();
+            }
+            else
+            {
+                UpdateGridFilteredPatients();
+            }
+        }
+
         private void UpdateGridFilteredPatients()
         {
             string searchTerm = txtSearchTerm.Text;
