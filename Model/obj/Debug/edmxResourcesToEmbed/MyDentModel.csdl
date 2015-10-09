@@ -88,6 +88,11 @@
       <End Role="User" EntitySet="Users" />
       <End Role="CleanedAction" EntitySet="CleanedActions" />
     </AssociationSet>
+    <EntitySet Name="Dotations" EntityType="MyDentDBModel.Dotation" />
+    <AssociationSet Name="FK_Dotations_UserId" Association="MyDentDBModel.FK_Dotations_UserId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Dotation" EntitySet="Dotations" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -310,6 +315,7 @@
     <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
     <NavigationProperty Name="Reminders" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="User" ToRole="Reminder" />
     <NavigationProperty Name="CleanedActions" Relationship="MyDentDBModel.FK_CleanedActions_UserId" FromRole="User" ToRole="CleanedAction" />
+    <NavigationProperty Name="Dotations" Relationship="MyDentDBModel.FK_Dotations_UserId" FromRole="User" ToRole="Dotation" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -541,6 +547,29 @@
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="CleanedAction">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Dotation">
+    <Key>
+      <PropertyRef Name="DotationId" />
+    </Key>
+    <Property Name="DotationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DotationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="SignedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Dotations_UserId" FromRole="Dotation" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Dotations_UserId">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.Dotation" Role="Dotation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Dotation">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>

@@ -6,7 +6,7 @@
 	x:Class="MyDentApplication.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="984" Height="774" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized">
+	Width="1214" Height="774" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized">
 
 	<Grid x:Name="LayoutRoot" OpacityMask="White">
 		<Label x:Name="lblLoggedInCaption" Content="Sesión iniciada como:" Margin="0,0,169.5,12.001" HorizontalAlignment="Right" Width="123.5" Height="24" VerticalAlignment="Bottom"/>
@@ -36,9 +36,6 @@
 				<ScrollViewer x:Name="svReminders" Margin="12,68.05,10,32" BorderBrush="Black" BorderThickness="0" FontWeight="Normal" VerticalScrollBarVisibility="Auto">
 					<StackPanel x:Name="spReminders"/>
 				</ScrollViewer>
-				<Button x:Name="btnRefreshReminders" HorizontalAlignment="Right" Height="25" Margin="0,0,10,2" VerticalAlignment="Bottom" Width="25" Click="btnRefreshReminders_Click" Cursor="Hand">
-					<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
-				</Button>
 			</Grid>
 		</GroupBox>
 		<Button x:Name="btnOpenAgenda" Margin="166,22.5,0,0" Width="90" Height="90" Click="btnOpenAgenda_Click" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top"> 
@@ -80,10 +77,16 @@
 							<TextBlock Text="Recordatorios" TextAlignment="Center" />
 						</StackPanel>
 					</Button>
-					<Button x:Name="btnConfigureEmail" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnConfigureEmail_Click" > 
+					<Button x:Name="btnConfigureEmail" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnConfigureEmail_Click" Margin="0,0,0,5" > 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/configureEmail_icon.png" Width="50" Height="50"  />
 							<TextBlock TextAlignment="Center" ><Run Text="Configurar"/><LineBreak/><Run Text="correo"/></TextBlock>
+						</StackPanel>
+					</Button>
+					<Button x:Name="btnManageDotations" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageDotations_Click" > 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/dotation_icon.png" Width="50" Height="50"  />
+							<TextBlock TextAlignment="Center" Text="Dotaciones" />
 						</StackPanel>
 					</Button>
 				</StackPanel>
@@ -138,9 +141,6 @@
         		<ScrollViewer x:Name="svMedicines" Margin="12,68.05,10,32" BorderBrush="Black" BorderThickness="0" FontWeight="Normal" VerticalScrollBarVisibility="Auto">
         			<StackPanel x:Name="spMedicines"/>
         		</ScrollViewer>
-        		<Button x:Name="btnRefreshMedicines" Margin="0,0,10,2" Click="btnRefreshMedicines_Click" HorizontalAlignment="Right" Width="25" Height="25" VerticalAlignment="Bottom" Cursor="Hand">
-        			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
-        		</Button>
         	</Grid>
         </GroupBox>
         <Button x:Name="btnManageMedicines" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="166,402.5,0,0" Click="btnManageMedicines_Click" > 
@@ -197,5 +197,32 @@
         		<TextBlock TextAlignment="Center" Text="Pacientes" />
         	</StackPanel>
         </Button>
+        <GroupBox x:Name="gbDotations" Header="Dotaciones del día de hoy" Margin="0,8.55,464,42.451" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Right" Width="222">
+        	<Grid x:Name="gridDotations" Margin="0,10,-2,2.245">
+        		<Rectangle x:Name="rcPendingDotations" Height="20" Margin="0,7.332,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
+        			<Rectangle.Fill>
+        				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        					<GradientStop Color="#FFEA5A5A"/>
+        					<GradientStop Color="#FFE0E0E0" Offset="0.5"/>
+        					<GradientStop Color="#FFEA5A5A" Offset="1"/>
+        				</LinearGradientBrush>
+        			</Rectangle.Fill>
+        		</Rectangle>
+        		<Rectangle x:Name="rcSignedDotations" Height="20" Margin="0,39.385,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
+        			<Rectangle.Fill>
+        				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        					<GradientStop Color="#FF5AEA61"/>
+        					<GradientStop Color="#FFE0E0E0" Offset="0.5"/>
+        					<GradientStop Color="#FF5AEA61" Offset="1"/>
+        				</LinearGradientBrush>
+        			</Rectangle.Fill>
+        		</Rectangle>
+        		<Label x:Name="lblPendingDotations" Content="Sin firmar" Height="27" Margin="0,4.05,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="174.66" FontWeight="Normal"/>
+        		<Label x:Name="lblSignedDotations" Content="Firmadas" Height="27" Margin="0,36.05,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="174.66" FontWeight="Normal"/>
+        		<ScrollViewer x:Name="svDotations" Margin="12,68.05,10,32" BorderBrush="Black" BorderThickness="0" FontWeight="Normal" VerticalScrollBarVisibility="Auto">
+        			<StackPanel x:Name="spDotations"/>
+        		</ScrollViewer>
+        	</Grid>
+        </GroupBox>
     </Grid>
 </Window>

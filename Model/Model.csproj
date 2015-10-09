@@ -59,6 +59,9 @@
     <Compile Include="Contact.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dotation.cs">
+      <DependentUpon>MyDentModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Event.cs">
       <DependentUpon>MyDentModel.tt</DependentUpon>
     </Compile>

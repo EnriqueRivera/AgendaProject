@@ -118,6 +118,18 @@
     <Compile Include="Contacts\ManageContactsWindow.xaml.cs">
       <DependentUpon>ManageContactsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dotations\AddEditDotationsModal.xaml.cs">
+      <DependentUpon>AddEditDotationsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dotations\ManageDotationsWindow.xaml.cs">
+      <DependentUpon>ManageDotationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dotations\ViewDotationControl.xaml.cs">
+      <DependentUpon>ViewDotationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dotations\ViewDotationModal.xaml.cs">
+      <DependentUpon>ViewDotationModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Emails\AddEmailModal.xaml.cs">
       <DependentUpon>AddEmailModal.xaml</DependentUpon>
     </Compile>
@@ -159,6 +171,9 @@
     </Compile>
     <Compile Include="LaboratoryWorks\ManageLaboratoryWorksWindow.xaml.cs">
       <DependentUpon>ManageLaboratoryWorksWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\RequestCredentialsModal.xaml.cs">
+      <DependentUpon>RequestCredentialsModal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Medicines\AddEditMedicinesModal.xaml.cs">
       <DependentUpon>AddEditMedicinesModal.xaml</DependentUpon>
@@ -265,6 +280,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dotations\AddEditDotationsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dotations\ManageDotationsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dotations\ViewDotationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dotations\ViewDotationModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Emails\AddEmailModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -318,6 +349,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LaboratoryWorks\ManageLaboratoryWorksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Main\RequestCredentialsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -504,6 +539,7 @@
     <Resource Include="Images\cleanedMaterials_icon.png" />
     <Resource Include="Images\configureEmail_icon.png" />
     <Resource Include="Images\contacts_icon.png" />
+    <Resource Include="Images\dotation_icon.png" />
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />

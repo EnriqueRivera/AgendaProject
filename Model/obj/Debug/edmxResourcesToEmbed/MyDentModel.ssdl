@@ -42,6 +42,16 @@
     <Property Name="HomePhone" Type="varchar(max)" />
     <Property Name="Address" Type="varchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Dotations">
+    <Key>
+      <PropertyRef Name="DotationId" />
+    </Key>
+    <Property Name="DotationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DotationDate" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="SignedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="Events">
     <Key>
       <PropertyRef Name="EventId" />
@@ -266,6 +276,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Dotations_UserId">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Dotations" Type="Self.Dotations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Dotations">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Events_EventCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Events" Type="Self.Events" Multiplicity="*" />
@@ -427,6 +449,7 @@
     <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
@@ -457,6 +480,10 @@
     <AssociationSet Name="FK_CleanedMaterials_Sterilized" Association="Self.FK_CleanedMaterials_Sterilized">
       <End Role="CleanedActions" EntitySet="CleanedActions" />
       <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Dotations" EntitySet="Dotations" />
     </AssociationSet>
     <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
       <End Role="Users" EntitySet="Users" />

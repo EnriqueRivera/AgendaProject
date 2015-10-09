@@ -238,5 +238,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Dotations">
+      <EntityTypeMapping TypeName="MyDentDBModel.Dotation">
+        <MappingFragment StoreEntitySet="Dotations">
+          <ScalarProperty Name="SignedDate" ColumnName="SignedDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="DotationDate" ColumnName="DotationDate" />
+          <ScalarProperty Name="DotationId" ColumnName="DotationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -49,6 +49,7 @@ namespace MyDentApplication
         private SendEmailWindow _sendEmailWindow;
         private ConfigureEmailWindow _configureEmailWindow;
         private ManagePatientsWindow _managePatientsWindow;
+        private ManageDotationsWindow _manageDotationsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -72,6 +73,7 @@ namespace MyDentApplication
             lblLoggedIn.FontWeight = _userLoggedIn.IsAdmin ? FontWeights.Bold : lblLoggedIn.FontWeight;
 
             RefreshMedicinesStackPanel();
+            RefreshDotationsStackPanel();
 
             _checkFinishedEventsThread = new Thread(CheckFinishedEvents);
             _checkFinishedEventsThread.SetApartmentState(ApartmentState.STA);
@@ -168,6 +170,7 @@ namespace MyDentApplication
             CloseWindow(_sendEmailWindow);
             CloseWindow(_configureEmailWindow);
             CloseWindow(_managePatientsWindow);
+            CloseWindow(_manageDotationsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -257,6 +260,11 @@ namespace MyDentApplication
             else if (sender is ManagePatientsWindow)
             {
                 _managePatientsWindow = null;
+            }
+            else if (sender is ManageDotationsWindow)
+            {
+                _manageDotationsWindow = null;
+                RefreshDotationsStackPanel();
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -468,6 +476,63 @@ namespace MyDentApplication
         }
         #endregion
 
+        #region Dotations
+        private void RefreshDotationsStackPanel()
+        {
+            int pendingDotations = 0;
+            int signedDotations = 0;
+
+            List<Model.Dotation> dailyDotations = BusinessController.Instance.FindBy<Model.Dotation>
+                                                    (d => EntityFunctions.TruncateTime(d.DotationDate) == EntityFunctions.TruncateTime(DateTime.Now))
+                                                    .OrderBy(m => m.DotationDate)
+                                                    .ToList();
+
+            int dotationsCount = dailyDotations.Count;
+            int spDotationsCount = spDotations.Children.Count;
+
+            if (dotationsCount > spDotationsCount)
+            {
+                for (int i = 0; i < dotationsCount - spDotationsCount; i++)
+                {
+                    ViewDotationControl viewDotationControl = new ViewDotationControl();
+                    viewDotationControl.OnDotationUpdated += viewDotationControl_OnDotationUpdated;
+
+                    spDotations.Children.Add(viewDotationControl);
+                }
+            }
+            else if (dotationsCount < spDotationsCount)
+            {
+                spDotations.Children.RemoveRange(0, spDotationsCount - dotationsCount);
+            }
+
+            for (int i = 0; i < dotationsCount; i++)
+            {
+                ViewDotationControl dotationControl = (spDotations.Children[i] as ViewDotationControl);
+
+                dotationControl.Dotation = dailyDotations[i];
+
+                dotationControl.Margin = new Thickness(0.0, 0.0, 0.0, 1.0);
+
+                if (dailyDotations[i].UserId != null)
+                {
+                    signedDotations++;
+                }
+                else
+                {
+                    pendingDotations++;
+                }
+            }
+
+            lblPendingDotations.ToolTip = lblPendingDotations.Content = "Sin firmar (" + pendingDotations + ")";
+            lblSignedDotations.ToolTip = lblSignedDotations.Content = "Firmadas (" + signedDotations + ")";
+        }
+
+        void viewDotationControl_OnDotationUpdated(object sender, bool e)
+        {
+            RefreshDotationsStackPanel();
+        }
+        #endregion
+
         #region Finished events
         public void OpenFinishedEventsReminderModal()
         {
@@ -632,17 +697,7 @@ namespace MyDentApplication
             _manageLaboratoryWorksWindow.Show();
             _manageLaboratoryWorksWindow.WindowState = WindowState.Normal;
         }
-
-        private void btnRefreshMedicines_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            RefreshMedicinesStackPanel();
-        }
-
-        private void btnRefreshReminders_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            RefreshRemindersStackPanel();
-        }
-
+        
         private void btnManageMedicines_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (_manageMedicinesWindow == null)
@@ -737,6 +792,18 @@ namespace MyDentApplication
 
             _managePatientsWindow.Show();
             _managePatientsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageDotations_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageDotationsWindow == null)
+            {
+                _manageDotationsWindow = new ManageDotationsWindow();
+                _manageDotationsWindow.Closed += Window_Closed;
+            }
+
+            _manageDotationsWindow.Show();
+            _manageDotationsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

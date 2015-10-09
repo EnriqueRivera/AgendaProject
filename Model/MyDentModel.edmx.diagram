@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1">
+      <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Contact" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="8.25" PointY="9.625" />
@@ -41,6 +41,8 @@
         <AssociationConnector Association="MyDentDBModel.FK_CleanedMaterials_Packaged" />
         <AssociationConnector Association="MyDentDBModel.FK_CleanedMaterials_Sterilized" />
         <AssociationConnector Association="MyDentDBModel.FK_CleanedActions_UserId" />
+        <EntityTypeShape EntityType="MyDentDBModel.Dotation" Width="1.5" PointX="3" PointY="25.25" />
+        <AssociationConnector Association="MyDentDBModel.FK_Dotations_UserId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

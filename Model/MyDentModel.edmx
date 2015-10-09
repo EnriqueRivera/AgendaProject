@@ -47,6 +47,16 @@
           <Property Name="HomePhone" Type="varchar(max)" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Dotations">
+          <Key>
+            <PropertyRef Name="DotationId" />
+          </Key>
+          <Property Name="DotationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DotationDate" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="SignedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Events">
           <Key>
             <PropertyRef Name="EventId" />
@@ -271,6 +281,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Dotations_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Dotations" Type="Self.Dotations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Dotations">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Events_EventCapturerId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Events" Type="Self.Events" Multiplicity="*" />
@@ -432,6 +454,7 @@
           <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
@@ -462,6 +485,10 @@
           <AssociationSet Name="FK_CleanedMaterials_Sterilized" Association="Self.FK_CleanedMaterials_Sterilized">
             <End Role="CleanedActions" EntitySet="CleanedActions" />
             <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Dotations" EntitySet="Dotations" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
             <End Role="Users" EntitySet="Users" />
@@ -607,6 +634,11 @@
           <AssociationSet Name="FK_CleanedActions_UserId" Association="MyDentDBModel.FK_CleanedActions_UserId">
             <End Role="User" EntitySet="Users" />
             <End Role="CleanedAction" EntitySet="CleanedActions" />
+          </AssociationSet>
+          <EntitySet Name="Dotations" EntityType="MyDentDBModel.Dotation" />
+          <AssociationSet Name="FK_Dotations_UserId" Association="MyDentDBModel.FK_Dotations_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Dotation" EntitySet="Dotations" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
@@ -830,6 +862,7 @@
           <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="User" ToRole="Patient" />
           <NavigationProperty Name="Reminders" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="User" ToRole="Reminder" />
           <NavigationProperty Name="CleanedActions" Relationship="MyDentDBModel.FK_CleanedActions_UserId" FromRole="User" ToRole="CleanedAction" />
+          <NavigationProperty Name="Dotations" Relationship="MyDentDBModel.FK_Dotations_UserId" FromRole="User" ToRole="Dotation" />
         </EntityType>
         <Association Name="FK_Events_EventCapturerId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -1061,6 +1094,29 @@
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="CleanedAction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Dotation">
+          <Key>
+            <PropertyRef Name="DotationId" />
+          </Key>
+          <Property Name="DotationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DotationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="SignedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Dotations_UserId" FromRole="Dotation" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Dotations_UserId">
+          <End Type="MyDentDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="MyDentDBModel.Dotation" Role="Dotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Dotation">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1305,6 +1361,17 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Shift" ColumnName="Shift" />
                 <ScalarProperty Name="CleanedActionId" ColumnName="CleanedActionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dotations">
+            <EntityTypeMapping TypeName="MyDentDBModel.Dotation">
+              <MappingFragment StoreEntitySet="Dotations">
+                <ScalarProperty Name="SignedDate" ColumnName="SignedDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DotationDate" ColumnName="DotationDate" />
+                <ScalarProperty Name="DotationId" ColumnName="DotationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

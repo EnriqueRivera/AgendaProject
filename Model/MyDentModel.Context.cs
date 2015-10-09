@@ -44,5 +44,6 @@ namespace Model
         public DbSet<User> Users { get; set; }
         public DbSet<CleanedMaterial> CleanedMaterials { get; set; }
         public DbSet<CleanedAction> CleanedActions { get; set; }
+        public DbSet<Dotation> Dotations { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace Model
             this.Patients = new HashSet<Patient>();
             this.Reminders = new HashSet<Reminder>();
             this.CleanedActions = new HashSet<CleanedAction>();
+            this.Dotations = new HashSet<Dotation>();
         }
     
         public int UserId { get; set; }
@@ -40,5 +41,6 @@ namespace Model
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<Reminder> Reminders { get; set; }
         public virtual ICollection<CleanedAction> CleanedActions { get; set; }
+        public virtual ICollection<Dotation> Dotations { get; set; }
     }
 }
