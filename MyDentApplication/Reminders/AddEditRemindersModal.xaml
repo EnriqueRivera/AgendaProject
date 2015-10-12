@@ -10,7 +10,7 @@
 	<Grid x:Name="LayoutRoot">
 		<Label x:Name="lblReminderMessage" Content="Mensaje:" HorizontalAlignment="Left" Height="25.672" Margin="10,10,0,0" VerticalAlignment="Top" Width="60.408"/>
 		<Border BorderThickness="1" BorderBrush="Black" Margin="10,40.672,10,0" Height="118.835" VerticalAlignment="Top">
-			<TextBox x:Name="txtReminderMessage" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+			<TextBox x:Name="txtReminderMessage" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True"/>
 		</Border>
 		<Label x:Name="lblReminderMessage_Copy" Content="Fecha y hora de aparición:" HorizontalAlignment="Left" Height="25.672" Margin="11,176.507,0,0" VerticalAlignment="Top" Width="149.741"/>
 		<xctk:DateTimePicker x:Name="dtpReminderAppearDate" Height="26" Margin="10,207.179,10,0" VerticalAlignment="Top" BorderBrush="Black" CultureInfo="es-MX"/>

@@ -160,6 +160,10 @@ namespace MyDentApplication
                 lblCellphone.ToolTip = lblCellphone.Text = selectedPatient.CellPhone;
                 lblHomePhone.ToolTip = lblHomePhone.Text = selectedPatient.HomePhone;
                 lblEmail.ToolTip = lblEmail.Text = selectedPatient.Email;
+
+                lblUpdateClinicHistoryMessage.Visibility = MainWindow.HasPatientToUpdateClinicHistory(selectedPatient)
+                                                                ? System.Windows.Visibility.Visible
+                                                                : System.Windows.Visibility.Hidden;
 			}
 		}
 

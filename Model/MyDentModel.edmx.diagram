@@ -43,6 +43,10 @@
         <AssociationConnector Association="MyDentDBModel.FK_CleanedActions_UserId" />
         <EntityTypeShape EntityType="MyDentDBModel.Dotation" Width="1.5" PointX="3" PointY="25.25" />
         <AssociationConnector Association="MyDentDBModel.FK_Dotations_UserId" />
+        <EntityTypeShape EntityType="MyDentDBModel.ClinicHistory" Width="1.5" PointX="11.375" PointY="6" />
+        <EntityTypeShape EntityType="MyDentDBModel.ClinicHistoryAttribute" Width="1.5" PointX="13.625" PointY="5.875" />
+        <AssociationConnector Association="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" />
+        <AssociationConnector Association="MyDentDBModel.FK_Patients_ClinicHistoryId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

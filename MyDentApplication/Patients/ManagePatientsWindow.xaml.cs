@@ -96,6 +96,21 @@ namespace MyDentApplication
                 }
             }
         }
+		
+		private void btnUpdateHc_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Model.Patient patientSelected = dgPatients.SelectedItem == null ? null : dgPatients.SelectedItem as Model.Patient;
+
+            if (patientSelected == null)
+            {
+                MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                new UpdateClinicHistoryWindow(patientSelected).ShowDialog();
+                UpdateGrid();
+            }
+        }
         #endregion
 
         #region Window's logic

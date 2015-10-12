@@ -12,7 +12,7 @@
 		<Label x:Name="lblDate" Content="Fecha:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="49.333"/>
 		<Label x:Name="lblCleanedActionObservations" Content="Observaciones:" HorizontalAlignment="Left" Height="25.672" Margin="10,133.276,0,0" VerticalAlignment="Top" Width="98.408"/>
 		<Border BorderThickness="1" BorderBrush="Black" Margin="10,163.948,10,0" Height="118.835" VerticalAlignment="Top">
-			<TextBox x:Name="txtCleanedActionObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+			<TextBox x:Name="txtCleanedActionObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True"/>
 		</Border>
 		<Label x:Name="lblShift" Content="Turno:" HorizontalAlignment="Left" Height="27" Margin="10,55.333,0,0" VerticalAlignment="Top" Width="49.333"/>
 		<ComboBox x:Name="cmbShift" Margin="64.333,55.333,10,0" VerticalAlignment="Top" Height="27" SelectedIndex="0">

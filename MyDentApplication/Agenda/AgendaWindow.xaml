@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:WpfScheduler="clr-namespace:WpfScheduler;assembly=WpfScheduler" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="MyDentApplication.AgendaWindow"
-        Title="Agenda" Height="800" Width="525" MinWidth="600" MinHeight="600" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+        Title="Agenda" Height="800" Width="823.5" MinWidth="600" MinHeight="600" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized" WindowStartupLocation="CenterScreen">
 	<Grid>
 		<WpfScheduler:Scheduler
 			HorizontalAlignment="Stretch" x:Name="scheduler" VerticalAlignment="Stretch"
@@ -12,7 +12,7 @@
 			OnScheduleAddEvent="scheduler_OnScheduleAddEvent"
 			OnEventMouseLeftButtonDown="scheduler_OnEventMouseLeftButtonDown"/>
 		<Calendar x:Name="calendar" HorizontalAlignment="Left" Margin="35,32.999,0,0" VerticalAlignment="Top" SelectedDatesChanged="calendar_SelectedDatesChanged"/>
-		<GroupBox x:Name="gbFilterEvents" Header="Filtrar citas" Margin="10,0,0,10" FontWeight="Bold" HorizontalAlignment="Left" Width="235" Height="175" VerticalAlignment="Bottom" BorderThickness="3" BorderBrush="Black">
+		<GroupBox x:Name="gbFilterEvents" Header="Filtrar citas" Margin="10,0,0,39.666" FontWeight="Bold" HorizontalAlignment="Left" Width="235" Height="175" VerticalAlignment="Bottom" BorderThickness="3" BorderBrush="Black">
 			<Grid Margin="0,0,-2,-1.925">
 				<Label x:Name="lblCanceledEvents" Content="Canceladas" HorizontalAlignment="Left" Margin="84.5,9.999,0,0" VerticalAlignment="Top" FontWeight="Normal"/>
 				<CheckBox x:Name="chkCanceledEvents" Content="CheckBox" HorizontalAlignment="Left" Height="15" Margin="9,14.999,0,0" VerticalAlignment="Top" Width="15" Checked="filterEvents_CheckedUnchecked" Unchecked="filterEvents_CheckedUnchecked" Tag="1" IsChecked="True" TabIndex="2"/>
@@ -31,7 +31,7 @@
 				<xctk:ColorPicker x:Name="cpCompletedEvents" HorizontalAlignment="Left" Height="21.667" Margin="29.527,120.681,0,0" VerticalAlignment="Top" Width="49.559" Cursor="Hand" SelectedColorChanged="cpStatusEvents_SelectedColorChanged" ShowAdvancedButton="False" AvailableColorsHeader="Colores disponibles" RecentColorsHeader="Colores recientes" StandardColorsHeader="Colores estándar" Tag="COMPLETED" TabIndex="11"/>
 			</Grid>
 		</GroupBox>
-		<GroupBox x:Name="gbEventInfo" Header="Información de la cita" Margin="10,200.966,0,190" HorizontalAlignment="Left" Width="235" FontWeight="Bold" BorderThickness="3" BorderBrush="Black">
+		<GroupBox x:Name="gbEventInfo" Header="Información de la cita" Margin="10,200.966,0,219.666" HorizontalAlignment="Left" Width="235" FontWeight="Bold" BorderThickness="3" BorderBrush="Black">
 			<Grid x:Name="gridEventInfo" Margin="0,0,-2,0">
 				<GroupBox x:Name="gbPacientInfo" Header="Información del paciente" Margin="0,158,3,0" FontWeight="Bold" BorderThickness="3" BorderBrush="Black">
 					<ScrollViewer x:Name="svPacientInfo" Margin="0,0,-2,-2">
@@ -63,5 +63,6 @@
 		<Button x:Name="btnToday" Content="Hoy" HorizontalAlignment="Left" Height="22.999" Margin="35,10,0,0" VerticalAlignment="Top" Width="179" Cursor="Hand" Click="btnToday_Click" TabIndex="1"/>
 		<Label x:Name="lblLoggedInCaption" Content="Sesión iniciada como:" Margin="0,0,169.5,10" HorizontalAlignment="Right" Width="123.5" Height="24" VerticalAlignment="Bottom"/>
 		<Label x:Name="lblLoggedIn" Content="" Margin="0,0,10,7.999" FontStyle="Italic" HorizontalAlignment="Right" Width="159.5" Height="26" VerticalAlignment="Bottom"/>
+		<Label x:Name="lblUpdateClinicHistoryMessage" Content="El paciente agendado para esta cita debe actualizar su historial clínico." HorizontalAlignment="Left" Height="26.667" Margin="10,0,0,7.999" VerticalAlignment="Bottom" Width="413" Foreground="Red" FontWeight="Bold" Visibility="Hidden"/>
 	</Grid>
 </Window>

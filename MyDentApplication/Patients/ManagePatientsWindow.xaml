@@ -45,5 +45,6 @@
 			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
 		</Button>
 		<Button x:Name="btnEditPatient" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnEditPatient_Click" />
+		<Button x:Name="btnUpdateHc" Content="Actualizar HC" Margin="10,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="90" Click="btnUpdateHc_Click" />
 	</Grid>
 </Window>

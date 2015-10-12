@@ -28,6 +28,22 @@
           <Property Name="Observations" Type="varchar(max)" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ClinicHistories">
+          <Key>
+            <PropertyRef Name="ClinicHistoryId" />
+          </Key>
+          <Property Name="ClinicHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClinicHistoryAttributes">
+          <Key>
+            <PropertyRef Name="ClinicHistoryAttributeId" />
+          </Key>
+          <Property Name="ClinicHistoryAttributeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClinicHistoryId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Value" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="Configurations">
           <Key>
             <PropertyRef Name="ConfigurationId" />
@@ -281,6 +297,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ClinicHistoryAttributes_ClinicHistoryId">
+          <End Role="ClinicHistories" Type="Self.ClinicHistories" Multiplicity="1" />
+          <End Role="ClinicHistoryAttributes" Type="Self.ClinicHistoryAttributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicHistories">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Principal>
+            <Dependent Role="ClinicHistoryAttributes">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Dotations_UserId">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Dotations" Type="Self.Dotations" Multiplicity="*" />
@@ -413,6 +441,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Patients_ClinicHistoryId">
+          <End Role="ClinicHistories" Type="Self.ClinicHistories" Multiplicity="0..1" />
+          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicHistories">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Patients_DataCapturerId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -452,6 +492,8 @@
         <EntityContainer Name="MyDentDBModelStoreContainer">
           <EntitySet Name="CleanedActions" EntityType="Self.CleanedActions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClinicHistories" EntityType="Self.ClinicHistories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClinicHistoryAttributes" EntityType="Self.ClinicHistoryAttributes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
@@ -485,6 +527,10 @@
           <AssociationSet Name="FK_CleanedMaterials_Sterilized" Association="Self.FK_CleanedMaterials_Sterilized">
             <End Role="CleanedActions" EntitySet="CleanedActions" />
             <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClinicHistoryAttributes_ClinicHistoryId" Association="Self.FK_ClinicHistoryAttributes_ClinicHistoryId">
+            <End Role="ClinicHistories" EntitySet="ClinicHistories" />
+            <End Role="ClinicHistoryAttributes" EntitySet="ClinicHistoryAttributes" />
           </AssociationSet>
           <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
             <End Role="Users" EntitySet="Users" />
@@ -529,6 +575,10 @@
           <AssociationSet Name="FK_OutgoingInvoices_PatientId" Association="Self.FK_OutgoingInvoices_PatientId">
             <End Role="Patients" EntitySet="Patients" />
             <End Role="OutgoingInvoices" EntitySet="OutgoingInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_ClinicHistoryId" Association="Self.FK_Patients_ClinicHistoryId">
+            <End Role="ClinicHistories" EntitySet="ClinicHistories" />
+            <End Role="Patients" EntitySet="Patients" />
           </AssociationSet>
           <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
             <End Role="Users" EntitySet="Users" />
@@ -639,6 +689,16 @@
           <AssociationSet Name="FK_Dotations_UserId" Association="MyDentDBModel.FK_Dotations_UserId">
             <End Role="User" EntitySet="Users" />
             <End Role="Dotation" EntitySet="Dotations" />
+          </AssociationSet>
+          <EntitySet Name="ClinicHistories" EntityType="MyDentDBModel.ClinicHistory" />
+          <EntitySet Name="ClinicHistoryAttributes" EntityType="MyDentDBModel.ClinicHistoryAttribute" />
+          <AssociationSet Name="FK_ClinicHistoryAttributes_ClinicHistoryId" Association="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId">
+            <End Role="ClinicHistory" EntitySet="ClinicHistories" />
+            <End Role="ClinicHistoryAttribute" EntitySet="ClinicHistoryAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_ClinicHistoryId" Association="MyDentDBModel.FK_Patients_ClinicHistoryId">
+            <End Role="ClinicHistory" EntitySet="ClinicHistories" />
+            <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
@@ -785,6 +845,7 @@
           <NavigationProperty Name="LaboratoryWorks" Relationship="MyDentDBModel.FK_LaboratoryWorks_PatientId" FromRole="Patient" ToRole="LaboratoryWork" />
           <NavigationProperty Name="OutgoingInvoices" Relationship="MyDentDBModel.FK_OutgoingInvoices_PatientId" FromRole="Patient" ToRole="OutgoingInvoice" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
+          <NavigationProperty Name="ClinicHistory" Relationship="MyDentDBModel.FK_Patients_ClinicHistoryId" FromRole="Patient" ToRole="ClinicHistory" />
         </EntityType>
         <EntityType Name="ReceivedInvoice">
           <Key>
@@ -1121,6 +1182,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClinicHistory">
+          <Key>
+            <PropertyRef Name="ClinicHistoryId" />
+          </Key>
+          <Property Name="ClinicHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ClinicHistoryAttributes" Relationship="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" FromRole="ClinicHistory" ToRole="ClinicHistoryAttribute" />
+          <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_ClinicHistoryId" FromRole="ClinicHistory" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="ClinicHistoryAttribute">
+          <Key>
+            <PropertyRef Name="ClinicHistoryAttributeId" />
+          </Key>
+          <Property Name="ClinicHistoryAttributeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClinicHistoryId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ClinicHistory" Relationship="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" FromRole="ClinicHistoryAttribute" ToRole="ClinicHistory" />
+        </EntityType>
+        <Association Name="FK_ClinicHistoryAttributes_ClinicHistoryId">
+          <End Type="MyDentDBModel.ClinicHistory" Role="ClinicHistory" Multiplicity="1" />
+          <End Type="MyDentDBModel.ClinicHistoryAttribute" Role="ClinicHistoryAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicHistory">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Principal>
+            <Dependent Role="ClinicHistoryAttribute">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patients_ClinicHistoryId">
+          <End Type="MyDentDBModel.ClinicHistory" Role="ClinicHistory" Multiplicity="0..1" />
+          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicHistory">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ClinicHistoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1372,6 +1476,24 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="DotationDate" ColumnName="DotationDate" />
                 <ScalarProperty Name="DotationId" ColumnName="DotationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClinicHistories">
+            <EntityTypeMapping TypeName="MyDentDBModel.ClinicHistory">
+              <MappingFragment StoreEntitySet="ClinicHistories">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClinicHistoryAttributes">
+            <EntityTypeMapping TypeName="MyDentDBModel.ClinicHistoryAttribute">
+              <MappingFragment StoreEntitySet="ClinicHistoryAttributes">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />
+                <ScalarProperty Name="ClinicHistoryAttributeId" ColumnName="ClinicHistoryAttributeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

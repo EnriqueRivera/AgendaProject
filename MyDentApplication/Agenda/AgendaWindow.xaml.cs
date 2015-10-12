@@ -61,6 +61,10 @@ namespace MyDentApplication
             lblEmail.ToolTip = lblEmail.Text = e.EventInfo.Patient.Email;
             lblEventStatus.ToolTip = lblEventStatus.Text = e.EventStatusString;
             lblEventCapturer.ToolTip = lblEventCapturer.Text = e.EventInfo.User.FirstName + " " + e.EventInfo.User.LastName;
+
+            lblUpdateClinicHistoryMessage.Visibility = MainWindow.HasPatientToUpdateClinicHistory(e.EventInfo.Patient)
+                                                                ? System.Windows.Visibility.Visible
+                                                                : System.Windows.Visibility.Hidden;
         }
 
         private void scheduler_OnScheduleAddEvent(object sender, System.DateTime e)

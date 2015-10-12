@@ -45,5 +45,7 @@ namespace Model
         public DbSet<CleanedMaterial> CleanedMaterials { get; set; }
         public DbSet<CleanedAction> CleanedActions { get; set; }
         public DbSet<Dotation> Dotations { get; set; }
+        public DbSet<ClinicHistory> ClinicHistories { get; set; }
+        public DbSet<ClinicHistoryAttribute> ClinicHistoryAttributes { get; set; }
     }
 }

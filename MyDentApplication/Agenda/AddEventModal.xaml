@@ -39,5 +39,6 @@
 				<TextBlock x:Name="lblEventEndTime" Text="" HorizontalAlignment="Left" Height="20" Margin="72.447,45,0,0" VerticalAlignment="Top" Width="165.144" FontWeight="Normal"/>
 			</Grid>
 		</GroupBox>
+		<Label x:Name="lblUpdateClinicHistoryMessage" Content="El paciente seleccionado debe actualizar su historial clínico." HorizontalAlignment="Left" Height="32" Margin="10,0,0,2" VerticalAlignment="Bottom" Width="349.934" Foreground="Red" FontWeight="Bold" Visibility="Hidden"/>
 	</Grid>
 </Window>

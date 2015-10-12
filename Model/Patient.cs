@@ -37,5 +37,6 @@ namespace Model
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }
         public virtual ICollection<OutgoingInvoice> OutgoingInvoices { get; set; }
         public virtual User User { get; set; }
+        public virtual ClinicHistory ClinicHistory { get; set; }
     }
 }

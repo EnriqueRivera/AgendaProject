@@ -249,5 +249,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ClinicHistories">
+      <EntityTypeMapping TypeName="MyDentDBModel.ClinicHistory">
+        <MappingFragment StoreEntitySet="ClinicHistories">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClinicHistoryAttributes">
+      <EntityTypeMapping TypeName="MyDentDBModel.ClinicHistoryAttribute">
+        <MappingFragment StoreEntitySet="ClinicHistoryAttributes">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />
+          <ScalarProperty Name="ClinicHistoryAttributeId" ColumnName="ClinicHistoryAttributeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

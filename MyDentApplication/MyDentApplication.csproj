@@ -190,6 +190,9 @@
     <Compile Include="Patients\ManagePatientsWindow.xaml.cs">
       <DependentUpon>ManagePatientsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Patients\UpdateClinicHistoryWindow.xaml.cs">
+      <DependentUpon>UpdateClinicHistoryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PrintableDocuments\MedicalProofDocument.xaml.cs">
       <DependentUpon>MedicalProofDocument.xaml</DependentUpon>
     </Compile>
@@ -373,6 +376,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Patients\ManagePatientsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Patients\UpdateClinicHistoryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

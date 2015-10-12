@@ -321,6 +321,12 @@ namespace MyDentApplication
             adminId = userResult.UserId;
             return userResult.IsAdmin;
         }
+
+        public static bool HasPatientToUpdateClinicHistory(Model.Patient selectedPatient)
+        {
+            return selectedPatient.ClinicHistoryId == null ||
+                    selectedPatient.ClinicHistory.UpdateDate.AddYears(1) < DateTime.Now;
+        }
         #endregion
 
         #region Actions to execute from another thread

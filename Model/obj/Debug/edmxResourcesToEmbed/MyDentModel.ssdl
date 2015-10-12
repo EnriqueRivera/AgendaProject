@@ -23,6 +23,22 @@
     <Property Name="Observations" Type="varchar(max)" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="ClinicHistories">
+    <Key>
+      <PropertyRef Name="ClinicHistoryId" />
+    </Key>
+    <Property Name="ClinicHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClinicHistoryAttributes">
+    <Key>
+      <PropertyRef Name="ClinicHistoryAttributeId" />
+    </Key>
+    <Property Name="ClinicHistoryAttributeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClinicHistoryId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar(max)" Nullable="false" />
+    <Property Name="Value" Type="varchar(max)" />
+  </EntityType>
   <EntityType Name="Configurations">
     <Key>
       <PropertyRef Name="ConfigurationId" />
@@ -276,6 +292,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ClinicHistoryAttributes_ClinicHistoryId">
+    <End Role="ClinicHistories" Type="Self.ClinicHistories" Multiplicity="1" />
+    <End Role="ClinicHistoryAttributes" Type="Self.ClinicHistoryAttributes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClinicHistories">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Principal>
+      <Dependent Role="ClinicHistoryAttributes">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Dotations_UserId">
     <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
     <End Role="Dotations" Type="Self.Dotations" Multiplicity="*" />
@@ -408,6 +436,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Patients_ClinicHistoryId">
+    <End Role="ClinicHistories" Type="Self.ClinicHistories" Multiplicity="0..1" />
+    <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClinicHistories">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Principal>
+      <Dependent Role="Patients">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Patients_DataCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
@@ -447,6 +487,8 @@
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="CleanedActions" EntityType="Self.CleanedActions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClinicHistories" EntityType="Self.ClinicHistories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClinicHistoryAttributes" EntityType="Self.ClinicHistoryAttributes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
@@ -480,6 +522,10 @@
     <AssociationSet Name="FK_CleanedMaterials_Sterilized" Association="Self.FK_CleanedMaterials_Sterilized">
       <End Role="CleanedActions" EntitySet="CleanedActions" />
       <End Role="CleanedMaterials" EntitySet="CleanedMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClinicHistoryAttributes_ClinicHistoryId" Association="Self.FK_ClinicHistoryAttributes_ClinicHistoryId">
+      <End Role="ClinicHistories" EntitySet="ClinicHistories" />
+      <End Role="ClinicHistoryAttributes" EntitySet="ClinicHistoryAttributes" />
     </AssociationSet>
     <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
       <End Role="Users" EntitySet="Users" />
@@ -524,6 +570,10 @@
     <AssociationSet Name="FK_OutgoingInvoices_PatientId" Association="Self.FK_OutgoingInvoices_PatientId">
       <End Role="Patients" EntitySet="Patients" />
       <End Role="OutgoingInvoices" EntitySet="OutgoingInvoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patients_ClinicHistoryId" Association="Self.FK_Patients_ClinicHistoryId">
+      <End Role="ClinicHistories" EntitySet="ClinicHistories" />
+      <End Role="Patients" EntitySet="Patients" />
     </AssociationSet>
     <AssociationSet Name="FK_Patients_DataCapturerId" Association="Self.FK_Patients_DataCapturerId">
       <End Role="Users" EntitySet="Users" />

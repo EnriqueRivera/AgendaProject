@@ -93,6 +93,16 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Dotation" EntitySet="Dotations" />
     </AssociationSet>
+    <EntitySet Name="ClinicHistories" EntityType="MyDentDBModel.ClinicHistory" />
+    <EntitySet Name="ClinicHistoryAttributes" EntityType="MyDentDBModel.ClinicHistoryAttribute" />
+    <AssociationSet Name="FK_ClinicHistoryAttributes_ClinicHistoryId" Association="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId">
+      <End Role="ClinicHistory" EntitySet="ClinicHistories" />
+      <End Role="ClinicHistoryAttribute" EntitySet="ClinicHistoryAttributes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patients_ClinicHistoryId" Association="MyDentDBModel.FK_Patients_ClinicHistoryId">
+      <End Role="ClinicHistory" EntitySet="ClinicHistories" />
+      <End Role="Patient" EntitySet="Patients" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -238,6 +248,7 @@
     <NavigationProperty Name="LaboratoryWorks" Relationship="MyDentDBModel.FK_LaboratoryWorks_PatientId" FromRole="Patient" ToRole="LaboratoryWork" />
     <NavigationProperty Name="OutgoingInvoices" Relationship="MyDentDBModel.FK_OutgoingInvoices_PatientId" FromRole="Patient" ToRole="OutgoingInvoice" />
     <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
+    <NavigationProperty Name="ClinicHistory" Relationship="MyDentDBModel.FK_Patients_ClinicHistoryId" FromRole="Patient" ToRole="ClinicHistory" />
   </EntityType>
   <EntityType Name="ReceivedInvoice">
     <Key>
@@ -571,6 +582,49 @@
       </Principal>
       <Dependent Role="Dotation">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ClinicHistory">
+    <Key>
+      <PropertyRef Name="ClinicHistoryId" />
+    </Key>
+    <Property Name="ClinicHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ClinicHistoryAttributes" Relationship="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" FromRole="ClinicHistory" ToRole="ClinicHistoryAttribute" />
+    <NavigationProperty Name="Patients" Relationship="MyDentDBModel.FK_Patients_ClinicHistoryId" FromRole="ClinicHistory" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="ClinicHistoryAttribute">
+    <Key>
+      <PropertyRef Name="ClinicHistoryAttributeId" />
+    </Key>
+    <Property Name="ClinicHistoryAttributeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClinicHistoryId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ClinicHistory" Relationship="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" FromRole="ClinicHistoryAttribute" ToRole="ClinicHistory" />
+  </EntityType>
+  <Association Name="FK_ClinicHistoryAttributes_ClinicHistoryId">
+    <End Type="MyDentDBModel.ClinicHistory" Role="ClinicHistory" Multiplicity="1" />
+    <End Type="MyDentDBModel.ClinicHistoryAttribute" Role="ClinicHistoryAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClinicHistory">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Principal>
+      <Dependent Role="ClinicHistoryAttribute">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patients_ClinicHistoryId">
+    <End Type="MyDentDBModel.ClinicHistory" Role="ClinicHistory" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClinicHistory">
+        <PropertyRef Name="ClinicHistoryId" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="ClinicHistoryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
