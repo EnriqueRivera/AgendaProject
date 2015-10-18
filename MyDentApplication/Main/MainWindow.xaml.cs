@@ -50,6 +50,7 @@ namespace MyDentApplication
         private ConfigureEmailWindow _configureEmailWindow;
         private ManagePatientsWindow _managePatientsWindow;
         private ManageDotationsWindow _manageDotationsWindow;
+        private ManageTreatmentPricesWindow _manageTreatmentPricesWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -171,6 +172,7 @@ namespace MyDentApplication
             CloseWindow(_configureEmailWindow);
             CloseWindow(_managePatientsWindow);
             CloseWindow(_manageDotationsWindow);
+            CloseWindow(_manageTreatmentPricesWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -265,6 +267,10 @@ namespace MyDentApplication
             {
                 _manageDotationsWindow = null;
                 RefreshDotationsStackPanel();
+            }
+            else if (sender is ManageTreatmentPricesWindow)
+            {
+                _manageTreatmentPricesWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -365,7 +371,8 @@ namespace MyDentApplication
             int seenReminders = 0;
 
             List<Model.Reminder> todayReminders = BusinessController.Instance.FindBy<Model.Reminder>
-                                                    (r => EntityFunctions.TruncateTime(r.AppearDate) == EntityFunctions.TruncateTime(DateTime.Now))
+                                                    (r => (r.Seen == false && EntityFunctions.TruncateTime(r.AppearDate) <= EntityFunctions.TruncateTime(DateTime.Now))
+                                                        || (r.Seen && EntityFunctions.TruncateTime(r.SeenDate.Value) == EntityFunctions.TruncateTime(DateTime.Now)))
                                                     .OrderBy(r => r.AppearDate)
                                                     .ToList();
 
@@ -810,6 +817,18 @@ namespace MyDentApplication
 
             _manageDotationsWindow.Show();
             _manageDotationsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageTreatmentPrices_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageTreatmentPricesWindow == null)
+            {
+                _manageTreatmentPricesWindow = new ManageTreatmentPricesWindow();
+                _manageTreatmentPricesWindow.Closed += Window_Closed;
+            }
+
+            _manageTreatmentPricesWindow.Show();
+            _manageTreatmentPricesWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

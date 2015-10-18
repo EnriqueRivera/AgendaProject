@@ -13,16 +13,16 @@ using System.Windows.Shapes;
 namespace MyDentApplication
 {
 	/// <summary>
-	/// Interaction logic for ManageTreatmentsWindow.xaml
+	/// Interaction logic for ManageTreatmentPricesWindow.xaml
 	/// </summary>
-	public partial class ManageTreatmentsWindow : Window
-    {
+	public partial class ManageTreatmentPricesWindow : Window
+	{
         #region Instance variables
-        private Controllers.CustomViewModel<Model.Treatment> _tratmentsViewModel;
+        private Controllers.CustomViewModel<Model.TreatmentPrice> _tratmentsViewModel;
         #endregion
 
         #region Constructors
-        public ManageTreatmentsWindow()
+        public ManageTreatmentPricesWindow()
 		{
 			this.InitializeComponent();
 
@@ -33,13 +33,13 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnAddTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            new AddEditTreatmentsModal(null).ShowDialog();
+            new AddEditTreatmentPricesModal(null).ShowDialog();
             UpdateGrid();
         }
 
         private void btnEditTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.Treatment treatmentSelected = dgTreatments.SelectedItem == null ? null : dgTreatments.SelectedItem as Model.Treatment;
+            Model.TreatmentPrice treatmentSelected = dgTreatments.SelectedItem == null ? null : dgTreatments.SelectedItem as Model.TreatmentPrice;
 
             if (treatmentSelected == null)
             {
@@ -47,14 +47,14 @@ namespace MyDentApplication
             }
             else
             {
-                new AddEditTreatmentsModal(treatmentSelected).ShowDialog();
+                new AddEditTreatmentPricesModal(treatmentSelected).ShowDialog();
                 UpdateGrid();
             }
         }
 
         private void btnDeleteTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.Treatment treatmentSelected = dgTreatments.SelectedItem == null ? null : dgTreatments.SelectedItem as Model.Treatment;
+            Model.TreatmentPrice treatmentSelected = dgTreatments.SelectedItem == null ? null : dgTreatments.SelectedItem as Model.TreatmentPrice;
 
             if (treatmentSelected == null)
             {
@@ -70,7 +70,7 @@ namespace MyDentApplication
             {
                 treatmentSelected.IsDeleted = true;
 
-                if (Controllers.BusinessController.Instance.Update<Model.Treatment>(treatmentSelected))
+                if (Controllers.BusinessController.Instance.Update<Model.TreatmentPrice>(treatmentSelected))
                 {
                     UpdateGrid();
                 }
@@ -85,7 +85,7 @@ namespace MyDentApplication
         #region Window's logic
         private void UpdateGrid()
         {
-            _tratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "TreatmentId", "asc");
+            _tratmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false, "TreatmentPriceId", "asc");
             this.DataContext = _tratmentsViewModel;
         }
         #endregion

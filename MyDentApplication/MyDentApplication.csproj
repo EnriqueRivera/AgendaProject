@@ -217,8 +217,14 @@
     <Compile Include="Technicals\ManageTechnicalsWindow.xaml.cs">
       <DependentUpon>ManageTechnicalsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Treatments\AddEditTreatmentPricesModal.xaml.cs">
+      <DependentUpon>AddEditTreatmentPricesModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Treatments\AddEditTreatmentsModal.xaml.cs">
       <DependentUpon>AddEditTreatmentsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Treatments\ManageTreatmentPricesWindow.xaml.cs">
+      <DependentUpon>ManageTreatmentPricesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Treatments\ManageTreatmentsWindow.xaml.cs">
       <DependentUpon>ManageTreatmentsWindow.xaml</DependentUpon>
@@ -415,7 +421,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Treatments\AddEditTreatmentPricesModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Treatments\AddEditTreatmentsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Treatments\ManageTreatmentPricesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -566,6 +580,7 @@
     <Resource Include="Images\sendEmail_icon.png" />
     <Resource Include="Images\technical_icon.png" />
     <Resource Include="Images\treatment_icon.png" />
+    <Resource Include="Images\treatment_prices_icon.png" />
     <Resource Include="Images\users_icon.png" />
   </ItemGroup>
   <ItemGroup>

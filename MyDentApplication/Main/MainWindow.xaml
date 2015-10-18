@@ -5,13 +5,13 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	x:Class="MyDentApplication.MainWindow"
 	x:Name="Window"
-	Title="MainWindow"
+	Title="Ventana principal"
 	Width="1214" Height="774" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowState="Maximized">
 
 	<Grid x:Name="LayoutRoot" OpacityMask="White">
 		<Label x:Name="lblLoggedInCaption" Content="Sesión iniciada como:" Margin="0,0,169.5,12.001" HorizontalAlignment="Right" Width="123.5" Height="24" VerticalAlignment="Bottom"/>
 		<Label x:Name="lblLoggedIn" Content="" Margin="0,0,10,10" FontStyle="Italic" HorizontalAlignment="Right" Width="159.5" Height="26" VerticalAlignment="Bottom"/>
-		<GroupBox x:Name="gbPacientInfo" Header="Recordatorios del día de hoy" Margin="0,10,10,41.001" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Right" Width="222">
+		<GroupBox x:Name="gbPacientInfo" Header="Recordatorios" Margin="0,10,10,41.001" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Foreground="Black" HorizontalAlignment="Right" Width="222">
 			<Grid x:Name="gridPacientInfo" Margin="0,10,-2,2.245">
 				<Rectangle x:Name="rcPendingReminderColor" Height="20" Margin="0,7.332,184.66,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20">
 					<Rectangle.Fill>
@@ -83,10 +83,16 @@
 							<TextBlock TextAlignment="Center" ><Run Text="Configurar"/><LineBreak/><Run Text="correo"/></TextBlock>
 						</StackPanel>
 					</Button>
-					<Button x:Name="btnManageDotations" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageDotations_Click" > 
+					<Button x:Name="btnManageDotations" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageDotations_Click" Margin="0,0,0,5" > 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/dotation_icon.png" Width="50" Height="50"  />
 							<TextBlock TextAlignment="Center" Text="Dotaciones" />
+						</StackPanel>
+					</Button>
+					<Button x:Name="btnManageTreatmentPrices" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageTreatmentPrices_Click"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/treatment_prices_icon.png" Width="50" Height="50"  />
+							<TextBlock TextAlignment="Center" ><Run Text="Costos "/><Run Text="de"/><LineBreak/><Run Text="tratamientos"/></TextBlock>
 						</StackPanel>
 					</Button>
 				</StackPanel>

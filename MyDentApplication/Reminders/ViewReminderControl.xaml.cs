@@ -64,7 +64,7 @@ namespace MyDentApplication
             if (_reminder != null)
             {
                 rcColorReminder.Fill = _reminder.Seen ? _reminderSeenColor : _reminderPendingColor;
-                lblReminderTime.ToolTip = lblReminderTime.Content = _reminder.AppearDate.ToString("HH:mm") + " hrs.";
+                lblReminderTime.ToolTip = lblReminderTime.Content = _reminder.AppearDate.ToString("dd/MM/yyy") + _reminder.AppearDate.ToString(" HH:mm") + " hrs.";
                 lblReminderMessage.ToolTip = _reminder.Message;
                 lblReminderMessage.Content = (_reminder.Message.Length > 10) ? _reminder.Message.Substring(0, 10) + "..." : _reminder.Message;
             }

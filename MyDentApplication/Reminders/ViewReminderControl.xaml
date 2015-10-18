@@ -9,7 +9,7 @@
 
 	<Grid x:Name="lrReminder">
 		<Rectangle x:Name="rcColorReminder" Stroke="Black" RadiusX="10" RadiusY="10" StrokeThickness="2"/>
-		<Label Content="Hora del recordatorio:" Height="28" Margin="0,0,20,0" VerticalAlignment="Top"/>
+		<Label Content="Fecha del recordatorio:" Height="28" Margin="0,0,20,0" VerticalAlignment="Top"/>
 		<Label x:Name="lblReminderTime" Content="" Height="28" Margin="10,22.5,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>
 		<Label Content="Mensaje:" Height="28" Margin="0,55.5,20,0" VerticalAlignment="Top"/>
 		<Label x:Name="lblReminderMessage" Content="" Height="28" Margin="10,79,10,0" VerticalAlignment="Top" FontStyle="Italic" BorderThickness="1" BorderBrush="Black"/>

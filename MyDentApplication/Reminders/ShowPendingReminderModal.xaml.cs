@@ -64,6 +64,7 @@ namespace MyDentApplication
 
             _reminderToShow.Seen = true;
             _reminderToShow.SeenBy = seenByUserId;
+            _reminderToShow.SeenDate = DateTime.Now;
 
             if (Controllers.BusinessController.Instance.Update<Model.Reminder>(_reminderToShow))
             {

@@ -47,5 +47,6 @@ namespace Model
         public DbSet<Dotation> Dotations { get; set; }
         public DbSet<ClinicHistory> ClinicHistories { get; set; }
         public DbSet<ClinicHistoryAttribute> ClinicHistoryAttributes { get; set; }
+        public DbSet<TreatmentPrice> TreatmentPrices { get; set; }
     }
 }

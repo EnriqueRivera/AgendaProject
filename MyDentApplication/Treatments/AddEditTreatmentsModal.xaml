@@ -12,7 +12,7 @@
 		<Label x:Name="lblTreatmentName" Content="Nombre del tratamiento:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="344"/>
 		<TextBox x:Name="txtTreatmentName" HorizontalAlignment="Left" Height="27" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" TabIndex="1" BorderThickness="1" BorderBrush="Black" TextAlignment="Center"/>
 		<Label x:Name="lblTreatmentDuration" Content="Duración:" HorizontalAlignment="Left" Height="27" Margin="10,80,0,0" VerticalAlignment="Top" Width="344"/>
-		<ComboBox x:Name="cbTreatmentDuration" HorizontalAlignment="Left" Height="28" Margin="10,107,0,0" VerticalAlignment="Top" Width="100"/>
+		<ComboBox x:Name="cbTreatmentDuration" HorizontalAlignment="Left" Height="28" Margin="10,107,0,0" VerticalAlignment="Top" Width="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
 		<Label x:Name="lblMinutesCaption" Content="minutos" HorizontalAlignment="Left" Height="27" Margin="115,108,0,0" VerticalAlignment="Top" Width="239"/>
 		<Label x:Name="lblIsRecurrent" Content="Recurrente:" HorizontalAlignment="Left" Height="27" Margin="38.042,143.382,0,0" VerticalAlignment="Top" Width="71.958"/>
 		<CheckBox x:Name="chkIsRecurrent" Content="" HorizontalAlignment="Left" Height="18" Margin="115,149.882,0,0" VerticalAlignment="Top" Width="15.333" Checked="chkIsRecurrent_CheckedUnchecked" Unchecked="chkIsRecurrent_CheckedUnchecked"/>

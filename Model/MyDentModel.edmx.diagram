@@ -47,6 +47,7 @@
         <EntityTypeShape EntityType="MyDentDBModel.ClinicHistoryAttribute" Width="1.5" PointX="13.625" PointY="5.875" />
         <AssociationConnector Association="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_ClinicHistoryId" />
+        <EntityTypeShape EntityType="MyDentDBModel.TreatmentPrice" Width="1.5" PointX="13.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
