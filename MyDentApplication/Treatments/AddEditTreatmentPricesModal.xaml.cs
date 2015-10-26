@@ -28,7 +28,7 @@ namespace MyDentApplication
 			this.InitializeComponent();
 
             _treatmentToUpdate = treatmentToUpdate;
-            _isUpdateTreatmentInfo = treatmentToUpdate != null;
+            _isUpdateTreatmentInfo = _treatmentToUpdate != null;
 
             if (_isUpdateTreatmentInfo)
             {
@@ -41,7 +41,7 @@ namespace MyDentApplication
         private void btnAddUpdateTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string treatmentName = txtTreatmentName.Text.Trim();
-            decimal? price;
+            decimal price;
 
             if (AreValidFields(treatmentName, out price) == false)
             {
@@ -51,7 +51,7 @@ namespace MyDentApplication
             if (_isUpdateTreatmentInfo)
             {
                 _treatmentToUpdate.Name = treatmentName;
-                _treatmentToUpdate.Price = price.Value;
+                _treatmentToUpdate.Price = price;
                 _treatmentToUpdate.Discount = (int)cbDiscount.SelectedItem;
 
                 UpdateTreatment(_treatmentToUpdate);
@@ -61,7 +61,7 @@ namespace MyDentApplication
                 Model.TreatmentPrice treatmentToAdd = new Model.TreatmentPrice()
                 {
                     Name = treatmentName,
-                    Price = price.Value,
+                    Price = price,
                     Discount = (int)cbDiscount.SelectedItem,
                     IsDeleted = false
                 };
@@ -86,9 +86,8 @@ namespace MyDentApplication
             cbDiscount.SelectedValue = _treatmentToUpdate.Discount;
         }
 
-        private bool AreValidFields(string treatmentName, out decimal? price)
+        private bool AreValidFields(string treatmentName, out decimal price)
         {
-            decimal auxPrice;
             price = 0;
 
             if (string.IsNullOrEmpty(treatmentName))
@@ -97,13 +96,11 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (decimal.TryParse(txtCost.Text.ToString().Trim(), out auxPrice) == false)
+            if (decimal.TryParse(txtCost.Text.ToString().Trim(), out price) == false)
             {
                 MessageBox.Show("Ingrese un costo válido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
-
-            price = auxPrice;
 
             return true;
         }

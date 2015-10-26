@@ -39,10 +39,7 @@ namespace MyDentApplication
             foreach (var item in selectedPatients)
             {
                 Model.Patient patient = item as Model.Patient;
-                if (string.IsNullOrEmpty(patient.Email) == false)
-                {
-                    _selectedPatients.Add(patient);   
-                }
+                _selectedPatients.Add(patient);
             }
 
             this.Close();

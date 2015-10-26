@@ -72,7 +72,6 @@ namespace MyDentApplication
         {
             _currentSelectedMonth = dtudSelectedMonth.Value.Value;
 
-
             _receivedInvoicesViewModel = new Controllers.CustomViewModel<Model.ReceivedInvoice>(i => i.IsDeleted == false && i.InvoiceDate.Value.Month == _currentSelectedMonth.Month && i.InvoiceDate.Value.Year == _currentSelectedMonth.Year, "InvoiceDate", "asc");
             _outgoingInvoicesViewModel = new Controllers.CustomViewModel<Model.OutgoingInvoice>(i => i.IsDeleted == false && i.InvoiceDate.Value.Month == _currentSelectedMonth.Month && i.InvoiceDate.Value.Year == _currentSelectedMonth.Year, "InvoiceDate", "asc");
                         

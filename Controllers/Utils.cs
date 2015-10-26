@@ -137,6 +137,11 @@ namespace Controllers
             _allData = new ObservableCollection<T>(allData.ToList());
         }
 
+        public CustomViewModel(List<T> data)
+        {
+            _allData = new ObservableCollection<T>(data);
+        }
+
         public ObservableCollection<T> ObservableData
         {
             get { return _allData; }

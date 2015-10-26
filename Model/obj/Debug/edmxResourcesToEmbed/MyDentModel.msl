@@ -279,5 +279,35 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="BudgetDetails">
+      <EntityTypeMapping TypeName="MyDentDBModel.BudgetDetail">
+        <MappingFragment StoreEntitySet="BudgetDetails">
+          <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+          <ScalarProperty Name="TotalPerEvent" ColumnName="TotalPerEvent" />
+          <ScalarProperty Name="TotalDiscount" ColumnName="TotalDiscount" />
+          <ScalarProperty Name="NetTotal" ColumnName="NetTotal" />
+          <ScalarProperty Name="UnitCostDiscount" ColumnName="UnitCostDiscount" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+          <ScalarProperty Name="NumberOfEvents" ColumnName="NumberOfEvents" />
+          <ScalarProperty Name="Concept" ColumnName="Concept" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="BudgetDetailId" ColumnName="BudgetDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Budgets">
+      <EntityTypeMapping TypeName="MyDentDBModel.Budget">
+        <MappingFragment StoreEntitySet="Budgets">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

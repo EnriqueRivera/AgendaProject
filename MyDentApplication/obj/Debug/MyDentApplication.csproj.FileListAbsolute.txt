@@ -30,6 +30,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication.csprojResolveAssemblyReference.cache
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetDetailsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\AddEditCleanedMaterialsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ChangeCleanedActionModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\CleanedMaterialsDetailsModal.baml
@@ -57,7 +58,9 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Reminders\ViewReminderControl.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Technicals\AddEditTechnicalsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Technicals\ManageTechnicalsWindow.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\AddEditTreatmentPricesModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\AddEditTreatmentsModal.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\ManageTreatmentPricesWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\ManageTreatmentsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Users\AddEditUsersModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Agenda\AddEventModal.baml
@@ -70,6 +73,9 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Configuration\Simple Styles.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Reminders\ViewReminderModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Configuration\App.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetDetailsModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetsModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\ManageBudgetsWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\AddEditCleanedMaterialsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ChangeCleanedActionModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\CleanedMaterialsDetailsModal.g.cs
@@ -109,7 +115,9 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Reminders\ViewReminderControl.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Technicals\AddEditTechnicalsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Technicals\ManageTechnicalsWindow.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\AddEditTreatmentPricesModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\AddEditTreatmentsModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\ManageTreatmentPricesWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\ManageTreatmentsWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Users\AddEditUsersModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Agenda\AddEventModal.g.cs
@@ -129,6 +137,8 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication_MarkupCompile.cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication_MarkupCompile.lref
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetsModal.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\ManageBudgetsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ManageCleanedMaterialsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Contacts\ManageContactsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Dotations\ManageDotationsWindow.baml
@@ -151,7 +161,3 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication.csproj.GenerateResource.Cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication.exe
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication.pdb
-C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\AddEditTreatmentPricesModal.baml
-C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\ManageTreatmentPricesWindow.baml
-C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\AddEditTreatmentPricesModal.g.cs
-C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Treatments\ManageTreatmentPricesWindow.g.cs

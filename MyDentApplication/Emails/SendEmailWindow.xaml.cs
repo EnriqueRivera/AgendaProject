@@ -157,19 +157,22 @@ namespace MyDentApplication
 
             foreach (Model.Patient patient in selectedPatients)
             {
-                Controllers.EmailContact emailToAdd = new Controllers.EmailContact()
+                if (string.IsNullOrEmpty(patient.Email) == false)
                 {
-                    IsValid = true,
-                    IsPatient = true,
-                    Email = patient.Email,
-                    FullName = patient.FirstName + " " + patient.LastName
-                };
+                    Controllers.EmailContact emailToAdd = new Controllers.EmailContact()
+                    {
+                        IsValid = true,
+                        IsPatient = true,
+                        Email = patient.Email,
+                        FullName = patient.FirstName + " " + patient.LastName
+                    };
 
-                EmailContactControl emailControl = new EmailContactControl(emailToAdd);
-                emailControl.Margin = new Thickness(5, 0, 0, 0);
-                emailControl.OnRemove += emailControl_OnRemoveEmail;
+                    EmailContactControl emailControl = new EmailContactControl(emailToAdd);
+                    emailControl.Margin = new Thickness(5, 0, 0, 0);
+                    emailControl.OnRemove += emailControl_OnRemoveEmail;
 
-                spEmailTo.Children.Add(emailControl);
+                    spEmailTo.Children.Add(emailControl);
+                }
             }
         }
 

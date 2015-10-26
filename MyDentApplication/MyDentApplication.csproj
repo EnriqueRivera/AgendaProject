@@ -100,6 +100,15 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Budgets\AddEditBudgetDetailsModal.xaml.cs">
+      <DependentUpon>AddEditBudgetDetailsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Budgets\AddEditBudgetsModal.xaml.cs">
+      <DependentUpon>AddEditBudgetsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Budgets\ManageBudgetsWindow.xaml.cs">
+      <DependentUpon>ManageBudgetsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CleanedMaterials\AddEditCleanedMaterialsModal.xaml.cs">
       <DependentUpon>AddEditCleanedMaterialsModal.xaml</DependentUpon>
     </Compile>
@@ -265,6 +274,18 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="Budgets\AddEditBudgetDetailsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Budgets\AddEditBudgetsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Budgets\ManageBudgetsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CleanedMaterials\AddEditCleanedMaterialsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -555,6 +576,7 @@
     <Resource Include="Images\addEmail_icon.png" />
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\background_money_icon.png" />
+    <Resource Include="Images\budget_icon.png" />
     <Resource Include="Images\CancelIcon.png" />
     <Resource Include="Images\changePassword_icon.png" />
     <Resource Include="Images\cleanedMaterials_icon.png" />

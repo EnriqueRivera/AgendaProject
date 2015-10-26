@@ -51,6 +51,7 @@ namespace MyDentApplication
         private ManagePatientsWindow _managePatientsWindow;
         private ManageDotationsWindow _manageDotationsWindow;
         private ManageTreatmentPricesWindow _manageTreatmentPricesWindow;
+        private ManageBudgetsWindow _manageBudgetsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -173,6 +174,7 @@ namespace MyDentApplication
             CloseWindow(_managePatientsWindow);
             CloseWindow(_manageDotationsWindow);
             CloseWindow(_manageTreatmentPricesWindow);
+            CloseWindow(_manageBudgetsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -271,6 +273,10 @@ namespace MyDentApplication
             else if (sender is ManageTreatmentPricesWindow)
             {
                 _manageTreatmentPricesWindow = null;
+            }
+            else if (sender is ManageBudgetsWindow)
+            {
+                _manageBudgetsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -829,6 +835,18 @@ namespace MyDentApplication
 
             _manageTreatmentPricesWindow.Show();
             _manageTreatmentPricesWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageBudgets_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageBudgetsWindow == null)
+            {
+                _manageBudgetsWindow = new ManageBudgetsWindow();
+                _manageBudgetsWindow.Closed += Window_Closed;
+            }
+
+            _manageBudgetsWindow.Show();
+            _manageBudgetsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }
