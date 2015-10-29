@@ -35,6 +35,6 @@
 		<Button x:Name="btnDeleteBudget" VerticalAlignment="Bottom" TabIndex="4" Margin="0,0,10,10" Height="29" Content="Eliminar" Cursor="Hand" HorizontalAlignment="Right" Width="60" Click="btnDeleteBudget_Click"/>
 		<Button x:Name="btnEditBudget" VerticalAlignment="Bottom" TabIndex="3" Margin="0,0,75,10" Height="29" Content="Editar" Cursor="Hand" HorizontalAlignment="Right" Width="60" Click="btnEditBudget_Click" />
 		<Button x:Name="btnAddBudget" Width="60" VerticalAlignment="Bottom" TabIndex="2" Margin="0,0,140,10" Height="29" HorizontalAlignment="Right" Content="Agregar" Cursor="Hand" Click="btnAddBudget_Click" />
-		<Button x:Name="btnViewBudget" VerticalAlignment="Bottom" TabIndex="2" Margin="10,0,0,10" Height="29" Content="Ver" Cursor="Hand" HorizontalAlignment="Left" Width="60" Click="btnViewBudget_Click" />
+		<Button x:Name="btnViewBudget" VerticalAlignment="Bottom" TabIndex="2" Margin="10,0,0,10" Height="29" Content="Ver/Exportar" Cursor="Hand" HorizontalAlignment="Left" Width="99" Click="btnViewBudget_Click" />
 	</Grid>
 </Window>

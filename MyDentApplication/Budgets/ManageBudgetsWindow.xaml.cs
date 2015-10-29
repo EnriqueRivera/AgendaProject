@@ -41,13 +41,13 @@ namespace MyDentApplication
             }
             else
             {
-                //new ViewBudgetModal(null).ShowDialog();
+                new AddEditBudgetsModal(budgetSelected, true).ShowDialog();
             }
 		}
 
 		private void btnAddBudget_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            new AddEditBudgetsModal(null).ShowDialog();
+            new AddEditBudgetsModal(null, false).ShowDialog();
             UpdateGrid();
 		}
 
@@ -61,7 +61,7 @@ namespace MyDentApplication
             }
             else
             {
-                new AddEditBudgetsModal(budgetSelected).ShowDialog();
+                new AddEditBudgetsModal(budgetSelected, false).ShowDialog();
                 UpdateGrid();
             }
 		}

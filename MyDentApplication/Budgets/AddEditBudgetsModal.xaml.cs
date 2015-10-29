@@ -10,6 +10,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
+using System.Web;
 
 namespace MyDentApplication
 {
@@ -24,15 +28,17 @@ namespace MyDentApplication
         private Model.Budget _budgetToUpdate;
         private bool _isUpdateBudget;
         private bool _dataSaved = false;
+        private bool _isReadOnly;
         #endregion
 
         #region Constructors
-        public AddEditBudgetsModal(Model.Budget budgetToUpdate)
+        public AddEditBudgetsModal(Model.Budget budgetToUpdate, bool isReadOnly)
 		{
 			this.InitializeComponent();
 
             _budgetToUpdate = budgetToUpdate;
             _isUpdateBudget = _budgetToUpdate != null;
+            _isReadOnly = isReadOnly;
 
             if (_isUpdateBudget)
             {
@@ -213,7 +219,7 @@ namespace MyDentApplication
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (_dataSaved == false && 
+            if (_isReadOnly == false && _dataSaved == false && 
                 MessageBox.Show("¿Está seguro(a) que desea cerrar esta ventana sin haber guardado los cambios del presupuesto?",
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
@@ -223,9 +229,201 @@ namespace MyDentApplication
                 e.Cancel = true;
             }
         }
+
+        private void btnExportPdf_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            string budgetName = txtBudgetName.Text.Trim();
+
+            if (AreValidFields(budgetName) == false)
+            {
+                return;
+            }
+
+            try
+            {
+                // Configure save file dialog box
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = budgetName + "_" + DateTime.Now.ToString("dd-MMMM-yyyy"); // Default file name
+                dlg.DefaultExt = ".pdf"; // Default file extension
+                dlg.Filter = "Text documents (.pdf)|*.pdf"; // Filter files by extension
+
+                if (dlg.ShowDialog() == true)
+                {
+                    ExportToPdf(dlg.FileName);
+                    MessageBox.Show("PDF generado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo generar el PDF.\n\n Detalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion
 
         #region Window's logic
+        public static byte[] ImageToByteArray(string uri)
+        {
+            BitmapImage bitmapImage = new BitmapImage(new Uri(uri));
+
+            byte[] data;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                data = ms.ToArray();
+            }
+
+            return data;
+        }
+
+        private void ExportToPdf(string path)
+        {
+            Model.Patient patient = (txtPatientName.Tag as Model.Patient);
+
+            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+            var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
+
+            iTextSharp.text.pdf.PdfPTable budgetTable = TotalInvoicesWindow.GetTableWithHeaders(dgBudgetDetails, bf);
+            FillBudgetTable(budgetTable, bf);
+
+            //Create the PDF Document
+            using (Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f))
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    using (var writer = PdfWriter.GetInstance(pdfDoc, fs))
+                    {
+                        pdfDoc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
+                        pdfDoc.Open();
+
+                        byte[] pngByteArrayImage = ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_1.PNG");
+                        iTextSharp.text.Image pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
+                        pngImage.ScalePercent(80f);
+                        pngImage.SetAbsolutePosition(10f, pdfDoc.PageSize.Height - 90f);
+                        pdfDoc.Add(pngImage);
+
+                        pngByteArrayImage = ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_2.PNG");
+                        pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
+                        pngImage.ScalePercent(75f);
+                        pngImage.SetAbsolutePosition(pdfDoc.PageSize.Width - 200f, pdfDoc.PageSize.Height - 90f);
+                        pdfDoc.Add(pngImage);
+
+                        var paragraph = new iTextSharp.text.Paragraph(new Chunk("PRESUPUESTO TENTATIVO DE TRATAMIENTO ODONTOLÓGICO INTEGRAL", boldFont));
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Dr. Gustavo Antonio Barajas Aguirre");
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Céd. Prof. 7944969");
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Paciente: ");
+                        paragraph.Add(new Chunk(patient.FirstName + " " + patient.LastName, boldFont));
+                        paragraph.Add(" Expediente: ");
+                        paragraph.Add(new Chunk(patient.PatientId.ToString(), boldFont));
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph(new Chunk(DateTime.Now.ToString("D"), boldFont));
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
+                        pdfDoc.Add(budgetTable);
+                        pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
+
+                        paragraph = new iTextSharp.text.Paragraph("Total de No. de citas: " + txtTotalNumberOfEvents.Text);
+                        paragraph.Alignment = Element.ALIGN_RIGHT;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Suma del total: " + txtGrandTotal.Text);
+                        paragraph.Alignment = Element.ALIGN_RIGHT;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Suma del total con descuento: ");
+                        paragraph.Add(new Chunk(txtGrandTotalDiscount.Text, boldFont));
+                        paragraph.Alignment = Element.ALIGN_RIGHT;
+                        pdfDoc.Add(paragraph);
+
+                        if (string.IsNullOrEmpty(txtNotes.Text) == false)
+                        {
+                            paragraph = new iTextSharp.text.Paragraph("Observaciones:");
+                            paragraph.Alignment = Element.ALIGN_LEFT;
+                            pdfDoc.Add(paragraph);
+
+                            paragraph = new iTextSharp.text.Paragraph(txtNotes.Text);
+                            paragraph.Alignment = Element.ALIGN_LEFT;
+                            pdfDoc.Add(paragraph);
+                        }
+
+                        paragraph = new iTextSharp.text.Paragraph(" ");
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("*Los costos de tratamiento pueden ser modificados sin previo aviso. Se le recuerda que el presupuesto es tentativo por lo que puede modificarse durante el tratamiento ante algún procedimiento no previsto *Pregunte por nuestras opciones de pago.");
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Vigencia: ");
+                        paragraph.Add(new Chunk(dtpExpDate.SelectedDate.Value.ToString("D"), boldFont));
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph(" ");
+                        pdfDoc.Add(paragraph);
+                        
+                        pngByteArrayImage = ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_3.PNG");
+                        pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
+                        pngImage.ScalePercent(90f);
+                        pngImage.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(pngImage);
+
+                        paragraph = new iTextSharp.text.Paragraph(" ");
+                        pdfDoc.Add(paragraph);
+
+                        paragraph = new iTextSharp.text.Paragraph("Calle Luis Echeverría no. 206-A Col. Unidad Presidentes C.P. 31200 Tel. 413-42-22 / (614) 176-76-81");
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
+
+                        pdfDoc.Close();
+                    }
+                }
+            }
+        }
+
+        private void FillBudgetTable(PdfPTable budgetTable, BaseFont bf)
+        {
+            for (int i = 0; i < dgBudgetDetails.Items.Count; i++)
+            {
+                DataGridRow row = (DataGridRow)dgBudgetDetails.ItemContainerGenerator.ContainerFromIndex(i);
+                Model.BudgetDetail budgetDetail = row.Item as Model.BudgetDetail;
+
+                AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
+                AddCell(budgetTable, bf, budgetDetail.Concept);
+                AddCell(budgetTable, bf, budgetDetail.NumberOfEvents.ToString());
+                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCost.ToString("0.##"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCostDiscount.ToString("0.##"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.NetTotal.ToString("0.##"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.TotalDiscount.ToString("0.##"));
+                AddCell(budgetTable, bf, budgetDetail.Discount.ToString());
+                AddCell(budgetTable, bf, "$" + budgetDetail.TotalPerEvent.ToString("0.##"));
+            }
+        }
+
+        private void AddCell(PdfPTable table, BaseFont bf, string text)
+        {
+            string cellText = HttpUtility.HtmlDecode(text);
+
+            iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
+            font.Color = new BaseColor(0, 0, 0);
+            iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
+
+            table.AddCell(cell);
+        }
+
         private void GetBudgetDetailsActions(List<Model.BudgetDetail> budgetDetails, List<Model.BudgetDetail> budgetDetailsToAdd, List<Model.BudgetDetail> budgetDetailsToUpdate)
         {
             foreach (Model.BudgetDetail item in _budgetDetailsList)
@@ -286,6 +484,18 @@ namespace MyDentApplication
             dtpExpDate.SelectedDate = _budgetToUpdate.ExpiredDate;
 
             _budgetDetailsList = Controllers.BusinessController.Instance.FindBy<Model.BudgetDetail>(bd => bd.BudgetId == _budgetToUpdate.BudgetId).OrderBy(bd => bd.BudgetDetailId).ToList();
+
+            if (_isReadOnly)
+            {
+                this.Title = "Ver/Exportar presupuesto";
+                txtBudgetName.IsEnabled = false;
+                btnAddBudgetDetail.IsEnabled = false;
+                btnEditBudgetDetail.IsEnabled = false;
+                btnDeleteBudgetDetail.IsEnabled = false;
+                btnAddUpdateBudget.Visibility = System.Windows.Visibility.Hidden;
+                btnCancel.Visibility = System.Windows.Visibility.Hidden;
+                btnExportPdf.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void UpdateGrid()

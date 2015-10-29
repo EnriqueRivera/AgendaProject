@@ -577,6 +577,9 @@
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\budget_icon.png" />
+    <Resource Include="Images\Budget_image_1.PNG" />
+    <Resource Include="Images\Budget_image_2.PNG" />
+    <Resource Include="Images\Budget_image_3.PNG" />
     <Resource Include="Images\CancelIcon.png" />
     <Resource Include="Images\changePassword_icon.png" />
     <Resource Include="Images\cleanedMaterials_icon.png" />

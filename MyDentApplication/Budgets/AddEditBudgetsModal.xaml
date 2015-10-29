@@ -5,7 +5,7 @@
 	x:Class="MyDentApplication.AddEditBudgetsModal"
 	x:Name="Window"
 	Title="Agregar nuevo presupuesto"
-	Width="640" Height="555" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closing="Window_Closing">
+	Width="640" Height="555" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closing="Window_Closing" MinWidth="640" MinHeight="555">
 
 	<Window.Resources>
 		<local:DateValueConverter x:Key="DateValueConverter" />
@@ -55,5 +55,6 @@
 		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Right" Margin="0,0,10,10" Width="91" Cursor="Hand" TabIndex="11" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="7" Grid.Row="3" Click="btnCancel_Click"/>
 		<Label x:Name="lblExpDate" Content="Vigencia:" HorizontalAlignment="Left" Height="27" Margin="9.334,114.5,0,0" VerticalAlignment="Top" Width="59.666" Grid.Row="2"/>
 		<DatePicker x:Name="dtpExpDate" Height="27" Margin="74,114.5,0,0" VerticalAlignment="Top" TabIndex="9" Grid.Row="2" HorizontalAlignment="Left" Width="192.5"/>
+		<Button x:Name="btnExportPdf" Content="Generar PDF" Margin="0,0,10,10" Cursor="Hand" TabIndex="11" Height="29" VerticalAlignment="Bottom" Panel.ZIndex="7" Grid.Row="3" Click="btnExportPdf_Click" HorizontalAlignment="Right" Width="91" Visibility="Hidden"/>
 	</Grid>
 </Window>

@@ -104,24 +104,24 @@ namespace MyDentApplication
 
                         var paragraph = new iTextSharp.text.Paragraph("Recibos de honorarios:");
                         paragraph.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(paragraph);
 
-                        pdfDoc.Add(new iTextSharp.text.Paragraph(paragraph));
                         pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
                         pdfDoc.Add(outgoingInvoicesTable);
                         pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
 
                         paragraph = new iTextSharp.text.Paragraph("Facturas:");
                         paragraph.Alignment = Element.ALIGN_CENTER;
-
                         pdfDoc.Add(paragraph);
+
                         pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
                         pdfDoc.Add(receivedInvoicesTable);
                         pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
 
                         paragraph = new iTextSharp.text.Paragraph(lblTotalMonth.Content.ToString());
                         paragraph.Alignment = Element.ALIGN_RIGHT;
-
                         pdfDoc.Add(paragraph);
+
                         pdfDoc.Close();
                     }
                 }
@@ -141,7 +141,7 @@ namespace MyDentApplication
                 AddCell(receivedInvoicesTable, bf, invoice.Folio);
                 AddCell(receivedInvoicesTable, bf, invoice.PaidMethod);
                 AddCell(receivedInvoicesTable, bf, invoice.IsPaid ? "Si" : "No");
-                AddCell(receivedInvoicesTable, bf, "$" + invoice.TotalAmount.ToString());
+                AddCell(receivedInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.##"));
             }
         }
 
@@ -157,11 +157,11 @@ namespace MyDentApplication
                 AddCell(outgoingInvoicesTable, bf, invoice.PaidDate.ToString("dd/MM/yyyy"));
                 AddCell(outgoingInvoicesTable, bf, invoice.Folio);
                 AddCell(outgoingInvoicesTable, bf, invoice.PaidMethod);
-                AddCell(outgoingInvoicesTable, bf, "$" + invoice.TotalAmount.ToString());
+                AddCell(outgoingInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.##"));
             }
         }
 
-        private iTextSharp.text.pdf.PdfPTable GetTableWithHeaders(DataGrid dgInvoices, BaseFont bf)
+        public static iTextSharp.text.pdf.PdfPTable GetTableWithHeaders(DataGrid dgInvoices, BaseFont bf)
         {
             iTextSharp.text.pdf.PdfPTable table = new iTextSharp.text.pdf.PdfPTable(dgInvoices.Columns.Count);
             int[] widths = new int[dgInvoices.Columns.Count];
