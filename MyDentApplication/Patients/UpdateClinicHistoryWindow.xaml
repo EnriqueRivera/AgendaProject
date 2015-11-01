@@ -52,9 +52,9 @@
 					<TextBox x:Name="txtSex_Copy7" Height="27" Margin="76.977,323.76,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="16" BorderBrush="Black" Tag="IDENTIFICACION_EMERGENCIA_TELEFONO" Grid.ColumnSpan="2" Grid.Column="3"/>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Antecedentes">
+			<TabItem Header="AHF">
 				<Grid x:Name="gdHeredofamiliares" Background="#FFE5E5E5">
-					<Label x:Name="lblFullName_Copy7" Content="Heredofamiliares" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="272,10,0,0" Height="25.96" Width="112.644" FontWeight="Bold"/>
+					<Label x:Name="lblFullName_Copy7" Content="Antecedentes Heredofamiliares" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="230,10,0,0" Height="25.96" Width="195.644" FontWeight="Bold"/>
 					<Label x:Name="lblFullName_Copy8" Content="Alta o baja presión:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,86,0,0" Height="25.96" Width="118.977"/>
 					<CheckBox Content="" HorizontalAlignment="Left" Height="15.94" Margin="154.227,92.686,0,0" VerticalAlignment="Top" Width="14.189" Tag="HEREDOFAMILIARES_PRESION_SI_NO|HEREDOFAMILIARES_PRESION_COMENTARIO" Checked="CheckBox_CheckedUnchecked" Unchecked="CheckBox_CheckedUnchecked" TabIndex="1" />
 					<Label x:Name="lblFullName_Copy9" Content="Por parte de:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="204,86,0,0" Height="25.96" Width="78.977"/>
@@ -84,9 +84,9 @@
 					<Label x:Name="lblFullName_Copy21" Content="Anótela:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,279.04,0,0" Height="25.96" Width="62.227"/>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Antecedentes">
+			<TabItem Header="APNP">
 				<Grid x:Name="gdNoPatologicos" Background="#FFE5E5E5">
-					<Label x:Name="lblFullName_Copy22" Content="Personales No Patológicos" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="248,10,0,0" Height="25.96" Width="162.644" FontWeight="Bold"/>
+					<Label x:Name="lblFullName_Copy22" Content="Antecedentes Personales No Patológicos" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="207,10,0,0" Height="25.96" Width="243.644" FontWeight="Bold"/>
 					<Label x:Name="lblFullName_Copy23" Content="Tabaquismo:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,69.5,0,0" Height="25.96" Width="118.977"/>
 					<CheckBox Content="" HorizontalAlignment="Left" Height="15.94" Margin="154.227,76.186,0,0" VerticalAlignment="Top" Width="14.189" Tag="PERSONALES_NO_PATOLOGICOS_TABAQUISMO_SI_NO|PERSONALES_NO_PATOLOGICOS_TABAQUISMO_COMENTARIO" Checked="CheckBox_CheckedUnchecked" Unchecked="CheckBox_CheckedUnchecked" TabIndex="1" />
 					<Label x:Name="lblFullName_Copy24" Content="Frecuencia:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="204,69.5,0,0" Height="25.96" Width="78.977"/>
@@ -118,7 +118,7 @@
 					<TextBox x:Name="txtSex_Copy22" Height="27" Margin="204,293.5,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="16" BorderBrush="Black" Tag="PERSONALES_NO_PATOLOGICOS_CIRUGIAS_COMENTARIO" IsEnabled="False"/>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Antecedentes">
+			<TabItem Header="APP">
 				<Grid Background="#FFE5E5E5">
 					<ScrollViewer Margin="10,66.92,10,10">
 						<Grid x:Name="gdPatologicos" Background="#FFE5E5E5" Height="1513.253" Width="621">
@@ -263,11 +263,11 @@
 							<TextBox x:Name="txtSex_Copy25" Height="73.5" Margin="53.939,1423.445,52.584,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="2" BorderBrush="Black" Tag="PERSONALES_PATOLOGICOS_ALERGICO_MEDICAMENTO_COMENTARIO" IsEnabled="False" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
 						</Grid>
 					</ScrollViewer>
-					<Label x:Name="lblFullName_Copy36" Content="Personales Patológicos" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="254,10,0,0" Height="25.96" Width="146.144" FontWeight="Bold"/>
+					<Label x:Name="lblFullName_Copy36" Content="Antecedentes Personales Patológicos" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="219.5,10,0,0" Height="25.96" Width="224.144" FontWeight="Bold"/>
 					<Label x:Name="lblFullName_Copy37" Content="Responda si padece o padeció alguna de las siguientes enfermedades:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136.977,35.96,0,0" Height="25.96" Width="395.977"/>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Antecedentes">
+			<TabItem Header="ADCM">
 				<Grid Background="#FFE5E5E5">
 					<ScrollViewer Margin="10,66.92,10,10">
 						<Grid x:Name="gdDolorDisfuncion" Background="#FFE5E5E5" Height="1513.253" Width="621">

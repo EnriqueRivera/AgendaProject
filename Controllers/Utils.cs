@@ -82,6 +82,16 @@ namespace Controllers
 
             return string.Format("{0:n1} {1}", dValue, SizeSuffixes[i]);
         }
+
+        public static string FirstCharToUpper(string input)
+        {
+            if (String.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            return input.First().ToString().ToUpper() + input.Substring(1);
+        }
     }
 
     public class ComboBoxItem

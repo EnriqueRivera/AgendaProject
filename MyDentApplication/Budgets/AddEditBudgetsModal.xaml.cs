@@ -328,7 +328,7 @@ namespace MyDentApplication
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
-                        paragraph = new iTextSharp.text.Paragraph(new Chunk(DateTime.Now.ToString("D"), boldFont));
+                        paragraph = new iTextSharp.text.Paragraph(new Chunk(Controllers.Utils.FirstCharToUpper(DateTime.Now.ToString("D")), boldFont));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
@@ -336,7 +336,7 @@ namespace MyDentApplication
                         pdfDoc.Add(budgetTable);
                         pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
 
-                        paragraph = new iTextSharp.text.Paragraph("Total de No. de citas: " + txtTotalNumberOfEvents.Text);
+                        paragraph = new iTextSharp.text.Paragraph("No. de citas: " + txtTotalNumberOfEvents.Text);
                         paragraph.Alignment = Element.ALIGN_RIGHT;
                         pdfDoc.Add(paragraph);
 
@@ -368,7 +368,7 @@ namespace MyDentApplication
                         pdfDoc.Add(paragraph);
 
                         paragraph = new iTextSharp.text.Paragraph("Vigencia: ");
-                        paragraph.Add(new Chunk(dtpExpDate.SelectedDate.Value.ToString("D"), boldFont));
+                        paragraph.Add(new Chunk(Controllers.Utils.FirstCharToUpper(dtpExpDate.SelectedDate.Value.ToString("D")), boldFont));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 

@@ -26,7 +26,7 @@
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Quantity}" Header="Cantidad" Width="0.15*"/>
 				<DataGridTextColumn Binding="{Binding Concept}" Header="Concepto" Width="0.2*"/>
-				<DataGridTextColumn Binding="{Binding NumberOfEvents}" Header="# citas" Width="0.1*"/>
+				<DataGridTextColumn Binding="{Binding NumberOfEvents}" Header="No. citas" Width="0.15*"/>
 				<DataGridTextColumn Binding="{Binding UnitCost, StringFormat=$\{0:0.00\}}" Header="Costo u. normal" Width="0.2*"/>
 				<DataGridTextColumn Binding="{Binding UnitCostDiscount, StringFormat=$\{0:0.00\}}" Header="Costo u. desc." Width="0.2*"/>
 				<DataGridTextColumn Binding="{Binding NetTotal, StringFormat=$\{0:0.00\}}" Header="Total Neto" Width="0.16*"/>
@@ -42,7 +42,7 @@
 		<Border BorderThickness="1" BorderBrush="Black" Margin="10,25.672,365.5,0" Grid.Row="2" Height="77.028" VerticalAlignment="Top">
 			<TextBox x:Name="txtNotes" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" TabIndex="8"/>
 		</Border>
-		<Label x:Name="lblPatientName_Copy" Content="Total de citas:" HorizontalAlignment="Right" Height="27" Margin="0,12.329,184.833,0" VerticalAlignment="Top" Width="82.167" Grid.Row="2"/>
+		<Label x:Name="lblPatientName_Copy" Content="No. de citas:" HorizontalAlignment="Right" Height="27" Margin="0,12.329,184.833,0" VerticalAlignment="Top" Width="76.167" Grid.Row="2"/>
 		<TextBox x:Name="txtTotalNumberOfEvents" Height="27" Margin="0,11.5,76.333,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black" IsEnabled="False" Grid.Row="2" HorizontalAlignment="Right" Width="103.5"/>
 		<Button x:Name="btnDeleteBudgetDetail" VerticalAlignment="Bottom" TabIndex="7" Margin="0,0,10,10" Height="29" Content="Eliminar" Cursor="Hand" HorizontalAlignment="Right" Width="60" Click="btnDeleteBudgetDetail_Click" Grid.Row="1"/>
 		<Button x:Name="btnEditBudgetDetail" VerticalAlignment="Bottom" TabIndex="6" Margin="0,0,10,44" Height="29" Content="Editar" Cursor="Hand" HorizontalAlignment="Right" Width="60" Click="btnEditBudgetDetail_Click" Grid.Row="1" />
