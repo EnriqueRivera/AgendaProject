@@ -226,6 +226,9 @@
     <Compile Include="Technicals\ManageTechnicalsWindow.xaml.cs">
       <DependentUpon>ManageTechnicalsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Treatments\AddEditBudgetTreatmentsModal.xaml.cs">
+      <DependentUpon>AddEditBudgetTreatmentsModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Treatments\AddEditTreatmentPricesModal.xaml.cs">
       <DependentUpon>AddEditTreatmentPricesModal.xaml</DependentUpon>
     </Compile>
@@ -439,6 +442,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Technicals\ManageTechnicalsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Treatments\AddEditBudgetTreatmentsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

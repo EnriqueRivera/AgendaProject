@@ -51,7 +51,7 @@
 			</StackPanel>
 		</Button>
 		<GroupBox x:Name="gbAdministration" Header="Administración" HorizontalAlignment="Left" Margin="243.5,8.55,0,103.451" Width="151" FontWeight="Bold" BorderBrush="Black" BorderThickness="2">
-			<ScrollViewer Margin="0,10,-2,2.019" VerticalScrollBarVisibility="Auto" FontWeight="Normal" VerticalAlignment="Center">
+			<ScrollViewer Margin="0,10,0,2.019" VerticalScrollBarVisibility="Auto" FontWeight="Normal" VerticalAlignment="Center">
 				<StackPanel>
 					<Button x:Name="btnManageUsers" Width="90" Height="90" Click="btnManageUsers_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
 						<StackPanel Orientation="Vertical">
@@ -62,7 +62,7 @@
 					<Button x:Name="btnManageTreatments" Width="90" Height="90" Click="btnManageTreatments_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/treatment_icon.png" Width="50" Height="50"  />
-							<TextBlock Text="Tratamientos" TextAlignment="Center" />
+							<TextBlock TextAlignment="Center" ><Run Text="Tratamientos"/></TextBlock>
 						</StackPanel>
 					</Button>
 					<Button x:Name="btnManageReminders" Width="90" Height="90" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 

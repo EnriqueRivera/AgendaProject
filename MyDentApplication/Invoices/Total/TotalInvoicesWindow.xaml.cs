@@ -141,7 +141,7 @@ namespace MyDentApplication
                 AddCell(receivedInvoicesTable, bf, invoice.Folio);
                 AddCell(receivedInvoicesTable, bf, invoice.PaidMethod);
                 AddCell(receivedInvoicesTable, bf, invoice.IsPaid ? "Si" : "No");
-                AddCell(receivedInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.##"));
+                AddCell(receivedInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.00"));
             }
         }
 
@@ -157,7 +157,7 @@ namespace MyDentApplication
                 AddCell(outgoingInvoicesTable, bf, invoice.PaidDate.ToString("dd/MM/yyyy"));
                 AddCell(outgoingInvoicesTable, bf, invoice.Folio);
                 AddCell(outgoingInvoicesTable, bf, invoice.PaidMethod);
-                AddCell(outgoingInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.##"));
+                AddCell(outgoingInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.00"));
             }
         }
 

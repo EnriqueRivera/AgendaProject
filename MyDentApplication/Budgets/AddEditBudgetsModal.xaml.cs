@@ -404,12 +404,12 @@ namespace MyDentApplication
                 AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
                 AddCell(budgetTable, bf, budgetDetail.Concept);
                 AddCell(budgetTable, bf, budgetDetail.NumberOfEvents.ToString());
-                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCost.ToString("0.##"));
-                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCostDiscount.ToString("0.##"));
-                AddCell(budgetTable, bf, "$" + budgetDetail.NetTotal.ToString("0.##"));
-                AddCell(budgetTable, bf, "$" + budgetDetail.TotalDiscount.ToString("0.##"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCost.ToString("0.00"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCostDiscount.ToString("0.00"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.NetTotal.ToString("0.00"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.TotalDiscount.ToString("0.00"));
                 AddCell(budgetTable, bf, budgetDetail.Discount.ToString());
-                AddCell(budgetTable, bf, "$" + budgetDetail.TotalPerEvent.ToString("0.##"));
+                AddCell(budgetTable, bf, "$" + budgetDetail.TotalPerEvent.ToString("0.00"));
             }
         }
 
@@ -504,8 +504,8 @@ namespace MyDentApplication
             this.DataContext = _budgetsViewModel;
 
             txtTotalNumberOfEvents.ToolTip = txtTotalNumberOfEvents.Text = Convert.ToInt32(_budgetDetailsList.Sum(bd => bd.NumberOfEvents)).ToString();
-            txtGrandTotal.ToolTip = txtGrandTotal.Text = _budgetDetailsList.Sum(bd => bd.NetTotal).ToString();
-            txtGrandTotalDiscount.ToolTip = txtGrandTotalDiscount.Text = _budgetDetailsList.Sum(bd => bd.TotalDiscount).ToString();
+            txtGrandTotal.ToolTip = txtGrandTotal.Text = _budgetDetailsList.Sum(bd => bd.NetTotal).ToString("0.00");
+            txtGrandTotalDiscount.ToolTip = txtGrandTotalDiscount.Text = _budgetDetailsList.Sum(bd => bd.TotalDiscount).ToString("0.00");
         }
         #endregion
     }

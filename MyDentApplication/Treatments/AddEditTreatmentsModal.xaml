@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	x:Class="MyDentApplication.AddEditTreatmentsModal"
 	x:Name="Window"
-	Title="Agregar tratamiento"
+	Title="Agregar tratamiento para agenda"
 	Width="380" Height="290" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Configuration/app_icon.ico">
 
 	<Grid x:Name="LayoutRoot">

@@ -33,6 +33,14 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="PatientId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="BudgetTreatments">
+          <Key>
+            <PropertyRef Name="BudgetTreatmenttId" />
+          </Key>
+          <Property Name="BudgetTreatmenttId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="CleanedActions">
           <Key>
             <PropertyRef Name="CleanedActionId" />
@@ -555,6 +563,7 @@
         <EntityContainer Name="MyDentDBModelStoreContainer">
           <EntitySet Name="BudgetDetails" EntityType="Self.BudgetDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BudgetTreatments" EntityType="Self.BudgetTreatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CleanedActions" EntityType="Self.CleanedActions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClinicHistories" EntityType="Self.ClinicHistories" Schema="dbo" store:Type="Tables" />
@@ -775,16 +784,17 @@
             <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
           <EntitySet Name="TreatmentPrices" EntityType="MyDentDBModel.TreatmentPrice" />
-          <EntitySet Name="BudgetDetails" EntityType="MyDentDBModel.BudgetDetail" />
           <EntitySet Name="Budgets" EntityType="MyDentDBModel.Budget" />
-          <AssociationSet Name="FK_BudgetDetails_BudgetId" Association="MyDentDBModel.FK_BudgetDetails_BudgetId">
-            <End Role="Budget" EntitySet="Budgets" />
-            <End Role="BudgetDetail" EntitySet="BudgetDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_Budgets_PatientId" Association="MyDentDBModel.FK_Budgets_PatientId">
             <End Role="Patient" EntitySet="Patients" />
             <End Role="Budget" EntitySet="Budgets" />
           </AssociationSet>
+          <EntitySet Name="BudgetDetails" EntityType="MyDentDBModel.BudgetDetail" />
+          <AssociationSet Name="FK_BudgetDetails_BudgetId" Association="MyDentDBModel.FK_BudgetDetails_BudgetId">
+            <End Role="Budget" EntitySet="Budgets" />
+            <End Role="BudgetDetail" EntitySet="BudgetDetails" />
+          </AssociationSet>
+          <EntitySet Name="BudgetTreatments" EntityType="MyDentDBModel.BudgetTreatment" />
           </EntityContainer>
         <EntityType Name="Configuration">
           <Key>
@@ -1322,6 +1332,32 @@
           <Property Name="Discount" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Budget">
+          <Key>
+            <PropertyRef Name="BudgetId" />
+          </Key>
+          <Property Name="BudgetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ExpiredDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GrandTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Budgets_PatientId" FromRole="Budget" ToRole="Patient" />
+          <NavigationProperty Name="BudgetDetails" Relationship="MyDentDBModel.FK_BudgetDetails_BudgetId" FromRole="Budget" ToRole="BudgetDetail" />
+        </EntityType>
+        <Association Name="FK_Budgets_PatientId">
+          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="MyDentDBModel.Budget" Role="Budget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Budget">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="BudgetDetail">
           <Key>
             <PropertyRef Name="BudgetDetailId" />
@@ -1339,20 +1375,6 @@
           <Property Name="BudgetId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Budget" Relationship="MyDentDBModel.FK_BudgetDetails_BudgetId" FromRole="BudgetDetail" ToRole="Budget" />
         </EntityType>
-        <EntityType Name="Budget">
-          <Key>
-            <PropertyRef Name="BudgetId" />
-          </Key>
-          <Property Name="BudgetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ExpiredDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="GrandTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="PatientId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BudgetDetails" Relationship="MyDentDBModel.FK_BudgetDetails_BudgetId" FromRole="Budget" ToRole="BudgetDetail" />
-          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Budgets_PatientId" FromRole="Budget" ToRole="Patient" />
-        </EntityType>
         <Association Name="FK_BudgetDetails_BudgetId">
           <End Type="MyDentDBModel.Budget" Role="Budget" Multiplicity="1" />
           <End Type="MyDentDBModel.BudgetDetail" Role="BudgetDetail" Multiplicity="*" />
@@ -1365,18 +1387,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Budgets_PatientId">
-          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
-          <End Type="MyDentDBModel.Budget" Role="Budget" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="PatientId" />
-            </Principal>
-            <Dependent Role="Budget">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="BudgetTreatment">
+          <Key>
+            <PropertyRef Name="BudgetTreatmenttId" />
+          </Key>
+          <Property Name="BudgetTreatmenttId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1661,6 +1679,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Budgets">
+            <EntityTypeMapping TypeName="MyDentDBModel.Budget">
+              <MappingFragment StoreEntitySet="Budgets">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BudgetDetails">
             <EntityTypeMapping TypeName="MyDentDBModel.BudgetDetail">
               <MappingFragment StoreEntitySet="BudgetDetails">
@@ -1678,16 +1709,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Budgets">
-            <EntityTypeMapping TypeName="MyDentDBModel.Budget">
-              <MappingFragment StoreEntitySet="Budgets">
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <EntitySetMapping Name="BudgetTreatments">
+            <EntityTypeMapping TypeName="MyDentDBModel.BudgetTreatment">
+              <MappingFragment StoreEntitySet="BudgetTreatments">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+                <ScalarProperty Name="BudgetTreatmenttId" ColumnName="BudgetTreatmenttId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

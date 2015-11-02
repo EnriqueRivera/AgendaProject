@@ -21,8 +21,6 @@ namespace MyDentApplication
     {
         #region Instance variables
         private WpfScheduler.Scheduler _scheduler;
-        private List<Model.Patient> _patients;
-        private List<Model.Treatment> _treatments;
         private DateTime _eventStart;
         private Model.Patient _selectedPatient;
         private Model.Treatment _selectedTreatment;
@@ -42,8 +40,8 @@ namespace MyDentApplication
             this.Title = "Agendar cita (" + eventStart.ToString("D") + ")";
             lblEventStartTime.ToolTip = lblEventStartTime.Text = eventStart.ToString("HH:mm") + " hrs";
 
-            GetPatients();
-            GetTreatments();
+            FillPatients();
+            FillTreatments();
 		}
         #endregion
 
@@ -244,29 +242,29 @@ namespace MyDentApplication
                     || Utils.IsOverlappedTime(eventToAddStart, eventToAddEnd, secondExtraHourMinRange, secondExtraHourMaxRange);
         }
 
-        private void GetTreatments()
+        private void FillTreatments()
         {
-            _treatments = BusinessController.Instance.GetAll<Model.Treatment>()
-                            .Where(t => t.IsDeleted == false)
-                            .OrderBy(t => t.Name)
-                            .ThenBy(t => t.Duration)
-                            .ToList();
+           List<Model.Treatment> treatments = BusinessController.Instance.GetAll<Model.Treatment>()
+                                                .Where(t => t.IsDeleted == false)
+                                                .OrderBy(t => t.Name)
+                                                .ThenBy(t => t.Duration)
+                                                .ToList();
 
-            foreach (Model.Treatment treatment in _treatments)
+            foreach (Model.Treatment treatment in treatments)
             {
                 cbTratmentName.Items.Add(new Controllers.ComboBoxItem() { Text = treatment.Name, Value = treatment });
             }
         }
 
-        private void GetPatients()
+        private void FillPatients()
         {
-            _patients = BusinessController.Instance.GetAll<Model.Patient>()
-                        .Where(p => p.IsDeleted == false)
-                        .OrderBy(p => p.FirstName)
-                        .ThenBy(p => p.LastName)
-                        .ToList();
+            List<Model.Patient> patients = BusinessController.Instance.GetAll<Model.Patient>()
+                                            .Where(p => p.IsDeleted == false)
+                                            .OrderBy(p => p.FirstName)
+                                            .ThenBy(p => p.LastName)
+                                            .ToList();
 
-            foreach (Model.Patient patient in _patients)
+            foreach (Model.Patient patient in patients)
             {
                 cbPatientName.Items.Add(new Controllers.ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
             }

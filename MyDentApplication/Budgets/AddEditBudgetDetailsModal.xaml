@@ -24,10 +24,10 @@
 		<Label x:Name="lblRecurrentDays" Content="Costo u. normal: $" HorizontalAlignment="Left" Height="27" Margin="10,137,0,0" VerticalAlignment="Top" Width="107.833"/>
 		<TextBox x:Name="txtCost" HorizontalAlignment="Left" Height="27" Margin="117.833,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="4" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
 		<Label x:Name="lblTreatmentName" Content="Concepto:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="344"/>
-		<TextBox x:Name="txtConcept" Height="27" Margin="10,37,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black" TextAlignment="Center"/>
 		<Label x:Name="lblRecurrentDays_Copy" Content="Cantidad:" HorizontalAlignment="Left" Height="27" Margin="51.333,73,0,0" VerticalAlignment="Top" Width="61.5"/>
 		<TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Height="27" Margin="117.833,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="2" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
 		<Label x:Name="lblRecurrentDays_Copy1" Content="No. de citas:" HorizontalAlignment="Left" Height="27" Margin="36.5,105,0,0" VerticalAlignment="Top" Width="76.333"/>
 		<TextBox x:Name="txtNumberOfEvents" HorizontalAlignment="Left" Height="27" Margin="117.833,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="3" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
+		<ComboBox x:Name="cbConcepts" Height="28" Margin="10,37,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TabIndex="5"/>
 	</Grid>
 </Window>

@@ -12,22 +12,10 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Budget
+    public partial class BudgetTreatment
     {
-        public Budget()
-        {
-            this.BudgetDetails = new HashSet<BudgetDetail>();
-        }
-    
-        public int BudgetId { get; set; }
+        public int BudgetTreatmenttId { get; set; }
         public string Name { get; set; }
-        public System.DateTime ExpiredDate { get; set; }
-        public string Notes { get; set; }
-        public decimal GrandTotal { get; set; }
         public bool IsDeleted { get; set; }
-        public int PatientId { get; set; }
-    
-        public virtual Patient Patient { get; set; }
-        public virtual ICollection<BudgetDetail> BudgetDetails { get; set; }
     }
 }

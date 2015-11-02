@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Controllers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq;
 
 namespace MyDentApplication
 {
@@ -29,6 +31,7 @@ namespace MyDentApplication
 
             _budgetDetailToUpdate = budgetDetailToUpdate;
             _isUpdateBudgetDetial = _budgetDetailToUpdate.BudgetDetailId != -1;
+            FillTreatments();
 
             if (_isUpdateBudgetDetial)
             {
@@ -40,19 +43,18 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnAddUpdateBudgetDetail_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            string concept = txtConcept.Text.Trim();
             decimal unitCost;
             int quantity;
             int numberOfEvents;
             int discount = (int)cbDiscount.SelectedItem;
 
-            if (AreValidFields(concept, out unitCost, out quantity, out numberOfEvents) == false)
+            if (AreValidFields(out unitCost, out quantity, out numberOfEvents) == false)
             {
                 return;
             }
 
             _budgetDetailToUpdate.Quantity = quantity;
-            _budgetDetailToUpdate.Concept = concept;
+            _budgetDetailToUpdate.Concept = cbConcepts.SelectedValue.ToString();
             _budgetDetailToUpdate.NumberOfEvents = numberOfEvents;
             _budgetDetailToUpdate.UnitCost = unitCost;
             _budgetDetailToUpdate.Discount = discount;
@@ -73,13 +75,13 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        private bool AreValidFields(string concept, out decimal unitCost, out int quantity, out int numberOfEvents)
+        private bool AreValidFields(out decimal unitCost, out int quantity, out int numberOfEvents)
         {
             unitCost = quantity = numberOfEvents = 0;
 
-            if (string.IsNullOrEmpty(concept))
+            if (cbConcepts.SelectedIndex == -1)
             {
-                MessageBox.Show("Ingrese el nombre del concepto", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Seleccione un concepto", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
@@ -126,11 +128,24 @@ namespace MyDentApplication
         {
             this.Title = "Actualizar concepto del presupuesto";
             btnAddUpdateBudgetDetail.Content = "Actualizar";
-            txtConcept.ToolTip = txtConcept.Text = _budgetDetailToUpdate.Concept;
             txtQuantity.ToolTip = txtQuantity.Text = _budgetDetailToUpdate.Quantity.ToString();
             txtNumberOfEvents.ToolTip = txtNumberOfEvents.Text = _budgetDetailToUpdate.NumberOfEvents.ToString();
             txtCost.ToolTip = txtCost.Text = _budgetDetailToUpdate.UnitCost.ToString();
             cbDiscount.SelectedValue = _budgetDetailToUpdate.Discount;
+            cbConcepts.SelectedValue = _budgetDetailToUpdate.Concept;
+        }
+
+        private void FillTreatments()
+        {
+            List<Model.BudgetTreatment> treatments = BusinessController.Instance.GetAll<Model.BudgetTreatment>()
+                                                        .Where(t => t.IsDeleted == false)
+                                                        .OrderBy(t => t.Name)
+                                                        .ToList();
+
+            foreach (Model.BudgetTreatment treatment in treatments)
+            {
+                cbConcepts.Items.Add(treatment.Name);
+            }
         }
         #endregion
     }

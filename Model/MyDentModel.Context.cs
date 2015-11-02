@@ -48,7 +48,8 @@ namespace Model
         public DbSet<ClinicHistory> ClinicHistories { get; set; }
         public DbSet<ClinicHistoryAttribute> ClinicHistoryAttributes { get; set; }
         public DbSet<TreatmentPrice> TreatmentPrices { get; set; }
-        public DbSet<BudgetDetail> BudgetDetails { get; set; }
         public DbSet<Budget> Budgets { get; set; }
+        public DbSet<BudgetDetail> BudgetDetails { get; set; }
+        public DbSet<BudgetTreatment> BudgetTreatments { get; set; }
     }
 }

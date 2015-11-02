@@ -4,21 +4,39 @@
 	x:Class="MyDentApplication.ManageTreatmentsWindow"
 	x:Name="Window"
 	Title="Administrar tratamientos"
-	Width="652" Height="496" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Configuration/app_icon.ico">
+	Width="662.448" Height="548.239" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Configuration/app_icon.ico">
 
 	<Grid x:Name="LayoutRoot">
-		<DataGrid x:Name="dgTreatments" Margin="10,10,12.917,48.469" IsReadOnly="True" CanUserSortColumns="True"
-			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
-			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
-			TabIndex="1">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-				<DataGridTextColumn Header="Duración (minutos)" Binding="{Binding Duration}" Width="0.2*" />
-				<DataGridTextColumn Header="Recurrencia (días)" Binding="{Binding Recurrent}" Width="0.2*" />
-			</DataGrid.Columns>
-		</DataGrid>
 		<Button x:Name="btnDeleteTreatment" Content="Eliminar" Margin="0,0,13.25,14.469" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteTreatment_Click"/>
 		<Button x:Name="btnEditTreatment" Content="Editar" Margin="0,0,78.25,14.469" Cursor="Hand" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditTreatment_Click"/>
 		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,143.25,14.469" Width="60" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click"/>
+		<TabControl x:Name="tbTreatments" Margin="10,10,13.25,48.469">
+			<TabItem Header="Tratamientos para la agenda">
+				<Grid Background="#FFE5E5E5">
+					<DataGrid x:Name="dgAgendaTreatments" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+						SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+						TabIndex="1">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+							<DataGridTextColumn Header="Duración (minutos)" Binding="{Binding Duration}" Width="0.2*" />
+							<DataGridTextColumn Header="Recurrencia (días)" Binding="{Binding Recurrent}" Width="0.2*" />
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Tratamientos para presupuestos">
+				<Grid Background="#FFE5E5E5">
+					<DataGrid x:Name="dgBudgetTreatments" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+						SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+						TabIndex="1">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+		</TabControl>
 	</Grid>
 </Window>

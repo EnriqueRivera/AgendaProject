@@ -137,7 +137,6 @@ namespace MyDentApplication
             dtpPaidDate.SelectedDate = _invoiceToUpdate.PaidDate;
             txtFolio.Text = _invoiceToUpdate.Folio;
             txtTotalAmount.Text = _invoiceToUpdate.TotalAmount.ToString();
-            cbPaidMethod.SelectedValue = _invoiceToUpdate.PaidMethod;
             chkIsInvoiced.IsChecked = _invoiceToUpdate.InvoiceDate != null;
             dtpInvoiceDate.SelectedDate = _invoiceToUpdate.InvoiceDate;
 

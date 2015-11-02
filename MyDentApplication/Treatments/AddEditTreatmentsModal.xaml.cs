@@ -100,7 +100,7 @@ namespace MyDentApplication
         #region Window's logic
         private void PrepareWindowForUpdates()
         {
-            this.Title = "Actualizar información del tratamiento";
+            this.Title = "Actualizar información del tratamiento para agenda";
             btnAddUpdateTreatment.Content = "Actualizar";
             txtTreatmentName.ToolTip = txtTreatmentName.Text = _treatmentToUpdate.Name;
             cbTreatmentDuration.SelectedIndex = (_treatmentToUpdate.Duration / _treatmentIntervalDuration) - 1;

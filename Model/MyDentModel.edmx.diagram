@@ -48,10 +48,11 @@
         <AssociationConnector Association="MyDentDBModel.FK_ClinicHistoryAttributes_ClinicHistoryId" />
         <AssociationConnector Association="MyDentDBModel.FK_Patients_ClinicHistoryId" />
         <EntityTypeShape EntityType="MyDentDBModel.TreatmentPrice" Width="1.5" PointX="13.375" PointY="8.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.BudgetDetail" Width="1.5" PointX="7.5" PointY="17.5" />
         <EntityTypeShape EntityType="MyDentDBModel.Budget" Width="1.5" PointX="5.25" PointY="17.75" />
-        <AssociationConnector Association="MyDentDBModel.FK_BudgetDetails_BudgetId" />
         <AssociationConnector Association="MyDentDBModel.FK_Budgets_PatientId" />
+        <EntityTypeShape EntityType="MyDentDBModel.BudgetDetail" Width="1.5" PointX="7.5" PointY="17.5" />
+        <AssociationConnector Association="MyDentDBModel.FK_BudgetDetails_BudgetId" />
+        <EntityTypeShape EntityType="MyDentDBModel.BudgetTreatment" Width="1.5" PointX="5.375" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

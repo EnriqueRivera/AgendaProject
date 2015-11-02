@@ -279,6 +279,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Budgets">
+      <EntityTypeMapping TypeName="MyDentDBModel.Budget">
+        <MappingFragment StoreEntitySet="Budgets">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="BudgetDetails">
       <EntityTypeMapping TypeName="MyDentDBModel.BudgetDetail">
         <MappingFragment StoreEntitySet="BudgetDetails">
@@ -296,16 +309,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Budgets">
-      <EntityTypeMapping TypeName="MyDentDBModel.Budget">
-        <MappingFragment StoreEntitySet="Budgets">
-          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+    <EntitySetMapping Name="BudgetTreatments">
+      <EntityTypeMapping TypeName="MyDentDBModel.BudgetTreatment">
+        <MappingFragment StoreEntitySet="BudgetTreatments">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+          <ScalarProperty Name="BudgetTreatmenttId" ColumnName="BudgetTreatmenttId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

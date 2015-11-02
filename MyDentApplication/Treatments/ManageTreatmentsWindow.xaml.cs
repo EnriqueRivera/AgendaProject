@@ -18,7 +18,8 @@ namespace MyDentApplication
 	public partial class ManageTreatmentsWindow : Window
     {
         #region Instance variables
-        private Controllers.CustomViewModel<Model.Treatment> _tratmentsViewModel;
+        private Controllers.CustomViewModel<Model.Treatment> _agendaTratmentsViewModel;
+        private Controllers.CustomViewModel<Model.BudgetTreatment> _budgetTratmentsViewModel;
         #endregion
 
         #region Constructors
@@ -26,67 +27,131 @@ namespace MyDentApplication
 		{
 			this.InitializeComponent();
 
-            UpdateGrid();
+            UpdateGridAgendaTreatments();
+            UpdateGridBudgetTreatments();
         }
         #endregion
 
         #region Window event handlers
         private void btnAddTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            new AddEditTreatmentsModal(null).ShowDialog();
-            UpdateGrid();
+            if (tbTreatments.SelectedIndex == 0)
+            {
+                new AddEditTreatmentsModal(null).ShowDialog();
+                UpdateGridAgendaTreatments();    
+            }
+            else
+            {
+                new AddEditBudgetTreatmentsModal(null).ShowDialog();
+                UpdateGridBudgetTreatments();
+            }            
         }
 
         private void btnEditTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.Treatment treatmentSelected = dgTreatments.SelectedItem == null ? null : dgTreatments.SelectedItem as Model.Treatment;
-
-            if (treatmentSelected == null)
+            if (tbTreatments.SelectedIndex == 0)
             {
-                MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                Model.Treatment treatmentSelected = dgAgendaTreatments.SelectedItem == null ? null : dgAgendaTreatments.SelectedItem as Model.Treatment;
+
+                if (treatmentSelected == null)
+                {
+                    MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    new AddEditTreatmentsModal(treatmentSelected).ShowDialog();
+                    UpdateGridAgendaTreatments();
+                }
             }
             else
             {
-                new AddEditTreatmentsModal(treatmentSelected).ShowDialog();
-                UpdateGrid();
+                Model.BudgetTreatment treatmentSelected = dgBudgetTreatments.SelectedItem == null ? null : dgBudgetTreatments.SelectedItem as Model.BudgetTreatment;
+
+                if (treatmentSelected == null)
+                {
+                    MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    new AddEditBudgetTreatmentsModal(treatmentSelected).ShowDialog();
+                    UpdateGridBudgetTreatments();
+                }
             }
         }
 
         private void btnDeleteTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.Treatment treatmentSelected = dgTreatments.SelectedItem == null ? null : dgTreatments.SelectedItem as Model.Treatment;
-
-            if (treatmentSelected == null)
+            if (tbTreatments.SelectedIndex == 0)
             {
-                MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else if (MessageBox.Show
-                                (string.Format("¿Está seguro(a) que desea eliminar el tratamiento '{0}'?",
-                                        treatmentSelected.Name),
-                                    "Advertencia",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Warning
-                                ) == MessageBoxResult.Yes)
-            {
-                treatmentSelected.IsDeleted = true;
+                Model.Treatment treatmentSelected = dgAgendaTreatments.SelectedItem == null ? null : dgAgendaTreatments.SelectedItem as Model.Treatment;
 
-                if (Controllers.BusinessController.Instance.Update<Model.Treatment>(treatmentSelected))
+                if (treatmentSelected == null)
                 {
-                    UpdateGrid();
+                    MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                else
+                else if (MessageBox.Show
+                                    (string.Format("¿Está seguro(a) que desea eliminar el tratamiento '{0}'?",
+                                            treatmentSelected.Name),
+                                        "Advertencia",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning
+                                    ) == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("No se pudo eliminar el tratamiento", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    treatmentSelected.IsDeleted = true;
+
+                    if (Controllers.BusinessController.Instance.Update<Model.Treatment>(treatmentSelected))
+                    {
+                        UpdateGridAgendaTreatments();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo eliminar el tratamiento", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
+            else
+            {
+                Model.BudgetTreatment treatmentSelected = dgBudgetTreatments.SelectedItem == null ? null : dgBudgetTreatments.SelectedItem as Model.BudgetTreatment;
+
+                if (treatmentSelected == null)
+                {
+                    MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (MessageBox.Show
+                                    (string.Format("¿Está seguro(a) que desea eliminar el tratamiento '{0}'?",
+                                            treatmentSelected.Name),
+                                        "Advertencia",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning
+                                    ) == MessageBoxResult.Yes)
+                {
+                    treatmentSelected.IsDeleted = true;
+
+                    if (Controllers.BusinessController.Instance.Update<Model.BudgetTreatment>(treatmentSelected))
+                    {
+                        UpdateGridBudgetTreatments();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo eliminar el tratamiento", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            
         }
         #endregion
 
         #region Window's logic
-        private void UpdateGrid()
+        private void UpdateGridAgendaTreatments()
         {
-            _tratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "TreatmentId", "asc");
-            this.DataContext = _tratmentsViewModel;
+            _agendaTratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "TreatmentId", "asc");
+            dgAgendaTreatments.DataContext = _agendaTratmentsViewModel;
+        }
+
+        private void UpdateGridBudgetTreatments()
+        {
+            _budgetTratmentsViewModel = new Controllers.CustomViewModel<Model.BudgetTreatment>(u => u.IsDeleted == false, "BudgetTreatmenttId", "asc");
+            dgBudgetTreatments.DataContext = _budgetTratmentsViewModel;
         }
         #endregion
     }
