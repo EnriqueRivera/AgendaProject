@@ -83,6 +83,12 @@
 							<TextBlock TextAlignment="Center" Text="Dotaciones" />
 						</StackPanel>
 					</Button>
+					<Button x:Name="btnManageAmericanExpressPaids" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageAmericanExpressPaids_Click"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/american_express_icon.png" Width="50" Height="50"  />
+							<TextBlock TextAlignment="Center" ><Run Text="Pagos American "/><LineBreak/><Run Text="Express"/></TextBlock>
+						</StackPanel>
+					</Button>
 					<Button x:Name="btnManageTreatmentPrices" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageTreatmentPrices_Click"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/treatment_prices_icon.png" Width="50" Height="50"  />

@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MyDentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AmericanExpressPaids">
+    <Key>
+      <PropertyRef Name="AmericanExpressPaidId" />
+    </Key>
+    <Property Name="AmericanExpressPaidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="PaidDate" Type="date" Nullable="false" />
+    <Property Name="Establishment" Type="varchar(max)" Nullable="false" />
+    <Property Name="Concept" Type="varchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="BudgetDetails">
     <Key>
       <PropertyRef Name="BudgetDetailId" />
@@ -556,6 +566,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="MyDentDBModelStoreContainer">
+    <EntitySet Name="AmericanExpressPaids" EntityType="Self.AmericanExpressPaids" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BudgetDetails" EntityType="Self.BudgetDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BudgetTreatments" EntityType="Self.BudgetTreatments" Schema="dbo" store:Type="Tables" />

@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MyDentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AmericanExpressPaids">
+          <Key>
+            <PropertyRef Name="AmericanExpressPaidId" />
+          </Key>
+          <Property Name="AmericanExpressPaidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PaidDate" Type="date" Nullable="false" />
+          <Property Name="Establishment" Type="varchar(max)" Nullable="false" />
+          <Property Name="Concept" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="BudgetDetails">
           <Key>
             <PropertyRef Name="BudgetDetailId" />
@@ -561,6 +571,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MyDentDBModelStoreContainer">
+          <EntitySet Name="AmericanExpressPaids" EntityType="Self.AmericanExpressPaids" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BudgetDetails" EntityType="Self.BudgetDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BudgetTreatments" EntityType="Self.BudgetTreatments" Schema="dbo" store:Type="Tables" />
@@ -795,6 +806,7 @@
             <End Role="BudgetDetail" EntitySet="BudgetDetails" />
           </AssociationSet>
           <EntitySet Name="BudgetTreatments" EntityType="MyDentDBModel.BudgetTreatment" />
+          <EntitySet Name="AmericanExpressPaids" EntityType="MyDentDBModel.AmericanExpressPaid" />
           </EntityContainer>
         <EntityType Name="Configuration">
           <Key>
@@ -1395,6 +1407,16 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="AmericanExpressPaid">
+          <Key>
+            <PropertyRef Name="AmericanExpressPaidId" />
+          </Key>
+          <Property Name="AmericanExpressPaidId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PaidDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Establishment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Concept" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1715,6 +1737,17 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="BudgetTreatmenttId" ColumnName="BudgetTreatmenttId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AmericanExpressPaids">
+            <EntityTypeMapping TypeName="MyDentDBModel.AmericanExpressPaid">
+              <MappingFragment StoreEntitySet="AmericanExpressPaids">
+                <ScalarProperty Name="Concept" ColumnName="Concept" />
+                <ScalarProperty Name="Establishment" ColumnName="Establishment" />
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="AmericanExpressPaidId" ColumnName="AmericanExpressPaidId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

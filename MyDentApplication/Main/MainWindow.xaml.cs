@@ -52,6 +52,7 @@ namespace MyDentApplication
         private ManageDotationsWindow _manageDotationsWindow;
         private ManageTreatmentPricesWindow _manageTreatmentPricesWindow;
         private ManageBudgetsWindow _manageBudgetsWindow;
+        private ManageAmericanExpressPaidsWindow _manageAmericanExpressPaidsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -175,6 +176,7 @@ namespace MyDentApplication
             CloseWindow(_manageDotationsWindow);
             CloseWindow(_manageTreatmentPricesWindow);
             CloseWindow(_manageBudgetsWindow);
+            CloseWindow(_manageAmericanExpressPaidsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -277,6 +279,10 @@ namespace MyDentApplication
             else if (sender is ManageBudgetsWindow)
             {
                 _manageBudgetsWindow = null;
+            }
+            else if (sender is ManageAmericanExpressPaidsWindow)
+            {
+                _manageAmericanExpressPaidsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -847,6 +853,18 @@ namespace MyDentApplication
 
             _manageBudgetsWindow.Show();
             _manageBudgetsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageAmericanExpressPaids_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageAmericanExpressPaidsWindow == null)
+            {
+                _manageAmericanExpressPaidsWindow = new ManageAmericanExpressPaidsWindow();
+                _manageAmericanExpressPaidsWindow.Closed += Window_Closed;
+            }
+
+            _manageAmericanExpressPaidsWindow.Show();
+            _manageAmericanExpressPaidsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

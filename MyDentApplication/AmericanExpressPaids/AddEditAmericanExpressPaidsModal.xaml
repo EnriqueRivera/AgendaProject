@@ -1,0 +1,22 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:System="clr-namespace:System;assembly=mscorlib"
+	x:Class="MyDentApplication.AddEditAmericanExpressPaidsModal"
+	x:Name="Window"
+	Title="Agregar pago American Express"
+	Width="345" Height="238" ResizeMode="CanMinimize" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="LayoutRoot">
+		<Button x:Name="btnAddUpdatePaid" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="63.67,156.697,0,0" VerticalAlignment="Top" Width="91" Cursor="Hand" TabIndex="8" Click="btnAddUpdatePaid_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="172.67,156.697,0,0" VerticalAlignment="Top" Width="91" Cursor="Hand" TabIndex="9" Click="btnCancel_Click"/>
+		<Label x:Name="lblFolio" Content="Establecimiento:" HorizontalAlignment="Left" Height="27" Margin="14.667,44,0,0" VerticalAlignment="Top" Width="96.333"/>
+		<Label x:Name="lblTotalAmount" Content="Total:" HorizontalAlignment="Left" Height="27" Margin="70.333,108,0,0" VerticalAlignment="Top" Width="40.667"/>
+		<Label x:Name="lbPurchaseDate" Content="Fecha del pago:" Height="27" Margin="17.667,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93.333"/>
+		<DatePicker x:Name="dtpPaidDate" Height="27" Margin="116,13,0,0" VerticalAlignment="Top" TabIndex="4" HorizontalAlignment="Left" Width="194.5"/>
+		<TextBox x:Name="txtEstablishment" HorizontalAlignment="Left" Height="27" Margin="116,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="5" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtTotalAmount" HorizontalAlignment="Left" Height="27" Margin="116,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="7" BorderThickness="1" BorderBrush="Black"/>
+		<Label x:Name="lblFolio_Copy" Content="Concepto:" HorizontalAlignment="Left" Height="27" Margin="46,76,0,0" VerticalAlignment="Top" Width="65"/>
+		<TextBox x:Name="txtConcept" HorizontalAlignment="Left" Height="27" Margin="116,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="5" BorderThickness="1" BorderBrush="Black"/>
+	</Grid>
+</Window>

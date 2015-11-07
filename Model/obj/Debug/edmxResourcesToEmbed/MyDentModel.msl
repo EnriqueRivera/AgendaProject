@@ -318,5 +318,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AmericanExpressPaids">
+      <EntityTypeMapping TypeName="MyDentDBModel.AmericanExpressPaid">
+        <MappingFragment StoreEntitySet="AmericanExpressPaids">
+          <ScalarProperty Name="Concept" ColumnName="Concept" />
+          <ScalarProperty Name="Establishment" ColumnName="Establishment" />
+          <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="AmericanExpressPaidId" ColumnName="AmericanExpressPaidId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

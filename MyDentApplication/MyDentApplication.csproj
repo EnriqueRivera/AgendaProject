@@ -100,6 +100,12 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AmericanExpressPaids\AddEditAmericanExpressPaidsModal.xaml.cs">
+      <DependentUpon>AddEditAmericanExpressPaidsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AmericanExpressPaids\ManageAmericanExpressPaidsWindow.xaml.cs">
+      <DependentUpon>ManageAmericanExpressPaidsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Budgets\AddEditBudgetDetailsModal.xaml.cs">
       <DependentUpon>AddEditBudgetDetailsModal.xaml</DependentUpon>
     </Compile>
@@ -277,6 +283,14 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="AmericanExpressPaids\AddEditAmericanExpressPaidsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AmericanExpressPaids\ManageAmericanExpressPaidsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Budgets\AddEditBudgetDetailsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -582,6 +596,7 @@
     <Resource Include="Configuration\app_icon.ico" />
     <Resource Include="Images\addEmail_icon.png" />
     <Resource Include="Images\agenda_icon.png" />
+    <Resource Include="Images\american_express_icon.png" />
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\budget_icon.png" />
     <Resource Include="Images\Budget_image_1.PNG" />
