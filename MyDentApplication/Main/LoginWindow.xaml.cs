@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Threading;
 
 namespace MyDentApplication
 {
@@ -18,6 +19,14 @@ namespace MyDentApplication
 	/// </summary>
 	public partial class LoginWindow : Window
     {
+        #region Instance variables       
+        private Thread _loginThread;
+        #endregion
+
+        #region Delegates
+        delegate void CheckLoginDelegate(Model.User userResult);
+        #endregion
+
         #region Constructors
         public LoginWindow()
 		{
@@ -51,7 +60,67 @@ namespace MyDentApplication
                 return;
             }
 
+            lblLoginStatus.Visibility = System.Windows.Visibility.Visible;
+            EnableLoginControls(false);
+
+            _loginThread = new Thread(() => Login(userId, password));
+            _loginThread.Start();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+            if (_loginThread != null)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                Controllers.BusinessController.Instance.CloseConnection();
+            }
+		}
+        #endregion
+
+        #region Window's logic
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
+        }
+
+        private void Login(int userId, string password)
+        {
             Model.User userResult = Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.AssignedUserId == userId && u.Password == password && u.IsDeleted == false).FirstOrDefault();
+            DispatcherCheckLogin(userResult);
+        }
+
+        void DispatcherCheckLogin(Model.User userResult)
+        {
+            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
+            {
+                Dispatcher.Invoke(new CheckLoginDelegate(DispatcherCheckLogin), userResult);
+                return;
+            }
+
+            CheckLogin(userResult);
+        }
+
+        private void EnableLoginControls(bool enable)
+        {
+            btnLogin.IsEnabled = enable;
+            btnClose.IsEnabled = enable;
+            txtUserId.IsEnabled = enable;
+            pbPassword.IsEnabled = enable;
+        }
+
+        private void CheckLogin(Model.User userResult)
+        {
+            _loginThread = null;
+            lblLoginStatus.Visibility = System.Windows.Visibility.Hidden;
+            EnableLoginControls(true);
 
             if (userResult == null)
             {
@@ -68,23 +137,6 @@ namespace MyDentApplication
                 CenterWindowOnScreen();
                 this.Show();
             }
-		}
-
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			Controllers.BusinessController.Instance.CloseConnection();
-		}
-        #endregion
-
-        #region Window's logic
-        private void CenterWindowOnScreen()
-        {
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = this.Width;
-            double windowHeight = this.Height;
-            this.Left = (screenWidth / 2) - (windowWidth / 2);
-            this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
         #endregion
     }

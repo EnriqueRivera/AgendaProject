@@ -14,5 +14,6 @@
 		<Button x:Name="btnLogin" Content="Iniciar sesión" HorizontalAlignment="Left" Height="24.97" Margin="190.507,89.463,0,0" VerticalAlignment="Top" Width="90" Cursor="Hand" Click="btnLogin_Click" TabIndex="3"/>
 		<Button x:Name="btnClose" Content="Cerrar" HorizontalAlignment="Left" Height="24.97" Margin="285.507,89.463,0,0" VerticalAlignment="Top" Width="90" Cursor="Hand" Click="btnClose_Click" TabIndex="4"/>
 		<Image HorizontalAlignment="Left" Height="83.433" Margin="10,17.463,0,0" VerticalAlignment="Top" Width="82.507" Source="/MyDentApplication;component/Images/app_icon.ico"/>
+		<Label x:Name="lblLoginStatus" Content="Iniciando sesión..." HorizontalAlignment="Left" Margin="10,98.582,0,0" Width="175.507" FontWeight="Bold" FontStyle="Italic" Height="27" VerticalAlignment="Top" Visibility="Hidden"/>
 	</Grid>
 </Window>
