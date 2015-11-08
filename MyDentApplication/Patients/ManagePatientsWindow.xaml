@@ -11,26 +11,6 @@
         <local:BoolValueConverter x:Key="BoolValueConverter" />
 	</Window.Resources>
 	<Grid x:Name="LayoutRoot">
-		<DataGrid x:Name="dgPatients" Margin="10,58,10,44" IsReadOnly="True" CanUserSortColumns="True"
-			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False" CanUserAddRows="False" 
-			CanUserDeleteRows="False" TabIndex="4">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Exp. No." Binding="{Binding PatientId}" Width="0.085*"/>
-				<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.14*" />
-				<DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.14*" />
-				<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.1*" />
-				<DataGridTextColumn Header="Teléfono celular" Binding="{Binding CellPhone}" Width="0.15*" />
-				<DataGridTextColumn Header="Teléfono de casa" Binding="{Binding HomePhone}" Width="0.15*" />
-				<DataGridCheckBoxColumn Header="HC" Width="0.04*">
-					<DataGridCheckBoxColumn.Binding>
-						<MultiBinding Converter="{StaticResource BoolValueConverter}">
-							<Binding Path="ClinicHistoryId"/>
-						</MultiBinding>
-					</DataGridCheckBoxColumn.Binding>
-				</DataGridCheckBoxColumn>
-				<DataGridCheckBoxColumn Header="Asegurado" Binding="{Binding HasHealthInsurance}" Width="0.1*" />
-			</DataGrid.Columns>
-		</DataGrid>
 		<Button x:Name="btnAddPatient" Content="Agregar" Margin="0,0,140,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnAddPatient_Click" />
 		<Button x:Name="btnDelete" Content="Eliminar" Margin="0,0,10,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDelete_Click" />
 		<Button x:Name="btnViewAllPatients" Width="63.333" VerticalAlignment="Top" Margin="0,14.5,10,0" Height="25" HorizontalAlignment="Right" Content="Ver todo" Cursor="Hand" Click="btnViewAllPatients_Click" TabIndex="3"/>
@@ -46,5 +26,53 @@
 		</Button>
 		<Button x:Name="btnEditPatient" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnEditPatient_Click" />
 		<Button x:Name="btnUpdateHc" Content="Actualizar HC" Margin="10,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="90" Click="btnUpdateHc_Click" />
+		<TabControl x:Name="tcPatients" Margin="10,55.353,10,44" SelectedIndex="0">
+			<TabItem Header="Pacientes no asegurados">
+				<Grid Background="#FFE5E5E5">
+					<DataGrid x:Name="dgPatientsNoHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False" CanUserAddRows="False" 
+						CanUserDeleteRows="False" TabIndex="4">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Exp. No." Binding="{Binding PatientId}" Width="0.085*"/>
+							<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.14*" />
+							<DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.14*" />
+							<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.1*" />
+							<DataGridTextColumn Header="Teléfono celular" Binding="{Binding CellPhone}" Width="0.15*" />
+							<DataGridTextColumn Header="Teléfono de casa" Binding="{Binding HomePhone}" Width="0.15*" />
+							<DataGridCheckBoxColumn Header="HC" Width="0.04*">
+								<DataGridCheckBoxColumn.Binding>
+									<MultiBinding Converter="{StaticResource BoolValueConverter}">
+										<Binding Path="ClinicHistoryId"/>
+									</MultiBinding>
+								</DataGridCheckBoxColumn.Binding>
+							</DataGridCheckBoxColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Pacientes asegurados">
+				<Grid Background="#FFE5E5E5">
+					<DataGrid x:Name="dgPatientsWithHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False" CanUserAddRows="False" 
+						CanUserDeleteRows="False" TabIndex="4">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Exp. No." Binding="{Binding PatientId}" Width="0.085*"/>
+							<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.14*" />
+							<DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.14*" />
+							<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.1*" />
+							<DataGridTextColumn Header="Teléfono celular" Binding="{Binding CellPhone}" Width="0.15*" />
+							<DataGridTextColumn Header="Teléfono de casa" Binding="{Binding HomePhone}" Width="0.15*" />
+							<DataGridCheckBoxColumn Header="HC" Width="0.04*">
+								<DataGridCheckBoxColumn.Binding>
+									<MultiBinding Converter="{StaticResource BoolValueConverter}">
+										<Binding Path="ClinicHistoryId"/>
+									</MultiBinding>
+								</DataGridCheckBoxColumn.Binding>
+							</DataGridCheckBoxColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+		</TabControl>
 	</Grid>
 </Window>

@@ -21,14 +21,16 @@ namespace MyDentApplication
         private Model.Patient _patientToUpdate;
         private bool _isUpdatePatientInfo;
         private Model.User _userLoggedIn;
+        private bool _hasHealthInsurance;
         #endregion
 
         #region Constructors
-        public AddEditPatientsModal(Model.Patient patientToUpdate, Model.User userLoggedIn)
+        public AddEditPatientsModal(Model.Patient patientToUpdate, bool hasHealthInsurance, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
             _userLoggedIn = userLoggedIn;
+            _hasHealthInsurance = hasHealthInsurance;
             _patientToUpdate = patientToUpdate;
             _isUpdatePatientInfo = patientToUpdate != null;
 
@@ -65,7 +67,6 @@ namespace MyDentApplication
                 _patientToUpdate.HomePhone = homePhone;
                 _patientToUpdate.CellPhone = cellPhone;
                 _patientToUpdate.Email = email;
-                _patientToUpdate.HasHealthInsurance = chkHealthInsurance.IsChecked.Value;
 
                 UpdateUser(_patientToUpdate);
             }
@@ -78,7 +79,7 @@ namespace MyDentApplication
                     HomePhone = homePhone,
                     CellPhone = cellPhone,
                     Email = txtEmail.Text.Trim(),
-                    HasHealthInsurance = chkHealthInsurance.IsChecked.Value,
+                    HasHealthInsurance = _hasHealthInsurance,
                     CaptureDate = DateTime.Now,
                     IsDeleted = false,
                     DataCapturerId = _userLoggedIn.UserId
@@ -100,8 +101,6 @@ namespace MyDentApplication
             txtHomePhone.Text = _patientToUpdate.HomePhone;
             txtCellPhone.Text = _patientToUpdate.CellPhone;
             txtEmail.Text = _patientToUpdate.Email;
-            chkHealthInsurance.IsChecked = _patientToUpdate.HasHealthInsurance;
-            chkHealthInsurance.IsEnabled = false;
         }
 
         private bool AreValidFields(string patientFirstName, string patientLastName, string homePhone, string cellPhone, string email)

@@ -10,7 +10,7 @@
 		<Button x:Name="btnDeleteTreatment" Content="Eliminar" Margin="0,0,13.25,14.469" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteTreatment_Click"/>
 		<Button x:Name="btnEditTreatment" Content="Editar" Margin="0,0,78.25,14.469" Cursor="Hand" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditTreatment_Click"/>
 		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,143.25,14.469" Width="60" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click"/>
-		<TabControl x:Name="tbTreatments" Margin="10,10,13.25,48.469">
+		<TabControl x:Name="tbTreatments" Margin="10,10,13.25,48.469" SelectedIndex="0">
 			<TabItem Header="Tratamientos para la agenda">
 				<Grid Background="#FFE5E5E5">
 					<DataGrid x:Name="dgAgendaTreatments" Margin="10" IsReadOnly="True" CanUserSortColumns="True"

@@ -27,8 +27,10 @@ namespace MyDentApplication
 		{
 			this.InitializeComponent();
 
-            UpdateGridAgendaTreatments();
-            UpdateGridBudgetTreatments();
+            UpdateGridTreatments();
+            tbTreatments.SelectedIndex = 1;
+            UpdateGridTreatments();
+            tbTreatments.SelectedIndex = 0;
         }
         #endregion
 
@@ -37,14 +39,14 @@ namespace MyDentApplication
         {
             if (tbTreatments.SelectedIndex == 0)
             {
-                new AddEditTreatmentsModal(null).ShowDialog();
-                UpdateGridAgendaTreatments();    
+                new AddEditTreatmentsModal(null).ShowDialog();    
             }
             else
             {
                 new AddEditBudgetTreatmentsModal(null).ShowDialog();
-                UpdateGridBudgetTreatments();
-            }            
+            }
+
+            UpdateGridTreatments();
         }
 
         private void btnEditTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -60,7 +62,7 @@ namespace MyDentApplication
                 else
                 {
                     new AddEditTreatmentsModal(treatmentSelected).ShowDialog();
-                    UpdateGridAgendaTreatments();
+                    UpdateGridTreatments();
                 }
             }
             else
@@ -74,7 +76,7 @@ namespace MyDentApplication
                 else
                 {
                     new AddEditBudgetTreatmentsModal(treatmentSelected).ShowDialog();
-                    UpdateGridBudgetTreatments();
+                    UpdateGridTreatments();
                 }
             }
         }
@@ -101,7 +103,7 @@ namespace MyDentApplication
 
                     if (Controllers.BusinessController.Instance.Update<Model.Treatment>(treatmentSelected))
                     {
-                        UpdateGridAgendaTreatments();
+                        UpdateGridTreatments();
                     }
                     else
                     {
@@ -129,7 +131,7 @@ namespace MyDentApplication
 
                     if (Controllers.BusinessController.Instance.Update<Model.BudgetTreatment>(treatmentSelected))
                     {
-                        UpdateGridBudgetTreatments();
+                        UpdateGridTreatments();
                     }
                     else
                     {
@@ -142,16 +144,18 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        private void UpdateGridAgendaTreatments()
+        private void UpdateGridTreatments()
         {
-            _agendaTratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "TreatmentId", "asc");
-            dgAgendaTreatments.DataContext = _agendaTratmentsViewModel;
-        }
-
-        private void UpdateGridBudgetTreatments()
-        {
-            _budgetTratmentsViewModel = new Controllers.CustomViewModel<Model.BudgetTreatment>(u => u.IsDeleted == false, "BudgetTreatmenttId", "asc");
-            dgBudgetTreatments.DataContext = _budgetTratmentsViewModel;
+            if (tbTreatments.SelectedIndex == 0)
+            {
+                _agendaTratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "TreatmentId", "asc");
+                dgAgendaTreatments.DataContext = _agendaTratmentsViewModel;
+            }
+            else
+            {
+                _budgetTratmentsViewModel = new Controllers.CustomViewModel<Model.BudgetTreatment>(u => u.IsDeleted == false, "BudgetTreatmenttId", "asc");
+                dgBudgetTreatments.DataContext = _budgetTratmentsViewModel;
+            }
         }
         #endregion
     }
