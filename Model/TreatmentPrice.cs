@@ -18,6 +18,7 @@ namespace Model
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Discount { get; set; }
+        public string Type { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

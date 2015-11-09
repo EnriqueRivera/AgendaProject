@@ -6,19 +6,229 @@
 	Title="Administrar costos de tratamientos"
 	Width="652" Height="496" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
 	<Grid x:Name="LayoutRoot">
-		<DataGrid x:Name="dgTreatments" Margin="10,10,12.917,48.469" IsReadOnly="True" CanUserSortColumns="True"
-			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
-			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
-			TabIndex="1">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
-				<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-				<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
-				<DataGridTextColumn Header="Descuento (%)" Binding="{Binding Discount}" Width="0.17*" />
-			</DataGrid.Columns>
-		</DataGrid>
-		<Button x:Name="btnDeleteTreatment" Content="Eliminar" Margin="0,0,13.25,14.469" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteTreatment_Click"/>
-		<Button x:Name="btnEditTreatment" Content="Editar" Margin="0,0,78.25,14.469" Cursor="Hand" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditTreatment_Click"/>
-		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,143.25,14.469" Width="60" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click"/>
+		<TabControl x:Name="tcTratments" Margin="10,10,10,44" SelectedIndex="0">
+			<TabItem Header="Odontología" Margin="-2,-2,-0.315,-1">
+				<Grid Background="#FFE5E5E5">
+					<DataGrid x:Name="dgDentristy" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+						SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+						TabIndex="1">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+							<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+							<DataGridTextColumn Header="Descuento (%)" Binding="{Binding Discount}" Width="0.17*" />
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Clínica del dolor" Margin="-2,-2,-2,-1">
+				<Grid Background="#FFE5E5E5">
+					<TabControl x:Name="tcPainClinic" Margin="10">
+						<TabItem Header="Costos vigentes">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgPainClinic" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Pacientes asegurados">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgPainClinicHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Endodoncia" Margin="-2,-2,-2,-1">
+				<Grid Background="#FFE5E5E5">
+					<TabControl x:Name="tcEndodontics" Margin="10">
+						<TabItem Header="Costos vigentes">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgEndodontics" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Pacientes asegurados">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgEndodonticsHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Ortodoncia" Margin="-2,-2,-2,-1">
+				<Grid Background="#FFE5E5E5">
+					<TabControl x:Name="tcOrthodontics" Margin="10">
+						<TabItem Header="Costos vigentes">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgOrthodontics" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Pacientes asegurados">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgOrthodonticsHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="CMF" Margin="-2,-2,-2,-1">
+				<Grid Background="#FFE5E5E5">
+					<TabControl x:Name="tcCmf" Margin="10">
+						<TabItem Header="Costos vigentes">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgCmf" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Pacientes asegurados">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgCmfHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Periodoncia" Margin="-2,-2,-2,-1">
+				<Grid Background="#FFE5E5E5">
+					<TabControl x:Name="tcPeriodontics" Margin="10">
+						<TabItem Header="Costos vigentes">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgPeriodontics" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Pacientes asegurados">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgPeriodonticsHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Odontopediatría" Margin="-2,-2,-2,-1">
+				<Grid Background="#FFE5E5E5">
+					<TabControl x:Name="tcPediatricDental" Margin="10">
+						<TabItem Header="Costos vigentes">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgPediatricDental" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Pacientes asegurados">
+							<Grid Background="#FFE5E5E5">
+								<DataGrid x:Name="dgPediatricDentalHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+									ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+									TabIndex="1">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+		</TabControl>
+		<Button x:Name="btnDeleteTreatment" Content="Eliminar" Margin="0,0,10,10" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteTreatment_Click"/>
+		<Button x:Name="btnEditTreatment" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditTreatment_Click"/>
+		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,140,10" Width="60" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click"/>
 	</Grid>
 </Window>

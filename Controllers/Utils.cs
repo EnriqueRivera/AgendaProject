@@ -18,6 +18,14 @@ namespace Controllers
         public const string ENABLE_SSL = "ENABLE_SSL";
         public const string USERNAME = "USERNAME";
         public const string PASSWORD = "PASSWORD";
+        public const string TREATMENT_DENTISTRY = "Odontología";
+        public const string TREATMENT_PAIN_CLINIC = "Clínica del dolor";
+        public const string TREATMENT_ENDODONTICS = "Endodoncia";
+        public const string TREATMENT_ORTHODONTICS = "Ortodoncia";
+        public const string TREATMENT_CMF = "CMF";
+        public const string TREATMENT_PERIODONTICS = "Periodoncia";
+        public const string TREATMENT_PEDIATRIC_DENTAL = "Odontopediatría";
+        public const string TREATMENT_HEALTH_INSURANCE = " - Con seguro médico";
         //public const string PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION = "PATIENT_MAX_SKIPPED_EVENTS";
         private static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 

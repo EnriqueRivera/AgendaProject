@@ -5,14 +5,14 @@
 	x:Class="MyDentApplication.AddEditTreatmentPricesModal"
 	x:Name="Window"
 	Title="Agregar tratamiento y costo"
-	Width="380" Height="261" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
+	Width="426" Height="261" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 	<Grid x:Name="LayoutRoot" Margin="0,0,-2,-2">
-		<Button x:Name="btnAddUpdateTreatment" Content="Agregar" Margin="93.17,0,0,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnAddUpdateTreatment_Click" HorizontalAlignment="Left" Width="91"/>
-		<Button x:Name="btnCancel" Content="Cancelar" Margin="189.17,0,0,10" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" HorizontalAlignment="Left" Width="91"/>
+		<Button x:Name="btnAddUpdateTreatment" Content="Agregar" Margin="110.17,0,0,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnAddUpdateTreatment_Click" HorizontalAlignment="Left" Width="91"/>
+		<Button x:Name="btnCancel" Content="Cancelar" Margin="206.17,0,0,10" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" HorizontalAlignment="Left" Width="91"/>
 		<Label x:Name="lblTreatmentName" Content="Nombre del tratamiento:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="344"/>
-		<TextBox x:Name="txtTreatmentName" HorizontalAlignment="Left" Height="27" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" TabIndex="1" BorderThickness="1" BorderBrush="Black" TextAlignment="Center"/>
-		<Label x:Name="lblTreatmentDuration" Content="Descuento:" HorizontalAlignment="Left" Height="27" Margin="10,139,0,0" VerticalAlignment="Top" Width="71.333"/>
-		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="86.333,138,0,0" VerticalAlignment="Top" Width="100" SelectedIndex="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">
+		<TextBox x:Name="txtTreatmentName" Height="27" Margin="10,37,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black" TextAlignment="Center"/>
+		<Label x:Name="lblTreatmentDuration" Content="Descuento:" HorizontalAlignment="Left" Height="27" Margin="10,139,0,0" VerticalAlignment="Top" Width="71.333" Visibility="Hidden"/>
+		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="86.333,138,0,0" VerticalAlignment="Top" Width="100" SelectedIndex="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Visibility="Hidden">
 			<System:Int32>0</System:Int32>
 			<System:Int32>5</System:Int32>
 			<System:Int32>10</System:Int32>
@@ -21,7 +21,7 @@
 			<System:Int32>25</System:Int32>
 			<System:Int32>30</System:Int32>
 		</ComboBox>
-		<Label x:Name="lblMinutesCaption" Content="%" HorizontalAlignment="Left" Height="27" Margin="186.333,139,0,0" VerticalAlignment="Top" Width="116"/>
+		<Label x:Name="lblPercentCaption" Content="%" HorizontalAlignment="Left" Height="27" Margin="186.333,139,0,0" VerticalAlignment="Top" Width="116" Visibility="Hidden"/>
 		<Label x:Name="lblRecurrentDays" Content="Costo: $" HorizontalAlignment="Left" Height="27" Margin="32.833,89,0,0" VerticalAlignment="Top" Width="53.5"/>
 		<TextBox x:Name="txtCost" HorizontalAlignment="Left" Height="27" Margin="86.333,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="6" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
 	</Grid>

@@ -20,19 +20,28 @@ namespace MyDentApplication
         #region Instance variables
         private Model.TreatmentPrice _treatmentToUpdate;
         private bool _isUpdateTreatmentInfo;
+        private string _tratmentType;
         #endregion
 
         #region Constructors
-        public AddEditTreatmentPricesModal(Model.TreatmentPrice treatmentToUpdate)
+        public AddEditTreatmentPricesModal(Model.TreatmentPrice treatmentToUpdate, string tratmentType)
 		{
 			this.InitializeComponent();
 
+            _tratmentType = tratmentType;
             _treatmentToUpdate = treatmentToUpdate;
             _isUpdateTreatmentInfo = _treatmentToUpdate != null;
 
             if (_isUpdateTreatmentInfo)
             {
                 PrepareWindowForUpdates();
+            }
+
+            if (_tratmentType == Controllers.Utils.TREATMENT_DENTISTRY)
+            {
+                lblTreatmentDuration.Visibility = System.Windows.Visibility.Visible;
+                cbDiscount.Visibility = System.Windows.Visibility.Visible;
+                lblPercentCaption.Visibility = System.Windows.Visibility.Visible;
             }
         }
         #endregion
@@ -63,6 +72,7 @@ namespace MyDentApplication
                     Name = treatmentName,
                     Price = price,
                     Discount = (int)cbDiscount.SelectedItem,
+                    Type = _tratmentType,
                     IsDeleted = false
                 };
 
