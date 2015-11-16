@@ -81,7 +81,7 @@ namespace MyDentApplication
                 return;
             }
 
-            List<Model.Event> skippedEvents = ((cbPatientName.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient).Events
+            List<Model.Event> skippedEvents = _selectedPatient.Events
                                                 .Where(ev => ev.IsCompleted && ev.PatientSkips)
                                                 .OrderBy(ev => ev.StartEvent)
                                                 .ToList();
@@ -112,10 +112,30 @@ namespace MyDentApplication
                                                 maxSkippedEvents == 1 ? "falta" : "faltas",
                                                 skippedEventsMessage
                                                 ),
-                                "Error",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
+                                                "Advertencia",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Warning);
                 return;
+            }
+
+            if (_selectedPatient.HasHealthInsurance)
+            {
+                List<Model.Authorization> authorizations = _selectedPatient.Authorizations
+                                                            .OrderByDescending(a => a.AuthorizationDate)
+                                                            .Take(1)
+                                                            .ToList();
+
+                if (authorizations.Count == 0 || IsValidAuthorization(authorizations[0]) == false)
+                {
+                    MessageBox.Show("El paciente seleccionado tiene seguro médico pero no cuenta con un número de " + 
+                                    "autorización vigente. Es necesario introducir un nuevo número de autorización " + 
+                                    "para poderle agendar una cita.",
+                                    "Advertencia",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Warning);
+
+                    return;
+                }
             }
 
             Model.Event eventToAdd = new Model.Event();
@@ -143,6 +163,19 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
+        private bool IsValidAuthorization(Model.Authorization authorization)
+        {
+            if (authorization.AuthorizationNumber != null)
+            {
+                DateTime today = DateTime.Now.Date;
+                DateTime authorizationDate = authorization.AuthorizationDate.AddMonths(1);
+
+                return authorizationDate >= today;
+            }
+
+            return true;
+        }
+
         private void FillPatientFields(Model.Patient selectedPatient) 
 		{
 			if (selectedPatient == null) 

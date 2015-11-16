@@ -10,6 +10,16 @@
     <Property Name="Establishment" Type="varchar(max)" Nullable="false" />
     <Property Name="Concept" Type="varchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Authorizations">
+    <Key>
+      <PropertyRef Name="AuthorizationId" />
+    </Key>
+    <Property Name="AuthorizationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthorizationDate" Type="date" Nullable="false" />
+    <Property Name="PreAuthorizationNumber" Type="varchar(max)" />
+    <Property Name="AuthorizationNumber" Type="varchar(max)" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="BudgetDetails">
     <Key>
       <PropertyRef Name="BudgetDetailId" />
@@ -302,6 +312,18 @@
     <Property Name="IsAdmin" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
+  <Association Name="FK_Authorizations_PatientId">
+    <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+    <End Role="Authorizations" Type="Self.Authorizations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Authorizations">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_BudgetDetails_BudgetId">
     <End Role="Budgets" Type="Self.Budgets" Multiplicity="1" />
     <End Role="BudgetDetails" Type="Self.BudgetDetails" Multiplicity="*" />
@@ -568,6 +590,7 @@
   </Association>
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="AmericanExpressPaids" EntityType="Self.AmericanExpressPaids" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Authorizations" EntityType="Self.Authorizations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BudgetDetails" EntityType="Self.BudgetDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BudgetTreatments" EntityType="Self.BudgetTreatments" Schema="dbo" store:Type="Tables" />
@@ -594,6 +617,10 @@
     <EntitySet Name="TreatmentPrices" EntityType="Self.TreatmentPrices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Authorizations_PatientId" Association="Self.FK_Authorizations_PatientId">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="Authorizations" EntitySet="Authorizations" />
+    </AssociationSet>
     <AssociationSet Name="FK_BudgetDetails_BudgetId" Association="Self.FK_BudgetDetails_BudgetId">
       <End Role="Budgets" EntitySet="Budgets" />
       <End Role="BudgetDetails" EntitySet="BudgetDetails" />

@@ -52,5 +52,6 @@ namespace Model
         public DbSet<BudgetTreatment> BudgetTreatments { get; set; }
         public DbSet<AmericanExpressPaid> AmericanExpressPaids { get; set; }
         public DbSet<TreatmentPrice> TreatmentPrices { get; set; }
+        public DbSet<Authorization> Authorizations { get; set; }
     }
 }

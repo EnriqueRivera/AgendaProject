@@ -65,6 +65,12 @@
 							<TextBlock TextAlignment="Center" ><Run Text="Tratamientos"/></TextBlock>
 						</StackPanel>
 					</Button>
+					<Button x:Name="btnManageAuthorizations" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageAuthorizations_Click"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/authorization_icon.gif" Width="50" Height="50"  />
+							<TextBlock TextAlignment="Center" Text="Autorizaciones" />
+						</StackPanel>
+					</Button>
 					<Button x:Name="btnManageReminders" Width="90" Height="90" Click="btnManageReminders_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/reminder_icon.png" Width="50" Height="50"  />

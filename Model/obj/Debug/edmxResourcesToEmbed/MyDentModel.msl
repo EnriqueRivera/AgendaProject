@@ -330,5 +330,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Authorizations">
+      <EntityTypeMapping TypeName="MyDentDBModel.Authorization">
+        <MappingFragment StoreEntitySet="Authorizations">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="AuthorizationNumber" ColumnName="AuthorizationNumber" />
+          <ScalarProperty Name="PreAuthorizationNumber" ColumnName="PreAuthorizationNumber" />
+          <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+          <ScalarProperty Name="AuthorizationId" ColumnName="AuthorizationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

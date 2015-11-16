@@ -31,6 +31,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication.csprojResolveAssemblyReference.cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\AmericanExpressPaids\AddEditAmericanExpressPaidsModal.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Authorizations\AddEditAuthorizationsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetDetailsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\AddEditCleanedMaterialsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ChangeCleanedActionModal.baml
@@ -77,6 +78,9 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Configuration\App.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\AmericanExpressPaids\AddEditAmericanExpressPaidsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\AmericanExpressPaids\ManageAmericanExpressPaidsWindow.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Authorizations\AddEditAuthorizationsModal.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Authorizations\ManageAuthorizationsWindow.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Authorizations\ManageUserAuthorizationsWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetDetailsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetsModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\ManageBudgetsWindow.g.cs
@@ -143,6 +147,8 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication_MarkupCompile.cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\MyDentApplication_MarkupCompile.lref
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\AmericanExpressPaids\ManageAmericanExpressPaidsWindow.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Authorizations\ManageAuthorizationsWindow.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Authorizations\ManageUserAuthorizationsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\AddEditBudgetsModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\Budgets\ManageBudgetsWindow.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\ManageCleanedMaterialsWindow.baml

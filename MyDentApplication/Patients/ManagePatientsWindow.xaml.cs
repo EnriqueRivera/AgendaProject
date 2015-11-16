@@ -121,6 +121,28 @@ namespace MyDentApplication
                 UpdateGrid();
             }
         }
+
+        private void tcPatients_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (btnAuthorization != null && e.Source is TabControl)
+            {
+                btnAuthorization.IsEnabled = tcPatients.SelectedIndex == 1;
+            }
+        }
+
+        private void btnAuthorization_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Model.Patient patientSelected = dgPatientsWithHI.SelectedItem == null ? null : dgPatientsWithHI.SelectedItem as Model.Patient;
+
+            if (patientSelected == null)
+            {
+                MessageBox.Show("Seleccione un paciente asegurado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                new ManageUserAuthorizationsWindow(patientSelected).ShowDialog();
+            }
+        }
         #endregion
 
         #region Window's logic

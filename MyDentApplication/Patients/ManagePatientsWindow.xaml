@@ -26,7 +26,7 @@
 		</Button>
 		<Button x:Name="btnEditPatient" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnEditPatient_Click" />
 		<Button x:Name="btnUpdateHc" Content="Actualizar HC" Margin="10,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="90" Click="btnUpdateHc_Click" />
-		<TabControl x:Name="tcPatients" Margin="10,55.353,10,44" SelectedIndex="0">
+		<TabControl x:Name="tcPatients" Margin="10,55.353,10,44" SelectedIndex="0" SelectionChanged="tcPatients_SelectionChanged">
 			<TabItem Header="Pacientes no asegurados">
 				<Grid Background="#FFE5E5E5">
 					<DataGrid x:Name="dgPatientsNoHI" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
@@ -74,5 +74,6 @@
 				</Grid>
 			</TabItem>
 		</TabControl>
+		<Button x:Name="btnAuthorization" Content="Autorización" Margin="105,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="90" Click="btnAuthorization_Click" IsEnabled="False" />
 	</Grid>
 </Window>

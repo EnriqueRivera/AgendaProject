@@ -106,6 +106,15 @@
     <Compile Include="AmericanExpressPaids\ManageAmericanExpressPaidsWindow.xaml.cs">
       <DependentUpon>ManageAmericanExpressPaidsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authorizations\AddEditAuthorizationsModal.xaml.cs">
+      <DependentUpon>AddEditAuthorizationsModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authorizations\ManageAuthorizationsWindow.xaml.cs">
+      <DependentUpon>ManageAuthorizationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authorizations\ManageUserAuthorizationsWindow.xaml.cs">
+      <DependentUpon>ManageUserAuthorizationsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Budgets\AddEditBudgetDetailsModal.xaml.cs">
       <DependentUpon>AddEditBudgetDetailsModal.xaml</DependentUpon>
     </Compile>
@@ -288,6 +297,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AmericanExpressPaids\ManageAmericanExpressPaidsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authorizations\AddEditAuthorizationsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authorizations\ManageAuthorizationsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authorizations\ManageUserAuthorizationsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -597,6 +618,7 @@
     <Resource Include="Images\addEmail_icon.png" />
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\american_express_icon.png" />
+    <Resource Include="Images\authorization_icon.gif" />
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\budget_icon.png" />
     <Resource Include="Images\Budget_image_1.PNG" />

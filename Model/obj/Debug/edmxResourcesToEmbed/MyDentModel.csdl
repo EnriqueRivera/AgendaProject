@@ -116,6 +116,11 @@
     <EntitySet Name="BudgetTreatments" EntityType="MyDentDBModel.BudgetTreatment" />
     <EntitySet Name="AmericanExpressPaids" EntityType="MyDentDBModel.AmericanExpressPaid" />
     <EntitySet Name="TreatmentPrices" EntityType="MyDentDBModel.TreatmentPrice" />
+    <EntitySet Name="Authorizations" EntityType="MyDentDBModel.Authorization" />
+    <AssociationSet Name="FK_Authorizations_PatientId" Association="MyDentDBModel.FK_Authorizations_PatientId">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Authorization" EntitySet="Authorizations" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -263,6 +268,7 @@
     <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
     <NavigationProperty Name="ClinicHistory" Relationship="MyDentDBModel.FK_Patients_ClinicHistoryId" FromRole="Patient" ToRole="ClinicHistory" />
     <NavigationProperty Name="Budgets" Relationship="MyDentDBModel.FK_Budgets_PatientId" FromRole="Patient" ToRole="Budget" />
+    <NavigationProperty Name="Authorizations" Relationship="MyDentDBModel.FK_Authorizations_PatientId" FromRole="Patient" ToRole="Authorization" />
   </EntityType>
   <EntityType Name="ReceivedInvoice">
     <Key>
@@ -727,4 +733,27 @@
     <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EntityType Name="Authorization">
+    <Key>
+      <PropertyRef Name="AuthorizationId" />
+    </Key>
+    <Property Name="AuthorizationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthorizationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PreAuthorizationNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
+    <Property Name="AuthorizationNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Authorizations_PatientId" FromRole="Authorization" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK_Authorizations_PatientId">
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="MyDentDBModel.Authorization" Role="Authorization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Authorization">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

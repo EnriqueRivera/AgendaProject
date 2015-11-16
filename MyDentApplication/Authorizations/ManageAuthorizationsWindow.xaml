@@ -1,0 +1,40 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication"
+	x:Class="MyDentApplication.ManageAuthorizationsWindow"
+	x:Name="Window"
+	Title="Ver autorizaciones"
+	Width="528.06" Height="439.701" WindowStartupLocation="CenterScreen" Icon="/MyDentApplication;component/Images/app_icon.ico">
+
+	<Window.Resources>
+		<local:DateValueConverter x:Key="DateValueConverter" />
+	</Window.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<DataGrid x:Name="dgAuthorization" TabIndex="1" SelectionMode="Single" Margin="10,49.909,10,10" ItemsSource="{Binding ObservableData}" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Paciente" Width="0.2*" >
+					<DataGridTextColumn.Binding>
+						<MultiBinding StringFormat="{}(Exp. No. {0}) {1} {2}">
+							<Binding Path="Patient.PatientId" />
+							<Binding Path="Patient.FirstName" />
+							<Binding Path="Patient.LastName" />
+						</MultiBinding>
+					</DataGridTextColumn.Binding>
+				</DataGridTextColumn>
+				<DataGridTextColumn Header="Fecha de autorización" Width="0.22*">
+					<DataGridTextColumn.Binding>
+						<MultiBinding Converter="{StaticResource DateValueConverter}">
+							<Binding Path="AuthorizationDate"/>
+						</MultiBinding>
+					</DataGridTextColumn.Binding>
+				</DataGridTextColumn>
+				<DataGridTextColumn Binding="{Binding PreAuthorizationNumber}" Header="No. de pre autorización" Width="0.23*"/>
+				<DataGridTextColumn Binding="{Binding AuthorizationNumber}" Header="No. de autorización" Width="0.2*"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Label x:Name="lblProvider" Content="Paciente:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="63"/>
+		<ComboBox x:Name="cbPatients" Height="26" Margin="78,10,10,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" SelectionChanged="cbPatients_SelectionChanged"/>
+	</Grid>
+</Window>
