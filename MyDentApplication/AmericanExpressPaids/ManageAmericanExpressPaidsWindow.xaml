@@ -23,7 +23,7 @@
 				</DataGridTextColumn>
 				<DataGridTextColumn Header="Establecimiento" Binding="{Binding Establishment}" Width="0.15*"/>
 				<DataGridTextColumn Header="Concepto" Binding="{Binding Concept}" Width="0.2*" />
-				<DataGridTextColumn Binding="{Binding Total, StringFormat=$\{0:0.00\}}" Header="Total" Width="0.1*"/>
+                <DataGridTextColumn Binding="{Binding Total, StringFormat=$\{0:n\}}" Header="Total" Width="0.1*"/>
 			</DataGrid.Columns>
 		</DataGrid>
 		<Button x:Name="btnDeletePaid" Content="Eliminar" Margin="140,0,0,10" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="60" Click="btnDeletePaid_Click" />

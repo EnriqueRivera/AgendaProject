@@ -404,12 +404,12 @@ namespace MyDentApplication
                 AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
                 AddCell(budgetTable, bf, budgetDetail.Concept);
                 AddCell(budgetTable, bf, budgetDetail.NumberOfEvents.ToString());
-                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCost.ToString("0.00"));
-                AddCell(budgetTable, bf, "$" + budgetDetail.UnitCostDiscount.ToString("0.00"));
-                AddCell(budgetTable, bf, "$" + budgetDetail.NetTotal.ToString("0.00"));
-                AddCell(budgetTable, bf, "$" + budgetDetail.TotalDiscount.ToString("0.00"));
+                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.UnitCost));
+                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.UnitCostDiscount));
+                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.NetTotal));
+                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.TotalDiscount));
                 AddCell(budgetTable, bf, budgetDetail.Discount.ToString());
-                AddCell(budgetTable, bf, "$" + budgetDetail.TotalPerEvent.ToString("0.00"));
+                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.TotalPerEvent));
             }
         }
 

@@ -106,7 +106,7 @@ namespace MyDentApplication
             }
             else if (MessageBox.Show
                                 (string.Format("¿Está seguro(a) que desea eliminar el tratamiento con clave '{0}'?",
-                                        treatmentSelected.TreatmentPriceId),
+                                        treatmentSelected.TreatmentKey),
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
                                     MessageBoxImage.Warning
@@ -123,6 +123,11 @@ namespace MyDentApplication
                     MessageBox.Show("No se pudo eliminar el tratamiento", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void btnCopyPrices_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            // TODO: Add event handler implementation here.
         }
         #endregion
 
@@ -155,78 +160,78 @@ namespace MyDentApplication
             switch (tcTratments.SelectedIndex)
             {
                 case 0:
-                    _dentristyViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_DENTISTRY, "TreatmentPriceId", "asc");
+                    _dentristyViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_DENTISTRY, "TreatmentKey", "asc");
                     dgDentristy.DataContext = _dentristyViewModel;
                     break;
                 case 1:
                     if (tcPainClinic.SelectedIndex == 0)
                     {
-                        _painClinicViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PAIN_CLINIC, "TreatmentPriceId", "asc");
+                        _painClinicViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PAIN_CLINIC, "TreatmentKey", "asc");
                         dgPainClinic.DataContext = _painClinicViewModel;
                     }
                     else
                     {
-                        _painClinicHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PAIN_CLINIC + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentPriceId", "asc");
+                        _painClinicHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PAIN_CLINIC + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgPainClinicHI.DataContext = _painClinicHIViewModel;
                     }
                     break;
                 case 2:
                     if (tcEndodontics.SelectedIndex == 0)
                     {
-                        _endodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ENDODONTICS, "TreatmentPriceId", "asc");
+                        _endodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ENDODONTICS, "TreatmentKey", "asc");
                         dgEndodontics.DataContext = _endodonticsViewModel;
                     }
                     else
                     {
-                        _endodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ENDODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentPriceId", "asc");
+                        _endodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ENDODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgEndodonticsHI.DataContext = _endodonticsHIViewModel;
                     }
                     break;
                 case 3:
                     if (tcOrthodontics.SelectedIndex == 0)
                     {
-                        _orthodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ORTHODONTICS, "TreatmentPriceId", "asc");
+                        _orthodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ORTHODONTICS, "TreatmentKey", "asc");
                         dgOrthodontics.DataContext = _orthodonticsViewModel;
                     }
                     else
                     {
-                        _orthodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ORTHODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentPriceId", "asc");
+                        _orthodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ORTHODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgOrthodonticsHI.DataContext = _orthodonticsHIViewModel;
                     }
                     break;
                 case 4:
                     if (tcCmf.SelectedIndex == 0)
                     {
-                        _cmfViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_CMF, "TreatmentPriceId", "asc");
+                        _cmfViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_CMF, "TreatmentKey", "asc");
                         dgCmf.DataContext = _cmfViewModel;
                     }
                     else
                     {
-                        _cmfHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_CMF + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentPriceId", "asc");
+                        _cmfHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_CMF + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgCmfHI.DataContext = _cmfHIViewModel;
                     }
                     break;
                 case 5:
                     if (tcPeriodontics.SelectedIndex == 0)
                     {
-                        _periodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PERIODONTICS, "TreatmentPriceId", "asc");
+                        _periodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PERIODONTICS, "TreatmentKey", "asc");
                         dgPeriodontics.DataContext = _periodonticsViewModel;
                     }
                     else
                     {
-                        _periodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PERIODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentPriceId", "asc");
+                        _periodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PERIODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgPeriodonticsHI.DataContext = _periodonticsHIViewModel;
                     }
                     break;
                 case 6:
                     if (tcPediatricDental.SelectedIndex == 0)
                     {
-                        _pediatricDentalViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL, "TreatmentPriceId", "asc");
+                        _pediatricDentalViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL, "TreatmentKey", "asc");
                         dgPediatricDental.DataContext = _pediatricDentalViewModel;
                     }
                     else
                     {
-                        _pediatricDentalHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentPriceId", "asc");
+                        _pediatricDentalHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgPediatricDentalHI.DataContext = _pediatricDentalHIViewModel;
                     }
                     break;

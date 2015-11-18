@@ -49,10 +49,11 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnAddUpdateTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            string treatmentKey = txtTreatmentKey.Text.Trim();
             string treatmentName = txtTreatmentName.Text.Trim();
             decimal price;
 
-            if (AreValidFields(treatmentName, out price) == false)
+            if (AreValidFields(treatmentName, treatmentKey, out price) == false)
             {
                 return;
             }
@@ -60,6 +61,7 @@ namespace MyDentApplication
             if (_isUpdateTreatmentInfo)
             {
                 _treatmentToUpdate.Name = treatmentName;
+                _treatmentToUpdate.TreatmentKey = treatmentKey;
                 _treatmentToUpdate.Price = price;
                 _treatmentToUpdate.Discount = (int)cbDiscount.SelectedItem;
 
@@ -70,6 +72,7 @@ namespace MyDentApplication
                 Model.TreatmentPrice treatmentToAdd = new Model.TreatmentPrice()
                 {
                     Name = treatmentName,
+                    TreatmentKey = treatmentKey,
                     Price = price,
                     Discount = (int)cbDiscount.SelectedItem,
                     Type = _tratmentType,
@@ -92,17 +95,24 @@ namespace MyDentApplication
             this.Title = "Actualizar información del tratamiento y costo";
             btnAddUpdateTreatment.Content = "Actualizar";
             txtTreatmentName.ToolTip = txtTreatmentName.Text = _treatmentToUpdate.Name;
+            txtTreatmentKey.ToolTip = txtTreatmentKey.Text = _treatmentToUpdate.TreatmentKey;
             txtCost.ToolTip = txtCost.Text = _treatmentToUpdate.Price.ToString();
             cbDiscount.SelectedValue = _treatmentToUpdate.Discount;
         }
 
-        private bool AreValidFields(string treatmentName, out decimal price)
+        private bool AreValidFields(string treatmentName, string treatmentKey, out decimal price)
         {
             price = 0;
 
             if (string.IsNullOrEmpty(treatmentName))
             {
                 MessageBox.Show("Ingrese el nombre del tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(treatmentKey))
+            {
+                MessageBox.Show("Ingrese la clave del tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 

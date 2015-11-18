@@ -24,7 +24,7 @@
 				</DataGridTextColumn>
 				<DataGridTextColumn Binding="{Binding TicketNumber}" Header="No. de ticket" Width="0.07*"/>
 				<DataGridTextColumn Binding="{Binding PaidMethod}" Header="Método de pago" Width="0.11*"/>
-				<DataGridTextColumn Binding="{Binding TotalAmount, StringFormat=$\{0:0.00\}}" Header="Total de la compra" Width="0.1*"/>
+                <DataGridTextColumn Binding="{Binding TotalAmount, StringFormat=$\{0:n\}}" Header="Total de la compra" Width="0.1*"/>
 			</DataGrid.Columns>
 		</DataGrid>
 		<Button x:Name="btnDeleteGeneralPaid" Width="60" VerticalAlignment="Bottom" TabIndex="6" Margin="140,0,0,10" Height="29" HorizontalAlignment="Left" Content="Eliminar" Cursor="Hand" Click="btnDeleteGeneralPaid_Click" />

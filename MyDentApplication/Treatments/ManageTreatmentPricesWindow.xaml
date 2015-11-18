@@ -14,9 +14,9 @@
 						SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 						TabIndex="1">
 						<DataGrid.Columns>
-							<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+							<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-							<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+							<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 							<DataGridTextColumn Header="Descuento (%)" Binding="{Binding Discount}" Width="0.17*" />
 						</DataGrid.Columns>
 					</DataGrid>
@@ -32,9 +32,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -46,9 +46,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -66,9 +66,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -80,9 +80,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -100,9 +100,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -114,9 +114,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -134,9 +134,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -148,9 +148,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -168,9 +168,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -182,9 +182,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -202,9 +202,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -216,9 +216,9 @@
 									SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 									TabIndex="1">
 									<DataGrid.Columns>
-										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentPriceId}" Width="0.15*"/>
+										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-										<DataGridTextColumn Header="Precio ($)" Binding="{Binding Price}" Width="0.2*" />
+										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
 							</Grid>
@@ -230,5 +230,6 @@
 		<Button x:Name="btnDeleteTreatment" Content="Eliminar" Margin="0,0,10,10" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteTreatment_Click"/>
 		<Button x:Name="btnEditTreatment" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditTreatment_Click"/>
 		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,140,10" Width="60" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click"/>
+		<Button x:Name="btnCopyPrices" Content="Copiar precios del año pasado" Margin="10,0,0,10" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="182" Click="btnCopyPrices_Click"/>
 	</Grid>
 </Window>

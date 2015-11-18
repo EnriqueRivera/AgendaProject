@@ -318,18 +318,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TreatmentPrices">
-      <EntityTypeMapping TypeName="MyDentDBModel.TreatmentPrice">
-        <MappingFragment StoreEntitySet="TreatmentPrices">
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="TreatmentPriceId" ColumnName="TreatmentPriceId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Authorizations">
       <EntityTypeMapping TypeName="MyDentDBModel.Authorization">
         <MappingFragment StoreEntitySet="Authorizations">
@@ -338,6 +326,19 @@
           <ScalarProperty Name="PreAuthorizationNumber" ColumnName="PreAuthorizationNumber" />
           <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
           <ScalarProperty Name="AuthorizationId" ColumnName="AuthorizationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentPrices">
+      <EntityTypeMapping TypeName="MyDentDBModel.TreatmentPrice">
+        <MappingFragment StoreEntitySet="TreatmentPrices">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TreatmentKey" ColumnName="TreatmentKey" />
+          <ScalarProperty Name="TreatmentPriceId" ColumnName="TreatmentPriceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

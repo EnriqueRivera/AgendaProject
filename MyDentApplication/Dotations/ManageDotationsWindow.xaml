@@ -22,7 +22,7 @@
 						</MultiBinding>
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
-				<DataGridTextColumn Binding="{Binding Amount, StringFormat=$\{0:0.00\}}" Header="Cantidad" Width="0.06*"/>
+                <DataGridTextColumn Binding="{Binding Amount, StringFormat=$\{0:n\}}" Header="Cantidad" Width="0.06*"/>
 				<DataGridTextColumn Header="Firmado por" Width="0.1*" >
 					<DataGridTextColumn.Binding>
 						<MultiBinding StringFormat="{}{0} {1}">

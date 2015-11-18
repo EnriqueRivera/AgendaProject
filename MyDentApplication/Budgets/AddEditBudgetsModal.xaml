@@ -27,12 +27,12 @@
 				<DataGridTextColumn Binding="{Binding Quantity}" Header="Cantidad" Width="0.15*"/>
 				<DataGridTextColumn Binding="{Binding Concept}" Header="Concepto" Width="0.2*"/>
 				<DataGridTextColumn Binding="{Binding NumberOfEvents}" Header="No. citas" Width="0.15*"/>
-				<DataGridTextColumn Binding="{Binding UnitCost, StringFormat=$\{0:0.00\}}" Header="Costo u. normal" Width="0.2*"/>
-				<DataGridTextColumn Binding="{Binding UnitCostDiscount, StringFormat=$\{0:0.00\}}" Header="Costo u. desc." Width="0.2*"/>
-				<DataGridTextColumn Binding="{Binding NetTotal, StringFormat=$\{0:0.00\}}" Header="Total Neto" Width="0.16*"/>
-				<DataGridTextColumn Binding="{Binding TotalDiscount, StringFormat=$\{0:0.00\}}" Header="Total con desc." Width="0.16*"/>
+                <DataGridTextColumn Binding="{Binding UnitCost, StringFormat=$\{0:n\}}" Header="Costo u. normal" Width="0.2*"/>
+                <DataGridTextColumn Binding="{Binding UnitCostDiscount, StringFormat=$\{0:n\}}" Header="Costo u. desc." Width="0.2*"/>
+                <DataGridTextColumn Binding="{Binding NetTotal, StringFormat=$\{0:n\}}" Header="Total Neto" Width="0.16*"/>
+                <DataGridTextColumn Binding="{Binding TotalDiscount, StringFormat=$\{0:n\}}" Header="Total con desc." Width="0.16*"/>
 				<DataGridTextColumn Binding="{Binding Discount}" Header="Descuento (%)" Width="0.16*"/>
-				<DataGridTextColumn Binding="{Binding TotalPerEvent, StringFormat=$\{0:0.00\}}" Header="Total por cita" Width="0.16*"/>
+                <DataGridTextColumn Binding="{Binding TotalPerEvent, StringFormat=$\{0:n\}}" Header="Total por cita" Width="0.16*"/>
 			</DataGrid.Columns>
 		</DataGrid>
 		<Button x:Name="btnFindPatient" HorizontalAlignment="Right" Height="30" Margin="0,51,76.333,0" VerticalAlignment="Top" Width="30" Cursor="Hand" TabIndex="3" Click="btnFindPatient_Click" >

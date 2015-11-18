@@ -80,7 +80,7 @@ namespace MyDentApplication
 
             decimal receivedInvoicesTotal = _receivedInvoicesViewModel.ObservableData.Sum(i => i.TotalAmount);
             decimal outgoingInvoicesTotal = _outgoingInvoicesViewModel.ObservableData.Sum(i => i.TotalAmount);
-            lblTotalMonth.ToolTip = lblTotalMonth.Content = "Diferencia: $" + (outgoingInvoicesTotal - receivedInvoicesTotal).ToString("0.00");
+            lblTotalMonth.ToolTip = lblTotalMonth.Content = "Diferencia: $" + string.Format("{0:n}", (outgoingInvoicesTotal - receivedInvoicesTotal));
         }
 
         private void ExportToPdf(string path)
@@ -141,7 +141,7 @@ namespace MyDentApplication
                 AddCell(receivedInvoicesTable, bf, invoice.Folio);
                 AddCell(receivedInvoicesTable, bf, invoice.PaidMethod);
                 AddCell(receivedInvoicesTable, bf, invoice.IsPaid ? "Si" : "No");
-                AddCell(receivedInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.00"));
+                AddCell(receivedInvoicesTable, bf, "$" + string.Format("{0:n}", invoice.TotalAmount));
             }
         }
 
@@ -157,7 +157,7 @@ namespace MyDentApplication
                 AddCell(outgoingInvoicesTable, bf, invoice.PaidDate.ToString("dd/MM/yyyy"));
                 AddCell(outgoingInvoicesTable, bf, invoice.Folio);
                 AddCell(outgoingInvoicesTable, bf, invoice.PaidMethod);
-                AddCell(outgoingInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.00"));
+                AddCell(outgoingInvoicesTable, bf, "$" + string.Format("{0:n}", invoice.TotalAmount));
             }
         }
 

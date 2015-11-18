@@ -284,6 +284,7 @@
       <PropertyRef Name="TreatmentPriceId" />
     </Key>
     <Property Name="TreatmentPriceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TreatmentKey" Type="varchar(max)" Nullable="false" />
     <Property Name="Name" Type="varchar(max)" Nullable="false" />
     <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Discount" Type="int" Nullable="false" />

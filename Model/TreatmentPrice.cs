@@ -15,6 +15,7 @@ namespace Model
     public partial class TreatmentPrice
     {
         public int TreatmentPriceId { get; set; }
+        public string TreatmentKey { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Discount { get; set; }
