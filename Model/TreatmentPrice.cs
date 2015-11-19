@@ -20,6 +20,7 @@ namespace Model
         public decimal Price { get; set; }
         public int Discount { get; set; }
         public string Type { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

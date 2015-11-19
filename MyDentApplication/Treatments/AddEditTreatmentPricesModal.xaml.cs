@@ -20,7 +20,7 @@ namespace MyDentApplication
         #region Instance variables
         private Model.TreatmentPrice _treatmentToUpdate;
         private bool _isUpdateTreatmentInfo;
-        private string _tratmentType;
+        private string _treatmentType;
         #endregion
 
         #region Constructors
@@ -28,7 +28,7 @@ namespace MyDentApplication
 		{
 			this.InitializeComponent();
 
-            _tratmentType = tratmentType;
+            _treatmentType = tratmentType;
             _treatmentToUpdate = treatmentToUpdate;
             _isUpdateTreatmentInfo = _treatmentToUpdate != null;
 
@@ -37,7 +37,7 @@ namespace MyDentApplication
                 PrepareWindowForUpdates();
             }
 
-            if (_tratmentType == Controllers.Utils.TREATMENT_DENTISTRY)
+            if (_treatmentType == Controllers.Utils.TREATMENT_DENTISTRY)
             {
                 lblTreatmentDuration.Visibility = System.Windows.Visibility.Visible;
                 cbDiscount.Visibility = System.Windows.Visibility.Visible;
@@ -64,6 +64,7 @@ namespace MyDentApplication
                 _treatmentToUpdate.TreatmentKey = treatmentKey;
                 _treatmentToUpdate.Price = price;
                 _treatmentToUpdate.Discount = (int)cbDiscount.SelectedItem;
+                _treatmentToUpdate.CreatedDate = DateTime.Now;
 
                 UpdateTreatment(_treatmentToUpdate);
             }
@@ -75,7 +76,8 @@ namespace MyDentApplication
                     TreatmentKey = treatmentKey,
                     Price = price,
                     Discount = (int)cbDiscount.SelectedItem,
-                    Type = _tratmentType,
+                    Type = _treatmentType,
+                    CreatedDate = DateTime.Now,
                     IsDeleted = false
                 };
 

@@ -633,6 +633,7 @@
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
+    <Resource Include="Images\history_prices_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
     <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />

@@ -1,12 +1,17 @@
 ﻿<Window
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication" 
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	x:Class="MyDentApplication.ManageTreatmentPricesWindow"
 	x:Name="Window"
 	Title="Administrar costos de tratamientos"
 	Width="652" Height="496" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
+	<Window.Resources>
+		<local:DateValueConverter x:Key="DateValueConverter" />
+	</Window.Resources>
 	<Grid x:Name="LayoutRoot">
-		<TabControl x:Name="tcTratments" Margin="10,10,10,44" SelectedIndex="0">
+		<TabControl x:Name="tcTratments" Margin="10,49.917,10,44" SelectedIndex="0">
 			<TabItem Header="Odontología" Margin="-2,-2,-0.315,-1">
 				<Grid Background="#FFE5E5E5">
 					<DataGrid x:Name="dgDentristy" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
@@ -16,8 +21,15 @@
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+							<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+								<DataGridTextColumn.Binding>
+									<MultiBinding Converter="{StaticResource DateValueConverter}">
+										<Binding Path="CreatedDate"/>
+									</MultiBinding>
+								</DataGridTextColumn.Binding>
+							</DataGridTextColumn>
 							<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
-							<DataGridTextColumn Header="Descuento (%)" Binding="{Binding Discount}" Width="0.17*" />
+							<DataGridTextColumn Header="Descuento (%)" Binding="{Binding Discount}" Width="0.22*" />
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
@@ -34,6 +46,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -48,6 +67,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -68,6 +94,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -82,6 +115,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -102,6 +142,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -116,6 +163,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -136,6 +190,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -150,6 +211,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -170,6 +238,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -184,6 +259,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -204,6 +286,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -218,6 +307,13 @@
 									<DataGrid.Columns>
 										<DataGridTextColumn Header="Clave" Binding="{Binding TreatmentKey}" Width="0.15*"/>
 										<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
+										<DataGridTextColumn Header="Fecha de creación" Width="0.26*">
+											<DataGridTextColumn.Binding>
+												<MultiBinding Converter="{StaticResource DateValueConverter}">
+													<Binding Path="CreatedDate"/>
+												</MultiBinding>
+											</DataGridTextColumn.Binding>
+										</DataGridTextColumn>
 										<DataGridTextColumn Header="Precio" Binding="{Binding Price, StringFormat=$\{0:n\}}" Width="0.2*" />
 									</DataGrid.Columns>
 								</DataGrid>
@@ -230,6 +326,11 @@
 		<Button x:Name="btnDeleteTreatment" Content="Eliminar" Margin="0,0,10,10" Cursor="Hand" TabIndex="4" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" Click="btnDeleteTreatment_Click"/>
 		<Button x:Name="btnEditTreatment" Content="Editar" Margin="0,0,75,10" Cursor="Hand" TabIndex="3" HorizontalAlignment="Right" Width="60" Height="29" VerticalAlignment="Bottom" Click="btnEditTreatment_Click"/>
 		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Right" Margin="0,0,140,10" Width="60" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click"/>
-		<Button x:Name="btnCopyPrices" Content="Copiar precios del año pasado" Margin="10,0,0,10" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="182" Click="btnCopyPrices_Click"/>
+		<Button x:Name="btnCopyPrices" Content="Copiar precios del año pasado al año en curso" Margin="10,0,0,10" Cursor="Hand" TabIndex="2" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="262" Click="btnCopyPrices_Click"/>
+		<xctk:DateTimeUpDown x:Name="dtudSelectedYear" HorizontalAlignment="Left" Height="25.5" Margin="133,10,0,0" VerticalAlignment="Top" Width="187.5" Format="Custom" FormatString="yyyy" Panel.ZIndex="1"/>
+		<Label Width="118" VerticalAlignment="Top" Margin="10,10,0,0" Height="27" HorizontalAlignment="Left" Content="Seleccione un año:"/>
+		<Button x:Name="btnRefresh" Margin="325.5,10,0,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" Click="btnRefresh_Click">
+			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
+		</Button>
 	</Grid>
 </Window>

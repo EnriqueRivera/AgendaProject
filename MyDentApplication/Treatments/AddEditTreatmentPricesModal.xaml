@@ -5,14 +5,14 @@
 	x:Class="MyDentApplication.AddEditTreatmentPricesModal"
 	x:Name="Window"
 	Title="Agregar tratamiento y costo"
-	Width="426" Height="299" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+	Width="426" Height="331" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 	<Grid x:Name="LayoutRoot" Margin="0,0,-2,-2">
 		<Button x:Name="btnAddUpdateTreatment" Content="Agregar" Margin="110.17,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" Click="btnAddUpdateTreatment_Click" HorizontalAlignment="Left" Width="91"/>
 		<Button x:Name="btnCancel" Content="Cancelar" Margin="206.17,0,0,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" HorizontalAlignment="Left" Width="91"/>
 		<Label x:Name="lblTreatmentName" Content="Nombre del tratamiento:" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="344"/>
 		<TextBox x:Name="txtTreatmentName" Height="27" Margin="10,37,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black" TextAlignment="Center"/>
 		<Label x:Name="lblTreatmentDuration" Content="Descuento:" HorizontalAlignment="Left" Height="27" Margin="15,178,0,0" VerticalAlignment="Top" Width="71.333" Visibility="Hidden"/>
-		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="91.333,177,0,0" VerticalAlignment="Top" Width="100" SelectedIndex="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Visibility="Hidden" TabIndex="4">
+		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="91.333,177,0,0" VerticalAlignment="Top" Width="100" SelectedIndex="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TabIndex="4" Visibility="Hidden">
 			<System:Int32>0</System:Int32>
 			<System:Int32>5</System:Int32>
 			<System:Int32>10</System:Int32>
@@ -26,5 +26,6 @@
 		<TextBox x:Name="txtCost" HorizontalAlignment="Left" Height="27" Margin="91.333,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="3" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
 		<Label x:Name="lblTreatmentKey" Content="Clave:" HorizontalAlignment="Left" Height="27" Margin="46.833,82,0,0" VerticalAlignment="Top" Width="44.5"/>
 		<TextBox x:Name="txtTreatmentKey" HorizontalAlignment="Left" Height="27" Margin="91.333,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="2" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
+		<Label Content="*Este tratamiento será agregado al año en curso." HorizontalAlignment="Left" Height="27" Margin="15,221,0,0" VerticalAlignment="Top" Width="355" FontStyle="Italic"/>
 	</Grid>
 </Window>

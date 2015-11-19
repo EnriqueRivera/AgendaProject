@@ -333,6 +333,7 @@
       <EntityTypeMapping TypeName="MyDentDBModel.TreatmentPrice">
         <MappingFragment StoreEntitySet="TreatmentPrices">
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="Discount" ColumnName="Discount" />
           <ScalarProperty Name="Price" ColumnName="Price" />

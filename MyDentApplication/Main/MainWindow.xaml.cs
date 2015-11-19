@@ -841,7 +841,7 @@ namespace MyDentApplication
         {
             if (_manageTreatmentPricesWindow == null)
             {
-                _manageTreatmentPricesWindow = new ManageTreatmentPricesWindow();
+                _manageTreatmentPricesWindow = new ManageTreatmentPricesWindow(_userLoggedIn);
                 _manageTreatmentPricesWindow.Closed += Window_Closed;
             }
 

@@ -33,13 +33,16 @@ namespace MyDentApplication
         private CustomViewModel<Model.TreatmentPrice> _periodonticsHIViewModel;
         private CustomViewModel<Model.TreatmentPrice> _pediatricDentalViewModel;
         private CustomViewModel<Model.TreatmentPrice> _pediatricDentalHIViewModel;
+        private Model.User _userLoggedIn;
         #endregion
 
         #region Constructors
-        public ManageTreatmentPricesWindow()
+        public ManageTreatmentPricesWindow(Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
+            _userLoggedIn = userLoggedIn;
+            dtudSelectedYear.Value = DateTime.Now;
             UpdateAllGrid();
         }
         #endregion
@@ -74,7 +77,8 @@ namespace MyDentApplication
                     break;
             }
 
-            UpdateGrid();
+            dtudSelectedYear.Value = DateTime.Now;
+            UpdateCurrentGrid();
         }
 
         private void btnEditTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -87,10 +91,16 @@ namespace MyDentApplication
             {
                 MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else if (treatmentSelected.CreatedDate.Year != DateTime.Now.Year)
+            {
+                MessageBox.Show("No puede editar un tratamiento que no sea del año en curso", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             else
             {
                 new AddEditTreatmentPricesModal(treatmentSelected, tcTratments.SelectedIndex == 0 ? Controllers.Utils.TREATMENT_DENTISTRY : string.Empty).ShowDialog();
-                UpdateGrid();
+
+                dtudSelectedYear.Value = DateTime.Now;
+                UpdateCurrentGrid();
             }
         }
 
@@ -104,6 +114,10 @@ namespace MyDentApplication
             {
                 MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else if (treatmentSelected.CreatedDate.Year != DateTime.Now.Year)
+            {
+                MessageBox.Show("No puede eliminar un tratamiento que no sea del año en curso", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             else if (MessageBox.Show
                                 (string.Format("¿Está seguro(a) que desea eliminar el tratamiento con clave '{0}'?",
                                         treatmentSelected.TreatmentKey),
@@ -116,7 +130,8 @@ namespace MyDentApplication
 
                 if (BusinessController.Instance.Update<Model.TreatmentPrice>(treatmentSelected))
                 {
-                    UpdateGrid();
+                    dtudSelectedYear.Value = DateTime.Now;
+                    UpdateCurrentGrid();
                 }
                 else
                 {
@@ -127,11 +142,61 @@ namespace MyDentApplication
 
         private void btnCopyPrices_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            // TODO: Add event handler implementation here.
+            int currentYear = DateTime.Now.Year;
+
+            if (MessageBox.Show(string.Format("¿Está seguro(a) que desea copiar todos los precios de los tratamientos del año '{0}' a el año en curso ({1})?",
+                                    currentYear - 1, currentYear),
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.Yes 
+                                && MainWindow.IsValidAdminPassword(_userLoggedIn))
+            {
+                CopyAllPricesOfLastYear();
+            }
+        }
+
+        private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            UpdateAllGrid();
         }
         #endregion
 
         #region Window's logic
+        private void CopyAllPricesOfLastYear()
+        {
+            bool treatmentsAdded = true;
+            List<Model.TreatmentPrice> allTreatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == (DateTime.Now.Year - 1)).ToList();
+
+            foreach (Model.TreatmentPrice treatmentToCopy in allTreatments)
+            {
+                Model.TreatmentPrice newTreatmentPrice = new Model.TreatmentPrice()
+                {
+                    CreatedDate = DateTime.Now,
+                    Discount = treatmentToCopy.Discount,
+                    IsDeleted = false,
+                    Name = treatmentToCopy.Name,
+                    Price = treatmentToCopy.Price,
+                    TreatmentKey = treatmentToCopy.TreatmentKey,
+                    Type = treatmentToCopy.Type
+                };
+
+                treatmentsAdded &= BusinessController.Instance.Add<Model.TreatmentPrice>(newTreatmentPrice);
+            }
+
+            dtudSelectedYear.Value = DateTime.Now;
+            UpdateAllGrid();
+
+            if (treatmentsAdded)
+            {
+                MessageBox.Show("Tratamientos copiados", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Ocurrio un error al tratar de copiar los precios de los tratamientos", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private DataGrid GetCurrentDataGrid()
         {
             switch (tcTratments.SelectedIndex)
@@ -155,83 +220,85 @@ namespace MyDentApplication
             }
         }
 
-        private void UpdateGrid()
+        private void UpdateCurrentGrid()
         {
+            int year = dtudSelectedYear.Value.Value.Year;
+
             switch (tcTratments.SelectedIndex)
             {
                 case 0:
-                    _dentristyViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_DENTISTRY, "TreatmentKey", "asc");
+                    _dentristyViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_DENTISTRY, "TreatmentKey", "asc");
                     dgDentristy.DataContext = _dentristyViewModel;
                     break;
                 case 1:
                     if (tcPainClinic.SelectedIndex == 0)
                     {
-                        _painClinicViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PAIN_CLINIC, "TreatmentKey", "asc");
+                        _painClinicViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_PAIN_CLINIC, "TreatmentKey", "asc");
                         dgPainClinic.DataContext = _painClinicViewModel;
                     }
                     else
                     {
-                        _painClinicHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PAIN_CLINIC + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
+                        _painClinicHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_PAIN_CLINIC + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgPainClinicHI.DataContext = _painClinicHIViewModel;
                     }
                     break;
                 case 2:
                     if (tcEndodontics.SelectedIndex == 0)
                     {
-                        _endodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ENDODONTICS, "TreatmentKey", "asc");
+                        _endodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_ENDODONTICS, "TreatmentKey", "asc");
                         dgEndodontics.DataContext = _endodonticsViewModel;
                     }
                     else
                     {
-                        _endodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ENDODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
+                        _endodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_ENDODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgEndodonticsHI.DataContext = _endodonticsHIViewModel;
                     }
                     break;
                 case 3:
                     if (tcOrthodontics.SelectedIndex == 0)
                     {
-                        _orthodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ORTHODONTICS, "TreatmentKey", "asc");
+                        _orthodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_ORTHODONTICS, "TreatmentKey", "asc");
                         dgOrthodontics.DataContext = _orthodonticsViewModel;
                     }
                     else
                     {
-                        _orthodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_ORTHODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
+                        _orthodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_ORTHODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgOrthodonticsHI.DataContext = _orthodonticsHIViewModel;
                     }
                     break;
                 case 4:
                     if (tcCmf.SelectedIndex == 0)
                     {
-                        _cmfViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_CMF, "TreatmentKey", "asc");
+                        _cmfViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_CMF, "TreatmentKey", "asc");
                         dgCmf.DataContext = _cmfViewModel;
                     }
                     else
                     {
-                        _cmfHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_CMF + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
+                        _cmfHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_CMF + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgCmfHI.DataContext = _cmfHIViewModel;
                     }
                     break;
                 case 5:
                     if (tcPeriodontics.SelectedIndex == 0)
                     {
-                        _periodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PERIODONTICS, "TreatmentKey", "asc");
+                        _periodonticsViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_PERIODONTICS, "TreatmentKey", "asc");
                         dgPeriodontics.DataContext = _periodonticsViewModel;
                     }
                     else
                     {
-                        _periodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PERIODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
+                        _periodonticsHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_PERIODONTICS + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgPeriodonticsHI.DataContext = _periodonticsHIViewModel;
                     }
                     break;
                 case 6:
                     if (tcPediatricDental.SelectedIndex == 0)
                     {
-                        _pediatricDentalViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL, "TreatmentKey", "asc");
+                        _pediatricDentalViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL, "TreatmentKey", "asc");
                         dgPediatricDental.DataContext = _pediatricDentalViewModel;
                     }
                     else
                     {
-                        _pediatricDentalHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
+                        _pediatricDentalHIViewModel = new CustomViewModel<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year && t.Type == Utils.TREATMENT_PEDIATRIC_DENTAL + Utils.TREATMENT_HEALTH_INSURANCE, "TreatmentKey", "asc");
                         dgPediatricDentalHI.DataContext = _pediatricDentalHIViewModel;
                     }
                     break;
@@ -242,7 +309,9 @@ namespace MyDentApplication
 
         private void UpdateAllGrid()
         {
-            List<Model.TreatmentPrice> allTreatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(t => t.IsDeleted == false).ToList();
+            int year = dtudSelectedYear.Value.Value.Year;
+
+            List<Model.TreatmentPrice> allTreatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == year).ToList();
 
             _dentristyViewModel = new CustomViewModel<Model.TreatmentPrice>(allTreatments.Where(t => t.Type == Utils.TREATMENT_DENTISTRY).ToList());
 
