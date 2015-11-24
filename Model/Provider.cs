@@ -198,5 +198,18 @@ namespace Model
                 return false;
             }
         }
+
+        public List<InventoryAvailability> GetInventoryAvailability(int drawerId, int year, int month)
+        {
+            try
+            {
+                return _db.GetInventoryAvailability(drawerId, year, month).ToList();
+            }
+            catch (Exception e)
+            {
+                AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                return new List<InventoryAvailability>();
+            }
+        }
     }
 }

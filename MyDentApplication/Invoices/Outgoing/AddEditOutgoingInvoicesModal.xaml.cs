@@ -204,8 +204,8 @@ namespace MyDentApplication
                 return false;
             }
 
-            
-            if (decimal.TryParse(totalAmountText, out totalAmount) == false)
+
+            if (decimal.TryParse(totalAmountText, out totalAmount) == false || totalAmount < 0m)
             {
                 MessageBox.Show("Cantidad total inválida", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;

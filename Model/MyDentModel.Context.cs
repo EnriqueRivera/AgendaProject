@@ -12,6 +12,9 @@ namespace Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class MyDentDBEntities : DbContext
     {
@@ -53,5 +56,26 @@ namespace Model
         public DbSet<AmericanExpressPaid> AmericanExpressPaids { get; set; }
         public DbSet<Authorization> Authorizations { get; set; }
         public DbSet<TreatmentPrice> TreatmentPrices { get; set; }
+        public DbSet<Drawer> Drawers { get; set; }
+        public DbSet<InstrumentComment> InstrumentComments { get; set; }
+        public DbSet<Instrument> Instruments { get; set; }
+        public DbSet<InventorySignature> InventorySignatures { get; set; }
+    
+        public virtual ObjectResult<InventoryAvailability> GetInventoryAvailability(Nullable<int> drawerId, Nullable<int> year, Nullable<int> month)
+        {
+            var drawerIdParameter = drawerId.HasValue ?
+                new ObjectParameter("drawerId", drawerId) :
+                new ObjectParameter("drawerId", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryAvailability>("GetInventoryAvailability", drawerIdParameter, yearParameter, monthParameter);
+        }
     }
 }

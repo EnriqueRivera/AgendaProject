@@ -1,0 +1,22 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+	x:Class="MyDentApplication.AddEditInstrumentRevisionModal"
+	x:Name="Window"
+	Title="Agregar/Editar revisión"
+	Width="401.5" Height="324" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
+	<Grid x:Name="LayoutRoot">
+		<Label x:Name="lblReminderMessage" Content="Comentario:" HorizontalAlignment="Left" Height="25.672" Margin="10,10,0,0" VerticalAlignment="Top" Width="99.408"/>
+		<Border BorderThickness="1" BorderBrush="Black" Margin="10,40.672,10,0" Height="118.835" VerticalAlignment="Top">
+			<TextBox x:Name="txtComment" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True"/>
+		</Border>
+		<Button x:Name="btnAddEditRevision" Content="Agregar/Editar" Margin="0,0,106,10" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="98" Click="btnAddEditRevision_Click" />
+		<Button x:Name="btnCancel" Content="Cancelar" Margin="0,0,10,10" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="91" Click="btnCancel_Click"/>
+		<Label x:Name="lblProviderName" Content="Cantidad actual:" HorizontalAlignment="Left" Height="27" Margin="17,181,0,0" VerticalAlignment="Top" Width="96.908"/>
+		<TextBox x:Name="txtQuantity" Height="27" Margin="118.908,181,106,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
+		<Label x:Name="lblUses" Content="Usos restantes:" HorizontalAlignment="Left" Height="27" Margin="22,213,0,0" VerticalAlignment="Top" Width="91.908"/>
+		<TextBox x:Name="txtUsesLeft" Height="27" Margin="118.908,213,106,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
+		<Label x:Name="lblMaxUses" Content="" HorizontalAlignment="Left" Height="27" Margin="292.5,213,0,0" VerticalAlignment="Top" Width="91"/>
+	</Grid>
+</Window>

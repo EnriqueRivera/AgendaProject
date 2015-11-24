@@ -24,6 +24,8 @@ namespace Model
             this.Reminders = new HashSet<Reminder>();
             this.CleanedActions = new HashSet<CleanedAction>();
             this.Dotations = new HashSet<Dotation>();
+            this.InventorySignatures = new HashSet<InventorySignature>();
+            this.InventorySignatures1 = new HashSet<InventorySignature>();
         }
     
         public int UserId { get; set; }
@@ -42,5 +44,7 @@ namespace Model
         public virtual ICollection<Reminder> Reminders { get; set; }
         public virtual ICollection<CleanedAction> CleanedActions { get; set; }
         public virtual ICollection<Dotation> Dotations { get; set; }
+        public virtual ICollection<InventorySignature> InventorySignatures { get; set; }
+        public virtual ICollection<InventorySignature> InventorySignatures1 { get; set; }
     }
 }

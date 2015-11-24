@@ -78,5 +78,10 @@ namespace Controllers
         {
             return Model.Provider.Instance.AddUpdateConfiguration(configurationName, configurationValue);
         }
+
+        public List<Model.InventoryAvailability> GetInventoryAvailability(int drawerId, int year, int month)
+        {
+            return Model.Provider.Instance.GetInventoryAvailability(drawerId, year, month);
+        }
     }
 }

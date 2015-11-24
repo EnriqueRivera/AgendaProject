@@ -17,6 +17,7 @@ namespace Model
         public Treatment()
         {
             this.Events = new HashSet<Event>();
+            this.Instruments = new HashSet<Instrument>();
         }
     
         public int TreatmentId { get; set; }
@@ -26,5 +27,6 @@ namespace Model
         public bool IsDeleted { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<Instrument> Instruments { get; set; }
     }
 }

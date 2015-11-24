@@ -54,6 +54,7 @@ namespace MyDentApplication
         private ManageBudgetsWindow _manageBudgetsWindow;
         private ManageAmericanExpressPaidsWindow _manageAmericanExpressPaidsWindow;
         private ManageAuthorizationsWindow _manageAuthorizationsWindow;
+        private ManageDrawersWindow _manageDrawersWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -179,6 +180,7 @@ namespace MyDentApplication
             CloseWindow(_manageBudgetsWindow);
             CloseWindow(_manageAmericanExpressPaidsWindow);
             CloseWindow(_manageAuthorizationsWindow);
+            CloseWindow(_manageDrawersWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -289,6 +291,10 @@ namespace MyDentApplication
             else if (sender is ManageAuthorizationsWindow)
             {
                 _manageAuthorizationsWindow = null;
+            }
+            else if (sender is ManageDrawersWindow)
+            {
+                _manageDrawersWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -883,6 +889,18 @@ namespace MyDentApplication
 
             _manageAuthorizationsWindow.Show();
             _manageAuthorizationsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageInventory_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageDrawersWindow == null)
+            {
+                _manageDrawersWindow = new ManageDrawersWindow(_userLoggedIn);
+                _manageDrawersWindow.Closed += Window_Closed;
+            }
+
+            _manageDrawersWindow.Show();
+            _manageDrawersWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

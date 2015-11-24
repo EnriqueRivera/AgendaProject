@@ -10,6 +10,8 @@ FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Dotations\ManageDotationsWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Emails\SendEmailWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\GeneralPaids\ManageGeneralPaidsWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Inventories\ManageDrawersWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Inventories\ManageInstrumentsWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\Outgoing\ManageOutgoingInvoicesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\Received\ManageReceivedInvoicesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Invoices\Total\TotalInvoicesWindow.xaml;;
@@ -17,10 +19,10 @@ FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Medicines\ManageMedicinesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Patients\ManagePatientsWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Providers\ManageProvidersWindow.xaml;;
+FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Treatments\ManageTreatmentPricesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Agenda\EventStatusChangesWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Agenda\FinishedEventsReminderModal.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Main\MainWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Reminders\ManageRemindersWindow.xaml;;
 FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Users\UserLoginsWindow.xaml;;
-FC:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\Treatments\ManageTreatmentPricesWindow.xaml;;
 

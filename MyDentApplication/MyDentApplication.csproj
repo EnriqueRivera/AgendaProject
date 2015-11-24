@@ -100,6 +100,9 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Agenda\InstrumentTreatmentRelationModal.xaml.cs">
+      <DependentUpon>InstrumentTreatmentRelationModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AmericanExpressPaids\AddEditAmericanExpressPaidsModal.xaml.cs">
       <DependentUpon>AddEditAmericanExpressPaidsModal.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,27 @@
     </Compile>
     <Compile Include="GeneralPaids\ManageGeneralPaidsWindow.xaml.cs">
       <DependentUpon>ManageGeneralPaidsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\AddEditDrawersModal.xaml.cs">
+      <DependentUpon>AddEditDrawersModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\AddEditInstrumentRevisionModal.xaml.cs">
+      <DependentUpon>AddEditInstrumentRevisionModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\AddInstrumentModal.xaml.cs">
+      <DependentUpon>AddInstrumentModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\DrawerControl.xaml.cs">
+      <DependentUpon>DrawerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\EditInstrumentModal.xaml.cs">
+      <DependentUpon>EditInstrumentModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\ManageDrawersWindow.xaml.cs">
+      <DependentUpon>ManageDrawersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\ManageInstrumentsWindow.xaml.cs">
+      <DependentUpon>ManageInstrumentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Invoices\Outgoing\AddEditOutgoingInvoicesModal.xaml.cs">
       <DependentUpon>AddEditOutgoingInvoicesModal.xaml</DependentUpon>
@@ -292,6 +316,10 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="Agenda\InstrumentTreatmentRelationModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AmericanExpressPaids\AddEditAmericanExpressPaidsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -389,6 +417,34 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GeneralPaids\ManageGeneralPaidsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\AddEditDrawersModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\AddEditInstrumentRevisionModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\AddInstrumentModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\DrawerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\EditInstrumentModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\ManageDrawersWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\ManageInstrumentsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -633,7 +689,7 @@
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
-    <Resource Include="Images\history_prices_icon.png" />
+    <Resource Include="Images\inventory_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
     <Resource Include="Images\laboratoryWork_icon.png" />
     <Resource Include="Images\logout_icon.png" />

@@ -118,7 +118,7 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (decimal.TryParse(txtCost.Text.ToString().Trim(), out price) == false)
+            if (decimal.TryParse(txtCost.Text.ToString().Trim(), out price) == false || price < 0m)
             {
                 MessageBox.Show("Ingrese un costo válido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;

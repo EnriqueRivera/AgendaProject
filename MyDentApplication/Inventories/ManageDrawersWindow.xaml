@@ -1,0 +1,17 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication"
+	x:Class="MyDentApplication.ManageDrawersWindow"
+	x:Name="Window"
+	Title="Administrar cajónes"
+	Width="563.88" Height="480" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen">
+	<Grid Margin="0,0,0.083,0.167">
+		<ScrollViewer x:Name="svDrawers" Margin="10,53.105,10,44" VerticalScrollBarVisibility="Auto" BorderThickness="0" Background="#FFE2C27E">
+			<StackPanel x:Name="spDrawers"/>
+		</ScrollViewer>
+		<Label x:Name="lblExpNoCaption_Copy1" Content="Total de cajones:" Margin="10,10,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="99.522"/>
+		<TextBlock x:Name="lblDrawerQuantity" Height="20" Margin="114.522,15,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
+		<Button x:Name="btnAddDrawer" Width="60" VerticalAlignment="Bottom" TabIndex="4" Margin="0,0,10,10" Height="29" HorizontalAlignment="Right" Content="Agregar" Cursor="Hand" Click="btnAddDrawer_Click" />
+	</Grid>
+</Window>

@@ -1,0 +1,23 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="MyDentApplication.DrawerControl"
+	x:Name="UserControl"
+	d:DesignWidth="640" Width="646.966" Height="133.057">
+	<Grid x:Name="gridDrawer" Margin="0,0,2,2">
+		<Grid x:Name="gridBackground" Grid.ColumnSpan="2" Background="#FFCFA279" Opacity="0.9"/>
+		<Button x:Name="btnOpenDrawer" Content="Abrir" Height="25" Margin="0,23.148,10,0" VerticalAlignment="Top" Cursor="Hand" Click="btnOpenDrawer_Click" HorizontalAlignment="Right" Width="70.47" />
+		<Button x:Name="btnEditDrawer" Content="Editar" Height="25" Margin="0,53.148,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="btnEditDrawer_Click" HorizontalAlignment="Right" Width="70.47" />
+		<Button x:Name="btnDeleteDrawer" Content="Eliminar" Height="25" Margin="0,83.148,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.383,0.55" Cursor="Hand" Click="btnDeleteDrawer_Click" HorizontalAlignment="Right" Width="70.47" />
+		<Label x:Name="lblExpNoCaption" Content="Nombre:" Margin="100.445,20,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="55.522"/>
+		<TextBlock x:Name="lblDrawerName" Height="20" Margin="160.967,25,106,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
+		<Label x:Name="lblExpNoCaption_Copy" Content="Fecha de creación:" Margin="44.445,80,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111.522"/>
+		<Label x:Name="lblExpNoCaption_Copy1" Content="Total de instrumentos:" Margin="26.445,50,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="129.522"/>
+		<TextBlock x:Name="lblInstrumentQuantity" Height="20" Margin="160.967,55,106,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
+		<TextBlock x:Name="lblCreatedDate" Height="20" Margin="160.967,85,106,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
+		<Rectangle x:Name="rcBorder" Stroke="Black" StrokeThickness="2"/>
+	</Grid>
+</UserControl>

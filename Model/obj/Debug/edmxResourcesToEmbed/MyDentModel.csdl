@@ -121,6 +121,39 @@
       <End Role="Authorization" EntitySet="Authorizations" />
     </AssociationSet>
     <EntitySet Name="TreatmentPrices" EntityType="MyDentDBModel.TreatmentPrice" />
+    <EntitySet Name="Drawers" EntityType="MyDentDBModel.Drawer" />
+    <FunctionImport Name="GetInventoryAvailability" ReturnType="Collection(MyDentDBModel.InventoryAvailability)">
+      <Parameter Name="drawerId" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="InstrumentComments" EntityType="MyDentDBModel.InstrumentComment" />
+    <EntitySet Name="Instruments" EntityType="MyDentDBModel.Instrument" />
+    <AssociationSet Name="FK_Instruments_DrawerId" Association="MyDentDBModel.FK_Instruments_DrawerId">
+      <End Role="Drawer" EntitySet="Drawers" />
+      <End Role="Instrument" EntitySet="Instruments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstrumentComments_InstrumentId" Association="MyDentDBModel.FK_InstrumentComments_InstrumentId">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="InstrumentComment" EntitySet="InstrumentComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruments_TreatmentId" Association="MyDentDBModel.FK_Instruments_TreatmentId">
+      <End Role="Treatment" EntitySet="Treatments" />
+      <End Role="Instrument" EntitySet="Instruments" />
+    </AssociationSet>
+    <EntitySet Name="InventorySignatures" EntityType="MyDentDBModel.InventorySignature" />
+    <AssociationSet Name="FK_InventorySignatures_Signature1" Association="MyDentDBModel.FK_InventorySignatures_Signature1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="InventorySignature" EntitySet="InventorySignatures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventorySignatures_Signature2" Association="MyDentDBModel.FK_InventorySignatures_Signature2">
+      <End Role="User" EntitySet="Users" />
+      <End Role="InventorySignature" EntitySet="InventorySignatures" />
+    </AssociationSet>
+    <AssociationSet Name="PK_Events_InstrumentId" Association="MyDentDBModel.PK_Events_InstrumentId">
+      <End Role="Instrument" EntitySet="Instruments" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -159,6 +192,8 @@
     <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
     <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
     <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="Event" ToRole="EventStatusChanx" />
+    <Property Name="InstrumentId" Type="Int32" />
+    <NavigationProperty Name="Instrument" Relationship="MyDentDBModel.PK_Events_InstrumentId" FromRole="Event" ToRole="Instrument" />
   </EntityType>
   <EntityType Name="EventStatusChanx">
     <Key>
@@ -328,6 +363,7 @@
     <Property Name="Recurrent" Type="Int32" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
+    <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.FK_Instruments_TreatmentId" FromRole="Treatment" ToRole="Instrument" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -348,6 +384,8 @@
     <NavigationProperty Name="Reminders" Relationship="MyDentDBModel.FK_Reminders_SeenBy" FromRole="User" ToRole="Reminder" />
     <NavigationProperty Name="CleanedActions" Relationship="MyDentDBModel.FK_CleanedActions_UserId" FromRole="User" ToRole="CleanedAction" />
     <NavigationProperty Name="Dotations" Relationship="MyDentDBModel.FK_Dotations_UserId" FromRole="User" ToRole="Dotation" />
+    <NavigationProperty Name="InventorySignatures" Relationship="MyDentDBModel.FK_InventorySignatures_Signature1" FromRole="User" ToRole="InventorySignature" />
+    <NavigationProperty Name="InventorySignatures1" Relationship="MyDentDBModel.FK_InventorySignatures_Signature2" FromRole="User" ToRole="InventorySignature" />
   </EntityType>
   <Association Name="FK_Events_EventCapturerId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -758,4 +796,136 @@
     <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EntityType Name="Drawer">
+    <Key>
+      <PropertyRef Name="DrawerId" />
+    </Key>
+    <Property Name="DrawerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.FK_Instruments_DrawerId" FromRole="Drawer" ToRole="Instrument" />
+  </EntityType>
+  <ComplexType Name="InventoryAvailability">
+    <Property Type="Int32" Name="InstrumentId" Nullable="false" />
+    <Property Type="Int32" Name="Quantity" Nullable="false" />
+    <Property Type="String" Name="TreatmentName" Nullable="true" />
+    <Property Type="Int32" Name="UsesLeft" Nullable="true" />
+    <Property Type="Int32" Name="InstrumentCommentId" Nullable="true" />
+    <Property Type="Boolean" Name="IsChecked" Nullable="true" />
+    <Property Type="String" Name="InstrumentName" Nullable="false" />
+    <Property Type="String" Name="Comment" Nullable="true" />
+    <Property Type="Int32" Name="MaxUses" Nullable="true" />
+    <Property Type="Int32" Name="TreatmentId" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="InstrumentComment">
+    <Key>
+      <PropertyRef Name="InstrumentCommentId" />
+    </Key>
+    <Property Name="InstrumentCommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="InstrumentId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Instrument" Relationship="MyDentDBModel.FK_InstrumentComments_InstrumentId" FromRole="InstrumentComment" ToRole="Instrument" />
+  </EntityType>
+  <EntityType Name="Instrument">
+    <Key>
+      <PropertyRef Name="InstrumentId" />
+    </Key>
+    <Property Name="InstrumentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="DrawerId" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentId" Type="Int32" />
+    <Property Name="UsesLeft" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Drawer" Relationship="MyDentDBModel.FK_Instruments_DrawerId" FromRole="Instrument" ToRole="Drawer" />
+    <NavigationProperty Name="InstrumentComments" Relationship="MyDentDBModel.FK_InstrumentComments_InstrumentId" FromRole="Instrument" ToRole="InstrumentComment" />
+    <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Instruments_TreatmentId" FromRole="Instrument" ToRole="Treatment" />
+    <Property Name="MaxUses" Type="Int32" />
+    <NavigationProperty Name="Events" Relationship="MyDentDBModel.PK_Events_InstrumentId" FromRole="Instrument" ToRole="Event" />
+  </EntityType>
+  <Association Name="FK_Instruments_DrawerId">
+    <End Type="MyDentDBModel.Drawer" Role="Drawer" Multiplicity="1" />
+    <End Type="MyDentDBModel.Instrument" Role="Instrument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drawer">
+        <PropertyRef Name="DrawerId" />
+      </Principal>
+      <Dependent Role="Instrument">
+        <PropertyRef Name="DrawerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstrumentComments_InstrumentId">
+    <End Type="MyDentDBModel.Instrument" Role="Instrument" Multiplicity="1" />
+    <End Type="MyDentDBModel.InstrumentComment" Role="InstrumentComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="InstrumentId" />
+      </Principal>
+      <Dependent Role="InstrumentComment">
+        <PropertyRef Name="InstrumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruments_TreatmentId">
+    <End Type="MyDentDBModel.Treatment" Role="Treatment" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.Instrument" Role="Instrument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Treatment">
+        <PropertyRef Name="TreatmentId" />
+      </Principal>
+      <Dependent Role="Instrument">
+        <PropertyRef Name="TreatmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="InventorySignature">
+    <Key>
+      <PropertyRef Name="InventorySignatureId" />
+    </Key>
+    <Property Name="InventorySignatureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Signature1" Type="Int32" Nullable="false" />
+    <Property Name="Signature2" Type="Int32" Nullable="false" />
+    <Property Name="SignatureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_InventorySignatures_Signature1" FromRole="InventorySignature" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="MyDentDBModel.FK_InventorySignatures_Signature2" FromRole="InventorySignature" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_InventorySignatures_Signature1">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.InventorySignature" Role="InventorySignature" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="InventorySignature">
+        <PropertyRef Name="Signature1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventorySignatures_Signature2">
+    <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MyDentDBModel.InventorySignature" Role="InventorySignature" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="InventorySignature">
+        <PropertyRef Name="Signature2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_Events_InstrumentId">
+    <End Type="MyDentDBModel.Instrument" Role="Instrument" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="InstrumentId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="InstrumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

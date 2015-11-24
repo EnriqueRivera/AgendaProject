@@ -25,6 +25,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="MyDentDBModel.Event">
         <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
           <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -340,6 +341,66 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TreatmentKey" ColumnName="TreatmentKey" />
           <ScalarProperty Name="TreatmentPriceId" ColumnName="TreatmentPriceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drawers">
+      <EntityTypeMapping TypeName="MyDentDBModel.Drawer">
+        <MappingFragment StoreEntitySet="Drawers">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DrawerId" ColumnName="DrawerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetInventoryAvailability" FunctionName="MyDentDBModel.Store.sp_GetInventoryAvailability">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MyDentDBModel.InventoryAvailability">
+          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TreatmentName" ColumnName="TreatmentName" />
+          <ScalarProperty Name="UsesLeft" ColumnName="UsesLeft" />
+          <ScalarProperty Name="InstrumentCommentId" ColumnName="InstrumentCommentId" />
+          <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+          <ScalarProperty Name="InstrumentName" ColumnName="InstrumentName" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="InstrumentComments">
+      <EntityTypeMapping TypeName="MyDentDBModel.InstrumentComment">
+        <MappingFragment StoreEntitySet="InstrumentComments">
+          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+          <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="InstrumentCommentId" ColumnName="InstrumentCommentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Instruments">
+      <EntityTypeMapping TypeName="MyDentDBModel.Instrument">
+        <MappingFragment StoreEntitySet="Instruments">
+          <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="UsesLeft" ColumnName="UsesLeft" />
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+          <ScalarProperty Name="DrawerId" ColumnName="DrawerId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InventorySignatures">
+      <EntityTypeMapping TypeName="MyDentDBModel.InventorySignature">
+        <MappingFragment StoreEntitySet="InventorySignatures">
+          <ScalarProperty Name="SignatureDate" ColumnName="SignatureDate" />
+          <ScalarProperty Name="Signature2" ColumnName="Signature2" />
+          <ScalarProperty Name="Signature1" ColumnName="Signature1" />
+          <ScalarProperty Name="InventorySignatureId" ColumnName="InventorySignatureId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

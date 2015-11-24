@@ -212,6 +212,12 @@
         				</Button>
 					</StackPanel>
 					<StackPanel>
+						<Button x:Name="btnManageInventory" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageInventory_Click" > 
+        					<StackPanel Orientation="Vertical">
+        						<Image Source="/MyDentApplication;component/Images/inventory_icon.png" Width="50" Height="50"  />
+        						<TextBlock Text="Inventario" TextAlignment="Center" />
+        					</StackPanel>
+        				</Button>
 						<Button x:Name="btnSendMails" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSendMails_Click" Margin="0,0,0,5" > 
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/sendEmail_icon.png" Width="50" Height="50"  />

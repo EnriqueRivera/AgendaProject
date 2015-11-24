@@ -110,7 +110,7 @@ namespace MyDentApplication
 
         private bool AreValidFields(string dotationAmountText, out decimal dotationAmount)
         {
-            if (decimal.TryParse(dotationAmountText, out dotationAmount) == false)
+            if (decimal.TryParse(dotationAmountText, out dotationAmount) == false || dotationAmount < 0m)
             {
                 MessageBox.Show("Cantidad inválida", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;

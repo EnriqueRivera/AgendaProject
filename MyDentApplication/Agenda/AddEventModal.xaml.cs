@@ -141,15 +141,31 @@ namespace MyDentApplication
             Model.Event eventToAdd = new Model.Event();
             if (IsValidEvent(eventToAdd))
             {
+                if (IsValidTreatmentInstrumentRelation(eventToAdd) == false)
+                {
+                    return;
+                }
+
                 if (BusinessController.Instance.Add<Model.Event>(eventToAdd))
                 {
                     WpfScheduler.Event eventToAddScheduler = new WpfScheduler.Event() { EventInfo = eventToAdd };
                     _scheduler.AddEvent(eventToAddScheduler);
 
+                    //Change status
                     bool eventStatusChangeRegistered = Utils.AddEventStatusChanges(null, eventToAddScheduler.EventStatus.ToString(), eventToAdd.EventId, _userLoggedIn.UserId);
                     if (eventStatusChangeRegistered == false)
                     {
-                        MessageBox.Show("No se pudo guardar un registro del cambio registrado en el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("No se pudo guardar el cambio registrado en el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    //Discount UsesLeft to the selected instrument
+                    if (eventToAdd.Instrument != null)
+                    {
+                        eventToAdd.Instrument.UsesLeft = eventToAdd.Instrument.UsesLeft.Value - 1;
+                        if (BusinessController.Instance.Update<Model.Instrument>(eventToAdd.Instrument) == false)
+                        {
+                            MessageBox.Show("No se pudo descontar la cantidad de usos al instrumento seleccionado", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
 
                     this.Close();
@@ -163,6 +179,22 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
+        private bool IsValidTreatmentInstrumentRelation(Model.Event eventToAdd)
+        {
+            List<Model.Instrument> instrumentsWithTreatment = BusinessController.Instance.FindBy<Model.Instrument>(i => i.IsDeleted == false && i.TreatmentId == eventToAdd.TreatmentId).ToList();
+
+            if (instrumentsWithTreatment.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                new InstrumentTreatmentRelationModal(instrumentsWithTreatment, eventToAdd).ShowDialog();
+
+                return eventToAdd.InstrumentId.HasValue;
+            }
+        }
+
         private bool IsValidAuthorization(Model.Authorization authorization)
         {
             if (authorization.AuthorizationNumber != null)
