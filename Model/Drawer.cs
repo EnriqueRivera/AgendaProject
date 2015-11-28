@@ -17,6 +17,7 @@ namespace Model
         public Drawer()
         {
             this.Instruments = new HashSet<Instrument>();
+            this.InventorySignatures = new HashSet<InventorySignature>();
         }
     
         public int DrawerId { get; set; }
@@ -25,5 +26,6 @@ namespace Model
         public bool IsDeleted { get; set; }
     
         public virtual ICollection<Instrument> Instruments { get; set; }
+        public virtual ICollection<InventorySignature> InventorySignatures { get; set; }
     }
 }

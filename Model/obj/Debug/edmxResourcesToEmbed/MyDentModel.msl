@@ -397,6 +397,7 @@
     <EntitySetMapping Name="InventorySignatures">
       <EntityTypeMapping TypeName="MyDentDBModel.InventorySignature">
         <MappingFragment StoreEntitySet="InventorySignatures">
+          <ScalarProperty Name="DrawerId" ColumnName="DrawerId" />
           <ScalarProperty Name="SignatureDate" ColumnName="SignatureDate" />
           <ScalarProperty Name="Signature2" ColumnName="Signature2" />
           <ScalarProperty Name="Signature1" ColumnName="Signature1" />

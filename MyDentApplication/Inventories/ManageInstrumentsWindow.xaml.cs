@@ -158,7 +158,8 @@ namespace MyDentApplication
                             {
                                 Signature1 = user1.UserId,
                                 Signature2 = user2.UserId,
-                                SignatureDate = _selectedDate
+                                SignatureDate = _selectedDate,
+                                DrawerId = _selectedDrawer.DrawerId
                             };
 
                             if (Controllers.BusinessController.Instance.Add<Model.InventorySignature>(signatureToAdd))
@@ -202,7 +203,7 @@ namespace MyDentApplication
 
         private void UpdateSignaturesInfo()
         {
-            Model.InventorySignature signatures = Controllers.BusinessController.Instance.FindBy<Model.InventorySignature>(s => s.SignatureDate.Year == _selectedDate.Year && s.SignatureDate.Month == _selectedDate.Month).FirstOrDefault();
+            Model.InventorySignature signatures = Controllers.BusinessController.Instance.FindBy<Model.InventorySignature>(s => s.DrawerId == _selectedDrawer.DrawerId && s.SignatureDate.Year == _selectedDate.Year && s.SignatureDate.Month == _selectedDate.Month).FirstOrDefault();
 
             if (signatures != null)
             {

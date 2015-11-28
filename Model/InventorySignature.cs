@@ -18,8 +18,10 @@ namespace Model
         public int Signature1 { get; set; }
         public int Signature2 { get; set; }
         public System.DateTime SignatureDate { get; set; }
+        public int DrawerId { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
+        public virtual Drawer Drawer { get; set; }
     }
 }

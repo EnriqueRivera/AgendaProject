@@ -206,6 +206,7 @@
           <Property Name="Signature1" Type="int" Nullable="false" />
           <Property Name="Signature2" Type="int" Nullable="false" />
           <Property Name="SignatureDate" Type="date" Nullable="false" />
+          <Property Name="DrawerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="LaboratoryWorks">
           <Key>
@@ -564,6 +565,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_InventorySignatures_DrawerId">
+          <End Role="Drawers" Type="Self.Drawers" Multiplicity="1" />
+          <End Role="InventorySignatures" Type="Self.InventorySignatures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drawers">
+              <PropertyRef Name="DrawerId" />
+            </Principal>
+            <Dependent Role="InventorySignatures">
+              <PropertyRef Name="DrawerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InventorySignatures_Signature1">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="InventorySignatures" Type="Self.InventorySignatures" Multiplicity="*" />
@@ -814,6 +827,10 @@
             <End Role="Treatments" EntitySet="Treatments" />
             <End Role="Instruments" EntitySet="Instruments" />
           </AssociationSet>
+          <AssociationSet Name="FK_InventorySignatures_DrawerId" Association="Self.FK_InventorySignatures_DrawerId">
+            <End Role="Drawers" EntitySet="Drawers" />
+            <End Role="InventorySignatures" EntitySet="InventorySignatures" />
+          </AssociationSet>
           <AssociationSet Name="FK_InventorySignatures_Signature1" Association="Self.FK_InventorySignatures_Signature1">
             <End Role="Users" EntitySet="Users" />
             <End Role="InventorySignatures" EntitySet="InventorySignatures" />
@@ -1020,6 +1037,10 @@
           <AssociationSet Name="PK_Events_InstrumentId" Association="MyDentDBModel.PK_Events_InstrumentId">
             <End Role="Instrument" EntitySet="Instruments" />
             <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventorySignatures_DrawerId" Association="MyDentDBModel.FK_InventorySignatures_DrawerId">
+            <End Role="Drawer" EntitySet="Drawers" />
+            <End Role="InventorySignature" EntitySet="InventorySignatures" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
@@ -1672,6 +1693,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.FK_Instruments_DrawerId" FromRole="Drawer" ToRole="Instrument" />
+          <NavigationProperty Name="InventorySignatures" Relationship="MyDentDBModel.FK_InventorySignatures_DrawerId" FromRole="Drawer" ToRole="InventorySignature" />
         </EntityType>
         <ComplexType Name="InventoryAvailability">
           <Property Type="Int32" Name="InstrumentId" Nullable="false" />
@@ -1758,6 +1780,8 @@
           <Property Name="SignatureDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_InventorySignatures_Signature1" FromRole="InventorySignature" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="MyDentDBModel.FK_InventorySignatures_Signature2" FromRole="InventorySignature" ToRole="User" />
+          <Property Name="DrawerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Drawer" Relationship="MyDentDBModel.FK_InventorySignatures_DrawerId" FromRole="InventorySignature" ToRole="Drawer" />
         </EntityType>
         <Association Name="FK_InventorySignatures_Signature1">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -1792,6 +1816,18 @@
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="InstrumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventorySignatures_DrawerId">
+          <End Type="MyDentDBModel.Drawer" Role="Drawer" Multiplicity="1" />
+          <End Type="MyDentDBModel.InventorySignature" Role="InventorySignature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drawer">
+              <PropertyRef Name="DrawerId" />
+            </Principal>
+            <Dependent Role="InventorySignature">
+              <PropertyRef Name="DrawerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2197,6 +2233,7 @@
           <EntitySetMapping Name="InventorySignatures">
             <EntityTypeMapping TypeName="MyDentDBModel.InventorySignature">
               <MappingFragment StoreEntitySet="InventorySignatures">
+                <ScalarProperty Name="DrawerId" ColumnName="DrawerId" />
                 <ScalarProperty Name="SignatureDate" ColumnName="SignatureDate" />
                 <ScalarProperty Name="Signature2" ColumnName="Signature2" />
                 <ScalarProperty Name="Signature1" ColumnName="Signature1" />

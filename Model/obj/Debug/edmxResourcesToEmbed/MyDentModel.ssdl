@@ -201,6 +201,7 @@
     <Property Name="Signature1" Type="int" Nullable="false" />
     <Property Name="Signature2" Type="int" Nullable="false" />
     <Property Name="SignatureDate" Type="date" Nullable="false" />
+    <Property Name="DrawerId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LaboratoryWorks">
     <Key>
@@ -559,6 +560,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_InventorySignatures_DrawerId">
+    <End Role="Drawers" Type="Self.Drawers" Multiplicity="1" />
+    <End Role="InventorySignatures" Type="Self.InventorySignatures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drawers">
+        <PropertyRef Name="DrawerId" />
+      </Principal>
+      <Dependent Role="InventorySignatures">
+        <PropertyRef Name="DrawerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_InventorySignatures_Signature1">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="InventorySignatures" Type="Self.InventorySignatures" Multiplicity="*" />
@@ -808,6 +821,10 @@
     <AssociationSet Name="FK_Instruments_TreatmentId" Association="Self.FK_Instruments_TreatmentId">
       <End Role="Treatments" EntitySet="Treatments" />
       <End Role="Instruments" EntitySet="Instruments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventorySignatures_DrawerId" Association="Self.FK_InventorySignatures_DrawerId">
+      <End Role="Drawers" EntitySet="Drawers" />
+      <End Role="InventorySignatures" EntitySet="InventorySignatures" />
     </AssociationSet>
     <AssociationSet Name="FK_InventorySignatures_Signature1" Association="Self.FK_InventorySignatures_Signature1">
       <End Role="Users" EntitySet="Users" />

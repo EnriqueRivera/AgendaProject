@@ -60,7 +60,6 @@ namespace MyDentApplication
                 UsesLeft = txtMaxUses.IsEnabled ? maxUses : new Nullable<int>(),
                 MaxUses = txtMaxUses.IsEnabled ? maxUses : new Nullable<int>(),
                 IsDeleted = false
-
             };
 
             AddInstrument(instrumentToAdd);
@@ -113,7 +112,7 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (int.TryParse(quantityText, out quantity) == false || quantity < 0)
+            if (int.TryParse(quantityText, out quantity) == false || quantity < 1)
             {
                 MessageBox.Show("Cantidad inválida", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
@@ -129,7 +128,7 @@ namespace MyDentApplication
 
                 if (quantity != 0 && quantity != 1)
                 {
-                    MessageBox.Show("La cantidad debe ser 0 o 1 para los instrumentos utilizados en un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("La cantidad debe ser 1 para los instrumentos utilizados en un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             }

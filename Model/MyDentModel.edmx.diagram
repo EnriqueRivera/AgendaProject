@@ -66,6 +66,7 @@
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_Signature1" />
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_Signature2" />
         <AssociationConnector Association="MyDentDBModel.PK_Events_InstrumentId" />
+        <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_DrawerId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
