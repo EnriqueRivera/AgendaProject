@@ -20,7 +20,7 @@ namespace MyDentApplication
         #region Instance variables
         private Model.Treatment _treatmentToUpdate;
         private bool _isUpdateTreatmentInfo;
-        private const int _maxMinutesDuration = 180;
+        private const int _maxMinutesDuration = 60 * 15;
         private const int _treatmentIntervalDuration = 15;
         #endregion
 
