@@ -58,8 +58,6 @@ namespace MyDentApplication
             _selectedTreatment = (cbTratmentName.SelectedValue as Controllers.ComboBoxItem).Value as Model.Treatment;
 
             FillTreatmentFields(_selectedTreatment);
-
-            lblEventEndTime.ToolTip = lblEventEndTime.Text = _eventStart.AddMinutes(_selectedTreatment.Duration).ToString("HH:mm") + " hrs";
         }
 
         private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -233,6 +231,13 @@ namespace MyDentApplication
         private void FillTreatmentFields(Model.Treatment selectedTreatment)
         {
             lblDuration.ToolTip = lblDuration.Text = selectedTreatment == null ? string.Empty : selectedTreatment.Duration.ToString() + " minutos";
+
+            DateTime secondExtraHourMaxRange = new DateTime(_eventStart.Year, _eventStart.Month, _eventStart.Day, _scheduler.MaxHour, 0, 0);
+            DateTime eventEnd = _eventStart.AddMinutes(_selectedTreatment.Duration);
+            eventEnd = eventEnd > secondExtraHourMaxRange ? secondExtraHourMaxRange : eventEnd;
+
+            lblEventEndTime.ToolTip = lblEventEndTime.Text = eventEnd.ToString("HH:mm") + " hrs";
+
         }
 
         private bool IsValidEvent(Model.Event eventToAdd)
@@ -281,10 +286,7 @@ namespace MyDentApplication
                     eventToAdd.IsException = true;
 
                     DateTime secondExtraHourMaxRange = new DateTime(eventToAdd.StartEvent.Year, eventToAdd.StartEvent.Month, eventToAdd.StartEvent.Day, _scheduler.MaxHour, 0, 0);
-                    if (eventToAdd.EndEvent > secondExtraHourMaxRange)
-                    {
-                        eventToAdd.EndEvent = secondExtraHourMaxRange;
-                    }
+                    eventToAdd.EndEvent = eventToAdd.EndEvent > secondExtraHourMaxRange ? secondExtraHourMaxRange : eventToAdd.EndEvent;
 
                     return true;   
                 }
