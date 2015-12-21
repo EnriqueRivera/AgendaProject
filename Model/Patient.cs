@@ -21,6 +21,9 @@ namespace Model
             this.OutgoingInvoices = new HashSet<OutgoingInvoice>();
             this.Budgets = new HashSet<Budget>();
             this.Authorizations = new HashSet<Authorization>();
+            this.Statements = new HashSet<Statement>();
+            this.PositiveBalances = new HashSet<PositiveBalance>();
+            this.PaymentFolios = new HashSet<PaymentFolio>();
         }
     
         public int PatientId { get; set; }
@@ -42,5 +45,8 @@ namespace Model
         public virtual ClinicHistory ClinicHistory { get; set; }
         public virtual ICollection<Budget> Budgets { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
+        public virtual ICollection<Statement> Statements { get; set; }
+        public virtual ICollection<PositiveBalance> PositiveBalances { get; set; }
+        public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
     }
 }

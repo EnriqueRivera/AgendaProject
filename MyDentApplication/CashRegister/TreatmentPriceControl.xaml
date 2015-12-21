@@ -1,0 +1,32 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="MyDentApplication.TreatmentPriceControl"
+	x:Name="UserControl" Width="555.466" Height="94.057">
+	<Grid x:Name="gridDrawer" Margin="0,0,2,2">
+		<Rectangle x:Name="rcBorder" Stroke="Black" StrokeThickness="2"/>
+		<Grid x:Name="gridBackground" Grid.ColumnSpan="2" Background="#FFF09393" Opacity="0.9">
+			<Button x:Name="btnRemoveTreatmentPrice" Width="35" Cursor="Hand" HorizontalAlignment="Right" Margin="0,47.057,10,0" Click="btnRemoveTreatmentPrice_Click" Height="35" VerticalAlignment="Top" > 
+				<Image Source="/MyDentApplication;component/Images/remove_icon.png"  />
+			</Button>
+			<Button x:Name="btnEditTreatmentPrice" Width="35" Cursor="Hand" HorizontalAlignment="Right" Margin="0,10,10,0" Click="btnEditTreatmentPrice_Click" Height="35" VerticalAlignment="Top" > 
+				<Image Source="/MyDentApplication;component/Images/edit_icon.png"  />
+			</Button>
+		</Grid>
+		<Label x:Name="lblExpNoCaption" Content="Cantidad:" Margin="25.445,32.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="62.355"/>
+		<TextBlock x:Name="lblTreatmentName" Height="20" Margin="87.8,12.05,316,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="1"/>
+		<Label x:Name="lblExpNoCaption_Copy" Content="Precio unitario:" Margin="260.778,32.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="91.022"/>
+		<Label x:Name="lblExpNoCaption_Copy1" Content="Tratamiento:" Margin="9.111,7.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="78.689"/>
+		<TextBlock x:Name="lblQuantity" Height="20" Margin="87.8,37.05,316,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="2"/>
+		<TextBlock x:Name="lblUnitPrice" Height="20" Margin="356.8,37.05,74.667,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="5"/>
+		<Label x:Name="lblExpNoCaption_Copy2" Content="Descuento:" Margin="18.112,57.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="69.688"/>
+		<Label x:Name="lblExpNoCaption_Copy3" Content="Total:" Margin="310.112,57.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="41.688"/>
+		<TextBlock x:Name="lblDiscount" Height="20" Margin="87.8,62.05,316,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="3"/>
+		<TextBlock x:Name="lblTotal" Height="20" Margin="356.8,62.057,74.667,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="6"/>
+		<Label x:Name="lblExpNoCaption_Copy4" Content="Fecha:" Margin="304.778,7.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="47.022"/>
+		<TextBlock x:Name="lblTreatmentDate" Height="20" Margin="356.8,12.05,74.667,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="4"/>		
+	</Grid>
+</UserControl>

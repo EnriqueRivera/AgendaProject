@@ -43,6 +43,10 @@ namespace MyDentApplication
                 cbDiscount.Visibility = System.Windows.Visibility.Visible;
                 lblPercentCaption.Visibility = System.Windows.Visibility.Visible;
             }
+            else
+            {
+                this.Height = 275;
+            }
         }
         #endregion
 

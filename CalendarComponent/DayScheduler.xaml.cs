@@ -104,8 +104,6 @@ namespace WpfScheduler
 
         private void AdjustCurrentDay(DateTime currentDay)
         {
-            dayLabel.Content = currentDay.ToString("D");
-
             PaintAllEvents();
         }
         #endregion
@@ -276,71 +274,76 @@ namespace WpfScheduler
         #region Paint Events
         private void PaintAllEvents()
         {
-            if (_scheduler == null || _scheduler.Events == null)
+            int eventsCount = 0;
+
+            if (_scheduler != null && _scheduler.Events != null)
             {
-                return;
-            }
 
-            IEnumerable<Event> eventList = TodayEvents
-                                            .Where(ev => ev.EventInfo.StartEvent.Date == ev.EventInfo.EndEvent.Date)
-                                            .OrderBy(ev => ev.EventInfo.IsCanceled)
-                                            .ThenBy(ev => ev.EventInfo.StartEvent);
+                IEnumerable<Event> eventList = TodayEvents
+                                                .Where(ev => ev.EventInfo.StartEvent.Date == ev.EventInfo.EndEvent.Date)
+                                                .OrderBy(ev => ev.EventInfo.IsCanceled)
+                                                .ThenBy(ev => ev.EventInfo.StartEvent);
 
-            column.Children.Clear();
+                column.Children.Clear();
 
-            double columnWidth = EventsGrid.ColumnDefinitions[1].Width.Value;
+                double columnWidth = EventsGrid.ColumnDefinitions[1].Width.Value;
 
-            foreach (Event e in eventList)
-            {
-                List<Event> concurrentEvents = new List<Event>();
-                GetConcurrentEvents(e, concurrentEvents);
-                concurrentEvents = concurrentEvents
-                                    .OrderBy(ev => ev.EventInfo.StartEvent)
-                                    .ThenBy(ev => ev.EventInfo.EndEvent)
-                                    .ToList();
-
-                double marginTop = _oneHourHeight * ((e.EventInfo.StartEvent.Hour + (e.EventInfo.StartEvent.Minute / 60.0)) - _minHour);
-                double width = columnWidth / (concurrentEvents.Count());
-                double marginLeft = width * concurrentEvents.ToList().FindIndex(ev => ev.Id == e.Id);
-
-                EventUserControl wEvent = new EventUserControl(e);
-                wEvent.Width = width;
-                wEvent.Height = e.EventInfo.EndEvent.Subtract(e.EventInfo.StartEvent).TotalHours * _oneHourHeight;
-                wEvent.Margin = new Thickness(marginLeft, marginTop, 0, 0);
-                wEvent.BorderElement.BorderThickness = new Thickness(_eventSelected == e.Id ? _selectedEventBorderThickness : 1.0);
-
-                wEvent.MouseLeftButtonDown += ((object sender, MouseButtonEventArgs ea) =>
+                foreach (Event e in eventList)
                 {
-                    ea.Handled = true;
+                    List<Event> concurrentEvents = new List<Event>();
+                    GetConcurrentEvents(e, concurrentEvents);
+                    concurrentEvents = concurrentEvents
+                                        .OrderBy(ev => ev.EventInfo.StartEvent)
+                                        .ThenBy(ev => ev.EventInfo.EndEvent)
+                                        .ToList();
 
-                    SelectEvent(sender as EventUserControl);
+                    double marginTop = _oneHourHeight * ((e.EventInfo.StartEvent.Hour + (e.EventInfo.StartEvent.Minute / 60.0)) - _minHour);
+                    double width = columnWidth / (concurrentEvents.Count());
+                    double marginLeft = width * concurrentEvents.ToList().FindIndex(ev => ev.Id == e.Id);
 
-                    OnEventMouseLeftButtonDown(sender, wEvent.Event);
-                });
-                wEvent.MouseRightButtonDown += ((object sender, MouseButtonEventArgs ea) =>
-                {
-                    SelectEvent(sender as EventUserControl);
+                    EventUserControl wEvent = new EventUserControl(e);
+                    wEvent.Width = width;
+                    wEvent.Height = e.EventInfo.EndEvent.Subtract(e.EventInfo.StartEvent).TotalHours * _oneHourHeight;
+                    wEvent.Margin = new Thickness(marginLeft, marginTop, 0, 0);
+                    wEvent.BorderElement.BorderThickness = new Thickness(_eventSelected == e.Id ? _selectedEventBorderThickness : 1.0);
 
-                    ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
-
-                    if (UserLoggedIn.IsAdmin == false)
+                    wEvent.MouseLeftButtonDown += ((object sender, MouseButtonEventArgs ea) =>
                     {
-                        foreach (var item in cm.Items)
+                        ea.Handled = true;
+
+                        SelectEvent(sender as EventUserControl);
+
+                        OnEventMouseLeftButtonDown(sender, wEvent.Event);
+                    });
+
+                    wEvent.MouseRightButtonDown += ((object sender, MouseButtonEventArgs ea) =>
+                    {
+                        SelectEvent(sender as EventUserControl);
+
+                        ContextMenu cm = this.FindResource("SchedulerContextMenu") as ContextMenu;
+
+                        if (UserLoggedIn.IsAdmin == false)
                         {
-                            if (item is MenuItem && (item as MenuItem).Tag.ToString() == "VIEW_EVENT_STATUS_CHANGES")
+                            foreach (var item in cm.Items)
                             {
-                                cm.Items.Remove(item as MenuItem);
-                                break;
+                                if (item is MenuItem && (item as MenuItem).Tag.ToString() == "VIEW_EVENT_STATUS_CHANGES")
+                                {
+                                    cm.Items.Remove(item as MenuItem);
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    cm.Tag = e;
-                    cm.IsOpen = (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted == false) || UserLoggedIn.IsAdmin;
-                });
+                        cm.Tag = e;
+                        cm.IsOpen = (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted == false) || UserLoggedIn.IsAdmin;
+                    });
 
-                column.Children.Add(wEvent);
+                    column.Children.Add(wEvent);
+                    eventsCount++;
+                }
             }
+
+            dayLabel.Content = _currentDay.ToString("D") + " (Citas: " + eventsCount + ")";
         }
 
         private void GetConcurrentEvents(Event e, List<Event> concurrentEvents)

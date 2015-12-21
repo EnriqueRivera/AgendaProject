@@ -1,0 +1,73 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="MyDentApplication.CashRegisterWindow"
+	x:Name="Window"
+	Title="Caja"
+	Width="640" Height="675.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="LayoutRoot">
+		<ScrollViewer Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
+			<Grid>
+				<Label x:Name="lblPatient" Content="Paciente:" HorizontalAlignment="Left" Height="27" Margin="10,9,0,0" VerticalAlignment="Top" Width="61.581" FontWeight="Bold"/>
+				<ComboBox x:Name="cbPatients" Height="26" Margin="76.507,9,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="236.24" SelectionChanged="cbPatients_SelectionChanged"/>
+				<ScrollViewer x:Name="svTreatments" Margin="10,93.924,62.103,0" VerticalScrollBarVisibility="Auto" BorderThickness="1" Height="190" VerticalAlignment="Top" BorderBrush="Black">
+					<Border BorderBrush="Black" BorderThickness="1">
+						<StackPanel x:Name="spTreatments">
+						</StackPanel>
+					</Border>
+				</ScrollViewer>
+				<ScrollViewer x:Name="svPayments" Margin="10,330.882,62.103,0" VerticalScrollBarVisibility="Auto" BorderThickness="0" Height="190" VerticalAlignment="Top">
+					<Border BorderBrush="Black" BorderThickness="1">
+						<StackPanel x:Name="spPayments">
+						</StackPanel>
+					</Border>
+				</ScrollViewer>
+				<Label x:Name="lblPatient_Copy" Content="Registro de tratamientos" HorizontalAlignment="Left" Height="27" Margin="10,61.924,0,0" VerticalAlignment="Top" Width="152.228" FontWeight="Bold"/>
+				<Button x:Name="btnAddTreatment" Width="49.265" Cursor="Hand" HorizontalAlignment="Right" Margin="0,161.924,7.838,0" Height="50" VerticalAlignment="Top" ToolTip="Agregar tratamiento..." Click="btnAddTreatment_Click" >
+					<Image Source="/MyDentApplication;component/Images/add_icon.png"  />
+				</Button>
+				<Label x:Name="lblPatient_Copy1" Content="Registro de pagos" HorizontalAlignment="Left" Height="27" Margin="10,298.882,0,0" VerticalAlignment="Top" Width="118.728" FontWeight="Bold"/>
+				<Button x:Name="btnAddCreditCardPayment" Width="49.265" Cursor="Hand" HorizontalAlignment="Right" Margin="0,401.882,7.838,0" Height="50" VerticalAlignment="Top" ToolTip="Pago con tarjeta..." Click="btnAddPayment_Click" Tag="Tarjeta" > 
+					<Image Source="/MyDentApplication;component/Images/credit_card_icon.png"  />
+				</Button>
+				<Button x:Name="btnCheckPayment" Width="49.265" Cursor="Hand" HorizontalAlignment="Right" Margin="0,456.882,7.838,0" Height="50" VerticalAlignment="Top" ToolTip="Pago con cheque..." Click="btnAddPayment_Click" Tag="Cheque" > 
+					<Image Source="/MyDentApplication;component/Images/check_icon.png"  />
+				</Button>
+				<Button x:Name="btnAddCashPayment" Width="49.265" Cursor="Hand" HorizontalAlignment="Right" Margin="0,346.882,7.838,0" Height="50" VerticalAlignment="Top" ToolTip="Pago en efectivo..." Click="btnAddPayment_Click" Tag="Efectivo" > 
+					<Image Source="/MyDentApplication;component/Images/cash_icon.png"  />
+				</Button>
+				<Label x:Name="lblTreatmentsCount" Content="No. de tratamientos:" Height="27" Margin="310.022,61.924,62.103,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+				<Label x:Name="lblPaymentsCount" Content="No. de pagos:" Height="27" Margin="310.022,298.882,62.103,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+				<Label x:Name="lblPatient_Copy4" Content="Resumen" HorizontalAlignment="Left" Height="27" Margin="10,535.89,0,0" VerticalAlignment="Top" Width="118.728" FontWeight="Bold"/>
+				<Label x:Name="lblPatient_Copy5" Content="Monto total de tratamientos:" HorizontalAlignment="Left" Height="27" Margin="10,567.89,0,0" VerticalAlignment="Top" Width="162.081"/>
+				<Label x:Name="lblPatient_Copy6" Content="Monto total de pagos:" HorizontalAlignment="Left" Height="27" Margin="42.515,599.89,0,0" VerticalAlignment="Top" Width="129.566"/>
+				<Label x:Name="lblPatient_Copy7" Content="Gran Total:" HorizontalAlignment="Left" Height="27" Margin="103.603,631.89,0,0" VerticalAlignment="Top" Width="68.478"/>
+				<Label x:Name="lblPatient_Copy8" Content="Saldo a favor:" HorizontalAlignment="Left" Height="27" Margin="90.794,663.89,0,0" VerticalAlignment="Top" Width="81.287"/>
+				<TextBlock x:Name="lblTotalAmountTreatments" Height="20" Margin="177.081,572.89,291.253,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="1"/>
+				<TextBlock x:Name="lblTotalAmountPayments" Height="20" Margin="177.081,604.89,291.253,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="2"/>
+				<TextBlock x:Name="lblGrandTotal" Height="20" Margin="177.081,636.89,291.253,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="3"/>
+				<TextBlock x:Name="lblPositiveBalance" Height="20" Margin="177.081,668.89,291.253,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="4"/>
+				<Button x:Name="btnSave" Content="Guardar" Margin="10,0,0,10" Cursor="Hand" TabIndex="6" HorizontalAlignment="Left" Width="91" Height="29" VerticalAlignment="Bottom" Click="btnSave_Click"/>
+				<Button x:Name="btnCancel" Content="Cancelar" Margin="106,0,0,10" Cursor="Hand" TabIndex="7" HorizontalAlignment="Left" Width="91" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
+				<GroupBox x:Name="gbPacientInfo" Header="Información del paciente" Margin="0,539.89,10,0" FontWeight="Bold" BorderThickness="3" BorderBrush="Black" HorizontalAlignment="Right" Width="222" Height="238.11" VerticalAlignment="Top">
+					<ScrollViewer x:Name="svPacientInfo" Margin="0,0,-2,-2" VerticalScrollBarVisibility="Auto">
+						<Grid x:Name="gridPacientInfo" VerticalAlignment="Center" Height="216.114"><Label x:Name="lblExpNoCaption" Content="Exp. No:" Margin="35.612,-1,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="55.522"/>
+							<TextBlock x:Name="lblExpNo" Text="" Height="20" Margin="96.134,4,0,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic"/>
+							<Label x:Name="lblCellPhoneCaption" Content="Teléfono celular:" Margin="0,74,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="97.134" Height="25" VerticalAlignment="Top"/>
+							<TextBlock x:Name="lblCellPhone" Text="" Height="20" Margin="0,99,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+							<Label x:Name="lblHomePhoneCaption" Content="Teléfono de casa:" Margin="0,121,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="101.134" Height="25" VerticalAlignment="Top"/>
+							<TextBlock x:Name="lblHomePhone" Text="" Height="20" Margin="0,146,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+							<Label x:Name="lblEmailCaption" Content="Email:" Margin="0,168,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="41.134" Height="25" VerticalAlignment="Top"/>
+							<TextBlock x:Name="lblEmail" Text="" Height="20" Margin="0,193,0,-12.886" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+							<Label x:Name="lblPacientNameCaption" Content="Nombre completo:" Margin="0,27,0,0" FontWeight="Normal" HorizontalAlignment="Left" Width="111" Height="25" VerticalAlignment="Top"/>
+							<TextBlock x:Name="lblPacientName" Text="" Height="20" Margin="0,52,0,0" VerticalAlignment="Top" FontWeight="Normal" TextAlignment="Center" FontStyle="Italic"/>
+						</Grid>
+					</ScrollViewer>
+				</GroupBox>
+				<Label x:Name="lblAccountStatusNumber" Content="" Height="27" Margin="345.747,8,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</Window>

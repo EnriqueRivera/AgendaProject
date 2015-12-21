@@ -14,6 +14,11 @@ namespace Model
     
     public partial class TreatmentPrice
     {
+        public TreatmentPrice()
+        {
+            this.TreatmentPayments = new HashSet<TreatmentPayment>();
+        }
+    
         public int TreatmentPriceId { get; set; }
         public string TreatmentKey { get; set; }
         public string Name { get; set; }
@@ -22,5 +27,7 @@ namespace Model
         public string Type { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; }
+    
+        public virtual ICollection<TreatmentPayment> TreatmentPayments { get; set; }
     }
 }

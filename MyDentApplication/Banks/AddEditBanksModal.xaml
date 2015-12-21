@@ -1,0 +1,16 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="MyDentApplication.AddEditBanksModal"
+	x:Name="Window"
+	Title="Agregar banco"
+	Width="356" Height="177" Icon="/MyDentApplication;component/Configuration/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+	<Grid x:Name="LayoutRoot" Margin="0,0,-2,-2">
+		<Label x:Name="lblTechnicalName" Content="Nombre:" HorizontalAlignment="Left" Height="27" Margin="54,42,0,0" VerticalAlignment="Top" Width="59.333"/>
+		<TextBox x:Name="txtBankId" HorizontalAlignment="Left" Height="27" Margin="118.333,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="4" BorderThickness="1" BorderBrush="Black" IsEnabled="False" HorizontalContentAlignment="Right"/>
+		<Label x:Name="lblTechnicalId" Content="Id del banco:" HorizontalAlignment="Left" Height="27" Margin="32,10,0,0" VerticalAlignment="Top" Width="81.333"/>
+		<TextBox x:Name="txtBankName" HorizontalAlignment="Left" Height="27" Margin="118.333,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="4" BorderThickness="1" BorderBrush="Black"/>
+		<Button x:Name="btnAddUpdateBanks" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="76.67,91.197,0,0" VerticalAlignment="Top" Width="91" Cursor="Hand" TabIndex="7" Click="btnAddUpdateBanks_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="185.67,91.197,0,0" VerticalAlignment="Top" Width="91" Cursor="Hand" TabIndex="8" Click="btnCancel_Click"/>
+	</Grid>
+</Window>

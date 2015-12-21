@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1" ZoomLevel="85">
+      <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Contact" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="8.25" PointY="9.625" />
@@ -67,6 +67,22 @@
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_Signature2" />
         <AssociationConnector Association="MyDentDBModel.PK_Events_InstrumentId" />
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_DrawerId" />
+        <EntityTypeShape EntityType="MyDentDBModel.Bank" Width="1.5" PointX="8.75" PointY="24.75" />
+        <EntityTypeShape EntityType="MyDentDBModel.PaymentFolio" Width="1.5" PointX="8.75" PointY="22.25" />
+        <EntityTypeShape EntityType="MyDentDBModel.Payment" Width="1.5" PointX="11" PointY="22.875" />
+        <EntityTypeShape EntityType="MyDentDBModel.Statement" Width="1.5" PointX="13.25" PointY="15" />
+        <EntityTypeShape EntityType="MyDentDBModel.TreatmentPayment" Width="1.5" PointX="15.5" PointY="15" />
+        <AssociationConnector Association="MyDentDBModel.FK_Payments_BankId" />
+        <AssociationConnector Association="MyDentDBModel.FK_StatementId_PatientId" />
+        <AssociationConnector Association="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId" />
+        <AssociationConnector Association="MyDentDBModel.AccountStatus_Payments" />
+        <AssociationConnector Association="MyDentDBModel.AccountStatus_Treatments" />
+        <AssociationConnector Association="MyDentDBModel.FolioNumbers_Payments" />
+        <AssociationConnector Association="MyDentDBModel.FolioNumbers_Treatments" />
+        <EntityTypeShape EntityType="MyDentDBModel.PositiveBalance" Width="1.5" PointX="5.25" PointY="25.375" />
+        <AssociationConnector Association="MyDentDBModel.FK_PositiveBalances_PatientId" />
+        <AssociationConnector Association="MyDentDBModel.FK_PaymentFolios_UserId" />
+        <AssociationConnector Association="MyDentDBModel.FK_PaymentFolios_PatientId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

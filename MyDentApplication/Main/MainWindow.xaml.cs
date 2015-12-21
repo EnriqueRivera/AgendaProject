@@ -55,6 +55,8 @@ namespace MyDentApplication
         private ManageAmericanExpressPaidsWindow _manageAmericanExpressPaidsWindow;
         private ManageAuthorizationsWindow _manageAuthorizationsWindow;
         private ManageDrawersWindow _manageDrawersWindow;
+        private CashRegisterWindow _cashRegisterWindow;
+        private ManageBanksWindow _manageBanks;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -181,6 +183,8 @@ namespace MyDentApplication
             CloseWindow(_manageAmericanExpressPaidsWindow);
             CloseWindow(_manageAuthorizationsWindow);
             CloseWindow(_manageDrawersWindow);
+            CloseWindow(_cashRegisterWindow);
+            CloseWindow(_manageBanks);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -295,6 +299,14 @@ namespace MyDentApplication
             else if (sender is ManageDrawersWindow)
             {
                 _manageDrawersWindow = null;
+            }
+            else if (sender is CashRegisterWindow)
+            {
+                _cashRegisterWindow = null;
+            }
+            else if (sender is ManageBanksWindow)
+            {
+                _manageBanks = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -901,6 +913,30 @@ namespace MyDentApplication
 
             _manageDrawersWindow.Show();
             _manageDrawersWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnOpenCashRegister_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_cashRegisterWindow == null)
+            {
+                _cashRegisterWindow = new CashRegisterWindow(_userLoggedIn, null);
+                _cashRegisterWindow.Closed += Window_Closed;
+            }
+
+            _cashRegisterWindow.Show();
+            _cashRegisterWindow.WindowState = _cashRegisterWindow.WindowState == WindowState.Minimized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void btnManageBanks_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageBanks == null)
+            {
+                _manageBanks = new ManageBanksWindow();
+                _manageBanks.Closed += Window_Closed;
+            }
+
+            _manageBanks.Show();
+            _manageBanks.WindowState = WindowState.Normal;
         }
         #endregion
     }

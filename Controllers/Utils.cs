@@ -181,4 +181,11 @@ namespace Controllers
         PACKAGED,
         STERILIZED
     }
+
+    public enum PaymentType
+    {
+        Efectivo,
+        Cheque,
+        Tarjeta
+    }
 }

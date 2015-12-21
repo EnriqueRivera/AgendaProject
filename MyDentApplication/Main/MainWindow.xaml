@@ -50,7 +50,7 @@
 				<TextBlock Text="Cerrar sesión" TextAlignment="Center" />
 			</StackPanel>
 		</Button>
-		<GroupBox x:Name="gbAdministration" Header="Administración" HorizontalAlignment="Left" Margin="243.5,8.55,0,103.451" Width="151" FontWeight="Bold" BorderBrush="Black" BorderThickness="2">
+		<GroupBox x:Name="gbAdministration" Header="Administración" HorizontalAlignment="Left" Margin="243.5,8.55,0,103.451" Width="151" FontWeight="Bold" BorderBrush="Black" BorderThickness="2" Foreground="Black">
 			<ScrollViewer Margin="0,10,0,2.019" VerticalScrollBarVisibility="Auto" FontWeight="Normal" VerticalAlignment="Center">
 				<StackPanel>
 					<Button x:Name="btnManageUsers" Width="90" Height="90" Click="btnManageUsers_Click" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"> 
@@ -99,6 +99,12 @@
 						<StackPanel Orientation="Vertical">
 							<Image Source="/MyDentApplication;component/Images/american_express_icon.png" Width="50" Height="50"  />
 							<TextBlock TextAlignment="Center" ><Run Text="Pagos American "/><LineBreak/><Run Text="Express"/></TextBlock>
+						</StackPanel>
+					</Button>
+					<Button x:Name="btnManageBanks" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageBanks_Click"> 
+						<StackPanel Orientation="Vertical">
+							<Image Source="/MyDentApplication;component/Images/bank_icon.png" Width="50" Height="50"  />
+							<TextBlock TextAlignment="Center" ><Run Text="Bancos"/></TextBlock>
 						</StackPanel>
 					</Button>
 				</StackPanel>
@@ -166,6 +172,12 @@
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/agenda_icon.png" Width="50" Height="50"  />
         						<TextBlock TextAlignment="Center" ><Run Text="Agenda"/><Run Text=" de"/><LineBreak/><Run Text="citas"/></TextBlock>
+        					</StackPanel>
+						</Button>
+						<Button x:Name="btnOpenCashRegister" Margin="0,0,0,5" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnOpenCashRegister_Click"> 
+        					<StackPanel Orientation="Vertical">
+        						<Image Source="/MyDentApplication;component/Images/cash_register_icon.png" Width="50" Height="50"  />
+        						<TextBlock TextAlignment="Center" ><Run Text="Caja"/></TextBlock>
         					</StackPanel>
 						</Button>
         				<Button x:Name="btnManageReceivedInvoices" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageReceivedInvoices_Click" Margin="0,0,0,5" > 

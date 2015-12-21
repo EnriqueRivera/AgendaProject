@@ -118,6 +118,12 @@
     <Compile Include="Authorizations\ManageUserAuthorizationsWindow.xaml.cs">
       <DependentUpon>ManageUserAuthorizationsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Banks\AddEditBanksModal.xaml.cs">
+      <DependentUpon>AddEditBanksModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Banks\ManageBanksWindow.xaml.cs">
+      <DependentUpon>ManageBanksWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Budgets\AddEditBudgetDetailsModal.xaml.cs">
       <DependentUpon>AddEditBudgetDetailsModal.xaml</DependentUpon>
     </Compile>
@@ -126,6 +132,21 @@
     </Compile>
     <Compile Include="Budgets\ManageBudgetsWindow.xaml.cs">
       <DependentUpon>ManageBudgetsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashRegister\AddEditPaymentModal.xaml.cs">
+      <DependentUpon>AddEditPaymentModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashRegister\AddEditTreatmentPaymentModal.xaml.cs">
+      <DependentUpon>AddEditTreatmentPaymentModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashRegister\CashRegisterWindow.xaml.cs">
+      <DependentUpon>CashRegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashRegister\PaymentControl.xaml.cs">
+      <DependentUpon>PaymentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashRegister\TreatmentPriceControl.xaml.cs">
+      <DependentUpon>TreatmentPriceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CleanedMaterials\AddEditCleanedMaterialsModal.xaml.cs">
       <DependentUpon>AddEditCleanedMaterialsModal.xaml</DependentUpon>
@@ -340,6 +361,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Banks\AddEditBanksModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Banks\ManageBanksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Budgets\AddEditBudgetDetailsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -349,6 +378,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Budgets\ManageBudgetsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\AddEditPaymentModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\AddEditTreatmentPaymentModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\CashRegisterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\PaymentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\TreatmentPriceControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -672,20 +721,27 @@
   <ItemGroup>
     <Resource Include="Configuration\app_icon.ico" />
     <Resource Include="Images\addEmail_icon.png" />
+    <Resource Include="Images\add_icon.png" />
     <Resource Include="Images\agenda_icon.png" />
     <Resource Include="Images\american_express_icon.png" />
     <Resource Include="Images\authorization_icon.gif" />
     <Resource Include="Images\background_money_icon.png" />
+    <Resource Include="Images\bank_icon.png" />
     <Resource Include="Images\budget_icon.png" />
     <Resource Include="Images\Budget_image_1.PNG" />
     <Resource Include="Images\Budget_image_2.PNG" />
     <Resource Include="Images\Budget_image_3.PNG" />
     <Resource Include="Images\CancelIcon.png" />
+    <Resource Include="Images\cash_icon.png" />
+    <Resource Include="Images\cash_register_icon.png" />
     <Resource Include="Images\changePassword_icon.png" />
+    <Resource Include="Images\check_icon.png" />
     <Resource Include="Images\cleanedMaterials_icon.png" />
     <Resource Include="Images\configureEmail_icon.png" />
     <Resource Include="Images\contacts_icon.png" />
+    <Resource Include="Images\credit_card_icon.png" />
     <Resource Include="Images\dotation_icon.png" />
+    <Resource Include="Images\edit_icon.png" />
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
@@ -703,6 +759,7 @@
     <Resource Include="Images\received_invoice_icon.png" />
     <Resource Include="Images\refresh_icon.png" />
     <Resource Include="Images\reminder_icon.png" />
+    <Resource Include="Images\remove_icon.png" />
     <Resource Include="Images\sendEmail_icon.png" />
     <Resource Include="Images\technical_icon.png" />
     <Resource Include="Images\treatment_icon.png" />
