@@ -73,6 +73,8 @@ namespace MyDentApplication
                     _paymentToUpdate.BankId = bankId;
                     _paymentToUpdate.VoucherCheckNumber = voucherCheckNumber;
                 }
+
+                _paymentControl.Payment = _paymentToUpdate;
             }
             else
             {
@@ -90,12 +92,11 @@ namespace MyDentApplication
                     paymentToAdd.VoucherCheckNumber = voucherCheckNumber;
                 }
 
-                if (_paymentControl != null)
-                {
-                    _paymentControl.Payment = paymentToAdd;
-                    _paymentControl.Width = Double.NaN;   
-                }
+                _paymentControl.Payment = paymentToAdd;
             }
+
+            _paymentControl.Width = Double.NaN;
+            _paymentControl.UpdateData();
 
             this.Close();
         }
@@ -183,6 +184,7 @@ namespace MyDentApplication
             btnAddPayment.Content = "Actualizar";
             txtAmount.Text = _paymentToUpdate.Amount.ToString();
             txtVoucherCheckNumber.Text = _paymentToUpdate.VoucherCheckNumber;
+            txtObservations.Text = _paymentToUpdate.Observation;
 
             if (_paymentToUpdate.Bank != null)
             {

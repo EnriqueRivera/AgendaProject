@@ -16,8 +16,8 @@ namespace Model
     {
         public Payment()
         {
-            this.Statements = new HashSet<Statement>();
             this.PaymentFolios = new HashSet<PaymentFolio>();
+            this.Statements = new HashSet<Statement>();
         }
     
         public int PaymentId { get; set; }
@@ -29,7 +29,7 @@ namespace Model
         public string Observation { get; set; }
     
         public virtual Bank Bank { get; set; }
-        public virtual ICollection<Statement> Statements { get; set; }
         public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
+        public virtual ICollection<Statement> Statements { get; set; }
     }
 }

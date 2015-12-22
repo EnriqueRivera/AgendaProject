@@ -61,11 +61,11 @@ namespace Model
         public DbSet<Instrument> Instruments { get; set; }
         public DbSet<InventorySignature> InventorySignatures { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<PositiveBalance> PositiveBalances { get; set; }
         public DbSet<PaymentFolio> PaymentFolios { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Statement> Statements { get; set; }
         public DbSet<TreatmentPayment> TreatmentPayments { get; set; }
-        public DbSet<PositiveBalance> PositiveBalances { get; set; }
     
         public virtual ObjectResult<InventoryAvailability> GetInventoryAvailability(Nullable<int> drawerId, Nullable<int> year, Nullable<int> month)
         {

@@ -414,9 +414,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PositiveBalances">
+      <EntityTypeMapping TypeName="MyDentDBModel.PositiveBalance">
+        <MappingFragment StoreEntitySet="PositiveBalances">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+          <ScalarProperty Name="PositiveBalanceDate" ColumnName="PositiveBalanceDate" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="PositiveBalanceId" ColumnName="PositiveBalanceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PaymentFolios">
       <EntityTypeMapping TypeName="MyDentDBModel.PaymentFolio">
         <MappingFragment StoreEntitySet="PaymentFolios">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="FolioDate" ColumnName="FolioDate" />
           <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
@@ -461,23 +473,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="AccountStatus_Payments" TypeName="MyDentDBModel.AccountStatus_Payments" StoreEntitySet="AccountStatus_Payments">
-      <EndProperty Name="Statement">
-        <ScalarProperty Name="StatementId" ColumnName="StatementId" />
-      </EndProperty>
-      <EndProperty Name="Payment">
-        <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="AccountStatus_Treatments" TypeName="MyDentDBModel.AccountStatus_Treatments" StoreEntitySet="AccountStatus_Treatments">
-      <EndProperty Name="TreatmentPayment">
-        <ScalarProperty Name="TreatmentPaymentId" ColumnName="TreatmentPaidId" />
-      </EndProperty>
-      <EndProperty Name="Statement">
-        <ScalarProperty Name="StatementId" ColumnName="StatementId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FolioNumbers_Payments" TypeName="MyDentDBModel.FolioNumbers_Payments" StoreEntitySet="FolioNumbers_Payments">
+    <AssociationSetMapping Name="PaymentFolios_Payments" TypeName="MyDentDBModel.PaymentFolios_Payments" StoreEntitySet="PaymentFolios_Payments">
       <EndProperty Name="Payment">
         <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
       </EndProperty>
@@ -485,7 +481,7 @@
         <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="FolioNumbers_Treatments" TypeName="MyDentDBModel.FolioNumbers_Treatments" StoreEntitySet="FolioNumbers_Treatments">
+    <AssociationSetMapping Name="PaymentFolios_Treatments" TypeName="MyDentDBModel.PaymentFolios_Treatments" StoreEntitySet="PaymentFolios_Treatments">
       <EndProperty Name="TreatmentPayment">
         <ScalarProperty Name="TreatmentPaymentId" ColumnName="TreatmentPaymentId" />
       </EndProperty>
@@ -493,16 +489,21 @@
         <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="PositiveBalances">
-      <EntityTypeMapping TypeName="MyDentDBModel.PositiveBalance">
-        <MappingFragment StoreEntitySet="PositiveBalances">
-          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-          <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
-          <ScalarProperty Name="PositiveBalanceDate" ColumnName="PositiveBalanceDate" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="PositiveBalanceId" ColumnName="PositiveBalanceId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+    <AssociationSetMapping Name="Statement_Payments" TypeName="MyDentDBModel.Statement_Payments" StoreEntitySet="Statement_Payments">
+      <EndProperty Name="Statement">
+        <ScalarProperty Name="StatementId" ColumnName="StatementId" />
+      </EndProperty>
+      <EndProperty Name="Payment">
+        <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Statement_Treatments" TypeName="MyDentDBModel.Statement_Treatments" StoreEntitySet="Statement_Treatments">
+      <EndProperty Name="TreatmentPayment">
+        <ScalarProperty Name="TreatmentPaymentId" ColumnName="TreatmentPaidId" />
+      </EndProperty>
+      <EndProperty Name="Statement">
+        <ScalarProperty Name="StatementId" ColumnName="StatementId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

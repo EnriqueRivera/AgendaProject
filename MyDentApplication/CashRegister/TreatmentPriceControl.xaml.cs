@@ -19,48 +19,54 @@ namespace MyDentApplication
 	public partial class TreatmentPriceControl : UserControl
     {
         #region Instance variables
-        private Model.TreatmentPayment _treatment;
-        private Model.Patient _patient;
+        private Model.TreatmentPayment _treatmentPayment;
+        private Model.Patient _selectedPatient;
         internal event EventHandler<bool> OnTreatmentDeleted;
         internal event EventHandler<bool> OnTreatmentEdited;
+        private Model.TreatmentPrice _treatmentPrice;
         #endregion
 
         #region Getters and setters
-        public Model.TreatmentPayment Treatment
+        public Model.TreatmentPayment TreatmentPayment
         {
-            get { return _treatment; }
+            get { return _treatmentPayment; }
 
-            set
-            {
-                _treatment = value;
-                UpdateTreatmentInfo();
-            }
+            set { _treatmentPayment = value; }
+        }
+
+        public Model.TreatmentPrice TreatmentPrice
+        {
+            get { return _treatmentPrice; }
+
+            set { _treatmentPrice = value; }
 
         }
         #endregion
 
         #region Constructors
-        public TreatmentPriceControl(Model.TreatmentPayment treatment, Model.Patient patient)
+        public TreatmentPriceControl(Model.TreatmentPayment treatment, Model.Patient selectedPatient)
 		{
 			this.InitializeComponent();
 
-            Treatment = treatment;
-            _patient = patient;
+            _treatmentPayment = treatment;
+            _selectedPatient = selectedPatient;
+
+            UpdateTreatmentInfo();
 		}
 
         public TreatmentPriceControl(Model.Patient patient)
         {
             this.InitializeComponent();
 
-            _patient = patient;
+            _selectedPatient = patient;
         }
         #endregion
 
         #region Window event handlers
         private void btnRemoveTreatmentPrice_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            if (_treatment != null 
-                && _treatment.TreatmentPaymentId == 0
+            if (_treatmentPayment != null 
+                && _treatmentPayment.TreatmentPaymentId == 0
                 && MessageBox.Show("¿Está seguro(a) que desea eliminar el tratamiento?",
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
@@ -73,10 +79,9 @@ namespace MyDentApplication
 
 		private void btnEditTreatmentPrice_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            if (_treatment != null)
+            if (_treatmentPayment != null)
             {
-                new AddEditTreatmentPaymentModal(_treatment, _userLoggedIn).ShowDialog();
-                UpdateTreatmentInfo();
+                new AddEditTreatmentPaymentModal(_treatmentPayment, _selectedPatient, this).ShowDialog();
                 OnTreatmentEdited(this, true);
             }
         }
@@ -85,17 +90,23 @@ namespace MyDentApplication
         #region Window's logic
         private void UpdateTreatmentInfo()
         {
-            if (_treatment != null)
+            lblTreatmentName.ToolTip = lblTreatmentName.Text = _treatmentPrice == null ? string.Empty : string.Format("{0} - {1} ({2})", _treatmentPrice.TreatmentKey, _treatmentPrice.Name, _treatmentPrice.Type);
+            
+            if (_treatmentPayment != null)
             {
-                lblTreatmentName.ToolTip = lblTreatmentName.Text = string.Format("{0} ({1})", _treatment.TreatmentPrice.Name, _treatment.TreatmentPrice.Type);
-                lblQuantity.ToolTip = lblQuantity.Text = _treatment.Quantity.ToString();
-                lblDiscount.ToolTip = lblDiscount.Text = _treatment.Discount.ToString() + "%";
-                lblUnitPrice.ToolTip = lblUnitPrice.Text = "$" + _treatment.Price.ToString("0.00");
-                lblTotal.ToolTip = lblTotal.Text = "$" + _treatment.Total.ToString("0.00");
-                lblTreatmentDate.ToolTip = lblTreatmentDate.Text = _treatment.TreatmentDate.ToString("dd/MMMM/yyyy");
+                lblQuantity.ToolTip = lblQuantity.Text = _treatmentPayment.Quantity.ToString();
+                lblDiscount.ToolTip = lblDiscount.Text = _treatmentPayment.Discount.ToString() + "%";
+                lblUnitPrice.ToolTip = lblUnitPrice.Text = "$" + _treatmentPayment.Price.ToString("0.00");
+                lblTotal.ToolTip = lblTotal.Text = "$" + _treatmentPayment.Total.ToString("0.00");
+                lblTreatmentDate.ToolTip = lblTreatmentDate.Text = _treatmentPayment.TreatmentDate.ToString("dd/MMMM/yyyy");
 
-                btnEditTreatmentPrice.IsEnabled = btnRemoveTreatmentPrice.IsEnabled = _treatment.TreatmentPaymentId == 0;
+                btnEditTreatmentPrice.IsEnabled = btnRemoveTreatmentPrice.IsEnabled = _treatmentPayment.TreatmentPaymentId == 0;
             }
+        }
+
+        public void UpdateData()
+        {
+            UpdateTreatmentInfo();
         }
         #endregion
     }

@@ -8,8 +8,13 @@
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="646.966" Height="94.057">
 	<Grid x:Name="gridDrawer" Margin="0,0,2,2">
-		<Rectangle x:Name="rcBorder" Stroke="Black" StrokeThickness="2"/>
-		<Grid x:Name="gridBackground" Grid.ColumnSpan="2" Background="#FFBFE4AD" Opacity="0.9">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="262*"/>
+			<ColumnDefinition Width="326*"/>
+			<ColumnDefinition Width="57*"/>
+		</Grid.ColumnDefinitions>
+		<Rectangle x:Name="rcBorder" Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="3"/>
+		<Grid x:Name="gridBackground" Grid.ColumnSpan="3" Background="#FFBFE4AD" Opacity="0.9">
 			<Button x:Name="btnRemovePayment" Width="35" Cursor="Hand" HorizontalAlignment="Right" Margin="0,47.057,10,0" Height="35" VerticalAlignment="Top" Click="btnRemovePayment_Click" > 
 				<Image Source="/MyDentApplication;component/Images/remove_icon.png"  />
 			</Button>
@@ -17,17 +22,17 @@
 				<Image Source="/MyDentApplication;component/Images/edit_icon.png"  />
 			</Button>
 		</Grid>
-		<Label x:Name="lblExpNoCaption" Content="Cantidad:" Margin="364.223,10,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65.077"/>
-		<TextBlock x:Name="lblPaymentType" Height="20" Margin="104.689,12.05,404.354,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="1"/>
+		<Label x:Name="lblExpNoCaption" Content="Cantidad:" Margin="102.223,10,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65.077" Grid.Column="1"/>
+		<TextBlock x:Name="lblPaymentType" Height="20" Margin="104.689,12.05,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="1"/>
 		<Label x:Name="lblExpNoCaption_Copy" Content="Banco:" Margin="52.667,35,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="47.022"/>
 		<Label x:Name="lblExpNoCaption_Copy1" Content="Tipo de pago:" Margin="15,7.05,0,0" FontWeight="Normal" Height="27.95" VerticalAlignment="Top" HorizontalAlignment="Left" Width="84.689"/>
-		<TextBlock x:Name="lblAmount" Height="20" Margin="434.3,15,72.667,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="4"/>
-		<TextBlock x:Name="lblVoucherCheckNumber" Height="20" Margin="434.3,42.05,72.667,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="5"/>
+		<TextBlock x:Name="lblAmount" Height="20" Margin="172.3,15,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="4" Grid.Column="1"/>
+		<TextBlock x:Name="lblVoucherCheckNumber" Height="20" Margin="172.3,42.05,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="5" Grid.Column="1"/>
 		<Label x:Name="lblExpNoCaption_Copy2" Content="Observaciones:" Margin="10,60,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89.689"/>
-		<Label x:Name="lblExpNoCaption_Copy3" Content="No. de voucher o cheque:" Margin="277.612,37.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="151.688"/>
-		<TextBlock x:Name="lblObservations" Height="20" Margin="104.689,65,404.354,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="3"/>
-		<TextBlock x:Name="lblPaymentDate" Height="20" Margin="434.3,65,72.667,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="6"/>
-		<TextBlock x:Name="lblBankName" Height="20" Margin="104.689,40,404.354,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="2"/>
-		<Label x:Name="lblExpNoCaption_Copy4" Content="Fecha de pago:" Margin="333.612,60,0,0" FontWeight="Normal" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="95.688"/>		
+		<Label x:Name="lblExpNoCaption_Copy3" Content="No. de voucher o cheque:" Margin="15.612,37.05,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="151.688" Grid.Column="1"/>
+		<TextBlock x:Name="lblObservations" Height="20" Margin="104.689,65,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="3"/>
+		<TextBlock x:Name="lblPaymentDate" Height="20" Margin="172.3,65,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="6" Grid.Column="1"/>
+		<TextBlock x:Name="lblBankName" Height="20" Margin="104.689,40,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="2"/>
+		<Label x:Name="lblExpNoCaption_Copy4" Content="Fecha de pago:" Margin="71.612,60,0,0" FontWeight="Normal" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="95.688" Grid.Column="1"/>		
 	</Grid>
 </UserControl>

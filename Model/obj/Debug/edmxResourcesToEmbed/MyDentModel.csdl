@@ -159,6 +159,11 @@
       <End Role="InventorySignature" EntitySet="InventorySignatures" />
     </AssociationSet>
     <EntitySet Name="Banks" EntityType="MyDentDBModel.Bank" />
+    <EntitySet Name="PositiveBalances" EntityType="MyDentDBModel.PositiveBalance" />
+    <AssociationSet Name="FK_PositiveBalances_PatientId" Association="MyDentDBModel.FK_PositiveBalances_PatientId">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="PositiveBalance" EntitySet="PositiveBalances" />
+    </AssociationSet>
     <EntitySet Name="PaymentFolios" EntityType="MyDentDBModel.PaymentFolio" />
     <EntitySet Name="Payments" EntityType="MyDentDBModel.Payment" />
     <EntitySet Name="Statements" EntityType="MyDentDBModel.Statement" />
@@ -167,38 +172,37 @@
       <End Role="Bank" EntitySet="Banks" />
       <End Role="Payment" EntitySet="Payments" />
     </AssociationSet>
+    <AssociationSet Name="FK_PaymentFolios_PatientId" Association="MyDentDBModel.FK_PaymentFolios_PatientId">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="PaymentFolio" EntitySet="PaymentFolios" />
+    </AssociationSet>
     <AssociationSet Name="FK_StatementId_PatientId" Association="MyDentDBModel.FK_StatementId_PatientId">
       <End Role="Patient" EntitySet="Patients" />
       <End Role="Statement" EntitySet="Statements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentFolios_UserId" Association="MyDentDBModel.FK_PaymentFolios_UserId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="PaymentFolio" EntitySet="PaymentFolios" />
     </AssociationSet>
     <AssociationSet Name="FK_TreatmentPayments_TreatmentPriceId" Association="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId">
       <End Role="TreatmentPrice" EntitySet="TreatmentPrices" />
       <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
     </AssociationSet>
-    <AssociationSet Name="AccountStatus_Payments" Association="MyDentDBModel.AccountStatus_Payments">
-      <End Role="Payment" EntitySet="Payments" />
-      <End Role="Statement" EntitySet="Statements" />
-    </AssociationSet>
-    <AssociationSet Name="AccountStatus_Treatments" Association="MyDentDBModel.AccountStatus_Treatments">
-      <End Role="Statement" EntitySet="Statements" />
-      <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
-    </AssociationSet>
-    <AssociationSet Name="FolioNumbers_Payments" Association="MyDentDBModel.FolioNumbers_Payments">
+    <AssociationSet Name="PaymentFolios_Payments" Association="MyDentDBModel.PaymentFolios_Payments">
       <End Role="PaymentFolio" EntitySet="PaymentFolios" />
       <End Role="Payment" EntitySet="Payments" />
     </AssociationSet>
-    <AssociationSet Name="FolioNumbers_Treatments" Association="MyDentDBModel.FolioNumbers_Treatments">
+    <AssociationSet Name="PaymentFolios_Treatments" Association="MyDentDBModel.PaymentFolios_Treatments">
       <End Role="PaymentFolio" EntitySet="PaymentFolios" />
       <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
     </AssociationSet>
-    <EntitySet Name="PositiveBalances" EntityType="MyDentDBModel.PositiveBalance" />
-    <AssociationSet Name="FK_PositiveBalances_PatientId" Association="MyDentDBModel.FK_PositiveBalances_PatientId">
-      <End Role="Patient" EntitySet="Patients" />
-      <End Role="PositiveBalance" EntitySet="PositiveBalances" />
+    <AssociationSet Name="Statement_Payments" Association="MyDentDBModel.Statement_Payments">
+      <End Role="Payment" EntitySet="Payments" />
+      <End Role="Statement" EntitySet="Statements" />
     </AssociationSet>
-    <AssociationSet Name="FK_PaymentFolios_UserId" Association="MyDentDBModel.FK_PaymentFolios_UserId">
-      <End Role="User" EntitySet="Users" />
-      <End Role="PaymentFolio" EntitySet="PaymentFolios" />
+    <AssociationSet Name="Statement_Treatments" Association="MyDentDBModel.Statement_Treatments">
+      <End Role="Statement" EntitySet="Statements" />
+      <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
@@ -350,8 +354,9 @@
     <NavigationProperty Name="ClinicHistory" Relationship="MyDentDBModel.FK_Patients_ClinicHistoryId" FromRole="Patient" ToRole="ClinicHistory" />
     <NavigationProperty Name="Budgets" Relationship="MyDentDBModel.FK_Budgets_PatientId" FromRole="Patient" ToRole="Budget" />
     <NavigationProperty Name="Authorizations" Relationship="MyDentDBModel.FK_Authorizations_PatientId" FromRole="Patient" ToRole="Authorization" />
-    <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
     <NavigationProperty Name="PositiveBalances" Relationship="MyDentDBModel.FK_PositiveBalances_PatientId" FromRole="Patient" ToRole="PositiveBalance" />
+    <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
+    <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
   </EntityType>
   <EntityType Name="ReceivedInvoice">
     <Key>
@@ -999,116 +1004,9 @@
     </Key>
     <Property Name="BankId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Payments" Relationship="MyDentDBModel.FK_Payments_BankId" FromRole="Bank" ToRole="Payment" />
-    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
   </EntityType>
-  <EntityType Name="PaymentFolio">
-    <Key>
-      <PropertyRef Name="FolioNumber" />
-    </Key>
-    <Property Name="FolioNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FolioDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Payments" Relationship="MyDentDBModel.FolioNumbers_Payments" FromRole="PaymentFolio" ToRole="Payment" />
-    <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.FolioNumbers_Treatments" FromRole="PaymentFolio" ToRole="TreatmentPayment" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_PaymentFolios_UserId" FromRole="PaymentFolio" ToRole="User" />
-  </EntityType>
-  <EntityType Name="Payment">
-    <Key>
-      <PropertyRef Name="PaymentId" />
-    </Key>
-    <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="BankId" Type="Int32" />
-    <Property Name="VoucherCheckNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Observation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Bank" Relationship="MyDentDBModel.FK_Payments_BankId" FromRole="Payment" ToRole="Bank" />
-    <NavigationProperty Name="Statements" Relationship="MyDentDBModel.AccountStatus_Payments" FromRole="Payment" ToRole="Statement" />
-    <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FolioNumbers_Payments" FromRole="Payment" ToRole="PaymentFolio" />
-  </EntityType>
-  <EntityType Name="Statement">
-    <Key>
-      <PropertyRef Name="StatementId" />
-    </Key>
-    <Property Name="StatementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PatientId" Type="Int32" Nullable="false" />
-    <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="IsPaid" Type="Boolean" Nullable="false" />
-    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Statement" ToRole="Patient" />
-    <NavigationProperty Name="Payments" Relationship="MyDentDBModel.AccountStatus_Payments" FromRole="Statement" ToRole="Payment" />
-    <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.AccountStatus_Treatments" FromRole="Statement" ToRole="TreatmentPayment" />
-  </EntityType>
-  <EntityType Name="TreatmentPayment">
-    <Key>
-      <PropertyRef Name="TreatmentPaymentId" />
-    </Key>
-    <Property Name="TreatmentPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TreatmentPriceId" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="Discount" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="TreatmentPrice" Relationship="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId" FromRole="TreatmentPayment" ToRole="TreatmentPrice" />
-    <NavigationProperty Name="Statements" Relationship="MyDentDBModel.AccountStatus_Treatments" FromRole="TreatmentPayment" ToRole="Statement" />
-    <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FolioNumbers_Treatments" FromRole="TreatmentPayment" ToRole="PaymentFolio" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-  </EntityType>
-  <Association Name="FK_Payments_BankId">
-    <End Type="MyDentDBModel.Bank" Role="Bank" Multiplicity="0..1" />
-    <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Bank">
-        <PropertyRef Name="BankId" />
-      </Principal>
-      <Dependent Role="Payment">
-        <PropertyRef Name="BankId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StatementId_PatientId">
-    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
-    <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Patient">
-        <PropertyRef Name="PatientId" />
-      </Principal>
-      <Dependent Role="Statement">
-        <PropertyRef Name="PatientId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentPayments_TreatmentPriceId">
-    <End Type="MyDentDBModel.TreatmentPrice" Role="TreatmentPrice" Multiplicity="1" />
-    <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TreatmentPrice">
-        <PropertyRef Name="TreatmentPriceId" />
-      </Principal>
-      <Dependent Role="TreatmentPayment">
-        <PropertyRef Name="TreatmentPriceId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="AccountStatus_Payments">
-    <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
-    <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
-  </Association>
-  <Association Name="AccountStatus_Treatments">
-    <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
-    <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
-  </Association>
-  <Association Name="FolioNumbers_Payments">
-    <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
-    <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
-  </Association>
-  <Association Name="FolioNumbers_Treatments">
-    <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
-    <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
-  </Association>
   <EntityType Name="PositiveBalance">
     <Key>
       <PropertyRef Name="PositiveBalanceId" />
@@ -1132,6 +1030,99 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="PaymentFolio">
+    <Key>
+      <PropertyRef Name="FolioNumber" />
+    </Key>
+    <Property Name="FolioNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FolioDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="PaymentFolio" ToRole="Patient" />
+    <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_PaymentFolios_UserId" FromRole="PaymentFolio" ToRole="User" />
+    <NavigationProperty Name="Payments" Relationship="MyDentDBModel.PaymentFolios_Payments" FromRole="PaymentFolio" ToRole="Payment" />
+    <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.PaymentFolios_Treatments" FromRole="PaymentFolio" ToRole="TreatmentPayment" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="PaymentId" />
+    </Key>
+    <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="BankId" Type="Int32" />
+    <Property Name="VoucherCheckNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Observation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Bank" Relationship="MyDentDBModel.FK_Payments_BankId" FromRole="Payment" ToRole="Bank" />
+    <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.PaymentFolios_Payments" FromRole="Payment" ToRole="PaymentFolio" />
+    <NavigationProperty Name="Statements" Relationship="MyDentDBModel.Statement_Payments" FromRole="Payment" ToRole="Statement" />
+  </EntityType>
+  <EntityType Name="Statement">
+    <Key>
+      <PropertyRef Name="StatementId" />
+    </Key>
+    <Property Name="StatementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Statement" ToRole="Patient" />
+    <NavigationProperty Name="Payments" Relationship="MyDentDBModel.Statement_Payments" FromRole="Statement" ToRole="Payment" />
+    <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.Statement_Treatments" FromRole="Statement" ToRole="TreatmentPayment" />
+  </EntityType>
+  <EntityType Name="TreatmentPayment">
+    <Key>
+      <PropertyRef Name="TreatmentPaymentId" />
+    </Key>
+    <Property Name="TreatmentPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TreatmentPriceId" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="TreatmentPrice" Relationship="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId" FromRole="TreatmentPayment" ToRole="TreatmentPrice" />
+    <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.PaymentFolios_Treatments" FromRole="TreatmentPayment" ToRole="PaymentFolio" />
+    <NavigationProperty Name="Statements" Relationship="MyDentDBModel.Statement_Treatments" FromRole="TreatmentPayment" ToRole="Statement" />
+  </EntityType>
+  <Association Name="FK_Payments_BankId">
+    <End Type="MyDentDBModel.Bank" Role="Bank" Multiplicity="0..1" />
+    <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="BankId" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="BankId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentFolios_PatientId">
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="PaymentFolio">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StatementId_PatientId">
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Statement">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PaymentFolios_UserId">
     <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
     <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
@@ -1143,5 +1134,33 @@
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentPayments_TreatmentPriceId">
+    <End Type="MyDentDBModel.TreatmentPrice" Role="TreatmentPrice" Multiplicity="1" />
+    <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentPrice">
+        <PropertyRef Name="TreatmentPriceId" />
+      </Principal>
+      <Dependent Role="TreatmentPayment">
+        <PropertyRef Name="TreatmentPriceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentFolios_Payments">
+    <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
+    <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
+  </Association>
+  <Association Name="PaymentFolios_Treatments">
+    <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
+    <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+  </Association>
+  <Association Name="Statement_Payments">
+    <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
+    <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
+  </Association>
+  <Association Name="Statement_Treatments">
+    <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
+    <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
   </Association>
 </Schema>

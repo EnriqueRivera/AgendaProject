@@ -30,11 +30,7 @@ namespace MyDentApplication
         {
             get { return _payment; }
 
-            set
-            {
-                _payment = value;
-                UpdatePaymentInfo();
-            }
+            set { _payment = value; }
 
         }
 
@@ -51,6 +47,8 @@ namespace MyDentApplication
 
             _positiveBalance = positiveBalance;
             Payment = payment;
+
+            UpdatePaymentInfo();
 		}
 
         public PaymentControl()
@@ -78,8 +76,7 @@ namespace MyDentApplication
 		{
             if (_payment != null)
             {
-                new AddEditPaymentModal(_payment, (Controllers.PaymentType)Enum.Parse(typeof(Controllers.PaymentType), _payment.Type, true), null).ShowDialog();
-                UpdatePaymentInfo();
+                new AddEditPaymentModal(_payment, (Controllers.PaymentType)Enum.Parse(typeof(Controllers.PaymentType), _payment.Type, true), this).ShowDialog();
                 OnPaymentEdited(this, true);
             }
         }
@@ -97,8 +94,13 @@ namespace MyDentApplication
                 lblVoucherCheckNumber.ToolTip = lblVoucherCheckNumber.Text = string.IsNullOrEmpty(_payment.VoucherCheckNumber) ? "N/A" : _payment.VoucherCheckNumber;
                 lblPaymentDate.ToolTip = lblPaymentDate.Text = _payment.PaymentDate.ToString("dd/MMMM/yyyy");
 
-                btnEditPayment.IsEnabled = btnRemovePayment.IsEnabled = _payment.PaymentId == 0;
+                btnEditPayment.IsEnabled = btnRemovePayment.IsEnabled = _payment.PaymentId == 0 && _positiveBalance == null;
             }
+        }
+
+        public void UpdateData()
+        {
+            UpdatePaymentInfo();
         }
         #endregion
     }

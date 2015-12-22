@@ -16,8 +16,8 @@ namespace Model
     {
         public TreatmentPayment()
         {
-            this.Statements = new HashSet<Statement>();
             this.PaymentFolios = new HashSet<PaymentFolio>();
+            this.Statements = new HashSet<Statement>();
         }
     
         public int TreatmentPaymentId { get; set; }
@@ -29,7 +29,7 @@ namespace Model
         public decimal Total { get; set; }
     
         public virtual TreatmentPrice TreatmentPrice { get; set; }
-        public virtual ICollection<Statement> Statements { get; set; }
         public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
+        public virtual ICollection<Statement> Statements { get; set; }
     }
 }
