@@ -5,12 +5,12 @@
 	x:Class="MyDentApplication.AddEditOutgoingInvoicesModal"
 	x:Name="Window"
 	Title="Agregar recibo de honorarios"
-	Width="390" Height="361" Icon="/MyDentApplication;component/Configuration/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+	Width="390" Height="338.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 	<Grid x:Name="LayoutRoot" Margin="0,0,-2,-2">
 		<Label x:Name="lblPatient" Content="Paciente:" HorizontalAlignment="Left" Height="27" Margin="87.667,31,0,0" VerticalAlignment="Top" Width="60.333"/>
 		<Label x:Name="lblInvoiceDate" Content="Fecha de facturación:" HorizontalAlignment="Left" Height="27" Margin="23.667,95,0,0" VerticalAlignment="Top" Width="124.333"/>
-		<Button x:Name="btnAddUpdateInvoice" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="100.67,280.697,0,0" VerticalAlignment="Top" Width="91" Click="btnAddUpdateInvoice_Click" Cursor="Hand" TabIndex="8"/>
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="209.67,280.697,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="9"/>
+		<Button x:Name="btnAddUpdateInvoice" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="87.667,0,0,10" VerticalAlignment="Bottom" Width="91" Click="btnAddUpdateInvoice_Click" Cursor="Hand" TabIndex="8"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="196.667,0,0,10" VerticalAlignment="Bottom" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="9"/>
 		<Label x:Name="lblFolio" Content="Folio:" HorizontalAlignment="Left" Height="27" Margin="105.667,159,0,0" VerticalAlignment="Top" Width="42.333"/>
 		<Label x:Name="lblTotalAmount" Content="Total:" HorizontalAlignment="Left" Height="27" Margin="107.333,223,0,0" VerticalAlignment="Top" Width="40.667"/>
 		<ComboBox x:Name="cbPatients" Height="26" Margin="153,31,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="194.5"/>

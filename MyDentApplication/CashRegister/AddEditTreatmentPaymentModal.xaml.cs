@@ -183,12 +183,9 @@ namespace MyDentApplication
 
         private void FillTreatments()
         {
-            List<Model.TreatmentPrice> treatments = BusinessController.Instance.GetAll<Model.TreatmentPrice>()
-                                                        .Where(tp => tp.CreatedDate.Year == DateTime.Now.Year
-                                                                && tp.IsDeleted == false
-                                                                && tp.Type.Contains(Utils.TREATMENT_HEALTH_INSURANCE) == _selectedPatient.HasHealthInsurance)
+            List<Model.TreatmentPrice> treatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(tp => tp.CreatedDate.Year == DateTime.Now.Year && tp.IsDeleted == false)
                                                         .OrderBy(tp => tp.TreatmentKey)
-                                                        .OrderBy(tp => tp.Name)
+                                                        .ThenBy(tp => tp.Name)
                                                         .ToList();
 
             cbTreatments.Items.Add(new Controllers.ComboBoxItem() { Text = string.Empty, Value = null });

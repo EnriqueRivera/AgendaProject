@@ -311,8 +311,7 @@ namespace MyDentApplication
 
         private void FillTreatments()
         {
-           List<Model.Treatment> treatments = BusinessController.Instance.GetAll<Model.Treatment>()
-                                                .Where(t => t.IsDeleted == false)
+            List<Model.Treatment> treatments = BusinessController.Instance.FindBy<Model.Treatment>(t => t.IsDeleted == false)
                                                 .OrderBy(t => t.Name)
                                                 .ThenBy(t => t.Duration)
                                                 .ToList();
@@ -325,8 +324,7 @@ namespace MyDentApplication
 
         private void FillPatients()
         {
-            List<Model.Patient> patients = BusinessController.Instance.GetAll<Model.Patient>()
-                                            .Where(p => p.IsDeleted == false)
+            List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
                                             .OrderBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
                                             .ToList();

@@ -13,8 +13,8 @@
 		<ComboBox x:Name="cbTreatments" Height="26" Margin="102.09,15.126,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="194.5" SelectionChanged="cbTreatments_SelectionChanged"/>
 		<Label x:Name="lblVoucherCheckNumber" Content="Costo: $" HorizontalAlignment="Left" Height="27" Margin="48.267,45.126,0,0" VerticalAlignment="Top" Width="53.823"/>
 		<TextBox x:Name="txtTreatmentCost" HorizontalAlignment="Left" Height="27" Margin="102.09,46.126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="2" BorderThickness="1" BorderBrush="Black"/>
-		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Left" Margin="67.602,0,0,22.43" Width="91" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click" />
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="176.602,0,0,22.43" Width="91" Cursor="Hand" TabIndex="8" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" />
+		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Left" Margin="71.602,0,0,10" Width="91" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click" />
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="180.602,0,0,10" Width="91" Cursor="Hand" TabIndex="8" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" />
 		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="102.09,77.126,0,0" VerticalAlignment="Top" Width="194.5" SelectedIndex="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TabIndex="3">
 			<System:Int32>0</System:Int32>
 			<System:Int32>5</System:Int32>

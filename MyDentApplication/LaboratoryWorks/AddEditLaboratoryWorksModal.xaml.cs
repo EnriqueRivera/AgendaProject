@@ -32,8 +32,8 @@ namespace MyDentApplication
             _laboratoryWorkToUpdate = laboratoryWorkToUpdate;
             _isUpdateLaboratoryWork = laboratoryWorkToUpdate != null;
             dtpDeliveryDate.SelectedDate = DateTime.Now;
-            FillPatientsComboBox();
-            FillTechnicalsComboBox();
+            FillPatients();
+            FillTechnicals();
 
             if (_isUpdateLaboratoryWork)
             {
@@ -111,10 +111,9 @@ namespace MyDentApplication
             }
         }
 
-        private void FillPatientsComboBox()
+        private void FillPatients()
         {
-            List<Model.Patient> patients = BusinessController.Instance.GetAll<Model.Patient>()
-                                            .Where(p => p.IsDeleted == false)
+            List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
                                             .OrderBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
                                             .ToList();
@@ -125,10 +124,9 @@ namespace MyDentApplication
             }
         }
 
-        private void FillTechnicalsComboBox()
+        private void FillTechnicals()
         {
-            List<Model.Technical> technicals = BusinessController.Instance.GetAll<Model.Technical>()
-                                                .Where(t => t.IsDeleted == false)
+            List<Model.Technical> technicals = BusinessController.Instance.FindBy<Model.Technical>(t => t.IsDeleted == false)
                                                 .OrderBy(t => t.Name)
                                                 .ToList();
 

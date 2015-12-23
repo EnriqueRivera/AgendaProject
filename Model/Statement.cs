@@ -25,10 +25,11 @@ namespace Model
         public System.DateTime CreationDate { get; set; }
         public System.DateTime ExpirationDate { get; set; }
         public bool IsPaid { get; set; }
-        public bool IsDeleted { get; set; }
+        public int UserId { get; set; }
     
         public virtual Patient Patient { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<TreatmentPayment> TreatmentPayments { get; set; }
+        public virtual User User { get; set; }
     }
 }

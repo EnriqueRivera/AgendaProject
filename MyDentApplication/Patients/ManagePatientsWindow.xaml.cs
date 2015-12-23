@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq;
 
 namespace MyDentApplication
 {
@@ -61,15 +62,15 @@ namespace MyDentApplication
         {
             DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
 
-            Model.Patient patientSelected = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
+            Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
-            if (patientSelected == null)
+            if (selectedPatient == null)
             {
                 MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                new AddEditPatientsModal(patientSelected, false, _userLoggedIn).ShowDialog();
+                new AddEditPatientsModal(selectedPatient, false, _userLoggedIn).ShowDialog();
                 UpdateGrid();
             }
         }
@@ -78,23 +79,23 @@ namespace MyDentApplication
         {
             DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
 
-            Model.Patient patientSelected = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
+            Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
-            if (patientSelected == null)
+            if (selectedPatient == null)
             {
                 MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else if (MessageBox.Show
                                 (string.Format("¿Está seguro(a) que desea eliminar el paciente con el Exp. No. {0}?",
-                                        patientSelected.PatientId),
+                                        selectedPatient.PatientId),
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
                                     MessageBoxImage.Warning
                                 ) == MessageBoxResult.Yes)
             {
-                patientSelected.IsDeleted = true;
+                selectedPatient.IsDeleted = true;
 
-                if (Controllers.BusinessController.Instance.Update<Model.Patient>(patientSelected))
+                if (Controllers.BusinessController.Instance.Update<Model.Patient>(selectedPatient))
                 {
                     UpdateGrid();
                 }
@@ -109,15 +110,15 @@ namespace MyDentApplication
         {
             DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
 
-            Model.Patient patientSelected = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
+            Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
-            if (patientSelected == null)
+            if (selectedPatient == null)
             {
                 MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                new UpdateClinicHistoryWindow(patientSelected).ShowDialog();
+                new UpdateClinicHistoryWindow(selectedPatient).ShowDialog();
                 UpdateGrid();
             }
         }
@@ -132,15 +133,42 @@ namespace MyDentApplication
 
         private void btnAuthorization_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.Patient patientSelected = dgPatientsWithHI.SelectedItem == null ? null : dgPatientsWithHI.SelectedItem as Model.Patient;
+            Model.Patient selectedPatient = dgPatientsWithHI.SelectedItem == null ? null : dgPatientsWithHI.SelectedItem as Model.Patient;
 
-            if (patientSelected == null)
+            if (selectedPatient == null)
             {
                 MessageBox.Show("Seleccione un paciente asegurado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                new ManageUserAuthorizationsWindow(patientSelected).ShowDialog();
+                new ManageUserAuthorizationsWindow(selectedPatient).ShowDialog();
+            }
+        }
+
+        private void btnViewStatements_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
+
+            Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
+
+            if (selectedPatient == null)
+            {
+                MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                List<Model.Statement> patientStatements = Controllers.BusinessController.Instance.FindBy<Model.Statement>(s => s.PatientId == selectedPatient.PatientId)
+                                                                .OrderByDescending(s => s.CreationDate)
+                                                                .ToList();
+
+                if (patientStatements.Count == 0)
+                {
+                    MessageBox.Show("El paciente seleccionado no posee estados de cuenta", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    new ManagePatientStatementsWindow(_userLoggedIn, selectedPatient, patientStatements).ShowDialog();
+                }
             }
         }
         #endregion

@@ -194,8 +194,7 @@ namespace MyDentApplication
 
         private void FillProviderComboBox()
         {
-            List<Model.ResourceProvider> providers = BusinessController.Instance.GetAll<Model.ResourceProvider>()
-                                                        .Where(p => p.IsDeleted == false)
+            List<Model.ResourceProvider> providers = BusinessController.Instance.FindBy<Model.ResourceProvider>(p => p.IsDeleted == false)
                                                         .OrderBy(p => p.Name)
                                                         .ToList();
 

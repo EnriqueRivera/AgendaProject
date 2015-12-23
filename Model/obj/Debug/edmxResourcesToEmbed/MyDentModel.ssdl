@@ -393,7 +393,7 @@
     <Property Name="CreationDate" Type="date" Nullable="false" />
     <Property Name="ExpirationDate" Type="date" Nullable="false" />
     <Property Name="IsPaid" Type="bit" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Technicals">
     <Key>
@@ -954,6 +954,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Statements_UserId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Statements" Type="Self.Statements" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Statements">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TreatmentPayments_TreatmentPriceId">
     <End Role="TreatmentPrices" Type="Self.TreatmentPrices" Multiplicity="1" />
     <End Role="TreatmentPayments" Type="Self.TreatmentPayments" Multiplicity="*" />
@@ -1192,6 +1204,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_StatementId_PatientId" Association="Self.FK_StatementId_PatientId">
       <End Role="Patients" EntitySet="Patients" />
+      <End Role="Statements" EntitySet="Statements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Statements_UserId" Association="Self.FK_Statements_UserId">
+      <End Role="Users" EntitySet="Users" />
       <End Role="Statements" EntitySet="Statements" />
     </AssociationSet>
     <AssociationSet Name="FK_TreatmentPayments_TreatmentPriceId" Association="Self.FK_TreatmentPayments_TreatmentPriceId">

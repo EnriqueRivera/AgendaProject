@@ -137,8 +137,7 @@ namespace MyDentApplication
 
         private void FillTreatments()
         {
-            List<Model.BudgetTreatment> treatments = BusinessController.Instance.GetAll<Model.BudgetTreatment>()
-                                                        .Where(t => t.IsDeleted == false)
+            List<Model.BudgetTreatment> treatments = BusinessController.Instance.FindBy<Model.BudgetTreatment>(t => t.IsDeleted == false)
                                                         .OrderBy(t => t.Name)
                                                         .ToList();
 

@@ -65,8 +65,7 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnRemoveTreatmentPrice_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            if (_treatmentPayment != null 
-                && _treatmentPayment.TreatmentPaymentId == 0
+            if (IsNewTreatment()
                 && MessageBox.Show("¿Está seguro(a) que desea eliminar el tratamiento?",
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
@@ -100,13 +99,22 @@ namespace MyDentApplication
                 lblTotal.ToolTip = lblTotal.Text = "$" + _treatmentPayment.Total.ToString("0.00");
                 lblTreatmentDate.ToolTip = lblTreatmentDate.Text = _treatmentPayment.TreatmentDate.ToString("dd/MMMM/yyyy");
 
-                btnEditTreatmentPrice.IsEnabled = btnRemoveTreatmentPrice.IsEnabled = _treatmentPayment.TreatmentPaymentId == 0;
+                if (_treatmentPayment.TreatmentPaymentId != 0)
+	            {
+		            btnEditTreatmentPrice.Visibility = System.Windows.Visibility.Hidden;
+                    btnRemoveTreatmentPrice.Visibility = System.Windows.Visibility.Hidden;
+	            }
             }
         }
 
         public void UpdateData()
         {
             UpdateTreatmentInfo();
+        }
+
+        public bool IsNewTreatment()
+        {
+            return _treatmentPayment != null && _treatmentPayment.TreatmentPaymentId == 0;
         }
         #endregion
     }

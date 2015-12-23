@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using Microsoft.Win32;
 
 namespace MyDentApplication
 {
@@ -101,6 +102,29 @@ namespace MyDentApplication
                 }
             }
         }
+
+        private void btnFindImage_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            try
+            {
+                // Create OpenFileDialog 
+                OpenFileDialog dlg = new OpenFileDialog();
+
+                // Set filter for file extension and default file extension 
+                dlg.DefaultExt = ".png";
+                dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+
+                // Get the selected file name and display in a TextBox 
+                if (dlg.ShowDialog() == true)
+                {
+                    LoadPatientPicutre(dlg.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo agregar la imagen seleccionada\n\nDetalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion
 
         #region Window's logic
@@ -113,6 +137,8 @@ namespace MyDentApplication
             {
                 result &= SaveGridControlsInfo(item);
             }
+
+            result &= AddUpdateClinicHistoryAttributeValue(Controllers.Utils.PATIENT_PICTURE, lblImagePath.Text);
 
             _patient.ClinicHistory.UpdateDate = DateTime.Now;
 
@@ -192,6 +218,19 @@ namespace MyDentApplication
             {
                 FillGridControlsInfo(item);
             }
+
+            //Load patient picture
+            Model.ClinicHistoryAttribute attribute = GetClinicHistoryAttributeValue(Controllers.Utils.PATIENT_PICTURE);
+            if (attribute != null)
+            {
+                LoadPatientPicutre(attribute.Value);
+            }
+        }
+
+        private void LoadPatientPicutre(string fileName)
+        {
+            imgPatientPicture.Source = new BitmapImage(new Uri(fileName));
+            lblImagePath.ToolTip = lblImagePath.Text = fileName;
         }
 
         private void FillGridControlsInfo(Grid grid)

@@ -86,10 +86,9 @@ namespace MyDentApplication
 
         private void FillTreatments()
         {
-            List<Model.Treatment> treatments = Controllers.BusinessController.Instance.GetAll<Model.Treatment>()
-                                            .Where(t => t.IsDeleted == false)
-                                            .OrderBy(t => t.Name)
-                                            .ToList();
+            List<Model.Treatment> treatments = Controllers.BusinessController.Instance.FindBy<Model.Treatment>(t => t.IsDeleted == false)
+                                                .OrderBy(t => t.Name)
+                                                .ToList();
 
             cbTreatments.Items.Add(new Controllers.ComboBoxItem() { Text = string.Empty, Value = string.Empty });
 

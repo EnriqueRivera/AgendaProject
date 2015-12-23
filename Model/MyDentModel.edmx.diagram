@@ -83,6 +83,7 @@
         <AssociationConnector Association="MyDentDBModel.PaymentFolios_Treatments" />
         <AssociationConnector Association="MyDentDBModel.Statement_Payments" />
         <AssociationConnector Association="MyDentDBModel.Statement_Treatments" />
+        <AssociationConnector Association="MyDentDBModel.FK_Statements_UserId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

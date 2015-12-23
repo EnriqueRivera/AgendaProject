@@ -32,7 +32,7 @@ namespace MyDentApplication
             _invoiceToUpdate = invoiceToUpdate;
             _isUpdateInvoice = invoiceToUpdate != null;
             dtpPaidDate.SelectedDate = dtpInvoiceDate.SelectedDate = DateTime.Now;
-            FillPatientsComboBox();
+            FillPatients();
 
             if (_isUpdateInvoice)
             {
@@ -161,10 +161,9 @@ namespace MyDentApplication
             }
         }
 
-        private void FillPatientsComboBox()
+        private void FillPatients()
         {
-            List<Model.Patient> patients = BusinessController.Instance.GetAll<Model.Patient>()
-                                                        .Where(p => p.IsDeleted == false)
+            List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
                                                         .OrderBy(p => p.FirstName)
                                                         .ThenBy(p => p.LastName)
                                                         .ToList();

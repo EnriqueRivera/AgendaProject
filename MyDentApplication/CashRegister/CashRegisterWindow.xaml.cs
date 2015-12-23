@@ -22,13 +22,12 @@ namespace MyDentApplication
         #region Instance variables
         private Model.User _userLoggedIn;
         private Model.Patient _selectedPatient;
-        private Model.Patient _previousSelectedPatient;
         private Model.Statement _statement;
+        private Model.PaymentFolio _paymentFolioGenerated;
         private decimal _totalAmountOfTreatments;
         private decimal _totalAmountOfPayments;
         private decimal _grandTotal;
         private decimal _positiveBalance;
-        private Model.PaymentFolio _paymentFolioGenerated;
         #endregion
 
         #region Constructors
@@ -48,8 +47,6 @@ namespace MyDentApplication
                 cbPatients.IsEnabled = false;
                 FillTreatments();
                 FillPayments();
-
-                btnAddTreatment.IsEnabled = _statement.ExpirationDate >= DateTime.Now.Date;
             }
 
             UpdateTotals();
@@ -75,63 +72,125 @@ namespace MyDentApplication
                 List<PaymentControl> paymentsToSave = GetPaymentsToSave();
                 List<TreatmentPriceControl> treatmentsToSave = GetTreatmentsToSave();
 
-                if (treatmentsToSave.Count == 0)
-                {
-                    MessageBox.Show("Agregue al menos un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-
-                if (_positiveBalance > 0m
-                    && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
-                                    "Advertencia",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Warning
-                                ) == MessageBoxResult.No)
-                {
-                    return;
-                }                
-
                 if (_statement == null)
                 {
-                    if (_grandTotal == 0m)
+                    if (treatmentsToSave.Count == 0)
                     {
+                        MessageBox.Show("Agregue al menos un tratamiento para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (_grandTotal == 0m)
+                    {
+                        if (_positiveBalance > 0m
+                            && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
                         SavePayments(paymentsToSave);
                         SaveTreatments(treatmentsToSave);
-
                         CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-
                         SavePositiveBalance();
-
                         PrepareWindowToPrintFolio();
-                        
-                        MessageBox.Show("Datos guardados\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
-                        //Checar si tiene estado de cuenta
-                        //Si no tiene preguntar si desea abrir estado de cuenta
-                        //Si tiene, preguntar si desea agregar lo que falta al estado de cuenta
-                        //Si el estado de cuenta está vencido no se puede agregar, tiene que liquidar ya
+                        Model.Statement currentStatement = _selectedPatient.Statements
+                                                            .Where(s => s.IsPaid == false)
+                                                            .FirstOrDefault();
+
+                        if (currentStatement == null)
+                        {
+                            currentStatement = new Model.Statement();
+
+                            if (MessageBox.Show("No se ha saldado por completo el monto de los tratamientos\n¿Desea abrir un estado de cuenta para este paciente?",
+                                                    "Advertencia",
+                                                    MessageBoxButton.YesNo,
+                                                    MessageBoxImage.Warning
+                                                ) == MessageBoxResult.Yes)
+                            {
+                                new StatementExpirationDateModal(currentStatement, _selectedPatient, _userLoggedIn).ShowDialog();
+
+                                if (currentStatement.PatientId != 0)
+                                {
+                                    SavePayments(paymentsToSave);
+                                    SaveTreatments(treatmentsToSave);
+                                    CreateStatement(currentStatement, paymentsToSave, treatmentsToSave);
+                                    CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                                    PrepareWindowToPrintFolio();
+
+                                    MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                            }
+                        }
+                        else if (currentStatement.ExpirationDate < DateTime.Now.Date)
+                        {
+                            MessageBox.Show("Este paciente posee un estado de cuenta que ha expirado (Estado de cuenta número: " + currentStatement.StatementId + ")" +
+                                            "\nEl monto faltante no puede ser agregado al estado de cuenta, por tal motivo tiene que liquidar estos tratamientos en este momento.", 
+                                            "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            if (MessageBox.Show("Este paciente posee un estado de cuenta con número: " + currentStatement.StatementId + 
+                                                "\n¿Desea guardar el monto faltante en el estado de cuenta del paciente?",
+                                                    "Advertencia",
+                                                    MessageBoxButton.YesNo,
+                                                    MessageBoxImage.Warning
+                                                ) == MessageBoxResult.Yes)
+                            {
+                                SavePayments(paymentsToSave);
+                                SaveTreatments(treatmentsToSave);
+                                UpdateStatement(currentStatement, paymentsToSave, treatmentsToSave);
+                                CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                                PrepareWindowToPrintFolio();
+
+                                MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
                     }
                 }
                 else
                 {
-                    if (_grandTotal == 0m)
+                    if (paymentsToSave.Count == 0)
                     {
+                        MessageBox.Show("Agregue al menos un pago para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (_grandTotal == 0m)
+                    {
+                        if (_positiveBalance > 0m
+                            && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
                         SavePayments(paymentsToSave);
                         SaveTreatments(treatmentsToSave);
-
-                        //Ligar pagos y tratamientos al estado de cuenta
-                        //Poner que está pagado
-
+                        _statement.IsPaid = true;
+                        UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
+                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
                         SavePositiveBalance();
+                        PrepareWindowToPrintFolio();
+
+                        MessageBox.Show("Datos guardados\n\nEl estado de cuenta fue marcado como liquidado.\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
                         SavePayments(paymentsToSave);
                         SaveTreatments(treatmentsToSave);
+                        UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
+                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                        PrepareWindowToPrintFolio();
 
-                        //Ligar pagos y tratamientos al estado de cuenta
+                        MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
             }
@@ -173,6 +232,11 @@ namespace MyDentApplication
             if (_selectedPatient == null)
             {
                 MessageBox.Show("Seleccione un paciente para poder agregar un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            else if (_statement != null && _statement.ExpirationDate < DateTime.Now.Date)
+            {
+                MessageBox.Show("No puede agregar tratamientos a un estado de cuenta vencido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);    
             }
             else
             {
@@ -208,11 +272,8 @@ namespace MyDentApplication
             _selectedPatient = (cbPatients.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient;
 
             FillPatientFields();
-            UpdateHealthInsuranceTreatments();
             UpdatePositiveBalances();
             UpdateTotals();
-
-            _previousSelectedPatient = _selectedPatient;
         }
 
         private void btnPrintMail_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -222,6 +283,37 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
+        private void CreateStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
+        {
+            AddPaymentsAndTreatmentsToStatement(currentStatement, paymentsToSave, treatmentsToSave);
+            if (BusinessController.Instance.Add<Model.Statement>(currentStatement) == false)
+            {
+                throw new Exception("No se pudo crear el estado de cuenta");
+            }
+        }
+
+        private void UpdateStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
+        {
+            AddPaymentsAndTreatmentsToStatement(currentStatement, paymentsToSave, treatmentsToSave);
+            if (BusinessController.Instance.Update<Model.Statement>(currentStatement) == false)
+            {
+                throw new Exception("No se pudo actualizar el estado de cuenta");
+            }
+        }
+
+        private void AddPaymentsAndTreatmentsToStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
+        {
+            foreach (var item in paymentsToSave)
+            {
+                currentStatement.Payments.Add(item.Payment);
+            }
+
+            foreach (var item in treatmentsToSave)
+            {
+                currentStatement.TreatmentPayments.Add(item.TreatmentPayment);
+            }
+        }
+
         private void PrepareWindowToPrintFolio()
         {
             btnSave.IsEnabled = false;
@@ -308,7 +400,7 @@ namespace MyDentApplication
             foreach (var item in spPayments.Children)
             {
                 PaymentControl paymentControl = (item as PaymentControl);
-                if (paymentControl.Payment.PaymentId == 0)
+                if (paymentControl.IsNewPayment())
                 {
                     paymentsToSave.Add(paymentControl);
                 }
@@ -323,21 +415,13 @@ namespace MyDentApplication
             foreach (var item in spTreatments.Children)
             {
                 TreatmentPriceControl treatmentControl = (item as TreatmentPriceControl);
-                if (treatmentControl.TreatmentPayment.TreatmentPaymentId == 0)
+                if (treatmentControl.IsNewTreatment())
                 {
                     treatmentsToSave.Add(treatmentControl);
                 }
             }
 
             return treatmentsToSave;
-        }
-
-        private void UpdateHealthInsuranceTreatments()
-        {
-            if (_previousSelectedPatient != null && _previousSelectedPatient.HasHealthInsurance != _selectedPatient.HasHealthInsurance)
-            {
-                spTreatments.Children.Clear();
-            }
         }
 
         private void UpdatePositiveBalances()
@@ -462,8 +546,7 @@ namespace MyDentApplication
 
         private void FillPatients()
         {
-            List<Model.Patient> patients = BusinessController.Instance.GetAll<Model.Patient>()
-                                            .Where(p => p.IsDeleted == false)
+            List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
                                             .OrderBy(p => p.PatientId)
                                             .ThenBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)

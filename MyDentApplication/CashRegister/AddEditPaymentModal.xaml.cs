@@ -143,8 +143,7 @@ namespace MyDentApplication
 
         private void FillBanks()
         {
-            List<Model.Bank> banks = BusinessController.Instance.GetAll<Model.Bank>()
-                                            .Where(p => p.IsDeleted == false)
+            List<Model.Bank> banks = BusinessController.Instance.FindBy<Model.Bank>(p => p.IsDeleted == false)
                                             .OrderBy(p => p.Name)
                                             .ToList();
 

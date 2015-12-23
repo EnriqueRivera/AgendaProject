@@ -60,8 +60,7 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnRemovePayment_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            if (_payment != null 
-                && _payment.PaymentId == 0
+            if (IsNewPayment()
                 && MessageBox.Show("¿Está seguro(a) que desea eliminar el pago?",
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
@@ -94,13 +93,22 @@ namespace MyDentApplication
                 lblVoucherCheckNumber.ToolTip = lblVoucherCheckNumber.Text = string.IsNullOrEmpty(_payment.VoucherCheckNumber) ? "N/A" : _payment.VoucherCheckNumber;
                 lblPaymentDate.ToolTip = lblPaymentDate.Text = _payment.PaymentDate.ToString("dd/MMMM/yyyy");
 
-                btnEditPayment.IsEnabled = btnRemovePayment.IsEnabled = _payment.PaymentId == 0 && _positiveBalance == null;
+                if (_payment.PaymentId != 0 || _positiveBalance != null)
+	            {
+                    btnEditPayment.Visibility = System.Windows.Visibility.Hidden;
+                    btnRemovePayment.Visibility = System.Windows.Visibility.Hidden;
+	            }
             }
         }
 
         public void UpdateData()
         {
             UpdatePaymentInfo();
+        }
+
+        public bool IsNewPayment()
+        {
+            return _payment != null && _payment.PaymentId == 0;
         }
         #endregion
     }

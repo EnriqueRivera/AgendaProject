@@ -398,7 +398,7 @@
           <Property Name="CreationDate" Type="date" Nullable="false" />
           <Property Name="ExpirationDate" Type="date" Nullable="false" />
           <Property Name="IsPaid" Type="bit" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Technicals">
           <Key>
@@ -959,6 +959,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Statements_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Statements" Type="Self.Statements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Statements">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TreatmentPayments_TreatmentPriceId">
           <End Role="TreatmentPrices" Type="Self.TreatmentPrices" Multiplicity="1" />
           <End Role="TreatmentPayments" Type="Self.TreatmentPayments" Multiplicity="*" />
@@ -1199,6 +1211,10 @@
             <End Role="Patients" EntitySet="Patients" />
             <End Role="Statements" EntitySet="Statements" />
           </AssociationSet>
+          <AssociationSet Name="FK_Statements_UserId" Association="Self.FK_Statements_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Statements" EntitySet="Statements" />
+          </AssociationSet>
           <AssociationSet Name="FK_TreatmentPayments_TreatmentPriceId" Association="Self.FK_TreatmentPayments_TreatmentPriceId">
             <End Role="TreatmentPrices" EntitySet="TreatmentPrices" />
             <End Role="TreatmentPayments" EntitySet="TreatmentPayments" />
@@ -1415,6 +1431,10 @@
           <AssociationSet Name="Statement_Treatments" Association="MyDentDBModel.Statement_Treatments">
             <End Role="Statement" EntitySet="Statements" />
             <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statements_UserId" Association="MyDentDBModel.FK_Statements_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Statement" EntitySet="Statements" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
@@ -1652,6 +1672,7 @@
           <NavigationProperty Name="InventorySignatures" Relationship="MyDentDBModel.FK_InventorySignatures_Signature1" FromRole="User" ToRole="InventorySignature" />
           <NavigationProperty Name="InventorySignatures1" Relationship="MyDentDBModel.FK_InventorySignatures_Signature2" FromRole="User" ToRole="InventorySignature" />
           <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_UserId" FromRole="User" ToRole="PaymentFolio" />
+          <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_Statements_UserId" FromRole="User" ToRole="Statement" />
         </EntityType>
         <Association Name="FK_Events_EventCapturerId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -2279,10 +2300,11 @@
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsPaid" Type="Boolean" Nullable="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Statement" ToRole="Patient" />
           <NavigationProperty Name="Payments" Relationship="MyDentDBModel.Statement_Payments" FromRole="Statement" ToRole="Payment" />
           <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.Statement_Treatments" FromRole="Statement" ToRole="TreatmentPayment" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Statements_UserId" FromRole="Statement" ToRole="User" />
         </EntityType>
         <EntityType Name="TreatmentPayment">
           <Key>
@@ -2374,6 +2396,18 @@
         <Association Name="Statement_Treatments">
           <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
           <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Statements_UserId">
+          <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Statement">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -2831,7 +2865,7 @@
           <EntitySetMapping Name="Statements">
             <EntityTypeMapping TypeName="MyDentDBModel.Statement">
               <MappingFragment StoreEntitySet="Statements">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

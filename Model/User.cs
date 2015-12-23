@@ -27,6 +27,7 @@ namespace Model
             this.InventorySignatures = new HashSet<InventorySignature>();
             this.InventorySignatures1 = new HashSet<InventorySignature>();
             this.PaymentFolios = new HashSet<PaymentFolio>();
+            this.Statements = new HashSet<Statement>();
         }
     
         public int UserId { get; set; }
@@ -48,5 +49,6 @@ namespace Model
         public virtual ICollection<InventorySignature> InventorySignatures { get; set; }
         public virtual ICollection<InventorySignature> InventorySignatures1 { get; set; }
         public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
+        public virtual ICollection<Statement> Statements { get; set; }
     }
 }

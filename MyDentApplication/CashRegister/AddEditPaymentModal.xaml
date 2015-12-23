@@ -8,8 +8,8 @@
 	Width="343.5" Height="308" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
 	<Grid x:Name="LayoutRoot">
-		<Button x:Name="btnAddPayment" Content="Agregar" HorizontalAlignment="Left" Margin="64.76,0,0,19.206" Width="91" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" Click="btnAddPayment_Click"/>
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="173.76,0,0,19.206" Width="91" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
+		<Button x:Name="btnAddPayment" Content="Agregar" HorizontalAlignment="Left" Margin="64.76,0,0,10" Width="91" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" Click="btnAddPayment_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="173.76,0,0,10" Width="91" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
 		<Label x:Name="lblTotalAmount" Content="Cantidad:" HorizontalAlignment="Left" Height="27" Margin="50.423,9,0,0" VerticalAlignment="Top" Width="61.667"/>
 		<TextBox x:Name="txtAmount" HorizontalAlignment="Left" Height="27" Margin="117.09,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
 		<Label x:Name="lblBank" Content="Banco:" HorizontalAlignment="Left" Height="27" Margin="64.76,42,0,0" VerticalAlignment="Top" Width="47.33"/>
