@@ -158,7 +158,7 @@ namespace MyDentApplication
             else
             {
                 List<Model.Statement> patientStatements = Controllers.BusinessController.Instance.FindBy<Model.Statement>(s => s.PatientId == selectedPatient.PatientId)
-                                                                .OrderByDescending(s => s.CreationDate)
+                                                                .OrderByDescending(s => s.StatementId)
                                                                 .ToList();
 
                 if (patientStatements.Count == 0)

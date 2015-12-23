@@ -13,7 +13,7 @@
 		<DataGrid x:Name="dgStatements" Margin="10,43.833,10,44" IsReadOnly="True" CanUserSortColumns="True"
 			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
 			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
-			TabIndex="1" SelectionChanged="dgMedicines_SelectionChanged">
+			TabIndex="1">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding StatementId}" Header="Número" Width="0.15*"/>
 				<DataGridTextColumn Header="Fecha de creación" Width="0.22*">
@@ -44,6 +44,6 @@
 		<Button x:Name="btnViewStatement" Content="Ver detalles" Margin="0,0,10,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="92.836" Click="btnViewStatement_Click" />
 		<Label Width="63" VerticalAlignment="Top" Margin="10,10,0,0" Height="27" HorizontalAlignment="Left" Content="Paciente:"/>
 		<Label x:Name="lblPatientName" VerticalAlignment="Top" Margin="78,10,10,0" Height="27" Content=""/>
-		<Button x:Name="btnAddPaymentToStatement" Content="Abonar/Liquidar" Margin="0,0,107.836,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="112.836" Click="btnAddPaymentToStatement_Click" IsEnabled="False" />
+		<Button x:Name="btnAddPaymentToStatement" Content="Abonar/Liquidar" Margin="0,0,107.836,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="112.836" Click="btnAddPaymentToStatement_Click" />
 	</Grid>
 </Window>

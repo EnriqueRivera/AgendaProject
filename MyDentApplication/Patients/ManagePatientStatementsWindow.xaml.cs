@@ -22,7 +22,6 @@ namespace MyDentApplication
         private Model.User _userLoggedIn;
         private Model.Patient _selectedPatient;
         private List<Model.Statement> _patientStatements;
-        private Model.Statement _selectedStatement;
         #endregion
 
         #region Constructors
@@ -38,18 +37,14 @@ namespace MyDentApplication
 
             UpdateGrid();
         }
-
-        private void dgMedicines_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            _selectedStatement = dgStatements.SelectedItem == null ? null : dgStatements.SelectedItem as Model.Statement;
-            btnAddPaymentToStatement.IsEnabled = _selectedStatement != null && _selectedStatement.IsPaid == false;
-        }
         #endregion
 
         #region Window event handlers
         private void btnViewStatement_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (_selectedStatement == null)
+            Model.Statement selectedStatement = dgStatements.SelectedItem == null ? null : dgStatements.SelectedItem as Model.Statement;
+
+            if (selectedStatement == null)
             {
                 MessageBox.Show("Seleccione un estado de cuenta", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -61,17 +56,20 @@ namespace MyDentApplication
 
         private void btnAddPaymentToStatement_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (_selectedStatement == null)
+            Model.Statement selectedStatement = dgStatements.SelectedItem == null ? null : dgStatements.SelectedItem as Model.Statement;
+
+            if (selectedStatement == null)
             {
                 MessageBox.Show("Seleccione un estado de cuenta", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else if (_selectedStatement.IsPaid)
+            else if (selectedStatement.IsPaid)
             {
                 MessageBox.Show("No se puede abonar a un estado de cuenta liquidado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                //Abrir caja
+                new CashRegisterWindow(_userLoggedIn, selectedStatement, _selectedPatient).ShowDialog();
+                UpdateGrid();
             }
         }
         #endregion

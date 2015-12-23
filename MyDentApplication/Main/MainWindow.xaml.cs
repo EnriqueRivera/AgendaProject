@@ -919,7 +919,7 @@ namespace MyDentApplication
         {
             if (_cashRegisterWindow == null)
             {
-                _cashRegisterWindow = new CashRegisterWindow(_userLoggedIn, null);
+                _cashRegisterWindow = new CashRegisterWindow(_userLoggedIn, null, null);
                 _cashRegisterWindow.Closed += Window_Closed;
             }
 

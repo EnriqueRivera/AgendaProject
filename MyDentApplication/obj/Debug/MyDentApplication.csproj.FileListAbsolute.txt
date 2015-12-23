@@ -39,6 +39,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\AddEditPaymentModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\AddEditTreatmentPaymentModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\PaymentControl.baml
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\RequestEmailModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\StatementExpirationDateModal.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\TreatmentPriceControl.baml
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\AddEditCleanedMaterialsModal.baml
@@ -103,6 +104,7 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\AddEditTreatmentPaymentModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\CashRegisterWindow.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\PaymentControl.g.cs
+C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\RequestEmailModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\StatementExpirationDateModal.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CashRegister\TreatmentPriceControl.g.cs
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\MyDentApplication\obj\Debug\CleanedMaterials\AddEditCleanedMaterialsModal.g.cs

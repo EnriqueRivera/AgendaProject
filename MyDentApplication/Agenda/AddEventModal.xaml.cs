@@ -136,6 +136,20 @@ namespace MyDentApplication
                 }
             }
 
+            //Statements
+            Model.Statement currentStatement = _selectedPatient.Statements
+                                                    .Where(s => s.IsPaid == false)
+                                                    .FirstOrDefault();
+
+            if (currentStatement != null && currentStatement.ExpirationDate < DateTime.Now.Date)
+            {
+                MessageBox.Show("Este paciente posee un estado de cuenta que ha expirado (Estado de cuenta número: " + currentStatement.StatementId + ")" +
+                                "\nEs necesario que el paciente liquide el estado de cuenta para poder agendarle una cita.",
+                                "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                return;
+            }
+
             Model.Event eventToAdd = new Model.Event();
             if (IsValidEvent(eventToAdd))
             {

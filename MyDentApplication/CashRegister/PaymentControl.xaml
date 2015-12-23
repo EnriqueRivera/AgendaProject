@@ -21,6 +21,9 @@
 			<Button x:Name="btnEditPayment" Width="35" Cursor="Hand" HorizontalAlignment="Right" Margin="0,10,10,0" Height="35" VerticalAlignment="Top" Click="btnEditPayment_Click" > 
 				<Image Source="/MyDentApplication;component/Images/edit_icon.png"  />
 			</Button>
+			<Button x:Name="btnPositiveBalanceMessage" Width="35" Cursor="Hand" HorizontalAlignment="Right" Margin="0,27,10,0" Height="35" VerticalAlignment="Top" Click="btnPositiveBalanceMessage_Click" Visibility="Hidden" > 
+				<Image Source="/MyDentApplication;component/Images/warning_icon.png"  />
+			</Button>
 		</Grid>
 		<Label x:Name="lblExpNoCaption" Content="Cantidad:" Margin="102.223,10,0,0" FontWeight="Normal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65.077" Grid.Column="1"/>
 		<TextBlock x:Name="lblPaymentType" Height="20" Margin="104.689,12.05,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Text="1"/>

@@ -30,14 +30,12 @@ namespace MyDentApplication
         public Model.TreatmentPayment TreatmentPayment
         {
             get { return _treatmentPayment; }
-
             set { _treatmentPayment = value; }
         }
 
         public Model.TreatmentPrice TreatmentPrice
         {
             get { return _treatmentPrice; }
-
             set { _treatmentPrice = value; }
 
         }
@@ -104,6 +102,13 @@ namespace MyDentApplication
 		            btnEditTreatmentPrice.Visibility = System.Windows.Visibility.Hidden;
                     btnRemoveTreatmentPrice.Visibility = System.Windows.Visibility.Hidden;
 	            }
+
+                lblTreatmentName.ToolTip = lblTreatmentName.Text = _treatmentPayment.TreatmentPrice == null 
+                                                                    ? lblTreatmentName.Text 
+                                                                    : string.Format("{0} - {1} ({2})"
+                                                                                    , _treatmentPayment.TreatmentPrice.TreatmentKey
+                                                                                    , _treatmentPayment.TreatmentPrice.Name
+                                                                                    , _treatmentPayment.TreatmentPrice.Type);
             }
         }
 

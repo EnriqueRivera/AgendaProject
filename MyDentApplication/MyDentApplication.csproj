@@ -145,6 +145,9 @@
     <Compile Include="CashRegister\PaymentControl.xaml.cs">
       <DependentUpon>PaymentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CashRegister\RequestEmailModal.xaml.cs">
+      <DependentUpon>RequestEmailModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CashRegister\StatementExpirationDateModal.xaml.cs">
       <DependentUpon>StatementExpirationDateModal.xaml</DependentUpon>
     </Compile>
@@ -400,6 +403,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CashRegister\PaymentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\RequestEmailModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -779,6 +786,7 @@
     <Resource Include="Images\treatment_icon.png" />
     <Resource Include="Images\treatment_prices_icon.png" />
     <Resource Include="Images\users_icon.png" />
+    <Resource Include="Images\warning_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\app_icon.ico" />

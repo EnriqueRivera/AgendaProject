@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
+using System.Threading;
 
 namespace MyDentApplication
 {
@@ -28,10 +31,15 @@ namespace MyDentApplication
         private decimal _totalAmountOfPayments;
         private decimal _grandTotal;
         private decimal _positiveBalance;
+        private Thread _sendEmailThread;
+        #endregion
+
+        #region Delegates
+        delegate void SendEmailDelegate(string errorMessage);
         #endregion
 
         #region Constructors
-        public CashRegisterWindow(Model.User userLoggedIn, Model.Statement statement)
+        public CashRegisterWindow(Model.User userLoggedIn, Model.Statement statement, Model.Patient patient)
 		{
 			this.InitializeComponent();
 
@@ -39,14 +47,19 @@ namespace MyDentApplication
 
             _userLoggedIn = userLoggedIn;
             _statement = statement;
+            _selectedPatient = patient;
 
             if (_statement != null)
             {
-                this.Title = "Abonar a estado de cuenta";
-                lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = "Estado de cuenta No. " + _statement.StatementId;
+                this.Title = "Abonar/Liquidar estado de cuenta";
+                lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = _statement.StatementId.ToString();
+                lblAccountStatusNumberCaption.Visibility = System.Windows.Visibility.Visible;
+                btnClearForm.Visibility = System.Windows.Visibility.Hidden;
                 cbPatients.IsEnabled = false;
                 FillTreatments();
                 FillPayments();
+
+                SelectPatient();
             }
 
             UpdateTotals();
@@ -90,6 +103,16 @@ namespace MyDentApplication
                             return;
                         }
 
+                        if (_positiveBalance == 0m
+                            && MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
                         SavePayments(paymentsToSave);
                         SaveTreatments(treatmentsToSave);
                         CreatePaymentFolio(paymentsToSave, treatmentsToSave);
@@ -124,14 +147,20 @@ namespace MyDentApplication
                                     CreatePaymentFolio(paymentsToSave, treatmentsToSave);
                                     PrepareWindowToPrintFolio();
 
-                                    MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    _statement = currentStatement;
+
+                                    MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
+                                                    + "\nNúmero del estado de cuenta generado: " + _statement.StatementId
+                                                    , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                    ShowStatementNumberGenerated();
                                 }
                             }
                         }
                         else if (currentStatement.ExpirationDate < DateTime.Now.Date)
                         {
                             MessageBox.Show("Este paciente posee un estado de cuenta que ha expirado (Estado de cuenta número: " + currentStatement.StatementId + ")" +
-                                            "\nEl monto faltante no puede ser agregado al estado de cuenta, por tal motivo tiene que liquidar estos tratamientos en este momento.", 
+                                            "\nEl monto faltante no puede ser agregado al estado de cuenta, por tal motivo tiene que liquidar los tratamientos seleccionados en este momento.", 
                                             "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
@@ -149,7 +178,13 @@ namespace MyDentApplication
                                 CreatePaymentFolio(paymentsToSave, treatmentsToSave);
                                 PrepareWindowToPrintFolio();
 
-                                MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                                _statement = currentStatement;
+
+                                MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
+                                                    + "\nNúmero del estado de cuenta modificado: " + _statement.StatementId
+                                                    , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                ShowStatementNumberGenerated();
                             }
                         }
                     }
@@ -172,6 +207,16 @@ namespace MyDentApplication
                             return;
                         }
 
+                        if (_positiveBalance == 0m
+                            && MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados en el estado de cuenta del paciente?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
                         SavePayments(paymentsToSave);
                         SaveTreatments(treatmentsToSave);
                         _statement.IsPaid = true;
@@ -181,16 +226,24 @@ namespace MyDentApplication
                         PrepareWindowToPrintFolio();
 
                         MessageBox.Show("Datos guardados\n\nEl estado de cuenta fue marcado como liquidado.\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     }
                     else
                     {
-                        SavePayments(paymentsToSave);
-                        SaveTreatments(treatmentsToSave);
-                        UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
-                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                        PrepareWindowToPrintFolio();
+                        if (MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados en el estado de cuenta del paciente?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.Yes)
+                        {
+                            SavePayments(paymentsToSave);
+                            SaveTreatments(treatmentsToSave);
+                            UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
+                            CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                            PrepareWindowToPrintFolio();
 
-                        MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
                 }
             }
@@ -200,17 +253,23 @@ namespace MyDentApplication
             }
         }
 
+        private void ShowStatementNumberGenerated()
+        {
+            lblGeneratedStatementNumberCaption.Visibility = System.Windows.Visibility.Visible;
+            lblGeneratedStatementNumber.ToolTip = lblGeneratedStatementNumber.Text = _statement.StatementId.ToString();
+        }
+
         private void btnAddPayment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             PaymentControl paymentControl = new PaymentControl();
             paymentControl.OnPaymentDeleted += paymentControl_OnPaymentDeleted;
             paymentControl.OnPaymentEdited += paymentControl_OnPaymentEdited;
 
-            new AddEditPaymentModal(null, (Controllers.PaymentType)Enum.Parse(typeof(Controllers.PaymentType), (sender as Button).Tag.ToString(), true), paymentControl).ShowDialog();
+            new AddEditPaymentModal(null, (Controllers.PaymentType)Enum.Parse(typeof(Controllers.PaymentType), (sender as Button).Tag.ToString(), true), paymentControl, null).ShowDialog();
 
             if (paymentControl.Payment != null)
             {
-                spPayments.Children.Add(paymentControl);
+                spPayments.Children.Insert(0, paymentControl);
             }
 
             UpdateTotals();
@@ -248,7 +307,7 @@ namespace MyDentApplication
 
                 if (treatmentControl.TreatmentPayment != null)
                 {
-                    spTreatments.Children.Add(treatmentControl);
+                    spTreatments.Children.Insert(0, treatmentControl);
                 }
 
                 UpdateTotals();
@@ -278,11 +337,291 @@ namespace MyDentApplication
 
         private void btnPrintMail_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            // TODO: Add event handler implementation here.
+            SendMail();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_sendEmailThread != null)
+            {
+                MessageBox.Show("No puede cerrar la ventana hasta que finalice el envío del correo"
+                                , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                e.Cancel = true;
+            }
+            else if (btnSave.IsEnabled == false)
+            {
+                if (MessageBox.Show("¿Seguro(a) que desea cerrar esta ventana?",
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+            else if (MessageBox.Show("Los cambios no guardados se perderán\n¿Está seguro(a) que desea salir de la caja?",
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void btnClearForm_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Los cambios no guardados se perderán\n¿Está seguro(a) que desea limpiar la caja?",
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.Yes)
+            {
+                ClearForm();
+            }
         }
         #endregion
 
         #region Window's logic
+        private void SendMail()
+        {
+            List<Model.Configuration> emailConfigurations = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name.Contains(Utils.EMAIL_CONFIGURATION_PREFIX)).ToList();
+            Model.Configuration host = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.HOST).FirstOrDefault();
+            Model.Configuration port = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PORT).FirstOrDefault();
+            Model.Configuration ssl = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.ENABLE_SSL).FirstOrDefault();
+            Model.Configuration username = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.USERNAME).FirstOrDefault();
+            Model.Configuration password = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PASSWORD).FirstOrDefault();
+
+            if (host == null || port == null || ssl == null || username == null || password == null)
+            {
+                MessageBox.Show("No se pudo cargar la información de la cuenta de correo configurada," +
+                                "\ndirijase al módulo de 'Configurar correo' para actualizar los datos correctamente de la cuenta de correo."
+                                , "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string email = _selectedPatient.Email;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                new RequestEmailModal(_selectedPatient).ShowDialog();
+
+                if (string.IsNullOrEmpty(_selectedPatient.Email))
+	            {
+	                return;	 
+	            }
+
+                email = _selectedPatient.Email;
+
+                if (MessageBox.Show("¿Desea que este correo sea guardado en la información del paciente?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.Yes)
+                {
+                    if (BusinessController.Instance.Update<Model.Patient>(_selectedPatient) == false)
+                    {
+                        MessageBox.Show("No se pudo guardar el correo en la información del paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        _selectedPatient.Email = string.Empty;
+                    }
+                    else
+                    {
+                        FillPatientFields();
+                    }
+                }
+                else
+                {
+                    _selectedPatient.Email = string.Empty;
+                }
+            }
+            else if (MessageBox.Show("El correo se enviará a '" + email + "' ¿Desea continuar?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            SendMail(host.Value, port.Value, ssl.Value, username.Value, password.Value, email);
+        }
+
+        private void SendMail(string host, string port, string ssl, string username, string password, string email)
+        {
+            try
+            {
+                lblStatus.Visibility = System.Windows.Visibility.Visible;
+                btnPrintMail.IsEnabled = false;
+                btnClearForm.IsEnabled = false;
+                btnCancel.IsEnabled = false;
+
+                SmtpClient client = new SmtpClient
+                {
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Port = Convert.ToInt32(port),
+                    Host = host,
+                    EnableSsl = Convert.ToBoolean(ssl),
+                    Credentials = new NetworkCredential(username, password)
+                };
+
+                MailMessage mail = new MailMessage
+                {
+                    From = new MailAddress(username),
+                    Subject = "MyDent - Folio de transacción #" + _paymentFolioGenerated.FolioNumber,
+                    Body = GenerateEmailBody(),
+                    IsBodyHtml = true
+                };
+
+                mail.To.Add(email);
+
+                _sendEmailThread = new Thread(() => SendEmailThread(client, mail));
+                _sendEmailThread.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al tratar de enviar el correo.\nDetalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string GenerateEmailBody()
+        {
+            StringBuilder body = new StringBuilder();
+            string patient = string.Format("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName));
+            string folioNumber = string.Format("<div><strong>Número del folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
+            string statementModified = string.Format("<div><strong>Número del estado de cuenta modificado:</strong> {0}</div>", _statement == null ? string.Empty : _statement.StatementId.ToString());
+            string totalOfTreatments = string.Format("<div><strong>Monto total de tratamientos:</strong> ${0}</div>", _totalAmountOfTreatments.ToString("0.00"));
+            string totalOfPayments = string.Format("<div><strong>Monto total de pagos:</strong> ${0}</div>", _totalAmountOfPayments.ToString("0.00"));
+            string grandTotal = string.Format("<div style='color:red;'><strong>Pendiente por pagar:</strong> ${0} {1}</div>", _grandTotal.ToString("0.00"), _grandTotal > 0m ? "(Monto agregado al estado de cuenta)" : string.Empty);
+            string positiveBalance = string.Format("<div style='color:green;'><strong>Saldo a favor:</strong> ${0}</div>", _positiveBalance.ToString("0.00"));
+
+            string paymentsTable = @"<table style='width:100%'>
+                                    <tr>
+                                        <th>Tipo de pago</th>
+                                        <th>Banco</th> 
+                                        <th>Cantidad</th>
+                                        <th>No. de voucher o cheque</th>
+                                        <th>Fecha de pago</th>
+                                        <th>Observaciones</th>
+                                    </tr>
+                                    {0}
+                                </table>";
+
+            string treatmentsTable = @"<table style='width:100%'>
+                                    <tr>
+                                        <th>Tratamiento</th>
+                                        <th>Cantidad</th> 
+                                        <th>Precio unitario</th>
+                                        <th>Descuento</th>
+                                        <th>Total</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                    {0}
+                                </table>";
+
+            StringBuilder treatments = new StringBuilder();
+            foreach (var item in _paymentFolioGenerated.TreatmentPayments)
+            {
+                treatments.Append("<tr>");
+                treatments.AppendFormat("<td align='center'>{0}</td>", string.Format("{0} - {1} ({2})", item.TreatmentPrice.TreatmentKey, item.TreatmentPrice.Name, item.TreatmentPrice.Type));
+                treatments.AppendFormat("<td align='center'>{0}</td>", item.Quantity);
+                treatments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Price.ToString("0.00"));
+                treatments.AppendFormat("<td align='center'>{0}</td>", item.Discount + "%");
+                treatments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Total.ToString("0.00"));
+                treatments.AppendFormat("<td align='center'>{0}</td>", item.TreatmentDate.ToString("dd/MMMM/yyyy"));
+                treatments.Append("</tr>");
+            }
+            treatmentsTable = string.Format(treatmentsTable, treatments);
+
+            StringBuilder payments = new StringBuilder();
+            foreach (var item in _paymentFolioGenerated.Payments)
+            {
+                payments.Append("<tr>");
+                payments.AppendFormat("<td align='center'>{0}</td>", item.Type);
+                payments.AppendFormat("<td align='center'>{0}</td>", item.Bank == null ? "N/A" : item.Bank.Name);
+                payments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Amount.ToString("0.00"));
+                payments.AppendFormat("<td align='center'>{0}</td>", string.IsNullOrEmpty(item.VoucherCheckNumber) ? "N/A" : item.VoucherCheckNumber);
+                payments.AppendFormat("<td align='center'>{0}</td>", item.PaymentDate.ToString("dd/MMMM/yyyy"));
+                payments.AppendFormat("<td align='center'>{0}</td>", item.Observation);
+                payments.Append("</tr>");
+            }
+            paymentsTable = string.Format(paymentsTable, payments);
+
+            body.Append(patient);
+            body.Append(folioNumber);
+
+            if (_statement != null)
+            {
+                body.Append(statementModified);
+            }
+
+            body.Append("<div>&nbsp;</div>");
+
+            if (_paymentFolioGenerated.TreatmentPayments.Count > 0)
+            {
+                body.Append("<div>&nbsp;</div>");
+                body.Append("<div><strong>Registro de tratamientos:</strong></div>");
+                body.Append(treatmentsTable);
+            }
+
+            if (_paymentFolioGenerated.Payments.Count > 0)
+            {
+                body.Append("<div>&nbsp;</div>");
+                body.Append("<div><strong>Registro de pagos:</strong></div>");
+                body.Append(paymentsTable);
+            }
+
+            body.Append("<div>&nbsp;</div>");
+            body.Append(totalOfTreatments);
+            body.Append(totalOfPayments);
+            body.Append(grandTotal);
+            body.Append(positiveBalance);
+
+            return body.ToString();
+        }
+
+        private void SendEmailThread(SmtpClient client, MailMessage mail)
+        {
+            try
+            {
+                client.Send(mail);
+                EmailSentNotify(string.Empty);
+            }
+            catch (Exception ex)
+            {
+                EmailSentNotify(ex.Message);
+            }
+        }
+
+        void EmailSentNotify(string errorMessage)
+        {
+            if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
+            {
+                Dispatcher.Invoke(new SendEmailDelegate(EmailSentNotify), errorMessage);
+                return;
+            }
+
+            EmailSent(errorMessage);
+        }
+
+        private void EmailSent(string errorMessage)
+        {
+            _sendEmailThread = null;
+            lblStatus.Visibility = System.Windows.Visibility.Hidden;
+            btnPrintMail.IsEnabled = true;
+            btnClearForm.IsEnabled = true;
+            btnCancel.IsEnabled = true;
+
+            if (string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show("Correo enviado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("No se pudo enviar el correo.\n\nDetalle del error:\n" + errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void CreateStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
         {
             AddPaymentsAndTreatmentsToStatement(currentStatement, paymentsToSave, treatmentsToSave);
@@ -323,7 +662,9 @@ namespace MyDentApplication
             btnAddCreditCardPayment.IsEnabled = false;
             btnAddCheckPayment.IsEnabled = false;
             btnPrintMail.IsEnabled = true;
-            lblPaymentFolioNumber.ToolTip = lblPaymentFolioNumber.Text = _paymentFolioGenerated == null ? string.Empty : _paymentFolioGenerated.FolioNumber.ToString();
+            lblPaymentFolioNumber.ToolTip = lblPaymentFolioNumber.Text = _paymentFolioGenerated == null 
+                                                                            ? string.Empty 
+                                                                            : _paymentFolioGenerated.FolioNumber.ToString();
         }
 
         private void CreatePaymentFolio(List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
@@ -552,15 +893,23 @@ namespace MyDentApplication
                                             .ThenBy(p => p.LastName)
                                             .ToList();
 
+            cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = "", Value = null });
+
             foreach (Model.Patient patient in patients)
             {
                 cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.PatientId, patient.FirstName, patient.LastName), Value = patient });
             }
+
+            cbPatients.SelectedIndex = 0;
         }
 
-        private void FillPayments()
+        private void FillTreatments()
         {
-            foreach (Model.TreatmentPayment treatment in _statement.TreatmentPayments)
+            List<Model.TreatmentPayment> treatments = _statement.TreatmentPayments
+                                                .OrderByDescending(p => p.TreatmentDate)
+                                                .ToList();
+
+            foreach (var treatment in treatments)
             {
                 TreatmentPriceControl treatmentControl = new TreatmentPriceControl(treatment, _selectedPatient)
                 {
@@ -571,9 +920,13 @@ namespace MyDentApplication
             }
         }
 
-        private void FillTreatments()
+        private void FillPayments()
         {
-            foreach (Model.Payment payment in _statement.Payments)
+            List<Model.Payment> payments = _statement.Payments
+                                            .OrderByDescending(p => p.PaymentDate)
+                                            .ToList();
+
+            foreach (var payment in payments)
             {
                 PaymentControl paymentControl = new PaymentControl(payment, null)
                 {
@@ -584,27 +937,42 @@ namespace MyDentApplication
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void SelectPatient()
         {
-            if (btnSave.IsEnabled == false)
-	        {
-                if (MessageBox.Show("¿Seguro(a) que desea cerrar esta ventana?",
-                                    "Advertencia",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Warning
-                                ) == MessageBoxResult.No)
-                {
-                    e.Cancel = true;
-                }
-	        }
-            else if (MessageBox.Show("Los cambios no guardados se perderán\n¿Está seguro(a) que desea salir de la caja?",
-                                    "Advertencia",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Warning
-                                ) == MessageBoxResult.No)
+            for (int i = 0; i < cbPatients.Items.Count; i++)
             {
-                e.Cancel = true;
+                Model.Patient patient = (cbPatients.Items[i] as Controllers.ComboBoxItem).Value as Model.Patient;
+                if (patient != null && patient.PatientId == _selectedPatient.PatientId)
+                {
+                    cbPatients.SelectedIndex = i;
+                    break;
+                }
             }
+        }
+
+        private void ClearForm()
+        {
+            _statement = null;
+            _paymentFolioGenerated = null;
+
+            btnSave.IsEnabled = true;
+            cbPatients.IsEnabled = true;
+            btnAddTreatment.IsEnabled = true;
+            btnAddCashPayment.IsEnabled = true;
+            btnAddCreditCardPayment.IsEnabled = true;
+            btnAddCheckPayment.IsEnabled = true;
+            btnPrintMail.IsEnabled = false;
+            lblPaymentFolioNumber.ToolTip = lblPaymentFolioNumber.Text = string.Empty;
+
+            spTreatments.Children.Clear();
+            spPayments.Children.Clear();
+
+            lblGeneratedStatementNumberCaption.Visibility = System.Windows.Visibility.Hidden;
+            lblGeneratedStatementNumber.ToolTip = lblGeneratedStatementNumber.Text = string.Empty;
+
+            cbPatients.SelectedIndex = 0;
+
+            UpdateTotals();
         }
         #endregion
     }

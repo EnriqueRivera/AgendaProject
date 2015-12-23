@@ -21,16 +21,18 @@ namespace MyDentApplication
 	{
         #region Instance variables
         private Model.Payment _paymentToUpdate;
+        private Model.Bank _bank;
         private bool _isUpdatePayment;
         private PaymentType _paymentType;
         private PaymentControl _paymentControl;
         #endregion
 
         #region Constructors
-        public AddEditPaymentModal(Model.Payment paymentToUpdate, PaymentType paymentType, PaymentControl paymentControl)
+        public AddEditPaymentModal(Model.Payment paymentToUpdate, PaymentType paymentType, PaymentControl paymentControl, Model.Bank bank)
 		{
 			this.InitializeComponent();
 
+            _bank = bank;
             _paymentControl = paymentControl;
             _paymentType = paymentType;
             _paymentToUpdate = paymentToUpdate;
@@ -52,11 +54,11 @@ namespace MyDentApplication
         private void btnAddPayment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string amountText = txtAmount.Text.Trim();
-            int bankId = Convert.ToInt32((cbBanks.SelectedItem as Controllers.ComboBoxItem).Value);
+            Model.Bank bank = (cbBanks.SelectedItem as Controllers.ComboBoxItem).Value as Model.Bank;
             string voucherCheckNumber = txtVoucherCheckNumber.Text.Trim();
             decimal amount;
 
-            if (AreValidFields(amountText, bankId, voucherCheckNumber, out amount) == false)
+            if (AreValidFields(amountText, bank, voucherCheckNumber, out amount) == false)
             {
                 return;
             }
@@ -70,7 +72,7 @@ namespace MyDentApplication
 
                 if (_paymentType != PaymentType.Efectivo)
                 {
-                    _paymentToUpdate.BankId = bankId;
+                    _paymentToUpdate.BankId = bank.BankId;
                     _paymentToUpdate.VoucherCheckNumber = voucherCheckNumber;
                 }
 
@@ -88,7 +90,7 @@ namespace MyDentApplication
 
                 if (_paymentType != PaymentType.Efectivo)
                 {
-                    paymentToAdd.BankId = bankId;
+                    paymentToAdd.BankId = bank.BankId;
                     paymentToAdd.VoucherCheckNumber = voucherCheckNumber;
                 }
 
@@ -96,6 +98,7 @@ namespace MyDentApplication
             }
 
             _paymentControl.Width = Double.NaN;
+            _paymentControl.Bank = bank;
             _paymentControl.UpdateData();
 
             this.Close();
@@ -108,7 +111,7 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        private bool AreValidFields(string amountText, int bankId, string voucherCheckNumber, out decimal amount)
+        private bool AreValidFields(string amountText, Model.Bank bank, string voucherCheckNumber, out decimal amount)
         {
             amount = 0;
 
@@ -125,7 +128,7 @@ namespace MyDentApplication
 
             if (_paymentType != PaymentType.Efectivo)
             {
-                if (bankId == -1)
+                if (bank == null)
                 {
                     MessageBox.Show("Seleccione un banco", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
@@ -147,11 +150,11 @@ namespace MyDentApplication
                                             .OrderBy(p => p.Name)
                                             .ToList();
 
-            cbBanks.Items.Add(new Controllers.ComboBoxItem() { Text = string.Empty, Value = -1 });
+            cbBanks.Items.Add(new Controllers.ComboBoxItem() { Text = string.Empty, Value = null });
 
             foreach (Model.Bank bank in banks)
             {
-                cbBanks.Items.Add(new Controllers.ComboBoxItem() { Text = bank.Name, Value = bank.BankId });
+                cbBanks.Items.Add(new Controllers.ComboBoxItem() { Text = bank.Name, Value = bank });
             }
 
             cbBanks.SelectedIndex = 0;
@@ -185,11 +188,11 @@ namespace MyDentApplication
             txtVoucherCheckNumber.Text = _paymentToUpdate.VoucherCheckNumber;
             txtObservations.Text = _paymentToUpdate.Observation;
 
-            if (_paymentToUpdate.Bank != null)
+            if (_bank != null)
             {
                 for (int i = 0; i < cbBanks.Items.Count; i++)
                 {
-                    if ((cbBanks.Items[i] as Controllers.ComboBoxItem).Text == _paymentToUpdate.Bank.Name)
+                    if ((cbBanks.Items[i] as Controllers.ComboBoxItem).Text == _bank.Name)
                     {
                         cbBanks.SelectedIndex = i;
                         break;
