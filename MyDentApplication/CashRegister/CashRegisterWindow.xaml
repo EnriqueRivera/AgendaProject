@@ -5,7 +5,7 @@
 	x:Class="MyDentApplication.CashRegisterWindow"
 	x:Name="Window"
 	Title="Caja"
-	Width="640" Height="852" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" Closing="Window_Closing" WindowState="Maximized">
+	Width="640" Height="598.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" Closing="Window_Closing" WindowState="Maximized">
 
 	<Grid x:Name="LayoutRoot">
 		<ScrollViewer Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">

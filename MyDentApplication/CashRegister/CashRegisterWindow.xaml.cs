@@ -32,6 +32,7 @@ namespace MyDentApplication
         private decimal _grandTotal;
         private decimal _positiveBalance;
         private Thread _sendEmailThread;
+        private bool _isStatement;
         #endregion
 
         #region Delegates
@@ -48,6 +49,7 @@ namespace MyDentApplication
             _userLoggedIn = userLoggedIn;
             _statement = statement;
             _selectedPatient = patient;
+            _isStatement = _statement != null;
 
             if (_statement != null)
             {
@@ -120,6 +122,7 @@ namespace MyDentApplication
                         PrepareWindowToPrintFolio();
 
                         MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        SendMail();
                     }
                     else
                     {
@@ -149,11 +152,12 @@ namespace MyDentApplication
 
                                     _statement = currentStatement;
 
+                                    ShowStatementNumberGenerated();
+
                                     MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
                                                     + "\nNúmero del estado de cuenta generado: " + _statement.StatementId
                                                     , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                                    ShowStatementNumberGenerated();
+                                    SendMail();
                                 }
                             }
                         }
@@ -180,20 +184,21 @@ namespace MyDentApplication
 
                                 _statement = currentStatement;
 
+                                ShowStatementNumberGenerated();
+
                                 MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
                                                     + "\nNúmero del estado de cuenta modificado: " + _statement.StatementId
                                                     , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                                ShowStatementNumberGenerated();
+                                SendMail();
                             }
                         }
                     }
                 }
                 else
                 {
-                    if (paymentsToSave.Count == 0)
+                    if (paymentsToSave.Count == 0 && treatmentsToSave.Count == 0)
                     {
-                        MessageBox.Show("Agregue al menos un pago para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Agregue al menos un pago o un tratamiento para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else if (_grandTotal == 0m)
                     {
@@ -226,7 +231,7 @@ namespace MyDentApplication
                         PrepareWindowToPrintFolio();
 
                         MessageBox.Show("Datos guardados\n\nEl estado de cuenta fue marcado como liquidado.\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                        SendMail();
                     }
                     else
                     {
@@ -243,6 +248,7 @@ namespace MyDentApplication
                             PrepareWindowToPrintFolio();
 
                             MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                            SendMail();
                         }
                     }
                 }
@@ -385,6 +391,8 @@ namespace MyDentApplication
         #region Window's logic
         private void SendMail()
         {
+            FillPatientFields();
+
             List<Model.Configuration> emailConfigurations = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name.Contains(Utils.EMAIL_CONFIGURATION_PREFIX)).ToList();
             Model.Configuration host = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.HOST).FirstOrDefault();
             Model.Configuration port = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PORT).FirstOrDefault();
@@ -487,95 +495,63 @@ namespace MyDentApplication
         private string GenerateEmailBody()
         {
             StringBuilder body = new StringBuilder();
-            string patient = string.Format("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName));
-            string folioNumber = string.Format("<div><strong>Número del folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
-            string statementModified = string.Format("<div><strong>Número del estado de cuenta modificado:</strong> {0}</div>", _statement == null ? string.Empty : _statement.StatementId.ToString());
-            string totalOfTreatments = string.Format("<div><strong>Monto total de tratamientos:</strong> ${0}</div>", _totalAmountOfTreatments.ToString("0.00"));
-            string totalOfPayments = string.Format("<div><strong>Monto total de pagos:</strong> ${0}</div>", _totalAmountOfPayments.ToString("0.00"));
-            string grandTotal = string.Format("<div style='color:red;'><strong>Pendiente por pagar:</strong> ${0} {1}</div>", _grandTotal.ToString("0.00"), _grandTotal > 0m ? "(Monto agregado al estado de cuenta)" : string.Empty);
-            string positiveBalance = string.Format("<div style='color:green;'><strong>Saldo a favor:</strong> ${0}</div>", _positiveBalance.ToString("0.00"));
+            DateTime today = DateTime.Now;
+            decimal totalAmountTreatmentPayments = 0m;
+            decimal totalAmountPayments = 0m;
+            bool thereAreTreatments = _paymentFolioGenerated.TreatmentPayments.Count > 0;
+            bool thereArePayments = _paymentFolioGenerated.Payments.Count > 0;
+            string treatmentsTable = Utils.BuildTreatmentPricesTable(_paymentFolioGenerated.TreatmentPayments.ToList(), out totalAmountTreatmentPayments);
+            string paymentsTable = Utils.BuildPaymentsTable(_paymentFolioGenerated.Payments.ToList(), out totalAmountPayments);
 
-            string paymentsTable = @"<table style='width:100%'>
-                                    <tr>
-                                        <th>Tipo de pago</th>
-                                        <th>Banco</th> 
-                                        <th>Cantidad</th>
-                                        <th>No. de voucher o cheque</th>
-                                        <th>Fecha de pago</th>
-                                        <th>Observaciones</th>
-                                    </tr>
-                                    {0}
-                                </table>";
-
-            string treatmentsTable = @"<table style='width:100%'>
-                                    <tr>
-                                        <th>Tratamiento</th>
-                                        <th>Cantidad</th> 
-                                        <th>Precio unitario</th>
-                                        <th>Descuento</th>
-                                        <th>Total</th>
-                                        <th>Fecha</th>
-                                    </tr>
-                                    {0}
-                                </table>";
-
-            StringBuilder treatments = new StringBuilder();
-            foreach (var item in _paymentFolioGenerated.TreatmentPayments)
-            {
-                treatments.Append("<tr>");
-                treatments.AppendFormat("<td align='center'>{0}</td>", string.Format("{0} - {1} ({2})", item.TreatmentPrice.TreatmentKey, item.TreatmentPrice.Name, item.TreatmentPrice.Type));
-                treatments.AppendFormat("<td align='center'>{0}</td>", item.Quantity);
-                treatments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Price.ToString("0.00"));
-                treatments.AppendFormat("<td align='center'>{0}</td>", item.Discount + "%");
-                treatments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Total.ToString("0.00"));
-                treatments.AppendFormat("<td align='center'>{0}</td>", item.TreatmentDate.ToString("dd/MMMM/yyyy"));
-                treatments.Append("</tr>");
-            }
-            treatmentsTable = string.Format(treatmentsTable, treatments);
-
-            StringBuilder payments = new StringBuilder();
-            foreach (var item in _paymentFolioGenerated.Payments)
-            {
-                payments.Append("<tr>");
-                payments.AppendFormat("<td align='center'>{0}</td>", item.Type);
-                payments.AppendFormat("<td align='center'>{0}</td>", item.Bank == null ? "N/A" : item.Bank.Name);
-                payments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Amount.ToString("0.00"));
-                payments.AppendFormat("<td align='center'>{0}</td>", string.IsNullOrEmpty(item.VoucherCheckNumber) ? "N/A" : item.VoucherCheckNumber);
-                payments.AppendFormat("<td align='center'>{0}</td>", item.PaymentDate.ToString("dd/MMMM/yyyy"));
-                payments.AppendFormat("<td align='center'>{0}</td>", item.Observation);
-                payments.Append("</tr>");
-            }
-            paymentsTable = string.Format(paymentsTable, payments);
-
-            body.Append(patient);
-            body.Append(folioNumber);
+            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName));
+            body.AppendFormat("<div><strong>Número del folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
+            body.AppendFormat("<div><strong>Fecha y hora de la transacción:</strong> {0}</div>", Utils.FirstCharToUpper(today.ToString("D")) + " a las " + today.ToString("HH:mm") + " hrs.");
 
             if (_statement != null)
             {
-                body.Append(statementModified);
+                if (_isStatement)
+                    body.AppendFormat("<div><strong>La siguiente información fue agregada a su estado de cuenta con número:</strong> {0}</div>", _statement.StatementId);
+                else
+                    body.AppendFormat("<div><strong>Se le proporcionó un nuevo estado de cuenta con número:</strong> {0}</div>", _statement.StatementId);
             }
 
-            body.Append("<div>&nbsp;</div>");
-
-            if (_paymentFolioGenerated.TreatmentPayments.Count > 0)
+            if (thereAreTreatments)
             {
                 body.Append("<div>&nbsp;</div>");
                 body.Append("<div><strong>Registro de tratamientos:</strong></div>");
                 body.Append(treatmentsTable);
             }
 
-            if (_paymentFolioGenerated.Payments.Count > 0)
+            if (thereArePayments)
             {
                 body.Append("<div>&nbsp;</div>");
                 body.Append("<div><strong>Registro de pagos:</strong></div>");
-                body.Append(paymentsTable);
+                body.Append(paymentsTable);   
             }
 
             body.Append("<div>&nbsp;</div>");
-            body.Append(totalOfTreatments);
-            body.Append(totalOfPayments);
-            body.Append(grandTotal);
-            body.Append(positiveBalance);
+
+            if (thereAreTreatments)
+                body.AppendFormat("<div><strong>Monto total de tratamientos:</strong> ${0}</div>", totalAmountTreatmentPayments.ToString("0.00")); 
+
+            if (thereArePayments)
+                body.AppendFormat("<div><strong>Monto total de pagos:</strong> ${0}</div>", totalAmountPayments.ToString("0.00"));   
+
+            if (_isStatement == false && _statement == null)
+		        body.AppendFormat("<div style='color:green;'><strong>Saldo a favor:</strong> ${0}</div>", _positiveBalance.ToString("0.00"));
+
+            if (_isStatement)
+            {
+                if (_grandTotal == 0m)
+                {
+                    body.AppendFormat("<div style='color:green;'><strong>Saldo a favor:</strong> ${0}</div>", _positiveBalance.ToString("0.00"));
+                    body.Append("<div style='color:green;'><strong>¡Estado de cuenta liquidado!</strong></div>");    
+                }
+                else
+                {
+                    body.AppendFormat("<div style='color:red;'><strong>Pendiente por pagar:</strong> ${0}</div>", _grandTotal.ToString("0.00"));
+                }                
+            }
 
             return body.ToString();
         }

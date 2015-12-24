@@ -394,6 +394,7 @@
     <Property Name="ExpirationDate" Type="date" Nullable="false" />
     <Property Name="IsPaid" Type="bit" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ReminderId" Type="int" />
   </EntityType>
   <EntityType Name="Technicals">
     <Key>
@@ -954,6 +955,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Statements_ReminderId">
+    <End Role="Reminders" Type="Self.Reminders" Multiplicity="0..1" />
+    <End Role="Statements" Type="Self.Statements" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reminders">
+        <PropertyRef Name="ReminderId" />
+      </Principal>
+      <Dependent Role="Statements">
+        <PropertyRef Name="ReminderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Statements_UserId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Statements" Type="Self.Statements" Multiplicity="*" />
@@ -1204,6 +1217,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_StatementId_PatientId" Association="Self.FK_StatementId_PatientId">
       <End Role="Patients" EntitySet="Patients" />
+      <End Role="Statements" EntitySet="Statements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Statements_ReminderId" Association="Self.FK_Statements_ReminderId">
+      <End Role="Reminders" EntitySet="Reminders" />
       <End Role="Statements" EntitySet="Statements" />
     </AssociationSet>
     <AssociationSet Name="FK_Statements_UserId" Association="Self.FK_Statements_UserId">

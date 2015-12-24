@@ -451,6 +451,7 @@
     <EntitySetMapping Name="Statements">
       <EntityTypeMapping TypeName="MyDentDBModel.Statement">
         <MappingFragment StoreEntitySet="Statements">
+          <ScalarProperty Name="ReminderId" ColumnName="ReminderId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />

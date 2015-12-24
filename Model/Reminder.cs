@@ -14,6 +14,11 @@ namespace Model
     
     public partial class Reminder
     {
+        public Reminder()
+        {
+            this.Statements = new HashSet<Statement>();
+        }
+    
         public int ReminderId { get; set; }
         public string Message { get; set; }
         public System.DateTime AppearDate { get; set; }
@@ -25,5 +30,6 @@ namespace Model
         public Nullable<System.DateTime> SeenDate { get; set; }
     
         public virtual User User { get; set; }
+        public virtual ICollection<Statement> Statements { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace MyDentApplication
             }
             else
             {
-                //Abrir ventana para ver estado de cuenta
+                new ViewStatementWindow(selectedStatement).ShowDialog();
             }
         }
 

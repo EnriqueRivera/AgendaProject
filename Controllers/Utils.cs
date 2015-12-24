@@ -101,6 +101,72 @@ namespace Controllers
 
             return input.First().ToString().ToUpper() + input.Substring(1);
         }
+
+        public static string BuildTreatmentPricesTable(List<Model.TreatmentPayment> treatmentPayments, out decimal totalAmount)
+        {
+            totalAmount = 0m;
+            StringBuilder treatments = new StringBuilder();
+            string treatmentsTable = @"<table style='width:100%'>
+                                    <tr>
+                                        <th>Tratamiento</th>
+                                        <th>Cantidad</th> 
+                                        <th>Precio unitario</th>
+                                        <th>Descuento</th>
+                                        <th>Total</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                    {0}
+                                </table>";
+            
+            foreach (var item in treatmentPayments)
+            {
+                treatments.Append("<tr>");
+                treatments.AppendFormat("<td align='center'>{0}</td>", string.Format("{0} - {1} ({2})", item.TreatmentPrice.TreatmentKey, item.TreatmentPrice.Name, item.TreatmentPrice.Type));
+                treatments.AppendFormat("<td align='center'>{0}</td>", item.Quantity);
+                treatments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Price.ToString("0.00"));
+                treatments.AppendFormat("<td align='center'>{0}</td>", item.Discount + "%");
+                treatments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Total.ToString("0.00"));
+                treatments.AppendFormat("<td align='center'>{0}</td>", item.TreatmentDate.ToString("dd/MMMM/yyyy"));
+                treatments.Append("</tr>");
+
+                totalAmount += item.Total;
+            }
+
+            return string.Format(treatmentsTable, treatments.ToString());
+        }
+
+        public static string BuildPaymentsTable(List<Model.Payment> paymentsList, out decimal totalAmount)
+        {
+            totalAmount = 0m;
+            StringBuilder payments = new StringBuilder();
+            string paymentsTable = @"<table style='width:100%'>
+                                    <tr>
+                                        <th>Tipo de pago</th>
+                                        <th>Banco</th> 
+                                        <th>Cantidad</th>
+                                        <th>No. de voucher o cheque</th>
+                                        <th>Fecha de pago</th>
+                                        <th>Observaciones</th>
+                                    </tr>
+                                    {0}
+                                </table>";
+
+            foreach (var item in paymentsList)
+            {
+                payments.Append("<tr>");
+                payments.AppendFormat("<td align='center'>{0}</td>", item.Type);
+                payments.AppendFormat("<td align='center'>{0}</td>", item.Bank == null ? "N/A" : item.Bank.Name);
+                payments.AppendFormat("<td align='center'>{0}</td>", "$" + item.Amount.ToString("0.00"));
+                payments.AppendFormat("<td align='center'>{0}</td>", string.IsNullOrEmpty(item.VoucherCheckNumber) ? "N/A" : item.VoucherCheckNumber);
+                payments.AppendFormat("<td align='center'>{0}</td>", item.PaymentDate.ToString("dd/MMMM/yyyy"));
+                payments.AppendFormat("<td align='center'>{0}</td>", item.Observation);
+                payments.Append("</tr>");
+
+                totalAmount += item.Amount;
+            }
+
+            return string.Format(paymentsTable, payments.ToString());
+        }
     }
 
     public class ComboBoxItem

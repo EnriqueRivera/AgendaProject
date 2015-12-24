@@ -26,10 +26,12 @@ namespace Model
         public System.DateTime ExpirationDate { get; set; }
         public bool IsPaid { get; set; }
         public int UserId { get; set; }
+        public Nullable<int> ReminderId { get; set; }
     
         public virtual Patient Patient { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<TreatmentPayment> TreatmentPayments { get; set; }
         public virtual User User { get; set; }
+        public virtual Reminder Reminder { get; set; }
     }
 }
