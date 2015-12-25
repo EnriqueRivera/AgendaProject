@@ -53,7 +53,7 @@ namespace MyDentApplication
 
         private void FillAllPatients()
         {
-            List<Model.Patient> patients = Controllers.BusinessController.Instance.FindBy<Model.Patient>(p => p.HasHealthInsurance)
+            List<Model.Patient> patients = Controllers.BusinessController.Instance.FindBy<Model.Patient>(p => p.HasHealthInsurance && p.IsDiverse == false)
                                             .OrderBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
                                             .ToList();

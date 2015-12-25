@@ -129,6 +129,7 @@
     <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="MyDentDBModel.Patient">
         <MappingFragment StoreEntitySet="Patients">
+          <ScalarProperty Name="IsDiverse" ColumnName="IsDiverse" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
           <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />

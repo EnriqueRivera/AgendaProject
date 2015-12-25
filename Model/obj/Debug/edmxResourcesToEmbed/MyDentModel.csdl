@@ -365,6 +365,7 @@
     <NavigationProperty Name="PositiveBalances" Relationship="MyDentDBModel.FK_PositiveBalances_PatientId" FromRole="Patient" ToRole="PositiveBalance" />
     <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
     <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
+    <Property Name="IsDiverse" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="ReceivedInvoice">
     <Key>

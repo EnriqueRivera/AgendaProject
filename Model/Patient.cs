@@ -37,6 +37,7 @@ namespace Model
         public Nullable<int> ClinicHistoryId { get; set; }
         public int DataCapturerId { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsDiverse { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }

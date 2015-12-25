@@ -73,6 +73,29 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
+			<TabItem Header="Pacientes asegurados diversos">
+				<Grid Background="#FFE5E5E5">
+					<DataGrid x:Name="dgPatientsDiverse" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
+						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False" CanUserAddRows="False" 
+						CanUserDeleteRows="False" TabIndex="4">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Exp. No." Binding="{Binding PatientId}" Width="0.085*"/>
+							<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.14*" />
+							<DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.14*" />
+							<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.1*" />
+							<DataGridTextColumn Header="Teléfono celular" Binding="{Binding CellPhone}" Width="0.15*" />
+							<DataGridTextColumn Header="Teléfono de casa" Binding="{Binding HomePhone}" Width="0.15*" />
+							<DataGridCheckBoxColumn Header="HC" Width="0.04*">
+								<DataGridCheckBoxColumn.Binding>
+									<MultiBinding Converter="{StaticResource BoolValueConverter}">
+										<Binding Path="ClinicHistoryId"/>
+									</MultiBinding>
+								</DataGridCheckBoxColumn.Binding>
+							</DataGridCheckBoxColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
 		</TabControl>
 		<Button x:Name="btnAuthorization" Content="Autorización" Margin="222.667,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="90" Click="btnAuthorization_Click" IsEnabled="False" />
 		<Button x:Name="btnViewStatements" Content="Estados de cuenta" Margin="10,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="112.667" Click="btnViewStatements_Click" />

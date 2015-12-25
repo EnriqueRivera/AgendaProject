@@ -116,7 +116,7 @@ namespace MyDentApplication
                 return;
             }
 
-            if (_selectedPatient.HasHealthInsurance)
+            if (_selectedPatient.HasHealthInsurance && _selectedPatient.IsDiverse == false)
             {
                 List<Model.Authorization> authorizations = _selectedPatient.Authorizations
                                                             .OrderByDescending(a => a.AuthorizationDate)

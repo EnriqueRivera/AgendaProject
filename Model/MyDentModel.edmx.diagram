@@ -19,7 +19,7 @@
         <EntityTypeShape EntityType="MyDentDBModel.ReceivedInvoice" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="MyDentDBModel.Reminder" Width="1.5" PointX="3" PointY="20.75" />
         <EntityTypeShape EntityType="MyDentDBModel.ResourceProvider" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="MyDentDBModel.Technical" Width="1.5" PointX="3" PointY="14" />
+        <EntityTypeShape EntityType="MyDentDBModel.Technical" Width="1.5" PointX="3" PointY="14.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="6" PointY="6.375" />
         <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="10.375" />
         <AssociationConnector Association="MyDentDBModel.FK_Events_EventCapturerId" />

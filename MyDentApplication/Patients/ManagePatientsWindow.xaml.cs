@@ -21,6 +21,7 @@ namespace MyDentApplication
         #region Instance variables
         private Controllers.CustomViewModel<Model.Patient> _patientsNoHIViewModel;
         private Controllers.CustomViewModel<Model.Patient> _patientsWithHIViewModel;
+        private Controllers.CustomViewModel<Model.Patient> _patientsDiverseViewModel;
         private bool _lastSearchAllPatients = true;
         private Model.User _userLoggedIn;
         #endregion    
@@ -32,10 +33,13 @@ namespace MyDentApplication
 
             _userLoggedIn = userLoggedIn;
 
-            UpdateGrid();
             tcPatients.SelectedIndex = 1;
             UpdateGrid();
+            tcPatients.SelectedIndex = 2;
+            UpdateGrid();
             tcPatients.SelectedIndex = 0;
+            UpdateGrid();
+            
 		}
         #endregion
 
@@ -54,13 +58,13 @@ namespace MyDentApplication
 
         private void btnAddPatient_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            new AddEditPatientsModal(null, tcPatients.SelectedIndex != 0, _userLoggedIn).ShowDialog();
+            new AddEditPatientsModal(null, tcPatients.SelectedIndex != 0, tcPatients.SelectedIndex == 2, _userLoggedIn).ShowDialog();
             UpdateGrid();
         }
 
         private void btnEditPatient_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
+            DataGrid dgAux = GetCurrentDataGrid();
 
             Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
@@ -70,14 +74,14 @@ namespace MyDentApplication
             }
             else
             {
-                new AddEditPatientsModal(selectedPatient, false, _userLoggedIn).ShowDialog();
+                new AddEditPatientsModal(selectedPatient, false, false, _userLoggedIn).ShowDialog();
                 UpdateGrid();
             }
         }
 
         private void btnDelete_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
+            DataGrid dgAux = GetCurrentDataGrid();
 
             Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
@@ -108,7 +112,7 @@ namespace MyDentApplication
 		
 		private void btnUpdateHc_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
+            DataGrid dgAux = GetCurrentDataGrid();
 
             Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
@@ -147,7 +151,7 @@ namespace MyDentApplication
 
         private void btnViewStatements_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            DataGrid dgAux = tcPatients.SelectedIndex == 0 ? dgPatientsNoHI : dgPatientsWithHI;
+            DataGrid dgAux = GetCurrentDataGrid();
 
             Model.Patient selectedPatient = dgAux.SelectedItem == null ? null : dgAux.SelectedItem as Model.Patient;
 
@@ -174,6 +178,17 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
+        private DataGrid GetCurrentDataGrid()
+        {
+            switch (tcPatients.SelectedIndex)
+            {
+                case 0: return dgPatientsNoHI;
+                case 1: return dgPatientsWithHI;
+                case 2: return dgPatientsDiverse;
+                default: return dgPatientsNoHI;
+            }
+        }
+
         private void UpdateGrid()
         {
             if (_lastSearchAllPatients)
@@ -212,21 +227,21 @@ namespace MyDentApplication
 
                 dgPatientsNoHI.DataContext = _patientsNoHIViewModel;
             }
-            else
+            else if (tcPatients.SelectedIndex == 1)
             {
                 switch (cbFilter.SelectedIndex)
                 {
                     case 0:
-                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
                         break;
                     case 1:
-                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
                         break;
                     case 2:
                         int patientId;
                         int.TryParse(searchTerm, out patientId);
 
-                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDeleted == false && u.PatientId == patientId, "PatientId", "asc");
+                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.PatientId == patientId, "PatientId", "asc");
                         break;
                     default:
                         break;
@@ -234,19 +249,48 @@ namespace MyDentApplication
 
                 dgPatientsWithHI.DataContext = _patientsWithHIViewModel;
             }
+            else
+            {
+                switch (cbFilter.SelectedIndex)
+                {
+                    case 0:
+                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
+                        break;
+                    case 1:
+                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
+                        break;
+                    case 2:
+                        int patientId;
+                        int.TryParse(searchTerm, out patientId);
+
+                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.PatientId == patientId, "PatientId", "asc");
+                        break;
+                    default:
+                        break;
+                }
+
+                dgPatientsDiverse.DataContext = _patientsDiverseViewModel;
+            }
         }
 
         private void UpdateGridAllPatients()
         {
-            if (tcPatients.SelectedIndex == 0)
+            switch (tcPatients.SelectedIndex)
             {
-                _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false, "PatientId", "asc");
-                dgPatientsNoHI.DataContext = _patientsNoHIViewModel;
-            }
-            else
-            {
-                _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDeleted == false, "PatientId", "asc");
-                dgPatientsWithHI.DataContext = _patientsWithHIViewModel;
+                case 0: 
+                    _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false, "PatientId", "asc");
+                    dgPatientsNoHI.DataContext = _patientsNoHIViewModel;
+                    break;
+                case 1:
+                    _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false, "PatientId", "asc");
+                    dgPatientsWithHI.DataContext = _patientsWithHIViewModel;
+                    break;
+                case 2:
+                    _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false, "PatientId", "asc");
+                    dgPatientsDiverse.DataContext = _patientsDiverseViewModel;
+                    break;
+                default:
+                    break;
             }
         }
         #endregion

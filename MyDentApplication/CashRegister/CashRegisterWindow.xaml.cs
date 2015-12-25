@@ -508,12 +508,7 @@ namespace MyDentApplication
             body.AppendFormat("<div><strong>Fecha y hora de la transacción:</strong> {0}</div>", Utils.FirstCharToUpper(today.ToString("D")) + " a las " + today.ToString("HH:mm") + " hrs.");
 
             if (_statement != null)
-            {
-                if (_isStatement)
-                    body.AppendFormat("<div><strong>La siguiente información fue agregada a su estado de cuenta con número:</strong> {0}</div>", _statement.StatementId);
-                else
-                    body.AppendFormat("<div><strong>Se le proporcionó un nuevo estado de cuenta con número:</strong> {0}</div>", _statement.StatementId);
-            }
+                body.AppendFormat("<div><strong>La siguiente información fue agregada a su estado de cuenta con número:</strong> {0}</div>", _statement.StatementId);
 
             if (thereAreTreatments)
             {

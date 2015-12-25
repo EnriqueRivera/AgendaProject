@@ -72,6 +72,25 @@ namespace MyDentApplication
                 UpdateGrid();
             }
         }
+		
+		private void btnChangeExpiredDate_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Model.Statement selectedStatement = dgStatements.SelectedItem == null ? null : dgStatements.SelectedItem as Model.Statement;
+
+            if (selectedStatement == null)
+            {
+                MessageBox.Show("Seleccione un estado de cuenta", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (selectedStatement.IsPaid)
+            {
+                MessageBox.Show("No se puede cambiar la fecha de expiración a un estado de cuenta liquidado", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                new ChangeStatementExpirationDateModal(selectedStatement).ShowDialog();
+                UpdateGrid();
+            }
+        }
         #endregion
 
         #region Window's logic
@@ -79,7 +98,7 @@ namespace MyDentApplication
         {
             _statementsViewModel = new Controllers.CustomViewModel<Model.Statement>(_patientStatements);
             this.DataContext = _statementsViewModel;
-        }        
+        }    
         #endregion
     }
 }

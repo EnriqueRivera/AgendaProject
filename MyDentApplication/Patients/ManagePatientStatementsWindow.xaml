@@ -45,5 +45,6 @@
 		<Label Width="63" VerticalAlignment="Top" Margin="10,10,0,0" Height="27" HorizontalAlignment="Left" Content="Paciente:"/>
 		<Label x:Name="lblPatientName" VerticalAlignment="Top" Margin="78,10,10,0" Height="27" Content=""/>
 		<Button x:Name="btnAddPaymentToStatement" Content="Abonar/Liquidar" Margin="0,0,107.836,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="112.836" Click="btnAddPaymentToStatement_Click" />
+		<Button x:Name="btnChangeExpiredDate" Content="Modificar fecha de expiración" Margin="10,0,0,10" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="184.836" Click="btnChangeExpiredDate_Click" />
 	</Grid>
 </Window>

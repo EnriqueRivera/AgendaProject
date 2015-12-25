@@ -284,6 +284,7 @@
     <Property Name="ClinicHistoryId" Type="int" />
     <Property Name="DataCapturerId" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="IsDiverse" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="PaymentFolios">
     <Key>

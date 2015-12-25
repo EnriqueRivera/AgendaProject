@@ -221,7 +221,7 @@ namespace MyDentApplication
 
             //Load patient picture
             Model.ClinicHistoryAttribute attribute = GetClinicHistoryAttributeValue(Controllers.Utils.PATIENT_PICTURE);
-            if (attribute != null)
+            if (attribute != null && string.IsNullOrEmpty(attribute.Value) == false)
             {
                 LoadPatientPicutre(attribute.Value);
             }
@@ -229,8 +229,16 @@ namespace MyDentApplication
 
         private void LoadPatientPicutre(string fileName)
         {
-            imgPatientPicture.Source = new BitmapImage(new Uri(fileName));
-            lblImagePath.ToolTip = lblImagePath.Text = fileName;
+            try
+            {
+                imgPatientPicture.Source = new BitmapImage(new Uri(fileName));
+                lblImagePath.ToolTip = lblImagePath.Text = fileName;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al cargar la foto del paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void FillGridControlsInfo(Grid grid)

@@ -5,13 +5,17 @@
 	x:Class="MyDentApplication.ViewStatementWindow"
 	x:Name="Window"
 	Title="Estado de cuenta"
-	Width="640" Height="800.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+	Width="640" Height="588.5" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" WindowState="Maximized">
 	<Window.Resources>
 		<local:DateValueConverter x:Key="DateValueConverter" />
 	</Window.Resources>
 	<Grid x:Name="LayoutRoot">
 		<ScrollViewer Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
 			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="73*"/>
+					<RowDefinition Height="8*"/>
+				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="317*"/>
 					<ColumnDefinition Width="315*"/>
@@ -82,8 +86,12 @@
 					</DataGrid.Columns>
 				</DataGrid>
 				<Label x:Name="lblPatient_Copy2" Content="*Saldo a favor:" HorizontalAlignment="Left" Height="27" Margin="83.603,663.89,0,0" VerticalAlignment="Top" Width="88.478"/>
-				<Label x:Name="lblPatient_Copy3" Content="*Este saldo a favor puede ser generado al liquidar el &#xA;estado de cuenta. Lo cual indica que ya pudo ser &#xD;&#xA;utilizado en alguna transacción." HorizontalAlignment="Left" Height="60.417" Margin="10,700,0,0" VerticalAlignment="Top" Width="297" Grid.RowSpan="2" FontStyle="Italic"/>
+				<Label x:Name="lblPatient_Copy3" Content="*Este saldo a favor puede ser generado al liquidar el &#xA;estado de cuenta. Lo cual indica que ya pudo ser &#xD;&#xA;utilizado en alguna transacción." HorizontalAlignment="Left" Margin="10,0,0,10.083" Width="297" FontStyle="Italic" Height="60.417" VerticalAlignment="Bottom" Grid.Row="1"/>
 				<TextBlock x:Name="lblPositiveBalance" Height="20" Margin="177.081,668.89,10,0" VerticalAlignment="Top" FontWeight="Normal" FontStyle="Italic" Foreground="Black"/>
+				<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Right" Height="160" Margin="0,562.89,14,0" VerticalAlignment="Top" Width="160" Grid.Column="1">
+					<Image x:Name="imgPatientPicture" Margin="0,0,-1,-1"/>
+				</Border>
+				<Label x:Name="lblPatient_Copy8" Content="Foto del paciente" HorizontalAlignment="Right" Height="27" Margin="0,535.89,31.436,0" VerticalAlignment="Top" Width="118.728" FontWeight="Bold" Grid.Column="1"/>
 			</Grid>
 		</ScrollViewer>
 	</Grid>

@@ -289,6 +289,7 @@
           <Property Name="ClinicHistoryId" Type="int" />
           <Property Name="DataCapturerId" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsDiverse" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentFolios">
           <Key>
@@ -1610,6 +1611,7 @@
           <NavigationProperty Name="PositiveBalances" Relationship="MyDentDBModel.FK_PositiveBalances_PatientId" FromRole="Patient" ToRole="PositiveBalance" />
           <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
           <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
+          <Property Name="IsDiverse" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="ReceivedInvoice">
           <Key>
@@ -2579,6 +2581,7 @@
           <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="MyDentDBModel.Patient">
               <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="IsDiverse" ColumnName="IsDiverse" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DataCapturerId" ColumnName="DataCapturerId" />
                 <ScalarProperty Name="ClinicHistoryId" ColumnName="ClinicHistoryId" />

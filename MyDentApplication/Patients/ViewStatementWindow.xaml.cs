@@ -43,6 +43,8 @@ namespace MyDentApplication
             lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = _statement.StatementId.ToString();
 
             UpdateStatementInfo();
+
+            LoadPatientPicture();
         }
         #endregion
 
@@ -118,6 +120,23 @@ namespace MyDentApplication
             lblTotalAmountPayments.ToolTip = lblTotalAmountPayments.Text = "$" + _totalAmountOfPayments.ToString("0.00");
             lblGrandTotal.ToolTip = lblGrandTotal.Text = "$" + _grandTotal.ToString("0.00");
             lblPositiveBalance.ToolTip = lblPositiveBalance.Text = "$" + _positiveBalance.ToString("0.00");
+        }
+
+        private void LoadPatientPicture()
+        {
+            try
+            {
+                Model.ClinicHistoryAttribute attribute = Controllers.BusinessController.Instance.FindBy<Model.ClinicHistoryAttribute>(c => c.ClinicHistoryId == _statement.Patient.ClinicHistoryId && c.Name == Controllers.Utils.PATIENT_PICTURE).FirstOrDefault();
+
+                if (attribute != null && string.IsNullOrEmpty(attribute.Value) == false)
+                {
+                    imgPatientPicture.Source = new BitmapImage(new Uri(attribute.Value));
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al cargar la foto del paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
     }

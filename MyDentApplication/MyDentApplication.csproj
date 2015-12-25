@@ -262,6 +262,9 @@
     <Compile Include="Patients\AddEditPatientsModal.xaml.cs">
       <DependentUpon>AddEditPatientsModal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Patients\ChangeStatementExpirationDateModal.xaml.cs">
+      <DependentUpon>ChangeStatementExpirationDateModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Patients\ManagePatientStatementsWindow.xaml.cs">
       <DependentUpon>ManagePatientStatementsWindow.xaml</DependentUpon>
     </Compile>
@@ -562,6 +565,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Patients\AddEditPatientsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Patients\ChangeStatementExpirationDateModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

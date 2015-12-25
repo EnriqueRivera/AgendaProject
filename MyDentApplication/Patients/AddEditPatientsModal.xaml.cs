@@ -22,15 +22,17 @@ namespace MyDentApplication
         private bool _isUpdatePatientInfo;
         private Model.User _userLoggedIn;
         private bool _hasHealthInsurance;
+        private bool _isDiverse;
         #endregion
 
         #region Constructors
-        public AddEditPatientsModal(Model.Patient patientToUpdate, bool hasHealthInsurance, Model.User userLoggedIn)
+        public AddEditPatientsModal(Model.Patient patientToUpdate, bool hasHealthInsurance, bool isDiverse, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
             _userLoggedIn = userLoggedIn;
             _hasHealthInsurance = hasHealthInsurance;
+            _isDiverse = isDiverse;
             _patientToUpdate = patientToUpdate;
             _isUpdatePatientInfo = patientToUpdate != null;
 
@@ -80,6 +82,7 @@ namespace MyDentApplication
                     CellPhone = cellPhone,
                     Email = txtEmail.Text.Trim(),
                     HasHealthInsurance = _hasHealthInsurance,
+                    IsDiverse = _isDiverse,
                     CaptureDate = DateTime.Now,
                     IsDeleted = false,
                     DataCapturerId = _userLoggedIn.UserId
