@@ -224,6 +224,12 @@
         				</Button>
 					</StackPanel>
 					<StackPanel>
+						<Button x:Name="btnViewPayments" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnViewPayments_Click" > 
+        					<StackPanel Orientation="Vertical">
+        						<Image Source="/MyDentApplication;component/Images/payments_icon.png" Width="50" Height="50"  />
+        						<TextBlock TextAlignment="Center" ><Run Text="Historial de"/><LineBreak/><Run Text="pagos"/></TextBlock>
+        					</StackPanel>
+        				</Button>
 						<Button x:Name="btnManageInventory" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageInventory_Click" > 
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/inventory_icon.png" Width="50" Height="50"  />

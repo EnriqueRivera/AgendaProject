@@ -61,7 +61,8 @@ namespace MyDentApplication
         private ManageAuthorizationsWindow _manageAuthorizationsWindow;
         private ManageDrawersWindow _manageDrawersWindow;
         private CashRegisterWindow _cashRegisterWindow;
-        private ManageBanksWindow _manageBanks;
+        private ManageBanksWindow _manageBanksWindow;
+        private ViewPaymentsWindow _viewPaymentsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -205,7 +206,8 @@ namespace MyDentApplication
             CloseWindow(_manageAuthorizationsWindow);
             CloseWindow(_manageDrawersWindow);
             CloseWindow(_cashRegisterWindow);
-            CloseWindow(_manageBanks);
+            CloseWindow(_manageBanksWindow);
+            CloseWindow(_viewPaymentsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -327,7 +329,11 @@ namespace MyDentApplication
             }
             else if (sender is ManageBanksWindow)
             {
-                _manageBanks = null;
+                _manageBanksWindow = null;
+            }
+            else if (sender is ViewPaymentsWindow)
+            {
+                _viewPaymentsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -1032,14 +1038,26 @@ namespace MyDentApplication
 
         private void btnManageBanks_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (_manageBanks == null)
+            if (_manageBanksWindow == null)
             {
-                _manageBanks = new ManageBanksWindow();
-                _manageBanks.Closed += Window_Closed;
+                _manageBanksWindow = new ManageBanksWindow();
+                _manageBanksWindow.Closed += Window_Closed;
             }
 
-            _manageBanks.Show();
-            _manageBanks.WindowState = WindowState.Normal;
+            _manageBanksWindow.Show();
+            _manageBanksWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnViewPayments_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_viewPaymentsWindow == null)
+            {
+                _viewPaymentsWindow = new ViewPaymentsWindow();
+                _viewPaymentsWindow.Closed += Window_Closed;
+            }
+
+            _viewPaymentsWindow.Show();
+            _viewPaymentsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

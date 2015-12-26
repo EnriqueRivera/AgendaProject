@@ -14,12 +14,6 @@ namespace Model
     
     public partial class TreatmentPayment
     {
-        public TreatmentPayment()
-        {
-            this.PaymentFolios = new HashSet<PaymentFolio>();
-            this.Statements = new HashSet<Statement>();
-        }
-    
         public int TreatmentPaymentId { get; set; }
         public int TreatmentPriceId { get; set; }
         public System.DateTime TreatmentDate { get; set; }
@@ -27,9 +21,11 @@ namespace Model
         public int Discount { get; set; }
         public int Quantity { get; set; }
         public decimal Total { get; set; }
+        public int FolioNumber { get; set; }
+        public Nullable<int> StatementId { get; set; }
     
+        public virtual PaymentFolio PaymentFolio { get; set; }
+        public virtual Statement Statement { get; set; }
         public virtual TreatmentPrice TreatmentPrice { get; set; }
-        public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
-        public virtual ICollection<Statement> Statements { get; set; }
     }
 }

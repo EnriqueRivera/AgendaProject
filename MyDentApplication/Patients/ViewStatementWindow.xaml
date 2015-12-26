@@ -54,9 +54,15 @@
 							</DataGridTextColumn.Binding>
 						</DataGridTextColumn>
 						<DataGridTextColumn Binding="{Binding Quantity}" Header="Cantidad" Width="0.2*"/>
-						<DataGridTextColumn Binding="{Binding Price}" Header="Precio ($)" Width="0.2*"/>
-						<DataGridTextColumn Binding="{Binding Discount}" Header="Descuento (%)" Width="0.25*"/>
-						<DataGridTextColumn Binding="{Binding Total}" Header="Total (%)" Width="0.25*"/>
+						<DataGridTextColumn Binding="{Binding Price, StringFormat=$\{0:n\}}" Header="Precio" Width="0.2*"/>
+						<DataGridTextColumn Header="Descuento" Width="0.25*" >
+							<DataGridTextColumn.Binding>
+								<MultiBinding StringFormat="{}{0}%">
+									<Binding Path="Discount" />
+								</MultiBinding>
+							</DataGridTextColumn.Binding>
+						</DataGridTextColumn>
+						<DataGridTextColumn Binding="{Binding Total, StringFormat=$\{0:n\}}" Header="Total" Width="0.25*"/>
 						<DataGridTextColumn Header="Fecha" Width="0.22*">
 							<DataGridTextColumn.Binding>
 								<MultiBinding Converter="{StaticResource DateValueConverter}">
@@ -73,7 +79,7 @@
 					<DataGrid.Columns>
 						<DataGridTextColumn Binding="{Binding Type}" Header="Tipo de pago" Width="0.2*"/>
 						<DataGridTextColumn Binding="{Binding Bank.Name}" Header="Banco" Width="0.18*"/>
-						<DataGridTextColumn Binding="{Binding Amount}" Header="Cantidad ($)" Width="0.18*"/>
+						<DataGridTextColumn Binding="{Binding Amount, StringFormat=$\{0:n\}}" Header="Cantidad" Width="0.18*"/>
 						<DataGridTextColumn Binding="{Binding VoucherCheckNumber}" Header="No. de voucher o cheque" Width="0.35*"/>
 						<DataGridTextColumn Header="Fecha de pago" Width="0.22*">
 							<DataGridTextColumn.Binding>

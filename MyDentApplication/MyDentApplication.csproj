@@ -280,6 +280,9 @@
     <Compile Include="Patients\ViewStatementWindow.xaml.cs">
       <DependentUpon>ViewStatementWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Payments\ViewPaymentsWindow.xaml.cs">
+      <DependentUpon>ViewPaymentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PrintableDocuments\MedicalProofDocument.xaml.cs">
       <DependentUpon>MedicalProofDocument.xaml</DependentUpon>
     </Compile>
@@ -595,6 +598,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Payments\ViewPaymentsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PrintableDocuments\MedicalProofDocument.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -797,6 +804,7 @@
     <Resource Include="Images\medicine_icon.png" />
     <Resource Include="Images\outgoing_invoice_icon.png" />
     <Resource Include="Images\patient_icon.png" />
+    <Resource Include="Images\payments_icon.png" />
     <Resource Include="Images\print_icon.png" />
     <Resource Include="Images\provider_icon.png" />
     <Resource Include="Images\received_invoice_icon.png" />

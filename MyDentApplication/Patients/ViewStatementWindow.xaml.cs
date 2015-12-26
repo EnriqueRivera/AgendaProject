@@ -229,9 +229,9 @@ namespace MyDentApplication
                                                                         item.TreatmentPrice.Name, 
                                                                         item.TreatmentPrice.Type));
                 MainWindow.AddCell(treatmentsTable, bf, item.Quantity.ToString());
-                MainWindow.AddCell(treatmentsTable, bf, item.Price.ToString());
-                MainWindow.AddCell(treatmentsTable, bf, item.Discount.ToString());
-                MainWindow.AddCell(treatmentsTable, bf, item.Total.ToString());
+                MainWindow.AddCell(treatmentsTable, bf, "$" + item.Price.ToString("0.00"));
+                MainWindow.AddCell(treatmentsTable, bf, item.Discount.ToString() + "%");
+                MainWindow.AddCell(treatmentsTable, bf, "$" + item.Total.ToString("0.00"));
                 MainWindow.AddCell(treatmentsTable, bf, item.TreatmentDate.ToString("dd/MMMM/yyyy"));
             }
         }
@@ -242,7 +242,7 @@ namespace MyDentApplication
             {
                 MainWindow.AddCell(paymentsTable, bf, item.Type);
                 MainWindow.AddCell(paymentsTable, bf, item.Bank == null ? string.Empty : item.Bank.Name);
-                MainWindow.AddCell(paymentsTable, bf, item.Amount.ToString());
+                MainWindow.AddCell(paymentsTable, bf, "$" + item.Amount.ToString("0.00"));
                 MainWindow.AddCell(paymentsTable, bf, item.VoucherCheckNumber == null ? string.Empty : item.VoucherCheckNumber);
                 MainWindow.AddCell(paymentsTable, bf, item.PaymentDate.ToString("dd/MMMM/yyyy"));
                 MainWindow.AddCell(paymentsTable, bf, item.Observation);   

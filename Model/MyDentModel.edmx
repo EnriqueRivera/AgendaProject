@@ -300,22 +300,6 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="PatientId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="PaymentFolios_Payments">
-          <Key>
-            <PropertyRef Name="FolioNumber" />
-            <PropertyRef Name="PaymentId" />
-          </Key>
-          <Property Name="FolioNumber" Type="int" Nullable="false" />
-          <Property Name="PaymentId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PaymentFolios_Treatments">
-          <Key>
-            <PropertyRef Name="FolioNumber" />
-            <PropertyRef Name="TreatmentPaymentId" />
-          </Key>
-          <Property Name="FolioNumber" Type="int" Nullable="false" />
-          <Property Name="TreatmentPaymentId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Payments">
           <Key>
             <PropertyRef Name="PaymentId" />
@@ -327,6 +311,8 @@
           <Property Name="BankId" Type="int" />
           <Property Name="VoucherCheckNumber" Type="varchar(max)" />
           <Property Name="Observation" Type="varchar(max)" Nullable="false" />
+          <Property Name="FolioNumber" Type="int" Nullable="false" />
+          <Property Name="StatementId" Type="int" />
         </EntityType>
         <EntityType Name="PositiveBalances">
           <Key>
@@ -374,22 +360,6 @@
           <Property Name="Name" Type="varchar(max)" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Statement_Payments">
-          <Key>
-            <PropertyRef Name="StatementId" />
-            <PropertyRef Name="PaymentId" />
-          </Key>
-          <Property Name="StatementId" Type="int" Nullable="false" />
-          <Property Name="PaymentId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Statement_Treatments">
-          <Key>
-            <PropertyRef Name="StatementId" />
-            <PropertyRef Name="TreatmentPaidId" />
-          </Key>
-          <Property Name="StatementId" Type="int" Nullable="false" />
-          <Property Name="TreatmentPaidId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Statements">
           <Key>
             <PropertyRef Name="StatementId" />
@@ -410,7 +380,7 @@
           <Property Name="Name" Type="varchar(max)" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="TreatmentPayments">
+        <EntityType Name="TreatmentPayment">
           <Key>
             <PropertyRef Name="TreatmentPaymentId" />
           </Key>
@@ -421,6 +391,8 @@
           <Property Name="Discount" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FolioNumber" Type="int" Nullable="false" />
+          <Property Name="StatementId" Type="int" />
         </EntityType>
         <EntityType Name="TreatmentPrices">
           <Key>
@@ -793,54 +765,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PaymentFolios_Payments_FolioNumber">
-          <End Role="PaymentFolios" Type="Self.PaymentFolios" Multiplicity="1" />
-          <End Role="PaymentFolios_Payments" Type="Self.PaymentFolios_Payments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaymentFolios">
-              <PropertyRef Name="FolioNumber" />
-            </Principal>
-            <Dependent Role="PaymentFolios_Payments">
-              <PropertyRef Name="FolioNumber" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentFolios_Payments_PaymentId">
-          <End Role="Payments" Type="Self.Payments" Multiplicity="1" />
-          <End Role="PaymentFolios_Payments" Type="Self.PaymentFolios_Payments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Payments">
-              <PropertyRef Name="PaymentId" />
-            </Principal>
-            <Dependent Role="PaymentFolios_Payments">
-              <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentFolios_Treatments_FolioNumber">
-          <End Role="PaymentFolios" Type="Self.PaymentFolios" Multiplicity="1" />
-          <End Role="PaymentFolios_Treatments" Type="Self.PaymentFolios_Treatments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaymentFolios">
-              <PropertyRef Name="FolioNumber" />
-            </Principal>
-            <Dependent Role="PaymentFolios_Treatments">
-              <PropertyRef Name="FolioNumber" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentFolios_Treatments_TreatmentPaymentId">
-          <End Role="TreatmentPayments" Type="Self.TreatmentPayments" Multiplicity="1" />
-          <End Role="PaymentFolios_Treatments" Type="Self.PaymentFolios_Treatments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TreatmentPayments">
-              <PropertyRef Name="TreatmentPaymentId" />
-            </Principal>
-            <Dependent Role="PaymentFolios_Treatments">
-              <PropertyRef Name="TreatmentPaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PaymentFolios_UserId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="PaymentFolios" Type="Self.PaymentFolios" Multiplicity="*" />
@@ -862,6 +786,30 @@
             </Principal>
             <Dependent Role="Payments">
               <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_FolioNumber">
+          <End Role="PaymentFolios" Type="Self.PaymentFolios" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentFolios">
+              <PropertyRef Name="FolioNumber" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="FolioNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_StatementId">
+          <End Role="Statements" Type="Self.Statements" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statements">
+              <PropertyRef Name="StatementId" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="StatementId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -901,54 +849,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Statement_Payments_PaymentId">
-          <End Role="Payments" Type="Self.Payments" Multiplicity="1" />
-          <End Role="Statement_Payments" Type="Self.Statement_Payments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Payments">
-              <PropertyRef Name="PaymentId" />
-            </Principal>
-            <Dependent Role="Statement_Payments">
-              <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Statement_Payments_StatementId">
-          <End Role="Statements" Type="Self.Statements" Multiplicity="1" />
-          <End Role="Statement_Payments" Type="Self.Statement_Payments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Statements">
-              <PropertyRef Name="StatementId" />
-            </Principal>
-            <Dependent Role="Statement_Payments">
-              <PropertyRef Name="StatementId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Statement_Treatments_StatementId">
-          <End Role="Statements" Type="Self.Statements" Multiplicity="1" />
-          <End Role="Statement_Treatments" Type="Self.Statement_Treatments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Statements">
-              <PropertyRef Name="StatementId" />
-            </Principal>
-            <Dependent Role="Statement_Treatments">
-              <PropertyRef Name="StatementId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Statement_Treatments_TreatmentPaidId">
-          <End Role="TreatmentPayments" Type="Self.TreatmentPayments" Multiplicity="1" />
-          <End Role="Statement_Treatments" Type="Self.Statement_Treatments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TreatmentPayments">
-              <PropertyRef Name="TreatmentPaymentId" />
-            </Principal>
-            <Dependent Role="Statement_Treatments">
-              <PropertyRef Name="TreatmentPaidId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StatementId_PatientId">
           <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
           <End Role="Statements" Type="Self.Statements" Multiplicity="*" />
@@ -985,14 +885,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TreatmentPayments_TreatmentPriceId">
+        <Association Name="FK_TreatmentPayment_FolioNumber">
+          <End Role="PaymentFolios" Type="Self.PaymentFolios" Multiplicity="1" />
+          <End Role="TreatmentPayment" Type="Self.TreatmentPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentFolios">
+              <PropertyRef Name="FolioNumber" />
+            </Principal>
+            <Dependent Role="TreatmentPayment">
+              <PropertyRef Name="FolioNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentPayment_StatementId">
+          <End Role="Statements" Type="Self.Statements" Multiplicity="0..1" />
+          <End Role="TreatmentPayment" Type="Self.TreatmentPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statements">
+              <PropertyRef Name="StatementId" />
+            </Principal>
+            <Dependent Role="TreatmentPayment">
+              <PropertyRef Name="StatementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentPayment_TreatmentPriceId">
           <End Role="TreatmentPrices" Type="Self.TreatmentPrices" Multiplicity="1" />
-          <End Role="TreatmentPayments" Type="Self.TreatmentPayments" Multiplicity="*" />
+          <End Role="TreatmentPayment" Type="Self.TreatmentPayment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TreatmentPrices">
               <PropertyRef Name="TreatmentPriceId" />
             </Principal>
-            <Dependent Role="TreatmentPayments">
+            <Dependent Role="TreatmentPayment">
               <PropertyRef Name="TreatmentPriceId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1042,18 +966,14 @@
           <EntitySet Name="OutgoingInvoices" EntityType="Self.OutgoingInvoices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentFolios" EntityType="Self.PaymentFolios" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PaymentFolios_Payments" EntityType="Self.PaymentFolios_Payments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PaymentFolios_Treatments" EntityType="Self.PaymentFolios_Treatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PositiveBalances" EntityType="Self.PositiveBalances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceivedInvoices" EntityType="Self.ReceivedInvoices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reminders" EntityType="Self.Reminders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ResourceProviders" EntityType="Self.ResourceProviders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Statement_Payments" EntityType="Self.Statement_Payments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Statement_Treatments" EntityType="Self.Statement_Treatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statements" EntityType="Self.Statements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TreatmentPayments" EntityType="Self.TreatmentPayments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentPayment" EntityType="Self.TreatmentPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentPrices" EntityType="Self.TreatmentPrices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -1169,28 +1089,20 @@
             <End Role="Patients" EntitySet="Patients" />
             <End Role="PaymentFolios" EntitySet="PaymentFolios" />
           </AssociationSet>
-          <AssociationSet Name="FK_PaymentFolios_Payments_FolioNumber" Association="Self.FK_PaymentFolios_Payments_FolioNumber">
-            <End Role="PaymentFolios" EntitySet="PaymentFolios" />
-            <End Role="PaymentFolios_Payments" EntitySet="PaymentFolios_Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentFolios_Payments_PaymentId" Association="Self.FK_PaymentFolios_Payments_PaymentId">
-            <End Role="Payments" EntitySet="Payments" />
-            <End Role="PaymentFolios_Payments" EntitySet="PaymentFolios_Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentFolios_Treatments_FolioNumber" Association="Self.FK_PaymentFolios_Treatments_FolioNumber">
-            <End Role="PaymentFolios" EntitySet="PaymentFolios" />
-            <End Role="PaymentFolios_Treatments" EntitySet="PaymentFolios_Treatments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentFolios_Treatments_TreatmentPaymentId" Association="Self.FK_PaymentFolios_Treatments_TreatmentPaymentId">
-            <End Role="TreatmentPayments" EntitySet="TreatmentPayments" />
-            <End Role="PaymentFolios_Treatments" EntitySet="PaymentFolios_Treatments" />
-          </AssociationSet>
           <AssociationSet Name="FK_PaymentFolios_UserId" Association="Self.FK_PaymentFolios_UserId">
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentFolios" EntitySet="PaymentFolios" />
           </AssociationSet>
           <AssociationSet Name="FK_Payments_BankId" Association="Self.FK_Payments_BankId">
             <End Role="Banks" EntitySet="Banks" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_FolioNumber" Association="Self.FK_Payments_FolioNumber">
+            <End Role="PaymentFolios" EntitySet="PaymentFolios" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_StatementId" Association="Self.FK_Payments_StatementId">
+            <End Role="Statements" EntitySet="Statements" />
             <End Role="Payments" EntitySet="Payments" />
           </AssociationSet>
           <AssociationSet Name="FK_PositiveBalances_PatientId" Association="Self.FK_PositiveBalances_PatientId">
@@ -1205,22 +1117,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Reminders" EntitySet="Reminders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Statement_Payments_PaymentId" Association="Self.FK_Statement_Payments_PaymentId">
-            <End Role="Payments" EntitySet="Payments" />
-            <End Role="Statement_Payments" EntitySet="Statement_Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Statement_Payments_StatementId" Association="Self.FK_Statement_Payments_StatementId">
-            <End Role="Statements" EntitySet="Statements" />
-            <End Role="Statement_Payments" EntitySet="Statement_Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Statement_Treatments_StatementId" Association="Self.FK_Statement_Treatments_StatementId">
-            <End Role="Statements" EntitySet="Statements" />
-            <End Role="Statement_Treatments" EntitySet="Statement_Treatments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Statement_Treatments_TreatmentPaidId" Association="Self.FK_Statement_Treatments_TreatmentPaidId">
-            <End Role="TreatmentPayments" EntitySet="TreatmentPayments" />
-            <End Role="Statement_Treatments" EntitySet="Statement_Treatments" />
-          </AssociationSet>
           <AssociationSet Name="FK_StatementId_PatientId" Association="Self.FK_StatementId_PatientId">
             <End Role="Patients" EntitySet="Patients" />
             <End Role="Statements" EntitySet="Statements" />
@@ -1233,9 +1129,17 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Statements" EntitySet="Statements" />
           </AssociationSet>
-          <AssociationSet Name="FK_TreatmentPayments_TreatmentPriceId" Association="Self.FK_TreatmentPayments_TreatmentPriceId">
+          <AssociationSet Name="FK_TreatmentPayment_FolioNumber" Association="Self.FK_TreatmentPayment_FolioNumber">
+            <End Role="PaymentFolios" EntitySet="PaymentFolios" />
+            <End Role="TreatmentPayment" EntitySet="TreatmentPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentPayment_StatementId" Association="Self.FK_TreatmentPayment_StatementId">
+            <End Role="Statements" EntitySet="Statements" />
+            <End Role="TreatmentPayment" EntitySet="TreatmentPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentPayment_TreatmentPriceId" Association="Self.FK_TreatmentPayment_TreatmentPriceId">
             <End Role="TreatmentPrices" EntitySet="TreatmentPrices" />
-            <End Role="TreatmentPayments" EntitySet="TreatmentPayments" />
+            <End Role="TreatmentPayment" EntitySet="TreatmentPayment" />
           </AssociationSet>
           <AssociationSet Name="PK_Events_InstrumentId" Association="Self.PK_Events_InstrumentId">
             <End Role="Instruments" EntitySet="Instruments" />
@@ -1430,33 +1334,33 @@
             <End Role="User" EntitySet="Users" />
             <End Role="PaymentFolio" EntitySet="PaymentFolios" />
           </AssociationSet>
-          <AssociationSet Name="FK_TreatmentPayments_TreatmentPriceId" Association="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId">
-            <End Role="TreatmentPrice" EntitySet="TreatmentPrices" />
-            <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
-          </AssociationSet>
-          <AssociationSet Name="PaymentFolios_Payments" Association="MyDentDBModel.PaymentFolios_Payments">
+          <AssociationSet Name="FK_Payments_FolioNumber" Association="MyDentDBModel.FK_Payments_FolioNumber">
             <End Role="PaymentFolio" EntitySet="PaymentFolios" />
             <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
-          <AssociationSet Name="PaymentFolios_Treatments" Association="MyDentDBModel.PaymentFolios_Treatments">
+          <AssociationSet Name="FK_TreatmentPayment_FolioNumber" Association="MyDentDBModel.FK_TreatmentPayment_FolioNumber">
             <End Role="PaymentFolio" EntitySet="PaymentFolios" />
             <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
           </AssociationSet>
-          <AssociationSet Name="Statement_Payments" Association="MyDentDBModel.Statement_Payments">
+          <AssociationSet Name="FK_Payments_StatementId" Association="MyDentDBModel.FK_Payments_StatementId">
+            <End Role="Statement" EntitySet="Statements" />
             <End Role="Payment" EntitySet="Payments" />
-            <End Role="Statement" EntitySet="Statements" />
           </AssociationSet>
-          <AssociationSet Name="Statement_Treatments" Association="MyDentDBModel.Statement_Treatments">
+          <AssociationSet Name="FK_Statements_ReminderId" Association="MyDentDBModel.FK_Statements_ReminderId">
+            <End Role="Reminder" EntitySet="Reminders" />
             <End Role="Statement" EntitySet="Statements" />
-            <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
           </AssociationSet>
           <AssociationSet Name="FK_Statements_UserId" Association="MyDentDBModel.FK_Statements_UserId">
             <End Role="User" EntitySet="Users" />
             <End Role="Statement" EntitySet="Statements" />
           </AssociationSet>
-          <AssociationSet Name="FK_Statements_ReminderId" Association="MyDentDBModel.FK_Statements_ReminderId">
-            <End Role="Reminder" EntitySet="Reminders" />
+          <AssociationSet Name="FK_TreatmentPayment_StatementId" Association="MyDentDBModel.FK_TreatmentPayment_StatementId">
             <End Role="Statement" EntitySet="Statements" />
+            <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentPayment_TreatmentPriceId" Association="MyDentDBModel.FK_TreatmentPayment_TreatmentPriceId">
+            <End Role="TreatmentPrice" EntitySet="TreatmentPrices" />
+            <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
@@ -1609,9 +1513,9 @@
           <NavigationProperty Name="Budgets" Relationship="MyDentDBModel.FK_Budgets_PatientId" FromRole="Patient" ToRole="Budget" />
           <NavigationProperty Name="Authorizations" Relationship="MyDentDBModel.FK_Authorizations_PatientId" FromRole="Patient" ToRole="Authorization" />
           <NavigationProperty Name="PositiveBalances" Relationship="MyDentDBModel.FK_PositiveBalances_PatientId" FromRole="Patient" ToRole="PositiveBalance" />
+          <Property Name="IsDiverse" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
           <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
-          <Property Name="IsDiverse" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="ReceivedInvoice">
           <Key>
@@ -2106,7 +2010,7 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId" FromRole="TreatmentPrice" ToRole="TreatmentPayment" />
+          <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.FK_TreatmentPayment_TreatmentPriceId" FromRole="TreatmentPrice" ToRole="TreatmentPayment" />
         </EntityType>
         <EntityType Name="Drawer">
           <Key>
@@ -2297,8 +2201,8 @@
           <Property Name="PatientId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="PaymentFolio" ToRole="Patient" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_PaymentFolios_UserId" FromRole="PaymentFolio" ToRole="User" />
-          <NavigationProperty Name="Payments" Relationship="MyDentDBModel.PaymentFolios_Payments" FromRole="PaymentFolio" ToRole="Payment" />
-          <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.PaymentFolios_Treatments" FromRole="PaymentFolio" ToRole="TreatmentPayment" />
+          <NavigationProperty Name="Payments" Relationship="MyDentDBModel.FK_Payments_FolioNumber" FromRole="PaymentFolio" ToRole="Payment" />
+          <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.FK_TreatmentPayment_FolioNumber" FromRole="PaymentFolio" ToRole="TreatmentPayment" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -2311,9 +2215,11 @@
           <Property Name="BankId" Type="Int32" />
           <Property Name="VoucherCheckNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Observation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FolioNumber" Type="Int32" Nullable="false" />
+          <Property Name="StatementId" Type="Int32" />
           <NavigationProperty Name="Bank" Relationship="MyDentDBModel.FK_Payments_BankId" FromRole="Payment" ToRole="Bank" />
-          <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.PaymentFolios_Payments" FromRole="Payment" ToRole="PaymentFolio" />
-          <NavigationProperty Name="Statements" Relationship="MyDentDBModel.Statement_Payments" FromRole="Payment" ToRole="Statement" />
+          <NavigationProperty Name="PaymentFolio" Relationship="MyDentDBModel.FK_Payments_FolioNumber" FromRole="Payment" ToRole="PaymentFolio" />
+          <NavigationProperty Name="Statement" Relationship="MyDentDBModel.FK_Payments_StatementId" FromRole="Payment" ToRole="Statement" />
         </EntityType>
         <EntityType Name="Statement">
           <Key>
@@ -2324,13 +2230,13 @@
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsPaid" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Statement" ToRole="Patient" />
-          <NavigationProperty Name="Payments" Relationship="MyDentDBModel.Statement_Payments" FromRole="Statement" ToRole="Payment" />
-          <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.Statement_Treatments" FromRole="Statement" ToRole="TreatmentPayment" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Statements_UserId" FromRole="Statement" ToRole="User" />
           <Property Name="ReminderId" Type="Int32" />
+          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Statement" ToRole="Patient" />
+          <NavigationProperty Name="Payments" Relationship="MyDentDBModel.FK_Payments_StatementId" FromRole="Statement" ToRole="Payment" />
           <NavigationProperty Name="Reminder" Relationship="MyDentDBModel.FK_Statements_ReminderId" FromRole="Statement" ToRole="Reminder" />
+          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Statements_UserId" FromRole="Statement" ToRole="User" />
+          <NavigationProperty Name="TreatmentPayments" Relationship="MyDentDBModel.FK_TreatmentPayment_StatementId" FromRole="Statement" ToRole="TreatmentPayment" />
         </EntityType>
         <EntityType Name="TreatmentPayment">
           <Key>
@@ -2343,9 +2249,11 @@
           <Property Name="Discount" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="TreatmentPrice" Relationship="MyDentDBModel.FK_TreatmentPayments_TreatmentPriceId" FromRole="TreatmentPayment" ToRole="TreatmentPrice" />
-          <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.PaymentFolios_Treatments" FromRole="TreatmentPayment" ToRole="PaymentFolio" />
-          <NavigationProperty Name="Statements" Relationship="MyDentDBModel.Statement_Treatments" FromRole="TreatmentPayment" ToRole="Statement" />
+          <Property Name="FolioNumber" Type="Int32" Nullable="false" />
+          <Property Name="StatementId" Type="Int32" />
+          <NavigationProperty Name="PaymentFolio" Relationship="MyDentDBModel.FK_TreatmentPayment_FolioNumber" FromRole="TreatmentPayment" ToRole="PaymentFolio" />
+          <NavigationProperty Name="Statement" Relationship="MyDentDBModel.FK_TreatmentPayment_StatementId" FromRole="TreatmentPayment" ToRole="Statement" />
+          <NavigationProperty Name="TreatmentPrice" Relationship="MyDentDBModel.FK_TreatmentPayment_TreatmentPriceId" FromRole="TreatmentPayment" ToRole="TreatmentPrice" />
         </EntityType>
         <Association Name="FK_Payments_BankId">
           <End Type="MyDentDBModel.Bank" Role="Bank" Multiplicity="0..1" />
@@ -2395,33 +2303,53 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TreatmentPayments_TreatmentPriceId">
-          <End Type="MyDentDBModel.TreatmentPrice" Role="TreatmentPrice" Multiplicity="1" />
-          <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+        <Association Name="FK_Payments_FolioNumber">
+          <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="1" />
+          <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TreatmentPrice">
-              <PropertyRef Name="TreatmentPriceId" />
+            <Principal Role="PaymentFolio">
+              <PropertyRef Name="FolioNumber" />
             </Principal>
-            <Dependent Role="TreatmentPayment">
-              <PropertyRef Name="TreatmentPriceId" />
+            <Dependent Role="Payment">
+              <PropertyRef Name="FolioNumber" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PaymentFolios_Payments">
-          <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
-          <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
-        </Association>
-        <Association Name="PaymentFolios_Treatments">
-          <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="*" />
+        <Association Name="FK_TreatmentPayment_FolioNumber">
+          <End Type="MyDentDBModel.PaymentFolio" Role="PaymentFolio" Multiplicity="1" />
           <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentFolio">
+              <PropertyRef Name="FolioNumber" />
+            </Principal>
+            <Dependent Role="TreatmentPayment">
+              <PropertyRef Name="FolioNumber" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="Statement_Payments">
+        <Association Name="FK_Payments_StatementId">
+          <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="0..1" />
           <End Type="MyDentDBModel.Payment" Role="Payment" Multiplicity="*" />
-          <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statement">
+              <PropertyRef Name="StatementId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="StatementId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="Statement_Treatments">
+        <Association Name="FK_Statements_ReminderId">
+          <End Type="MyDentDBModel.Reminder" Role="Reminder" Multiplicity="0..1" />
           <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
-          <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reminder">
+              <PropertyRef Name="ReminderId" />
+            </Principal>
+            <Dependent Role="Statement">
+              <PropertyRef Name="ReminderId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_Statements_UserId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -2435,15 +2363,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Statements_ReminderId">
-          <End Type="MyDentDBModel.Reminder" Role="Reminder" Multiplicity="0..1" />
-          <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="*" />
+        <Association Name="FK_TreatmentPayment_StatementId">
+          <End Type="MyDentDBModel.Statement" Role="Statement" Multiplicity="0..1" />
+          <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Reminder">
-              <PropertyRef Name="ReminderId" />
+            <Principal Role="Statement">
+              <PropertyRef Name="StatementId" />
             </Principal>
-            <Dependent Role="Statement">
-              <PropertyRef Name="ReminderId" />
+            <Dependent Role="TreatmentPayment">
+              <PropertyRef Name="StatementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentPayment_TreatmentPriceId">
+          <End Type="MyDentDBModel.TreatmentPrice" Role="TreatmentPrice" Multiplicity="1" />
+          <End Type="MyDentDBModel.TreatmentPayment" Role="TreatmentPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TreatmentPrice">
+              <PropertyRef Name="TreatmentPriceId" />
+            </Principal>
+            <Dependent Role="TreatmentPayment">
+              <PropertyRef Name="TreatmentPriceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2891,6 +2831,8 @@
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="MyDentDBModel.Payment">
               <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="StatementId" ColumnName="StatementId" />
+                <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
                 <ScalarProperty Name="Observation" ColumnName="Observation" />
                 <ScalarProperty Name="VoucherCheckNumber" ColumnName="VoucherCheckNumber" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
@@ -2916,7 +2858,9 @@
           </EntitySetMapping>
           <EntitySetMapping Name="TreatmentPayments">
             <EntityTypeMapping TypeName="MyDentDBModel.TreatmentPayment">
-              <MappingFragment StoreEntitySet="TreatmentPayments">
+              <MappingFragment StoreEntitySet="TreatmentPayment">
+                <ScalarProperty Name="StatementId" ColumnName="StatementId" />
+                <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
@@ -2927,38 +2871,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="PaymentFolios_Payments" TypeName="MyDentDBModel.PaymentFolios_Payments" StoreEntitySet="PaymentFolios_Payments">
-            <EndProperty Name="Payment">
-              <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-            </EndProperty>
-            <EndProperty Name="PaymentFolio">
-              <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="PaymentFolios_Treatments" TypeName="MyDentDBModel.PaymentFolios_Treatments" StoreEntitySet="PaymentFolios_Treatments">
-            <EndProperty Name="TreatmentPayment">
-              <ScalarProperty Name="TreatmentPaymentId" ColumnName="TreatmentPaymentId" />
-            </EndProperty>
-            <EndProperty Name="PaymentFolio">
-              <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Statement_Payments" TypeName="MyDentDBModel.Statement_Payments" StoreEntitySet="Statement_Payments">
-            <EndProperty Name="Statement">
-              <ScalarProperty Name="StatementId" ColumnName="StatementId" />
-            </EndProperty>
-            <EndProperty Name="Payment">
-              <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Statement_Treatments" TypeName="MyDentDBModel.Statement_Treatments" StoreEntitySet="Statement_Treatments">
-            <EndProperty Name="TreatmentPayment">
-              <ScalarProperty Name="TreatmentPaymentId" ColumnName="TreatmentPaidId" />
-            </EndProperty>
-            <EndProperty Name="Statement">
-              <ScalarProperty Name="StatementId" ColumnName="StatementId" />
-            </EndProperty>
-          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

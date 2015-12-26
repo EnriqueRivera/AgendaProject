@@ -421,37 +421,22 @@ namespace MyDentApplication
             }
         }
 
-        private void CreateStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
+        private void CreateStatement(Model.Statement currentStatement)
         {
-            AddPaymentsAndTreatmentsToStatement(currentStatement, paymentsToSave, treatmentsToSave);
             if (BusinessController.Instance.Add<Model.Statement>(currentStatement) == false)
             {
                 throw new Exception("No se pudo crear el estado de cuenta");
             }
         }
 
-        private void UpdateStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
+        private void UpdateStatement(Model.Statement currentStatement)
         {
-            AddPaymentsAndTreatmentsToStatement(currentStatement, paymentsToSave, treatmentsToSave);
             if (BusinessController.Instance.Update<Model.Statement>(currentStatement) == false)
             {
                 throw new Exception("No se pudo actualizar el estado de cuenta");
             }
         }
-
-        private void AddPaymentsAndTreatmentsToStatement(Model.Statement currentStatement, List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
-        {
-            foreach (var item in paymentsToSave)
-            {
-                currentStatement.Payments.Add(item.Payment);
-            }
-
-            foreach (var item in treatmentsToSave)
-            {
-                currentStatement.TreatmentPayments.Add(item.TreatmentPayment);
-            }
-        }
-
+              
         private void PrepareWindowToPrintFolio()
         {
             btnSave.IsEnabled = false;
@@ -466,7 +451,7 @@ namespace MyDentApplication
                                                                             : _paymentFolioGenerated.FolioNumber.ToString();
         }
 
-        private void CreatePaymentFolio(List<PaymentControl> paymentsToSave, List<TreatmentPriceControl> treatmentsToSave)
+        private void CreatePaymentFolio()
         {
             _paymentFolioGenerated = new Model.PaymentFolio()
             {
@@ -474,16 +459,6 @@ namespace MyDentApplication
                 UserId = _userLoggedIn.UserId,
                 PatientId = _selectedPatient.PatientId
             };
-
-            foreach (var item in paymentsToSave)
-            {
-                _paymentFolioGenerated.Payments.Add(item.Payment);
-            }
-
-            foreach (var item in treatmentsToSave)
-            {
-                _paymentFolioGenerated.TreatmentPayments.Add(item.TreatmentPayment);
-            }
 
             if (BusinessController.Instance.Add<Model.PaymentFolio>(_paymentFolioGenerated) == false)
             {
@@ -514,7 +489,10 @@ namespace MyDentApplication
         {
             foreach (var item in paymentsToSave)
             {
+                item.Payment.FolioNumber = _paymentFolioGenerated.FolioNumber;
+                item.Payment.StatementId = _statement == null ? item.Payment.StatementId : _statement.StatementId;
                 BusinessController.Instance.Add<Model.Payment>(item.Payment);
+
                 item.UpdateData();
 
                 if (item.PositiveBalance != null)
@@ -529,6 +507,9 @@ namespace MyDentApplication
         {
             foreach (var item in treatmentsToSave)
             {
+                item.TreatmentPayment.FolioNumber = _paymentFolioGenerated.FolioNumber;
+                item.TreatmentPayment.StatementId = _statement == null ? item.TreatmentPayment.StatementId : _statement.StatementId;
+
                 BusinessController.Instance.Add<Model.TreatmentPayment>(item.TreatmentPayment);
                 item.UpdateData();
             }
@@ -820,9 +801,9 @@ namespace MyDentApplication
                             return;
                         }
 
+                        CreatePaymentFolio();
                         SavePayments(paymentsToSave);
                         SaveTreatments(treatmentsToSave);
-                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
                         SavePositiveBalance();
                         PrepareWindowToPrintFolio();
 
@@ -849,14 +830,12 @@ namespace MyDentApplication
 
                                 if (currentStatement.PatientId != 0)
                                 {
+                                    CreatePaymentFolio();
+                                    CreateStatement(currentStatement);
+                                    _statement = currentStatement;
                                     SavePayments(paymentsToSave);
                                     SaveTreatments(treatmentsToSave);
-                                    CreateStatement(currentStatement, paymentsToSave, treatmentsToSave);
-                                    CreatePaymentFolio(paymentsToSave, treatmentsToSave);
                                     PrepareWindowToPrintFolio();
-
-                                    _statement = currentStatement;
-
                                     ShowStatementNumberGenerated();
 
                                     MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
@@ -881,13 +860,11 @@ namespace MyDentApplication
                                                     MessageBoxImage.Warning
                                                 ) == MessageBoxResult.Yes)
                             {
+                                CreatePaymentFolio();
+                                _statement = currentStatement;
                                 SavePayments(paymentsToSave);
                                 SaveTreatments(treatmentsToSave);
-                                UpdateStatement(currentStatement, paymentsToSave, treatmentsToSave);
-                                CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                                PrepareWindowToPrintFolio();
-
-                                _statement = currentStatement;
+                                PrepareWindowToPrintFolio();                                                               
 
                                 ShowStatementNumberGenerated();
 
@@ -917,11 +894,11 @@ namespace MyDentApplication
                             return;
                         }
 
-                        SavePayments(paymentsToSave);
-                        SaveTreatments(treatmentsToSave);
+                        CreatePaymentFolio();
                         _statement.IsPaid = true;
-                        UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
-                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                        UpdateStatement(_statement);
+                        SavePayments(paymentsToSave);
+                        SaveTreatments(treatmentsToSave);                        
                         SavePositiveBalance();
                         PrepareWindowToPrintFolio();
 
@@ -936,10 +913,9 @@ namespace MyDentApplication
                                             MessageBoxImage.Warning
                                         ) == MessageBoxResult.Yes)
                         {
+                            CreatePaymentFolio();
                             SavePayments(paymentsToSave);
                             SaveTreatments(treatmentsToSave);
-                            UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
-                            CreatePaymentFolio(paymentsToSave, treatmentsToSave);
                             PrepareWindowToPrintFolio();
 
                             MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);

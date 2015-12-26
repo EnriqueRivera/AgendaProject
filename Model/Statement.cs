@@ -30,8 +30,8 @@ namespace Model
     
         public virtual Patient Patient { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
-        public virtual ICollection<TreatmentPayment> TreatmentPayments { get; set; }
-        public virtual User User { get; set; }
         public virtual Reminder Reminder { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<TreatmentPayment> TreatmentPayments { get; set; }
     }
 }
