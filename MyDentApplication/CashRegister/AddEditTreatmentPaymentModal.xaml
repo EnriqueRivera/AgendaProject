@@ -5,17 +5,16 @@
 	x:Class="MyDentApplication.AddEditTreatmentPaymentModal"
 	x:Name="Window"
 	Title="Agregar tratamiento a caja"
-	Width="360.5" Height="264" Icon="/MyDentApplication;component/Configuration/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+	Width="377.5" Height="264" Icon="/MyDentApplication;component/Configuration/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
 		<Label x:Name="lblTotalAmount" Content="Descuento:" HorizontalAlignment="Left" Height="27" Margin="27.423,77.126,0,0" VerticalAlignment="Top" Width="69.667"/>
 		<Label x:Name="lblBank" Content="Tratamiento:" HorizontalAlignment="Left" Height="27" Margin="17.76,15.126,0,0" VerticalAlignment="Top" Width="79.33"/>
-		<ComboBox x:Name="cbTreatments" Height="26" Margin="102.09,15.126,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="194.5" SelectionChanged="cbTreatments_SelectionChanged"/>
 		<Label x:Name="lblVoucherCheckNumber" Content="Costo: $" HorizontalAlignment="Left" Height="27" Margin="48.267,45.126,0,0" VerticalAlignment="Top" Width="53.823"/>
-		<TextBox x:Name="txtTreatmentCost" HorizontalAlignment="Left" Height="27" Margin="102.09,46.126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="2" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtTreatmentCost" HorizontalAlignment="Left" Height="27" Margin="102.09,46.126,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="2" BorderThickness="1" BorderBrush="Black" TextChanged="txtTreatmentCost_TextChanged"/>
 		<Button x:Name="btnAddTreatment" Content="Agregar" HorizontalAlignment="Left" Margin="71.602,0,0,10" Width="91" Cursor="Hand" TabIndex="7" Height="29" VerticalAlignment="Bottom" Click="btnAddTreatment_Click" />
 		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="180.602,0,0,10" Width="91" Cursor="Hand" TabIndex="8" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" />
-		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="102.09,77.126,0,0" VerticalAlignment="Top" Width="194.5" SelectedIndex="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TabIndex="3">
+		<ComboBox x:Name="cbDiscount" HorizontalAlignment="Left" Height="28" Margin="102.09,77.126,0,0" VerticalAlignment="Top" Width="194.5" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TabIndex="3" SelectionChanged="cbDiscount_SelectionChanged">
 			<System:Int32>0</System:Int32>
 			<System:Int32>5</System:Int32>
 			<System:Int32>10</System:Int32>
@@ -26,11 +25,18 @@
 		</ComboBox>
 		<Label x:Name="lblTotalAmount_Copy" Content="%" HorizontalAlignment="Left" Height="27" Margin="296.59,78.146,0,0" VerticalAlignment="Top" Width="25.167"/>
 		<Label x:Name="lblVoucherCheckNumber_Copy" Content="Cantidad:" HorizontalAlignment="Left" Height="27" Margin="35.767,109.126,0,0" VerticalAlignment="Top" Width="61.323"/>
-		<TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Height="27" Margin="102.09,110.126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="4" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Height="27" Margin="102.09,110.126,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="4" BorderThickness="1" BorderBrush="Black" TextChanged="txtQuantity_TextChanged"/>
 		<Label x:Name="lblVoucherCheckNumber_Copy1" Content="Total: $" HorizontalAlignment="Left" Height="27" Margin="53.767,141.126,0,0" VerticalAlignment="Top" Width="48.323"/>
-		<TextBox x:Name="txtTotalAmount" HorizontalAlignment="Left" Height="27" Margin="102.09,142.126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="5" BorderThickness="1" BorderBrush="Black" IsEnabled="False"/>
-		<Button x:Name="btnRefresh" Margin="301.59,143.126,0,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" Click="btnRefresh_Click" TabIndex="6" >
+		<TextBox x:Name="txtTotalAmount" HorizontalAlignment="Left" Height="27" Margin="102.09,142.126,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="5" BorderThickness="1" BorderBrush="Black" IsEnabled="False"/>
+		<Button x:Name="btnRefresh" Margin="301.59,143.126,0,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" Click="btnRefresh_Click" TabIndex="6" Visibility="Hidden" >
 			<Image Source="/MyDentApplication;component/Images/refresh_icon.png" Stretch="Fill" Height="20"/>
+		</Button>
+		<Button x:Name="btnFindTreatment" Margin="301.59,16.126,0,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" Click="btnFindTreatment_Click" TabIndex="6" >
+			<Image Source="/MyDentApplication;component/Images/find_treatment_icon.png" Stretch="Fill" Height="20"/>
+		</Button>
+		<TextBox x:Name="txtTreatment" HorizontalAlignment="Left" Height="27" Margin="102.09,15.126,0,0" VerticalAlignment="Top" Width="194.5" TabIndex="2" BorderThickness="1" BorderBrush="Black"/>
+		<Button x:Name="btnRemoveTreatment" Margin="331.59,16.126,-2.09,0" Cursor="Hand" HorizontalAlignment="Left" Width="25" Height="25" VerticalAlignment="Top" Click="btnRemoveTreatment_Click" TabIndex="6" >
+			<Image Source="/MyDentApplication;component/Images/remove_icon.png" Stretch="Fill" Height="20"/>
 		</Button>
 	</Grid>
 </Window>

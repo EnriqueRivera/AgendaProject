@@ -80,15 +80,15 @@ namespace MyDentApplication
 
             decimal receivedInvoicesTotal = _receivedInvoicesViewModel.ObservableData.Sum(i => i.TotalAmount);
             decimal outgoingInvoicesTotal = _outgoingInvoicesViewModel.ObservableData.Sum(i => i.TotalAmount);
-            lblTotalMonth.ToolTip = lblTotalMonth.Content = "Diferencia: $" + string.Format("{0:n}", (outgoingInvoicesTotal - receivedInvoicesTotal));
+            lblTotalMonth.ToolTip = lblTotalMonth.Content = "Diferencia: $" + (outgoingInvoicesTotal - receivedInvoicesTotal).ToString("0.00");
         }
 
         private void ExportToPdf(string path)
         {
             BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
 
-            iTextSharp.text.pdf.PdfPTable outgoingInvoicesTable = GetTableWithHeaders(dgOutgoingInvoices, bf);
-            iTextSharp.text.pdf.PdfPTable receivedInvoicesTable = GetTableWithHeaders(dgReceivedInvoices, bf);
+            iTextSharp.text.pdf.PdfPTable outgoingInvoicesTable = MainWindow.GetTableWithHeaders(dgOutgoingInvoices, bf);
+            iTextSharp.text.pdf.PdfPTable receivedInvoicesTable = MainWindow.GetTableWithHeaders(dgReceivedInvoices, bf);
 
             FillOutgoingInvoicesTable(outgoingInvoicesTable, bf);
             FillReceivedInvoicesTable(receivedInvoicesTable, bf);
@@ -135,13 +135,13 @@ namespace MyDentApplication
                 DataGridRow row = (DataGridRow)dgReceivedInvoices.ItemContainerGenerator.ContainerFromIndex(i);
                 Model.ReceivedInvoice invoice = row.Item as Model.ReceivedInvoice;
 
-                AddCell(receivedInvoicesTable, bf, invoice.ResourceProvider.Name);
-                AddCell(receivedInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));
-                AddCell(receivedInvoicesTable, bf, invoice.PurchaseDate.ToString("dd/MM/yyyy"));
-                AddCell(receivedInvoicesTable, bf, invoice.Folio);
-                AddCell(receivedInvoicesTable, bf, invoice.PaidMethod);
-                AddCell(receivedInvoicesTable, bf, invoice.IsPaid ? "Si" : "No");
-                AddCell(receivedInvoicesTable, bf, "$" + string.Format("{0:n}", invoice.TotalAmount));
+                MainWindow.AddCell(receivedInvoicesTable, bf, invoice.ResourceProvider.Name);
+                MainWindow.AddCell(receivedInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));
+                MainWindow.AddCell(receivedInvoicesTable, bf, invoice.PurchaseDate.ToString("dd/MM/yyyy"));
+                MainWindow.AddCell(receivedInvoicesTable, bf, invoice.Folio);
+                MainWindow.AddCell(receivedInvoicesTable, bf, invoice.PaidMethod);
+                MainWindow.AddCell(receivedInvoicesTable, bf, invoice.IsPaid ? "Si" : "No");
+                MainWindow.AddCell(receivedInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.00"));
             }
         }
 
@@ -152,45 +152,13 @@ namespace MyDentApplication
                 DataGridRow row = (DataGridRow)dgOutgoingInvoices.ItemContainerGenerator.ContainerFromIndex(i);
                 Model.OutgoingInvoice invoice = row.Item as Model.OutgoingInvoice;
 
-                AddCell(outgoingInvoicesTable, bf, string.Format("(Exp. No. {0}) {1} {2}", invoice.PatientId, invoice.Patient.FirstName, invoice.Patient.LastName));
-                AddCell(outgoingInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));
-                AddCell(outgoingInvoicesTable, bf, invoice.PaidDate.ToString("dd/MM/yyyy"));
-                AddCell(outgoingInvoicesTable, bf, invoice.Folio);
-                AddCell(outgoingInvoicesTable, bf, invoice.PaidMethod);
-                AddCell(outgoingInvoicesTable, bf, "$" + string.Format("{0:n}", invoice.TotalAmount));
+                MainWindow.AddCell(outgoingInvoicesTable, bf, string.Format("(Exp. No. {0}) {1} {2}", invoice.PatientId, invoice.Patient.FirstName, invoice.Patient.LastName));
+                MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));
+                MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.PaidDate.ToString("dd/MM/yyyy"));
+                MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.Folio);
+                MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.PaidMethod);
+                MainWindow.AddCell(outgoingInvoicesTable, bf, "$" + invoice.TotalAmount.ToString("0.00"));
             }
-        }
-
-        public static iTextSharp.text.pdf.PdfPTable GetTableWithHeaders(DataGrid dgInvoices, BaseFont bf)
-        {
-            iTextSharp.text.pdf.PdfPTable table = new iTextSharp.text.pdf.PdfPTable(dgInvoices.Columns.Count);
-            int[] widths = new int[dgInvoices.Columns.Count];
-            for (int i = 0; i < dgInvoices.Columns.Count; i++)
-            {
-                widths[i] = (int)(dgInvoices.Columns[i].Width.Value * 100);
-                string cellText = HttpUtility.HtmlDecode(dgInvoices.Columns[i].Header.ToString());
-
-                //Set Font and Font Color
-                iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.BOLD);
-                font.Color = new BaseColor(0, 0, 0);
-                iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
-
-                table.AddCell(cell);
-            }
-            table.SetWidths(widths);
-
-            return table;
-        }
-
-        private void AddCell(PdfPTable table, BaseFont bf, string text)
-        {
-            string cellText = HttpUtility.HtmlDecode(text);
-
-            iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
-            font.Color = new BaseColor(0, 0, 0);
-            iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
-
-            table.AddCell(cell);
         }
         #endregion
 	}

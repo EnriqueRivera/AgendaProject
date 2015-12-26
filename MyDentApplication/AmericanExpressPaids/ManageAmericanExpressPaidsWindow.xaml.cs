@@ -100,7 +100,7 @@ namespace MyDentApplication
             this.DataContext = _paidsViewModel;
 
             decimal total = _paidsViewModel.ObservableData.Sum(i => i.Total);
-            lblTotal.ToolTip = lblTotal.Content = "Total del periodo: $" + string.Format("{0:n}", total);
+            lblTotal.ToolTip = lblTotal.Content = "Total del periodo: $" + total.ToString("0.00");
         }
         #endregion
 	}

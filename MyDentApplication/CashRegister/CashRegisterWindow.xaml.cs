@@ -76,187 +76,7 @@ namespace MyDentApplication
 
         private void btnSave_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            try
-            {
-                if (_selectedPatient == null)
-                {
-                    MessageBox.Show("Seleccione un paciente para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-
-                List<PaymentControl> paymentsToSave = GetPaymentsToSave();
-                List<TreatmentPriceControl> treatmentsToSave = GetTreatmentsToSave();
-
-                if (_statement == null)
-                {
-                    if (treatmentsToSave.Count == 0)
-                    {
-                        MessageBox.Show("Agregue al menos un tratamiento para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else if (_grandTotal == 0m)
-                    {
-                        if (_positiveBalance > 0m
-                            && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
-                                            "Advertencia",
-                                            MessageBoxButton.YesNo,
-                                            MessageBoxImage.Warning
-                                        ) == MessageBoxResult.No)
-                        {
-                            return;
-                        }
-
-                        if (_positiveBalance == 0m
-                            && MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados?",
-                                            "Advertencia",
-                                            MessageBoxButton.YesNo,
-                                            MessageBoxImage.Warning
-                                        ) == MessageBoxResult.No)
-                        {
-                            return;
-                        }
-
-                        SavePayments(paymentsToSave);
-                        SaveTreatments(treatmentsToSave);
-                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                        SavePositiveBalance();
-                        PrepareWindowToPrintFolio();
-
-                        MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                        SendMail();
-                    }
-                    else
-                    {
-                        Model.Statement currentStatement = _selectedPatient.Statements
-                                                            .Where(s => s.IsPaid == false)
-                                                            .FirstOrDefault();
-
-                        if (currentStatement == null)
-                        {
-                            currentStatement = new Model.Statement();
-
-                            if (MessageBox.Show("No se ha saldado por completo el monto de los tratamientos\n¿Desea abrir un estado de cuenta para este paciente?",
-                                                    "Advertencia",
-                                                    MessageBoxButton.YesNo,
-                                                    MessageBoxImage.Warning
-                                                ) == MessageBoxResult.Yes)
-                            {
-                                new StatementExpirationDateModal(currentStatement, _selectedPatient, _userLoggedIn).ShowDialog();
-
-                                if (currentStatement.PatientId != 0)
-                                {
-                                    SavePayments(paymentsToSave);
-                                    SaveTreatments(treatmentsToSave);
-                                    CreateStatement(currentStatement, paymentsToSave, treatmentsToSave);
-                                    CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                                    PrepareWindowToPrintFolio();
-
-                                    _statement = currentStatement;
-
-                                    ShowStatementNumberGenerated();
-
-                                    MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
-                                                    + "\nNúmero del estado de cuenta generado: " + _statement.StatementId
-                                                    , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                                    SendMail();
-                                }
-                            }
-                        }
-                        else if (currentStatement.ExpirationDate < DateTime.Now.Date)
-                        {
-                            MessageBox.Show("Este paciente posee un estado de cuenta que ha expirado (Estado de cuenta número: " + currentStatement.StatementId + ")" +
-                                            "\nEl monto faltante no puede ser agregado al estado de cuenta, por tal motivo tiene que liquidar los tratamientos seleccionados en este momento.", 
-                                            "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                        else
-                        {
-                            if (MessageBox.Show("Este paciente posee un estado de cuenta con número: " + currentStatement.StatementId + 
-                                                "\n¿Desea guardar el monto faltante en el estado de cuenta del paciente?",
-                                                    "Advertencia",
-                                                    MessageBoxButton.YesNo,
-                                                    MessageBoxImage.Warning
-                                                ) == MessageBoxResult.Yes)
-                            {
-                                SavePayments(paymentsToSave);
-                                SaveTreatments(treatmentsToSave);
-                                UpdateStatement(currentStatement, paymentsToSave, treatmentsToSave);
-                                CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                                PrepareWindowToPrintFolio();
-
-                                _statement = currentStatement;
-
-                                ShowStatementNumberGenerated();
-
-                                MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
-                                                    + "\nNúmero del estado de cuenta modificado: " + _statement.StatementId
-                                                    , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                                SendMail();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (paymentsToSave.Count == 0 && treatmentsToSave.Count == 0)
-                    {
-                        MessageBox.Show("Agregue al menos un pago o un tratamiento para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else if (_grandTotal == 0m)
-                    {
-                        if (_positiveBalance > 0m
-                            && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
-                                            "Advertencia",
-                                            MessageBoxButton.YesNo,
-                                            MessageBoxImage.Warning
-                                        ) == MessageBoxResult.No)
-                        {
-                            return;
-                        }
-
-                        if (_positiveBalance == 0m
-                            && MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados en el estado de cuenta del paciente?",
-                                            "Advertencia",
-                                            MessageBoxButton.YesNo,
-                                            MessageBoxImage.Warning
-                                        ) == MessageBoxResult.No)
-                        {
-                            return;
-                        }
-
-                        SavePayments(paymentsToSave);
-                        SaveTreatments(treatmentsToSave);
-                        _statement.IsPaid = true;
-                        UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
-                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                        SavePositiveBalance();
-                        PrepareWindowToPrintFolio();
-
-                        MessageBox.Show("Datos guardados\n\nEl estado de cuenta fue marcado como liquidado.\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                        SendMail();
-                    }
-                    else
-                    {
-                        if (MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados en el estado de cuenta del paciente?",
-                                            "Advertencia",
-                                            MessageBoxButton.YesNo,
-                                            MessageBoxImage.Warning
-                                        ) == MessageBoxResult.Yes)
-                        {
-                            SavePayments(paymentsToSave);
-                            SaveTreatments(treatmentsToSave);
-                            UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
-                            CreatePaymentFolio(paymentsToSave, treatmentsToSave);
-                            PrepareWindowToPrintFolio();
-
-                            MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                            SendMail();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al tratar de guardar la información de la caja.\nDetalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            FinishTransaction();
         }
 
         private void ShowStatementNumberGenerated()
@@ -267,18 +87,26 @@ namespace MyDentApplication
 
         private void btnAddPayment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            PaymentControl paymentControl = new PaymentControl();
-            paymentControl.OnPaymentDeleted += paymentControl_OnPaymentDeleted;
-            paymentControl.OnPaymentEdited += paymentControl_OnPaymentEdited;
-
-            new AddEditPaymentModal(null, (Controllers.PaymentType)Enum.Parse(typeof(Controllers.PaymentType), (sender as Button).Tag.ToString(), true), paymentControl, null).ShowDialog();
-
-            if (paymentControl.Payment != null)
+            if (_selectedPatient == null)
             {
-                spPayments.Children.Insert(0, paymentControl);
+                MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else
+            {
+                PaymentControl paymentControl = new PaymentControl();
+                paymentControl.OnPaymentDeleted += paymentControl_OnPaymentDeleted;
+                paymentControl.OnPaymentEdited += paymentControl_OnPaymentEdited;
 
-            UpdateTotals();
+                new AddEditPaymentModal(null, (Controllers.PaymentType)Enum.Parse(typeof(Controllers.PaymentType), (sender as Button).Tag.ToString(), true), paymentControl, null).ShowDialog();
+
+                if (paymentControl.Payment != null)
+                {
+                    spPayments.Children.Insert(0, paymentControl);
+                    UpdateTotals();
+
+                    CheckIfTransactionCanBeFinished();
+                }
+            }
         }
 
         void paymentControl_OnPaymentEdited(object sender, bool e)
@@ -296,8 +124,7 @@ namespace MyDentApplication
         {
             if (_selectedPatient == null)
             {
-                MessageBox.Show("Seleccione un paciente para poder agregar un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
+                MessageBox.Show("Seleccione un paciente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);    
             }
             else if (_statement != null && _statement.ExpirationDate < DateTime.Now.Date)
             {
@@ -305,20 +132,20 @@ namespace MyDentApplication
             }
             else
             {
-                TreatmentPriceControl treatmentControl = new TreatmentPriceControl(_selectedPatient);
+                TreatmentPriceControl treatmentControl = new TreatmentPriceControl();
                 treatmentControl.OnTreatmentDeleted += treatmentControl_OnTreatmentDeleted;
                 treatmentControl.OnTreatmentEdited += treatmentControl_OnTreatmentEdited;
 
-                new AddEditTreatmentPaymentModal(null, _selectedPatient, treatmentControl).ShowDialog();
+                new AddEditTreatmentPaymentModal(null, treatmentControl).ShowDialog();
 
                 if (treatmentControl.TreatmentPayment != null)
                 {
                     spTreatments.Children.Insert(0, treatmentControl);
-                }
+                    UpdateTotals();
 
-                UpdateTotals();
-            }
-            
+                    CheckIfTransactionCanBeFinished();
+                }
+            }            
         }
 
         void treatmentControl_OnTreatmentEdited(object sender, bool e)
@@ -540,6 +367,7 @@ namespace MyDentApplication
                 if (_grandTotal == 0m)
                 {
                     body.AppendFormat("<div style='color:green;'><strong>Saldo a favor:</strong> ${0}</div>", _positiveBalance.ToString("0.00"));
+                    body.Append("<div>&nbsp;</div>");
                     body.Append("<div style='color:green;'><strong>¡Estado de cuenta liquidado!</strong></div>");    
                 }
                 else
@@ -882,7 +710,7 @@ namespace MyDentApplication
 
             foreach (var treatment in treatments)
             {
-                TreatmentPriceControl treatmentControl = new TreatmentPriceControl(treatment, _selectedPatient)
+                TreatmentPriceControl treatmentControl = new TreatmentPriceControl(treatment)
                 {
                     Width = Double.NaN
                 };
@@ -944,6 +772,186 @@ namespace MyDentApplication
             cbPatients.SelectedIndex = 0;
 
             UpdateTotals();
+        }
+
+        private void CheckIfTransactionCanBeFinished()
+        {
+            bool finishTransaction = (_isStatement || GetTreatmentsToSave().Count > 0) && _grandTotal == 0;
+
+            if (finishTransaction
+                && MessageBox.Show("Se ha cubierto el costo total de los tratamientos ¿Desea finalizar la transacción y generar un número de folio?",
+                                    "Advertencia",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.Yes)
+            {
+                FinishTransaction();
+            }
+        }
+
+        private void FinishTransaction()
+        {
+            try
+            {
+                if (_selectedPatient == null)
+                {
+                    MessageBox.Show("Seleccione un paciente para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                List<PaymentControl> paymentsToSave = GetPaymentsToSave();
+                List<TreatmentPriceControl> treatmentsToSave = GetTreatmentsToSave();
+
+                if (_statement == null)
+                {
+                    if (treatmentsToSave.Count == 0)
+                    {
+                        MessageBox.Show("Agregue al menos un tratamiento para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (_grandTotal == 0m)
+                    {
+                        if (_positiveBalance > 0m
+                            && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
+                        SavePayments(paymentsToSave);
+                        SaveTreatments(treatmentsToSave);
+                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                        SavePositiveBalance();
+                        PrepareWindowToPrintFolio();
+
+                        MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        SendMail();
+                    }
+                    else
+                    {
+                        Model.Statement currentStatement = _selectedPatient.Statements
+                                                            .Where(s => s.IsPaid == false)
+                                                            .FirstOrDefault();
+
+                        if (currentStatement == null)
+                        {
+                            currentStatement = new Model.Statement();
+
+                            if (MessageBox.Show("No se ha saldado por completo el monto de los tratamientos\n¿Desea abrir un estado de cuenta para este paciente?",
+                                                    "Advertencia",
+                                                    MessageBoxButton.YesNo,
+                                                    MessageBoxImage.Warning
+                                                ) == MessageBoxResult.Yes)
+                            {
+                                new StatementExpirationDateModal(currentStatement, _selectedPatient, _userLoggedIn).ShowDialog();
+
+                                if (currentStatement.PatientId != 0)
+                                {
+                                    SavePayments(paymentsToSave);
+                                    SaveTreatments(treatmentsToSave);
+                                    CreateStatement(currentStatement, paymentsToSave, treatmentsToSave);
+                                    CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                                    PrepareWindowToPrintFolio();
+
+                                    _statement = currentStatement;
+
+                                    ShowStatementNumberGenerated();
+
+                                    MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
+                                                    + "\nNúmero del estado de cuenta generado: " + _statement.StatementId
+                                                    , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    SendMail();
+                                }
+                            }
+                        }
+                        else if (currentStatement.ExpirationDate < DateTime.Now.Date)
+                        {
+                            MessageBox.Show("Este paciente posee un estado de cuenta que ha expirado (Estado de cuenta número: " + currentStatement.StatementId + ")" +
+                                            "\nEl monto faltante no puede ser agregado al estado de cuenta, por tal motivo tiene que liquidar los tratamientos seleccionados en este momento.",
+                                            "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            if (MessageBox.Show("Este paciente posee un estado de cuenta con número: " + currentStatement.StatementId +
+                                                "\n¿Desea guardar el monto faltante en el estado de cuenta del paciente?",
+                                                    "Advertencia",
+                                                    MessageBoxButton.YesNo,
+                                                    MessageBoxImage.Warning
+                                                ) == MessageBoxResult.Yes)
+                            {
+                                SavePayments(paymentsToSave);
+                                SaveTreatments(treatmentsToSave);
+                                UpdateStatement(currentStatement, paymentsToSave, treatmentsToSave);
+                                CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                                PrepareWindowToPrintFolio();
+
+                                _statement = currentStatement;
+
+                                ShowStatementNumberGenerated();
+
+                                MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber
+                                                    + "\nNúmero del estado de cuenta modificado: " + _statement.StatementId
+                                                    , "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                                SendMail();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (paymentsToSave.Count == 0 && treatmentsToSave.Count == 0)
+                    {
+                        MessageBox.Show("Agregue al menos un pago o un tratamiento para poder guardar", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (_grandTotal == 0m)
+                    {
+                        if (_positiveBalance > 0m
+                            && MessageBox.Show("Existe un saldo a favor\n¿Desea que se guarde para el paciente seleccionado?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
+                        SavePayments(paymentsToSave);
+                        SaveTreatments(treatmentsToSave);
+                        _statement.IsPaid = true;
+                        UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
+                        CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                        SavePositiveBalance();
+                        PrepareWindowToPrintFolio();
+
+                        MessageBox.Show("Datos guardados\n\nEl estado de cuenta fue marcado como liquidado.\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                        SendMail();
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("¿Está seguro(a) que desea guardar los cambios realizados en el estado de cuenta del paciente?",
+                                            "Advertencia",
+                                            MessageBoxButton.YesNo,
+                                            MessageBoxImage.Warning
+                                        ) == MessageBoxResult.Yes)
+                        {
+                            SavePayments(paymentsToSave);
+                            SaveTreatments(treatmentsToSave);
+                            UpdateStatement(_statement, paymentsToSave, treatmentsToSave);
+                            CreatePaymentFolio(paymentsToSave, treatmentsToSave);
+                            PrepareWindowToPrintFolio();
+
+                            MessageBox.Show("Datos guardados\n\nNúmero de folio generado: " + _paymentFolioGenerated.FolioNumber, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                            SendMail();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al tratar de guardar la información de la caja.\nDetalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
     }

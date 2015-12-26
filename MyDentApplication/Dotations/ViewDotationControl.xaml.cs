@@ -67,7 +67,7 @@ namespace MyDentApplication
             {
                 rcColorMedicine.Fill = _dotation.UserId == null ? _pendingDotationColor : _signedDotationColor;
                 lblDotationTimeCreation.ToolTip = lblDotationTimeCreation.Content = _dotation.DotationDate.ToString("HH:mm") + " hrs.";
-                lblDotationAmount.ToolTip = lblDotationAmount.Content = "$" + string.Format("{0:n}", _dotation.Amount);
+                lblDotationAmount.ToolTip = lblDotationAmount.Content = "$" + _dotation.Amount.ToString("0.00");
             }
         }
         #endregion

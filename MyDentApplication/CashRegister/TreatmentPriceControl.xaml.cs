@@ -20,7 +20,6 @@ namespace MyDentApplication
     {
         #region Instance variables
         private Model.TreatmentPayment _treatmentPayment;
-        private Model.Patient _selectedPatient;
         internal event EventHandler<bool> OnTreatmentDeleted;
         internal event EventHandler<bool> OnTreatmentEdited;
         private Model.TreatmentPrice _treatmentPrice;
@@ -42,21 +41,18 @@ namespace MyDentApplication
         #endregion
 
         #region Constructors
-        public TreatmentPriceControl(Model.TreatmentPayment treatment, Model.Patient selectedPatient)
+        public TreatmentPriceControl(Model.TreatmentPayment treatment)
 		{
 			this.InitializeComponent();
 
             _treatmentPayment = treatment;
-            _selectedPatient = selectedPatient;
 
             UpdateTreatmentInfo();
 		}
 
-        public TreatmentPriceControl(Model.Patient patient)
+        public TreatmentPriceControl()
         {
             this.InitializeComponent();
-
-            _selectedPatient = patient;
         }
         #endregion
 
@@ -78,7 +74,7 @@ namespace MyDentApplication
 		{
             if (_treatmentPayment != null)
             {
-                new AddEditTreatmentPaymentModal(_treatmentPayment, _selectedPatient, this).ShowDialog();
+                new AddEditTreatmentPaymentModal(_treatmentPayment, this).ShowDialog();
                 OnTreatmentEdited(this, true);
             }
         }

@@ -261,21 +261,6 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        public static byte[] ImageToByteArray(string uri)
-        {
-            BitmapImage bitmapImage = new BitmapImage(new Uri(uri));
-
-            byte[] data;
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-            using (MemoryStream ms = new MemoryStream())
-            {
-                encoder.Save(ms);
-                data = ms.ToArray();
-            }
-
-            return data;
-        }
 
         private void ExportToPdf(string path)
         {
@@ -284,7 +269,7 @@ namespace MyDentApplication
             BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
             var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
 
-            iTextSharp.text.pdf.PdfPTable budgetTable = TotalInvoicesWindow.GetTableWithHeaders(dgBudgetDetails, bf);
+            iTextSharp.text.pdf.PdfPTable budgetTable = MainWindow.GetTableWithHeaders(dgBudgetDetails, bf);
             FillBudgetTable(budgetTable, bf);
 
             //Create the PDF Document
@@ -297,13 +282,13 @@ namespace MyDentApplication
                         pdfDoc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
                         pdfDoc.Open();
 
-                        byte[] pngByteArrayImage = ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_1.PNG");
+                        byte[] pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_1.PNG");
                         iTextSharp.text.Image pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
                         pngImage.ScalePercent(80f);
                         pngImage.SetAbsolutePosition(10f, pdfDoc.PageSize.Height - 90f);
                         pdfDoc.Add(pngImage);
 
-                        pngByteArrayImage = ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_2.PNG");
+                        pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_2.PNG");
                         pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
                         pngImage.ScalePercent(75f);
                         pngImage.SetAbsolutePosition(pdfDoc.PageSize.Width - 200f, pdfDoc.PageSize.Height - 90f);
@@ -374,8 +359,8 @@ namespace MyDentApplication
 
                         paragraph = new iTextSharp.text.Paragraph(" ");
                         pdfDoc.Add(paragraph);
-                        
-                        pngByteArrayImage = ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_3.PNG");
+
+                        pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_3.PNG");
                         pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
                         pngImage.ScalePercent(90f);
                         pngImage.Alignment = Element.ALIGN_CENTER;
@@ -401,27 +386,16 @@ namespace MyDentApplication
                 DataGridRow row = (DataGridRow)dgBudgetDetails.ItemContainerGenerator.ContainerFromIndex(i);
                 Model.BudgetDetail budgetDetail = row.Item as Model.BudgetDetail;
 
-                AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
-                AddCell(budgetTable, bf, budgetDetail.Concept);
-                AddCell(budgetTable, bf, budgetDetail.NumberOfEvents.ToString());
-                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.UnitCost));
-                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.UnitCostDiscount));
-                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.NetTotal));
-                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.TotalDiscount));
-                AddCell(budgetTable, bf, budgetDetail.Discount.ToString());
-                AddCell(budgetTable, bf, "$" + string.Format("{0:n}", budgetDetail.TotalPerEvent));
+                MainWindow.AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
+                MainWindow.AddCell(budgetTable, bf, budgetDetail.Concept);
+                MainWindow.AddCell(budgetTable, bf, budgetDetail.NumberOfEvents.ToString());
+                MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.UnitCost.ToString("0.00"));
+                MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.UnitCostDiscount.ToString("0.00"));
+                MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.NetTotal.ToString("0.00"));
+                MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.TotalDiscount.ToString("0.00"));
+                MainWindow.AddCell(budgetTable, bf, budgetDetail.Discount.ToString());
+                MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.TotalPerEvent.ToString("0.00"));
             }
-        }
-
-        private void AddCell(PdfPTable table, BaseFont bf, string text)
-        {
-            string cellText = HttpUtility.HtmlDecode(text);
-
-            iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
-            font.Color = new BaseColor(0, 0, 0);
-            iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
-
-            table.AddCell(cell);
         }
 
         private void GetBudgetDetailsActions(List<Model.BudgetDetail> budgetDetails, List<Model.BudgetDetail> budgetDetailsToAdd, List<Model.BudgetDetail> budgetDetailsToUpdate)

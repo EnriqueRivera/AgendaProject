@@ -21,7 +21,6 @@ namespace MyDentApplication
 	{
         #region Instance variables
         private Model.TreatmentPayment _treatment;
-        private Model.Patient _selectedPatient;
         private bool _isUpdateTreatment;
         private Model.TreatmentPrice _selectedTreatmentPrice;
         private TreatmentPriceControl _treatmentControl;
@@ -32,20 +31,19 @@ namespace MyDentApplication
         #endregion
 
         #region Constructors
-        public AddEditTreatmentPaymentModal(Model.TreatmentPayment treatment, Model.Patient selectedPatient, TreatmentPriceControl treatmentControl)
+        public AddEditTreatmentPaymentModal(Model.TreatmentPayment treatment, TreatmentPriceControl treatmentControl)
 		{
 			this.InitializeComponent();
 
+            cbDiscount.SelectedIndex = 0;
             _treatmentControl = treatmentControl;
             _treatment = treatment;
-            _selectedPatient = selectedPatient;
             _isUpdateTreatment = _treatment != null;
-
-            FillTreatments();
-
+            
             if (_isUpdateTreatment)
             {
                 PrepareWindowForUpdates();
+                UpdateTotalFieldChanged();
             }
 		}
         #endregion
@@ -53,13 +51,7 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnAddTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (_selectedTreatmentPrice == null)
-            {
-                MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            if (UpdateTotalAmount() == false)
+            if (AreValidFields() == false)
 	        {
 		        return;
 	        }
@@ -102,32 +94,82 @@ namespace MyDentApplication
             this.Close();
         }
 
-        private void cbTreatments_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            _selectedTreatmentPrice = (cbTreatments.SelectedItem as Controllers.ComboBoxItem).Value as Model.TreatmentPrice;
-
-            if (_selectedTreatmentPrice != null)
-            {
-                UpdateCostAndDiscount();
-            }
-        }
-
         private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            UpdateTotalAmount();
+            AreValidFields();
+        }
+
+        private void btnFindTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            List<Model.TreatmentPrice> selectedTreatments = new List<Model.TreatmentPrice>();
+            new FindTreatmentPriceModal(selectedTreatments, txtTreatment.Text.Trim()).ShowDialog();
+
+            _selectedTreatmentPrice = selectedTreatments.Count == 0 ? null : selectedTreatments[0];
+
+            UpdateTreatment();
+            UpdateCostAndDiscount();
+        }
+
+        private void btnRemoveTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _selectedTreatmentPrice = null;
+            txtTreatment.Text = string.Empty;
+            UpdateTreatment();
+        }
+
+        private void txtTreatmentCost_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            UpdateTotalFieldChanged();
+        }
+
+        private void cbDiscount_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            UpdateTotalFieldChanged();
+        }
+
+        private void txtQuantity_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            UpdateTotalFieldChanged();
         }
         #endregion
 
         #region Window's logic
-        private void UpdateCostAndDiscount()
+        private void UpdateTotalFieldChanged()
         {
-            txtTreatmentCost.Text = _selectedTreatmentPrice.Price.ToString();
-            cbDiscount.SelectedValue = _selectedTreatmentPrice.Discount;
+            if (decimal.TryParse(txtTreatmentCost.Text, out _price) == false
+                || int.TryParse(cbDiscount.SelectedValue.ToString(), out _discount) == false
+                || int.TryParse(txtQuantity.Text, out _quantity) == false)
+            {
+                txtTotalAmount.Text = string.Empty;
+                return;
+            }
+
+            UpdateTotal();
         }
 
-        private bool UpdateTotalAmount()
+        private void UpdateTotal()
         {
-            _discount = Convert.ToInt32(cbDiscount.SelectedItem);
+            _total = _quantity * _price;
+            _total = (_total - (_discount * _total / 100m));
+            txtTotalAmount.Text = _total.ToString();
+        }
+
+        private void UpdateCostAndDiscount()
+        {
+            if (_selectedTreatmentPrice != null)
+            {
+                txtTreatmentCost.Text = _selectedTreatmentPrice.Price.ToString();
+                cbDiscount.SelectedValue = _selectedTreatmentPrice.Discount;   
+            }
+        }
+
+        private bool AreValidFields()
+        {
+            if (_selectedTreatmentPrice == null)
+            {
+                MessageBox.Show("Seleccione un tratamiento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
 
             if (decimal.TryParse(txtTreatmentCost.Text, out _price) == false)
             {
@@ -153,9 +195,9 @@ namespace MyDentApplication
                 return false;
             }
 
-            _total = _quantity * _price;
-            _total = (_total - (_discount * _total / 100m));
-            txtTotalAmount.Text = _total.ToString();
+            _discount = Convert.ToInt32(cbDiscount.SelectedItem);
+
+            UpdateTotal();
 
             return true;            
         }
@@ -164,38 +206,31 @@ namespace MyDentApplication
         {
             this.Title = "Actualizar tratamiento de caja";
             btnAddTreatment.Content = "Actualizar";
-
-            for (int i = 0; i < cbTreatments.Items.Count; i++)
-            {
-                Model.TreatmentPrice treatmentItem = ((cbTreatments.Items[i] as Controllers.ComboBoxItem).Value as Model.TreatmentPrice);
-                if (treatmentItem != null && treatmentItem.TreatmentPriceId == _treatment.TreatmentPriceId)
-                {
-                    cbTreatments.SelectedIndex = i;
-                    break;
-                }
-            }
-
             txtTreatmentCost.Text = _treatment.Price.ToString();
             txtQuantity.Text = _treatment.Quantity.ToString();
             txtTotalAmount.Text = _treatment.Total.ToString();
             cbDiscount.SelectedValue = _treatment.Discount;
+            UpdateTotalFieldChanged();
+
+            _selectedTreatmentPrice = _treatmentControl.TreatmentPrice;
+            UpdateTreatment();
         }
 
-        private void FillTreatments()
+        private void UpdateTreatment()
         {
-            List<Model.TreatmentPrice> treatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(tp => tp.CreatedDate.Year == DateTime.Now.Year && tp.IsDeleted == false)
-                                                        .OrderBy(tp => tp.TreatmentKey)
-                                                        .ThenBy(tp => tp.Name)
-                                                        .ToList();
-
-            cbTreatments.Items.Add(new Controllers.ComboBoxItem() { Text = string.Empty, Value = null });
-
-            foreach (Model.TreatmentPrice treatment in treatments)
+            if (_selectedTreatmentPrice == null)
             {
-                cbTreatments.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("{0} - {1} ({2})", treatment.TreatmentKey, treatment.Name, treatment.Type), Value = treatment });
+                txtTreatment.IsEnabled = true;
+                btnFindTreatment.IsEnabled = true;
+                btnRemoveTreatment.IsEnabled = false;
             }
-
-            cbTreatments.SelectedIndex = 0;
+            else
+            {
+                txtTreatment.ToolTip = txtTreatment.Text = string.Format("{0} - {1} ({2})", _selectedTreatmentPrice.TreatmentKey, _selectedTreatmentPrice.Name, _selectedTreatmentPrice.Type);
+                txtTreatment.IsEnabled = false;
+                btnFindTreatment.IsEnabled = false;
+                btnRemoveTreatment.IsEnabled = true;
+            }
         }
         #endregion
     }

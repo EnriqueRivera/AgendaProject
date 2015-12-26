@@ -172,6 +172,7 @@ namespace MyDentApplication
                 else
                 {
                     new ManagePatientStatementsWindow(_userLoggedIn, selectedPatient, patientStatements).ShowDialog();
+                    UpdateGrid();
                 }
             }
         }

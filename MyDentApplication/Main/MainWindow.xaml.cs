@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Controllers;
 using System.Data.Objects;
+using System.Web;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace MyDentApplication
 {
@@ -386,6 +389,54 @@ namespace MyDentApplication
         {
             return selectedPatient.ClinicHistoryId == null ||
                     selectedPatient.ClinicHistory.UpdateDate.AddYears(1) < DateTime.Now;
+        }
+
+        public static iTextSharp.text.pdf.PdfPTable GetTableWithHeaders(DataGrid dgInvoices, BaseFont bf)
+        {
+            iTextSharp.text.pdf.PdfPTable table = new iTextSharp.text.pdf.PdfPTable(dgInvoices.Columns.Count);
+            int[] widths = new int[dgInvoices.Columns.Count];
+            for (int i = 0; i < dgInvoices.Columns.Count; i++)
+            {
+                widths[i] = (int)(dgInvoices.Columns[i].Width.Value * 100);
+                string cellText = HttpUtility.HtmlDecode(dgInvoices.Columns[i].Header.ToString());
+
+                //Set Font and Font Color
+                iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.BOLD);
+                font.Color = new BaseColor(0, 0, 0);
+                iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
+
+                table.AddCell(cell);
+            }
+            table.SetWidths(widths);
+
+            return table;
+        }
+
+        public static void AddCell(PdfPTable table, BaseFont bf, string text)
+        {
+            string cellText = HttpUtility.HtmlDecode(text);
+
+            iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
+            font.Color = new BaseColor(0, 0, 0);
+            iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
+
+            table.AddCell(cell);
+        }
+
+        public static byte[] ImageToByteArray(string uri)
+        {
+            BitmapImage bitmapImage = new BitmapImage(new Uri(uri));
+
+            byte[] data;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                encoder.Save(ms);
+                data = ms.ToArray();
+            }
+
+            return data;
         }
         #endregion
 

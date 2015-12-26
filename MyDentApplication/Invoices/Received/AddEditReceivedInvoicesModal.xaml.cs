@@ -78,7 +78,7 @@ namespace MyDentApplication
                     PaidMethod = cbPaidMethod.SelectedValue.ToString(),
                     TotalAmount = Convert.ToDecimal(totalAmount),
                     IsDeleted = false,
-                    IsPaid = chkIsPaid.IsChecked.Value
+                    IsPaid = chkIsPaid.IsChecked.Value                    
                 };
 
                 AddInvoice(invoiceToAdd);
@@ -127,7 +127,8 @@ namespace MyDentApplication
                 if (invoiceToAdd.IsPaid == false)
                 {
                     string reminderMessage = string.Format(
-                                          "La compra aun no pagada que fue realizada a '{0}' el día {1} ha vencido. \nFactura con número de folio '{2}' por la cantidad de '{3}'.",
+                                          "Revise que la compra realizada a '{0}' el día {1} haya sido pagada."+
+                                          "\nFactura con número de folio '{2}' por la cantidad de '{3}'.",
                                             invoiceToAdd.ResourceProvider.Name,
                                             invoiceToAdd.PurchaseDate.ToString("D"),
                                             invoiceToAdd.Folio,

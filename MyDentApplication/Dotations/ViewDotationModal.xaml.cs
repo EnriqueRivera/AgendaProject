@@ -63,7 +63,7 @@ namespace MyDentApplication
         private void LoadDotationInfo()
         {
             lblDotationDate.ToolTip = lblDotationDate.Content = _dotationToView.DotationDate.ToString("D") + _dotationToView.DotationDate.ToString(", HH:mm:ss") + " hrs";
-            lblDotationAmount.ToolTip = lblDotationAmount.Content = "$" + string.Format("{0:n}", _dotationToView.Amount);
+            lblDotationAmount.ToolTip = lblDotationAmount.Content = "$" + _dotationToView.Amount.ToString("0.00");
 
             if (_dotationToView.UserId != null)
             {

@@ -142,6 +142,9 @@
     <Compile Include="CashRegister\CashRegisterWindow.xaml.cs">
       <DependentUpon>CashRegisterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CashRegister\FindTreatmentPriceModal.xaml.cs">
+      <DependentUpon>FindTreatmentPriceModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CashRegister\PaymentControl.xaml.cs">
       <DependentUpon>PaymentControl.xaml</DependentUpon>
     </Compile>
@@ -405,6 +408,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CashRegister\CashRegisterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashRegister\FindTreatmentPriceModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -779,6 +786,7 @@
     <Resource Include="Images\edit_icon.png" />
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />
+    <Resource Include="Images\find_treatment_icon.png" />
     <Resource Include="Images\general_paids_icon.png" />
     <Resource Include="Images\inventory_icon.png" />
     <Resource Include="Images\invoice_icon.png" />
