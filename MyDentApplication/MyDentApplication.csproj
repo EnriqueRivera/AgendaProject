@@ -280,6 +280,12 @@
     <Compile Include="Patients\ViewStatementWindow.xaml.cs">
       <DependentUpon>ViewStatementWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Payments\ViewPaymentFolioDetailWindow.xaml.cs">
+      <DependentUpon>ViewPaymentFolioDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Payments\ViewPaymentFoliosWindow.xaml.cs">
+      <DependentUpon>ViewPaymentFoliosWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Payments\ViewPaymentsWindow.xaml.cs">
       <DependentUpon>ViewPaymentsWindow.xaml</DependentUpon>
     </Compile>
@@ -598,6 +604,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Payments\ViewPaymentFolioDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Payments\ViewPaymentFoliosWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Payments\ViewPaymentsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -816,6 +830,7 @@
     <Resource Include="Images\treatment_icon.png" />
     <Resource Include="Images\treatment_prices_icon.png" />
     <Resource Include="Images\users_icon.png" />
+    <Resource Include="Images\view_folios_icon.png" />
     <Resource Include="Images\warning_icon.png" />
   </ItemGroup>
   <ItemGroup>

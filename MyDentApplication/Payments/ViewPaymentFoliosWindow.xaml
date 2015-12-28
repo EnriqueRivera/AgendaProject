@@ -1,0 +1,65 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication"
+	x:Class="MyDentApplication.ViewPaymentFoliosWindow"
+	x:Name="Window"
+	Title="Historial de folios"
+	Width="703" Height="496" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
+	<Window.Resources>
+		<local:DateValueConverter x:Key="DateValueConverter" />
+	</Window.Resources>
+	<Grid x:Name="LayoutRoot">
+		<DataGrid x:Name="dgFolioNumbers" Margin="10,152,10,44" IsReadOnly="True" CanUserSortColumns="True"
+			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
+			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
+			TabIndex="1">
+			<DataGrid.Columns>
+				<DataGridTextColumn Binding="{Binding FolioNumber}" Header="No. de folio" Width="0.11*"/>
+				<DataGridTextColumn Header="Fecha de generación" Width="0.17*">
+					<DataGridTextColumn.Binding>
+						<MultiBinding Converter="{StaticResource DateValueConverter}">
+							<Binding Path="FolioDate"/>
+						</MultiBinding>
+					</DataGridTextColumn.Binding>
+				</DataGridTextColumn>
+				<DataGridTextColumn Header="Paciente" Width="0.15*" >
+					<DataGridTextColumn.Binding>
+						<MultiBinding StringFormat="(Exp. No. {0}) {1} {2}">
+							<Binding Path="Patient.PatientId" />
+							<Binding Path="Patient.FirstName" />
+							<Binding Path="Patient.LastName" />
+						</MultiBinding>
+					</DataGridTextColumn.Binding>
+				</DataGridTextColumn>
+				<DataGridTextColumn Header="Usuario que generó el folio" Width="0.22*" >
+					<DataGridTextColumn.Binding>
+						<MultiBinding StringFormat="{}{0} {1}">
+							<Binding Path="User.FirstName" />
+							<Binding Path="User.LastName" />
+						</MultiBinding>
+					</DataGridTextColumn.Binding>
+				</DataGridTextColumn>
+				<DataGridTextColumn Binding="{Binding TreatmentPayments.Count}" Header="Total de tratamientos" Width="0.18*"/>
+				<DataGridTextColumn Binding="{Binding Payments.Count}" Header="Total de pagos" Width="0.13*"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<GroupBox Header="Búsqueda por No. de folio" HorizontalAlignment="Left" Height="137" Margin="10,10,0,0" VerticalAlignment="Top" Width="254" BorderBrush="Black" FontWeight="Bold">
+			<Grid Margin="0,0,-2,-3.96">
+				<Label x:Name="lblPatient" Content="Número de folio:" HorizontalAlignment="Left" Height="27" Margin="16.5,28.01,0,0" VerticalAlignment="Top" Width="99.333" FontWeight="Normal"/>
+				<Button x:Name="btnSearch" Content="Buscar" Margin="88.166,67.04,0,0" Cursor="Hand" TabIndex="7" HorizontalAlignment="Left" Width="68.5" Click="btnSearch_Click" Height="29" VerticalAlignment="Top" FontWeight="Normal"/>
+				<TextBox x:Name="txtFolioNumber" HorizontalAlignment="Left" Height="27" Margin="120.833,28.01,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102.833" TabIndex="1" BorderBrush="Black" FontWeight="Normal"/>
+			</Grid>
+		</GroupBox>
+		<GroupBox Header="Filtrar folios por fecha" HorizontalAlignment="Right" Height="137" Margin="0,10,10,0" VerticalAlignment="Top" Width="353.5" BorderBrush="Black" FontWeight="Bold">
+			<Grid Margin="0,0,-2,-3.96">
+				<Button x:Name="btnFilter" Content="Filtrar" Margin="145,76.54,0,0" Cursor="Hand" TabIndex="7" HorizontalAlignment="Left" Width="68.5" Click="btnFilter_Click" Height="29" VerticalAlignment="Top" FontWeight="Normal"/>
+				<DatePicker x:Name="dpStartDate" HorizontalAlignment="Left" Margin="114.5,17.54,0,0" VerticalAlignment="Top" Width="212.64" FontWeight="Normal"/>
+				<DatePicker x:Name="dpEndDate" HorizontalAlignment="Left" Margin="114.5,47.54,0,0" VerticalAlignment="Top" Width="212.64" FontWeight="Normal"/>
+				<Label Content="Fecha de inicio:" HorizontalAlignment="Left" Height="24" Margin="16.5,17.54,0,0" VerticalAlignment="Top" Width="93" FontWeight="Normal"/>
+				<Label Content="Fecha de fin:" HorizontalAlignment="Left" Height="24" Margin="31.833,46.54,0,0" VerticalAlignment="Top" Width="77.667" FontWeight="Normal"/>
+			</Grid>
+		</GroupBox>
+		<Button x:Name="btnViewFolioDetails" Content="Ver detalles" Margin="0,0,10,10" Cursor="Hand" TabIndex="7" HorizontalAlignment="Right" Width="85.5" Click="btnViewFolioDetails_Click" Height="29" VerticalAlignment="Bottom" FontWeight="Normal"/>
+	</Grid>
+</Window>

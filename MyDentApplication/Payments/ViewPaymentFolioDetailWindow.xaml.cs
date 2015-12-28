@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,31 +11,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
-using Controllers;
-using System.Net.Mail;
-using System.Net;
-using System.Threading;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.IO;
+using System.Net.Mail;
+using Controllers;
+using System.Net;
 
 namespace MyDentApplication
 {
 	/// <summary>
-	/// Interaction logic for ViewStatementWindow.xaml
+	/// Interaction logic for ViewPaymentFolioDetailWindow.xaml
 	/// </summary>
-	public partial class ViewStatementWindow : Window
+	public partial class ViewPaymentFolioDetailWindow : Window
     {
         #region Instance variables
-        private Model.Statement _statement;
+        private Model.PaymentFolio _folio;
         private Controllers.CustomViewModel<Model.TreatmentPayment> _treatmentsViewModel;
         private Controllers.CustomViewModel<Model.Payment> _paymentsViewModel;
         private List<Model.TreatmentPayment> _treatments;
         private List<Model.Payment> _payments;
         private decimal _totalAmountOfTreatments;
         private decimal _totalAmountOfPayments;
-        private decimal _grandTotal;
-        private decimal _positiveBalance;
         private int _numberOfTreatments;
         private int _numberOfPayments;
         private Thread _sendEmailThread;
@@ -44,31 +42,23 @@ namespace MyDentApplication
         delegate void SendEmailDelegate(string errorMessage);
         #endregion
 
-        #region Constructors
-        public ViewStatementWindow(Model.Statement statement)
+        public ViewPaymentFolioDetailWindow(Model.PaymentFolio folio)
         {
             this.InitializeComponent();
 
-            _statement = statement;
+            _folio = folio;
 
-            lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName);
-            lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = _statement.StatementId.ToString();
+            lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _folio.Patient.PatientId, _folio.Patient.FirstName, _folio.Patient.LastName);
+            lblFolioNumber.ToolTip = lblFolioNumber.Content = _folio.FolioNumber.ToString();
 
-            UpdateStatementInfo();
-            LoadPatientPicture();
+            UpdateFolioInfo();
         }
-        #endregion
 
         #region Window event handlers
-        private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-            this.Close();
-		}
+        private void btnGeneratePdf_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            string statementName = "Folio numero " + _folio.FolioNumber;
 
-		private void btnGeneratePdf_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-            string statementName = "Estado de cuenta numero " + _statement.StatementId;
-            
             try
             {
                 // Configure save file dialog box
@@ -87,10 +77,15 @@ namespace MyDentApplication
             {
                 MessageBox.Show("No se pudo generar el PDF.\n\n Detalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-		}
+        }
 
-		private void btnSendMail_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
+        private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSendMail_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
             SendMail();
         }
 
@@ -128,19 +123,10 @@ namespace MyDentApplication
                         pdfDoc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
                         pdfDoc.Open();
 
-                        string imagePath = imgPatientPicture.ToolTip == null ? string.Empty : imgPatientPicture.ToolTip.ToString();
-                        if (string.IsNullOrEmpty(imagePath) == false)
-                        {
-                            iTextSharp.text.Image pngImage = iTextSharp.text.Image.GetInstance(imagePath);
-                            pngImage.ScaleToFit(165f, 165f);
-                            pngImage.SetAbsolutePosition(pdfDoc.PageSize.Width - 200f, pdfDoc.PageSize.Height - 140f);
-                            pdfDoc.Add(pngImage);
-                        }
-
                         pdfDoc.Add(new iTextSharp.text.Paragraph(" "));
 
                         var paragraph = new iTextSharp.text.Paragraph("");
-                        paragraph.Add(new Chunk("Estado de cuenta", boldFontTitle));
+                        paragraph.Add(new Chunk("Folio", boldFontTitle));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
@@ -148,19 +134,13 @@ namespace MyDentApplication
 
                         paragraph = new iTextSharp.text.Paragraph("");
                         paragraph.Add(new Chunk("Paciente: ", boldFont));
-                        paragraph.Add(string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName));
+                        paragraph.Add(string.Format("(Exp. No. {0}) {1} {2}", _folio.Patient.PatientId, _folio.Patient.FirstName, _folio.Patient.LastName));
                         paragraph.Alignment = Element.ALIGN_LEFT;
                         pdfDoc.Add(paragraph);
 
                         paragraph = new iTextSharp.text.Paragraph("");
-                        paragraph.Add(new Chunk("Estado de cuenta número: ", boldFont));
-                        paragraph.Add(_statement.StatementId.ToString());
-                        paragraph.Alignment = Element.ALIGN_LEFT;
-                        pdfDoc.Add(paragraph);
-
-                        paragraph = new iTextSharp.text.Paragraph("");
-                        paragraph.Add(new Chunk("Fecha de expiración del estado de cuenta: ", boldFont));
-                        paragraph.Add(Utils.FirstCharToUpper(_statement.ExpirationDate.ToString("D")));
+                        paragraph.Add(new Chunk("Número de folio : ", boldFont));
+                        paragraph.Add(_folio.FolioNumber.ToString());
                         paragraph.Alignment = Element.ALIGN_LEFT;
                         pdfDoc.Add(paragraph);
 
@@ -212,24 +192,7 @@ namespace MyDentApplication
                         paragraph.Add(lblTotalAmountPayments.Text);
                         paragraph.Alignment = Element.ALIGN_LEFT;
                         pdfDoc.Add(paragraph);
-
-                        paragraph = new iTextSharp.text.Paragraph("");
-                        paragraph.Add(new Chunk("Pendiente por pagar: ", boldFont));
-                        paragraph.Add(lblGrandTotal.Text);
-                        paragraph.Alignment = Element.ALIGN_LEFT;
-                        pdfDoc.Add(paragraph);
-
-                        paragraph = new iTextSharp.text.Paragraph("");
-                        paragraph.Add(new Chunk("*Saldo a favor: ", boldFont));
-                        paragraph.Add(lblPositiveBalance.Text);
-                        paragraph.Alignment = Element.ALIGN_LEFT;
-                        pdfDoc.Add(paragraph);
-
-                        paragraph = new iTextSharp.text.Paragraph("");
-                        paragraph.Add(new Chunk(lblPositiveBalanceMessage.Content.ToString().Replace(System.Environment.NewLine, string.Empty), boldFontMessage));
-                        paragraph.Alignment = Element.ALIGN_RIGHT;
-                        pdfDoc.Add(paragraph);
-
+                        
                         pdfDoc.Close();
                     }
                 }
@@ -282,18 +245,18 @@ namespace MyDentApplication
                 return;
             }
 
-            string email = _statement.Patient.Email;
+            string email = _folio.Patient.Email;
 
             if (string.IsNullOrEmpty(email))
             {
-                new RequestEmailModal(_statement.Patient).ShowDialog();
+                new RequestEmailModal(_folio.Patient).ShowDialog();
 
-                if (string.IsNullOrEmpty(_statement.Patient.Email))
+                if (string.IsNullOrEmpty(_folio.Patient.Email))
                 {
                     return;
                 }
 
-                email = _statement.Patient.Email;
+                email = _folio.Patient.Email;
 
                 if (MessageBox.Show("¿Desea que este correo sea guardado en la información del paciente?",
                                             "Advertencia",
@@ -301,15 +264,15 @@ namespace MyDentApplication
                                             MessageBoxImage.Warning
                                         ) == MessageBoxResult.Yes)
                 {
-                    if (BusinessController.Instance.Update<Model.Patient>(_statement.Patient) == false)
+                    if (BusinessController.Instance.Update<Model.Patient>(_folio.Patient) == false)
                     {
                         MessageBox.Show("No se pudo guardar el correo en la información del paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        _statement.Patient.Email = string.Empty;
+                        _folio.Patient.Email = string.Empty;
                     }
                 }
                 else
                 {
-                    _statement.Patient.Email = string.Empty;
+                    _folio.Patient.Email = string.Empty;
                 }
             }
             else if (MessageBox.Show("El correo se enviará a '" + email + "' ¿Desea continuar?",
@@ -346,7 +309,7 @@ namespace MyDentApplication
                 MailMessage mail = new MailMessage
                 {
                     From = new MailAddress(username),
-                    Subject = "MyDent - Estado de cuenta #" + _statement.StatementId,
+                    Subject = "MyDent - Número de folio: " + _folio.FolioNumber,
                     Body = GenerateEmailBody(),
                     IsBodyHtml = true
                 };
@@ -370,9 +333,8 @@ namespace MyDentApplication
             string treatmentsTable = Utils.BuildTreatmentPricesTable(_treatments, out _totalAmountOfTreatments);
             string paymentsTable = Utils.BuildPaymentsTable(_payments.ToList(), out _totalAmountOfPayments);
 
-            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName));
-            body.AppendFormat("<div><strong>Estado de cuenta número:</strong> {0}</div>", _statement.StatementId);
-            body.AppendFormat("<div><strong>Fecha de expiración del estado de cuenta:</strong> {0}</div>", Utils.FirstCharToUpper(_statement.ExpirationDate.ToString("D")));
+            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _folio.Patient.PatientId, _folio.Patient.FirstName, _folio.Patient.LastName));
+            body.AppendFormat("<div><strong>Número de folio:</strong> {0}</div>", _folio.FolioNumber);
 
             if (thereAreTreatments)
             {
@@ -395,19 +357,7 @@ namespace MyDentApplication
 
             if (thereArePayments)
                 body.AppendFormat("<div><strong>Monto total de pagos:</strong> ${0}</div>", _totalAmountOfPayments.ToString("0.00"));
-
-            body.AppendFormat("<div style='color:red;'><strong>Pendiente por pagar:</strong> ${0}</div>", _grandTotal.ToString("0.00"));
-            body.AppendFormat("<div style='color:green;'><strong>*Saldo a favor:</strong> ${0}</div>", _positiveBalance.ToString("0.00"));
-
-            body.Append("<div>&nbsp;</div>");
-            body.Append("<div style='font-size:13px;'><em>" + lblPositiveBalanceMessage.Content.ToString() + "</em></div>");
-
-            if (_statement.IsPaid)
-            {
-                body.Append("<div>&nbsp;</div>");
-                body.Append("<div style='color:green;'><strong>¡Estado de cuenta liquidado!</strong></div>");
-            }
-
+            
             return body.ToString();
         }
 
@@ -453,13 +403,13 @@ namespace MyDentApplication
             }
         }
 
-        private void UpdateStatementInfo()
+        private void UpdateFolioInfo()
         {
-            _treatments = _statement.TreatmentPayments
+            _treatments = _folio.TreatmentPayments
                             .OrderBy(t => t.TreatmentDate)
                             .ToList();
 
-            _payments = _statement.Payments
+            _payments = _folio.Payments
                             .OrderBy(p => p.PaymentDate)
                             .ToList();
 
@@ -476,10 +426,8 @@ namespace MyDentApplication
         {
             _totalAmountOfTreatments = 0m;
             _totalAmountOfPayments = 0m;
-            _grandTotal = 0m;
             _numberOfTreatments = 0;
             _numberOfPayments = 0;
-            _positiveBalance = 0m;
 
             foreach (var item in _treatments)
             {
@@ -493,39 +441,12 @@ namespace MyDentApplication
                 _numberOfPayments++;
             }
 
-            _grandTotal = _totalAmountOfTreatments - _totalAmountOfPayments;
-            
-            if (_grandTotal < 0m)
-            {
-                _positiveBalance = Math.Abs(_grandTotal);
-                _grandTotal = 0m;
-            }
-
             lblTreatmentsCount.ToolTip = lblTreatmentsCount.Content = "No. de tratamientos: " + _numberOfTreatments;
             lblPaymentsCount.ToolTip = lblPaymentsCount.Content = "No. de pagos: " + _numberOfPayments;
             lblTotalAmountTreatments.ToolTip = lblTotalAmountTreatments.Text = "$" + _totalAmountOfTreatments.ToString("0.00");
             lblTotalAmountPayments.ToolTip = lblTotalAmountPayments.Text = "$" + _totalAmountOfPayments.ToString("0.00");
-            lblGrandTotal.ToolTip = lblGrandTotal.Text = "$" + _grandTotal.ToString("0.00");
-            lblPositiveBalance.ToolTip = lblPositiveBalance.Text = "$" + _positiveBalance.ToString("0.00");
-        }
-
-        private void LoadPatientPicture()
-        {
-            try
-            {
-                Model.ClinicHistoryAttribute attribute = Controllers.BusinessController.Instance.FindBy<Model.ClinicHistoryAttribute>(c => c.ClinicHistoryId == _statement.Patient.ClinicHistoryId && c.Name == Controllers.Utils.PATIENT_PICTURE).FirstOrDefault();
-
-                if (attribute != null && string.IsNullOrEmpty(attribute.Value) == false)
-                {
-                    imgPatientPicture.ToolTip = attribute.Value;
-                    imgPatientPicture.Source = new BitmapImage(new Uri(attribute.Value));
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error al cargar la foto del paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
         #endregion
+
     }
 }

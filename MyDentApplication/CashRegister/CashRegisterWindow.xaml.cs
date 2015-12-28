@@ -303,7 +303,7 @@ namespace MyDentApplication
                 MailMessage mail = new MailMessage
                 {
                     From = new MailAddress(username),
-                    Subject = "MyDent - Folio de transacción #" + _paymentFolioGenerated.FolioNumber,
+                    Subject = "MyDent - Número de Folio de la transacción: " + _paymentFolioGenerated.FolioNumber,
                     Body = GenerateEmailBody(),
                     IsBodyHtml = true
                 };
@@ -331,7 +331,7 @@ namespace MyDentApplication
             string paymentsTable = Utils.BuildPaymentsTable(_paymentFolioGenerated.Payments.ToList(), out totalAmountPayments);
 
             body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName));
-            body.AppendFormat("<div><strong>Número del folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
+            body.AppendFormat("<div><strong>Número de folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
             body.AppendFormat("<div><strong>Fecha y hora de la transacción:</strong> {0}</div>", Utils.FirstCharToUpper(today.ToString("D")) + " a las " + today.ToString("HH:mm") + " hrs.");
 
             if (_statement != null)
