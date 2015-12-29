@@ -36,9 +36,9 @@
 				<Button x:Name="btnCancel" Content="Cerrar" Margin="0,0,10,10" Cursor="Hand" TabIndex="7" HorizontalAlignment="Right" Width="64" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" Grid.Column="1" Grid.Row="1"/>
 				<Label x:Name="lblAccountStatusNumber" Content="" Height="27" Margin="0,8,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="83.253" Grid.Column="1"/>
 				<Button x:Name="btnSendMail" Content="Enviar correo" Margin="0,0,179,10.083" Cursor="Hand" TabIndex="6" HorizontalAlignment="Right" Width="95.104" Height="29" VerticalAlignment="Bottom" Click="btnSendMail_Click" Grid.Column="1" Grid.Row="1" />
-				<Label x:Name="lblAccountStatusNumberCaption" Content="Estado de cuenta No." Height="27" Margin="10,8,98.253,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontWeight="Bold" Grid.Column="1"/>
+				<Label x:Name="lblAccountStatusNumberCaption" Content="Estado de cuenta No." Height="27" Margin="73,8,98.253,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontWeight="Bold" Grid.Column="1"/>
 				<Label x:Name="lblStatus" Content="Enviando correo..." HorizontalAlignment="Right" Margin="0,0,14,42.082" Width="123.168" Foreground="Red" FontWeight="Bold" FontStyle="Italic" FontSize="13.333" Height="29" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Visibility="Hidden"/>
-				<Label x:Name="lblPatientName" Content="" Height="27" Margin="76.581,8,10,0" VerticalAlignment="Top"/>
+				<Label x:Name="lblPatientName" Content="" Height="27" Margin="76.581,8,263.527,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 				<DataGrid x:Name="dgTreatments" Margin="10,88.924,10,0" IsReadOnly="True" CanUserSortColumns="True"
 					ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
 					SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 

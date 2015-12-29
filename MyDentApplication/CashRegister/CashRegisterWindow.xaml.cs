@@ -55,7 +55,7 @@ namespace MyDentApplication
             {
                 this.Title = "Abonar/Liquidar estado de cuenta";
                 lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = _statement.StatementId.ToString();
-                lblAccountStatusNumberCaption.Visibility = System.Windows.Visibility.Visible;
+                gbAccountStatusNumber.Visibility = System.Windows.Visibility.Visible;
                 btnClearForm.Visibility = System.Windows.Visibility.Hidden;
                 cbPatients.IsEnabled = false;
                 FillTreatments();
@@ -161,7 +161,7 @@ namespace MyDentApplication
 
         private void cbPatients_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            _selectedPatient = (cbPatients.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient;
+            _selectedPatient = cbPatients.SelectedValue == null ? null : (cbPatients.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient;
 
             FillPatientFields();
             UpdatePositiveBalances();
@@ -303,7 +303,7 @@ namespace MyDentApplication
                 MailMessage mail = new MailMessage
                 {
                     From = new MailAddress(username),
-                    Subject = "MyDent - Número de Folio de la transacción: " + _paymentFolioGenerated.FolioNumber,
+                    Subject = "MyDent - Folio de transacción #" + _paymentFolioGenerated.FolioNumber,
                     Body = GenerateEmailBody(),
                     IsBodyHtml = true
                 };
@@ -335,7 +335,10 @@ namespace MyDentApplication
             body.AppendFormat("<div><strong>Fecha y hora de la transacción:</strong> {0}</div>", Utils.FirstCharToUpper(today.ToString("D")) + " a las " + today.ToString("HH:mm") + " hrs.");
 
             if (_statement != null)
+            {
                 body.AppendFormat("<div><strong>La siguiente información fue agregada a su estado de cuenta con número:</strong> {0}</div>", _statement.StatementId);
+                body.AppendFormat("<div><strong>Fecha de expiración del estado de cuenta:</strong> {0}</div>", Utils.FirstCharToUpper(_statement.ExpirationDate.ToString("D")));
+            }
 
             if (thereAreTreatments)
             {
@@ -673,14 +676,14 @@ namespace MyDentApplication
                                             .ThenBy(p => p.LastName)
                                             .ToList();
 
-            cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = "", Value = null });
+            //cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = "", Value = null });
 
             foreach (Model.Patient patient in patients)
             {
                 cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.PatientId, patient.FirstName, patient.LastName), Value = patient });
             }
 
-            cbPatients.SelectedIndex = 0;
+            //cbPatients.SelectedIndex = 0;
         }
 
         private void FillTreatments()
@@ -750,7 +753,7 @@ namespace MyDentApplication
             lblGeneratedStatementNumberCaption.Visibility = System.Windows.Visibility.Hidden;
             lblGeneratedStatementNumber.ToolTip = lblGeneratedStatementNumber.Text = string.Empty;
 
-            cbPatients.SelectedIndex = 0;
+            cbPatients.SelectedIndex = -1;
 
             UpdateTotals();
         }

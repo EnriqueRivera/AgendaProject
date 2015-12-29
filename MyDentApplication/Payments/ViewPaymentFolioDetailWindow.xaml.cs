@@ -309,7 +309,7 @@ namespace MyDentApplication
                 MailMessage mail = new MailMessage
                 {
                     From = new MailAddress(username),
-                    Subject = "MyDent - Número de folio: " + _folio.FolioNumber,
+                    Subject = "MyDent - Folio de transacción #" + _folio.FolioNumber,
                     Body = GenerateEmailBody(),
                     IsBodyHtml = true
                 };
@@ -420,6 +420,31 @@ namespace MyDentApplication
             dgPayments.DataContext = _paymentsViewModel;
 
             UpdateTotals();
+
+            int statementId;
+            if (FolioBelongsToStatement(out statementId))
+            {
+                lblStatementMessage.Visibility = System.Windows.Visibility.Visible;
+                lblStatementMessage.ToolTip = lblStatementMessage.Content = lblStatementMessage.Content.ToString() + statementId;
+            }
+        }
+
+        private bool FolioBelongsToStatement(out int statementId)
+        {
+            if (_treatments.Count > 0 && _treatments[0].StatementId.HasValue)
+            {
+                statementId = _treatments[0].StatementId.Value;
+                return true;
+            }
+
+            if (_payments.Count > 0 && _payments[0].StatementId.HasValue)
+            {
+                statementId = _payments[0].StatementId.Value;
+                return true;
+            }
+
+            statementId = 0;
+            return false;
         }
 
         private void UpdateTotals()

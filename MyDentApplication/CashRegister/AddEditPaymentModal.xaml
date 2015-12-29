@@ -5,21 +5,20 @@
 	x:Class="MyDentApplication.AddEditPaymentModal"
 	x:Name="Window"
 	Title="Agregar pago"
-	Width="343.5" Height="308" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+	Width="373.5" Height="306" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
 	<Grid x:Name="LayoutRoot">
-		<Button x:Name="btnAddPayment" Content="Agregar" HorizontalAlignment="Left" Margin="64.76,0,0,10" Width="91" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" Click="btnAddPayment_Click"/>
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="173.76,0,0,10" Width="91" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
-		<Label x:Name="lblTotalAmount" Content="Cantidad:" HorizontalAlignment="Left" Height="27" Margin="50.423,9,0,0" VerticalAlignment="Top" Width="61.667"/>
-		<TextBox x:Name="txtAmount" HorizontalAlignment="Left" Height="27" Margin="117.09,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
-		<Label x:Name="lblBank" Content="Banco:" HorizontalAlignment="Left" Height="27" Margin="64.76,42,0,0" VerticalAlignment="Top" Width="47.33"/>
-		<ComboBox x:Name="cbBanks" Height="26" Margin="117.09,42,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="2" HorizontalAlignment="Left" Width="194.5">
-		</ComboBox>
-		<Label x:Name="lblVoucherCheckNumber" Content="No. de voucher:" HorizontalAlignment="Left" Height="27" Margin="17.423,72,0,0" VerticalAlignment="Top" Width="94.667"/>
-		<TextBox x:Name="txtVoucherCheckNumber" HorizontalAlignment="Left" Height="27" Margin="117.09,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194.5" TabIndex="3" BorderThickness="1" BorderBrush="Black"/>
-		<Label x:Name="lblReminderMessage" Content="Observaciones:" HorizontalAlignment="Left" Margin="17.423,0,0,145.328" Width="94.667" Height="25.672" VerticalAlignment="Bottom"/>
-		<Border BorderThickness="1" BorderBrush="Black" Margin="17.423,0,25.91,58.206" Height="82.122" VerticalAlignment="Bottom">
-			<TextBox x:Name="txtObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True" TabIndex="4"/>
+		<Button x:Name="btnAddPayment" Content="Agregar" HorizontalAlignment="Left" Margin="87.76,0,0,10" Width="91" Cursor="Hand" TabIndex="5" Height="29" VerticalAlignment="Bottom" Click="btnAddPayment_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Margin="196.76,0,0,10" Width="91" Cursor="Hand" TabIndex="6" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
+		<Label x:Name="lblTotalAmount" Content="Cantidad:" HorizontalAlignment="Left" Height="28" Margin="51.667,9.334,0,0" VerticalAlignment="Top" Width="78.91" FontSize="16"/>
+		<TextBox x:Name="txtAmount" Height="27" Margin="135.577,10.334,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black" FontSize="16"/>
+		<Label x:Name="lblBank" Content="Banco:" HorizontalAlignment="Left" Height="30" Margin="72.004,39.001,0,0" VerticalAlignment="Top" Width="58.573" FontSize="16"/>
+		<ComboBox x:Name="cbBanks" Height="26" Margin="135.577,43.001,10,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="2" FontSize="16"/>
+		<Label x:Name="lblVoucherCheckNumber" Content="No. de voucher:" HorizontalAlignment="Left" Height="30.999" Margin="10,73.001,0,0" VerticalAlignment="Top" Width="120.577" FontSize="16"/>
+		<TextBox x:Name="txtVoucherCheckNumber" Height="27" Margin="135.577,74.001,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="3" BorderThickness="1" BorderBrush="Black" FontSize="16"/>
+		<Label x:Name="lblReminderMessage" Content="Observaciones:" HorizontalAlignment="Left" Margin="10,0,0,132.328" Width="347.5" Height="30.672" VerticalAlignment="Bottom" FontSize="16"/>
+		<Border BorderThickness="1" BorderBrush="Black" Margin="10,0,10,50.206" Height="82.122" VerticalAlignment="Bottom">
+			<TextBox x:Name="txtObservations" Margin="0,0,0,0" FontStyle="Italic" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True" TabIndex="4" FontSize="16"/>
 		</Border>
 	</Grid>
 </Window>

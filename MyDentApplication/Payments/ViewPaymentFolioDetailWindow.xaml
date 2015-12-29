@@ -5,7 +5,7 @@
 	x:Class="MyDentApplication.ViewPaymentFolioDetailWindow"
 	x:Name="Window"
 	Title="Detalle del folio"
-	Width="640" Height="595.5" Closing="Window_Closing" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
+	Width="640" Height="586.5" Closing="Window_Closing" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
 	<Window.Resources>
 		<local:DateValueConverter x:Key="DateValueConverter" />
 	</Window.Resources>
@@ -34,9 +34,9 @@
 				<Button x:Name="btnCancel" Content="Cerrar" Margin="0,0,10,10" Cursor="Hand" TabIndex="7" HorizontalAlignment="Right" Width="64" Height="29" VerticalAlignment="Bottom" Click="btnCancel_Click" Grid.Column="1" Grid.Row="1"/>
 				<Label x:Name="lblFolioNumber" Content="" Height="27" Margin="0,8,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="81.253" Grid.Column="1"/>
 				<Button x:Name="btnSendMail" Content="Enviar correo" Margin="0,0,179,10" Cursor="Hand" TabIndex="6" HorizontalAlignment="Right" Width="95.104" Height="29" VerticalAlignment="Bottom" Click="btnSendMail_Click" Grid.Column="1" Grid.Row="1" />
-				<Label x:Name="lblAccountStatusNumberCaption" Content="Número de folio:" Height="27" Margin="18.527,8,96.253,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontWeight="Bold" Grid.Column="1"/>
+				<Label x:Name="lblAccountStatusNumberCaption" Content="Número de folio:" Height="27" Margin="0,8,96.253,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Right" Width="112.747"/>
 				<Label x:Name="lblStatus" Content="Enviando correo..." HorizontalAlignment="Right" Margin="0,0,10,44" Width="123.168" Foreground="Red" FontWeight="Bold" FontStyle="Italic" FontSize="13.333" Height="29" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" Visibility="Hidden"/>
-				<Label x:Name="lblPatientName" Content="" Height="27" Margin="76.581,8,10,0" VerticalAlignment="Top"/>
+				<Label x:Name="lblPatientName" Content="" Height="27" Margin="76.581,8,262.027,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 				<DataGrid x:Name="dgTreatments" Margin="10,88.924,10,0" IsReadOnly="True" CanUserSortColumns="True"
 					ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
 					SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
@@ -89,6 +89,7 @@
 						<DataGridTextColumn Binding="{Binding Observation}" Header="Observaciones" Width="0.25*"/>
 					</DataGrid.Columns>
 				</DataGrid>
+				<Label x:Name="lblStatementMessage" Content="**Los tratamientos y pagos de este folio fueron &#xD;&#xA;agregados al estado de cuenta número: " HorizontalAlignment="Left" Height="44" Margin="10,19,0,0" VerticalAlignment="Top" Width="297" Grid.Row="1" FontStyle="Italic" Visibility="Hidden"/>
 			</Grid>
 		</ScrollViewer>
 	</Grid>
