@@ -20,12 +20,15 @@ namespace MyDentApplication
 	{
         #region Instance variables
         private Controllers.CustomViewModel<Model.PaymentFolio> _paymentFoliosViewModel;
+        private Model.User _userLoggedIn;
         #endregion
 
         #region Constructors
-        public ViewPaymentFoliosWindow()
+        public ViewPaymentFoliosWindow(Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
+
+            _userLoggedIn = userLoggedIn;
 
             dpStartDate.SelectedDate = DateTime.Now;
             dpEndDate.SelectedDate = DateTime.Now;
@@ -66,7 +69,7 @@ namespace MyDentApplication
             }
             else
             {
-                new ViewPaymentFolioDetailWindow(selectedFolio).ShowDialog();
+                new ViewPaymentFolioDetailWindow(selectedFolio, _userLoggedIn).ShowDialog();
             }
         }
         #endregion

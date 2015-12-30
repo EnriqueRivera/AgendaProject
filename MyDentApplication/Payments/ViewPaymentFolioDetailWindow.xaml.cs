@@ -36,17 +36,19 @@ namespace MyDentApplication
         private int _numberOfTreatments;
         private int _numberOfPayments;
         private Thread _sendEmailThread;
+        private Model.User _userLoggedIn;
         #endregion
 
         #region Delegates
         delegate void SendEmailDelegate(string errorMessage);
         #endregion
 
-        public ViewPaymentFolioDetailWindow(Model.PaymentFolio folio)
+        public ViewPaymentFolioDetailWindow(Model.PaymentFolio folio, Model.User userLoggedIn)
         {
             this.InitializeComponent();
 
             _folio = folio;
+            _userLoggedIn = userLoggedIn;
 
             lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _folio.Patient.PatientId, _folio.Patient.FirstName, _folio.Patient.LastName);
             lblFolioNumber.ToolTip = lblFolioNumber.Content = _folio.FolioNumber.ToString();
@@ -335,6 +337,7 @@ namespace MyDentApplication
 
             body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _folio.Patient.PatientId, _folio.Patient.FirstName, _folio.Patient.LastName));
             body.AppendFormat("<div><strong>Número de folio:</strong> {0}</div>", _folio.FolioNumber);
+            body.AppendFormat("<div><strong>Asistente:</strong> {0}</div>", _userLoggedIn.FirstName + " " + _userLoggedIn.LastName);
 
             if (thereAreTreatments)
             {

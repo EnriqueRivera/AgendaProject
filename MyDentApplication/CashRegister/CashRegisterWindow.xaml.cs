@@ -333,6 +333,7 @@ namespace MyDentApplication
             body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName));
             body.AppendFormat("<div><strong>Número de folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
             body.AppendFormat("<div><strong>Fecha y hora de la transacción:</strong> {0}</div>", Utils.FirstCharToUpper(today.ToString("D")) + " a las " + today.ToString("HH:mm") + " hrs.");
+            body.AppendFormat("<div><strong>Asistente:</strong> {0}</div>", _userLoggedIn.FirstName + " " + _userLoggedIn.LastName);
 
             if (_statement != null)
             {

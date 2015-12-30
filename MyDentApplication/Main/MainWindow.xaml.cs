@@ -1070,7 +1070,7 @@ namespace MyDentApplication
         {
             if (_viewPaymentFoliosWindow == null)
             {
-                _viewPaymentFoliosWindow = new ViewPaymentFoliosWindow();
+                _viewPaymentFoliosWindow = new ViewPaymentFoliosWindow(_userLoggedIn);
                 _viewPaymentFoliosWindow.Closed += Window_Closed;
             }
 

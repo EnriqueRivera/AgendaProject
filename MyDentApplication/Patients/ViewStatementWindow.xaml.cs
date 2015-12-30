@@ -38,6 +38,7 @@ namespace MyDentApplication
         private int _numberOfTreatments;
         private int _numberOfPayments;
         private Thread _sendEmailThread;
+        private Model.User _userLoggedIn;
         #endregion
 
         #region Delegates
@@ -45,11 +46,12 @@ namespace MyDentApplication
         #endregion
 
         #region Constructors
-        public ViewStatementWindow(Model.Statement statement)
+        public ViewStatementWindow(Model.Statement statement, Model.User userLoggedIn)
         {
             this.InitializeComponent();
 
             _statement = statement;
+            _userLoggedIn = userLoggedIn;
 
             lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName);
             lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = _statement.StatementId.ToString();
@@ -373,6 +375,7 @@ namespace MyDentApplication
             body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName));
             body.AppendFormat("<div><strong>Estado de cuenta número:</strong> {0}</div>", _statement.StatementId);
             body.AppendFormat("<div><strong>Fecha de expiración del estado de cuenta:</strong> {0}</div>", Utils.FirstCharToUpper(_statement.ExpirationDate.ToString("D")));
+            body.AppendFormat("<div><strong>Asistente:</strong> {0}</div>", _userLoggedIn.FirstName + " " + _userLoggedIn.LastName);
 
             if (thereAreTreatments)
             {

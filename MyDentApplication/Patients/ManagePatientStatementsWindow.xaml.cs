@@ -50,7 +50,7 @@ namespace MyDentApplication
             }
             else
             {
-                new ViewStatementWindow(selectedStatement).ShowDialog();
+                new ViewStatementWindow(selectedStatement, _userLoggedIn).ShowDialog();
             }
         }
 
