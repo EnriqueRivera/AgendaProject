@@ -374,9 +374,11 @@ namespace MyDentApplication
 
         public static Model.Event OverlappedWithExistingEvent(Model.Event eventToAdd, List<WpfScheduler.Event> events)
         {
-            events = events.OrderBy(e => e.EventInfo.StartEvent).ToList();
+            events = events.Where(e => e.EventInfo.IsCanceled == false && e.EventInfo.PatientSkips == false)
+                            .OrderBy(e => e.EventInfo.StartEvent)
+                            .ToList();
 
-            foreach (WpfScheduler.Event e in events.Where(e => e.EventInfo.IsCanceled == false))
+            foreach (WpfScheduler.Event e in events)
             {
                 if (Utils.IsOverlappedTime(eventToAdd.StartEvent, eventToAdd.EndEvent, e.EventInfo.StartEvent, e.EventInfo.EndEvent))
                 {
