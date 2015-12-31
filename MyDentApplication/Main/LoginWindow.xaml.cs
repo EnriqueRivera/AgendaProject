@@ -93,8 +93,15 @@ namespace MyDentApplication
 
         private void Login(int userId, string password)
         {
-            Model.User userResult = Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.AssignedUserId == userId && u.Password == password && u.IsDeleted == false).FirstOrDefault();
-            DispatcherCheckLogin(userResult);
+            try
+            {
+                Model.User userResult = Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.AssignedUserId == userId && u.Password == password && u.IsDeleted == false).FirstOrDefault();
+                DispatcherCheckLogin(userResult);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         void DispatcherCheckLogin(Model.User userResult)

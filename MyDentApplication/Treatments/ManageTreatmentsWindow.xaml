@@ -25,18 +25,6 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Tratamientos para presupuestos">
-				<Grid Background="#FFE5E5E5">
-					<DataGrid x:Name="dgBudgetTreatments" Margin="10" IsReadOnly="True" CanUserSortColumns="True"
-						ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
-						SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
-						TabIndex="1">
-						<DataGrid.Columns>
-							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-						</DataGrid.Columns>
-					</DataGrid>
-				</Grid>
-			</TabItem>
 		</TabControl>
 	</Grid>
 </Window>

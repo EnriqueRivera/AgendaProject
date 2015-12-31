@@ -72,6 +72,17 @@ namespace MyDentApplication
 		{
             this.Close();
 		}
+
+        private void cbConcepts_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Model.TreatmentPrice selectedTreatment = cbConcepts.SelectedItem == null ? null : (cbConcepts.SelectedItem as Controllers.ComboBoxItem).Value as Model.TreatmentPrice;
+
+            if (selectedTreatment != null)
+            {
+                txtCost.Text = selectedTreatment.Price.ToString();
+                cbDiscount.SelectedValue = selectedTreatment.Discount;
+            }
+        }
         #endregion
 
         #region Window's logic
@@ -132,18 +143,26 @@ namespace MyDentApplication
             txtNumberOfEvents.ToolTip = txtNumberOfEvents.Text = _budgetDetailToUpdate.NumberOfEvents.ToString();
             txtCost.ToolTip = txtCost.Text = _budgetDetailToUpdate.UnitCost.ToString();
             cbDiscount.SelectedValue = _budgetDetailToUpdate.Discount;
-            cbConcepts.SelectedValue = _budgetDetailToUpdate.Concept;
+
+            for (int i = 0; i < cbConcepts.Items.Count; i++)
+            {
+                if ((cbConcepts.Items[i] as Controllers.ComboBoxItem).Text == _budgetDetailToUpdate.Concept)
+	            {
+                    cbConcepts.SelectedIndex = i;
+                    break;
+	            }     
+            }
         }
 
         private void FillTreatments()
         {
-            List<Model.BudgetTreatment> treatments = BusinessController.Instance.FindBy<Model.BudgetTreatment>(t => t.IsDeleted == false)
+            List<Model.TreatmentPrice> treatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(t => t.IsDeleted == false)
                                                         .OrderBy(t => t.Name)
                                                         .ToList();
 
-            foreach (Model.BudgetTreatment treatment in treatments)
+            foreach (Model.TreatmentPrice treatment in treatments)
             {
-                cbConcepts.Items.Add(treatment.Name);
+                cbConcepts.Items.Add(new Controllers.ComboBoxItem() { Text = treatment.Name, Value = treatment });
             }
         }
         #endregion

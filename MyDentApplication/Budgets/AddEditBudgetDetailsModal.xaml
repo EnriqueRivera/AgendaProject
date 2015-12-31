@@ -28,6 +28,6 @@
 		<TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Height="27" Margin="117.833,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="2" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
 		<Label x:Name="lblRecurrentDays_Copy1" Content="No. de citas:" HorizontalAlignment="Left" Height="27" Margin="36.5,105,0,0" VerticalAlignment="Top" Width="76.333"/>
 		<TextBox x:Name="txtNumberOfEvents" HorizontalAlignment="Left" Height="27" Margin="117.833,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96.837" TabIndex="3" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center"/>
-		<ComboBox x:Name="cbConcepts" Height="28" Margin="10,37,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TabIndex="5"/>
+		<ComboBox x:Name="cbConcepts" Height="28" Margin="10,37,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TabIndex="5" SelectionChanged="cbConcepts_SelectionChanged"/>
 	</Grid>
 </Window>

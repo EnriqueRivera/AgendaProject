@@ -61,14 +61,6 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="PatientId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="BudgetTreatments">
-          <Key>
-            <PropertyRef Name="BudgetTreatmenttId" />
-          </Key>
-          <Property Name="BudgetTreatmenttId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar(max)" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="CleanedActions">
           <Key>
             <PropertyRef Name="CleanedActionId" />
@@ -944,7 +936,6 @@
           <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BudgetDetails" EntityType="Self.BudgetDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BudgetTreatments" EntityType="Self.BudgetTreatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CleanedActions" EntityType="Self.CleanedActions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClinicHistories" EntityType="Self.ClinicHistories" Schema="dbo" store:Type="Tables" />
@@ -1263,7 +1254,6 @@
             <End Role="Budget" EntitySet="Budgets" />
             <End Role="BudgetDetail" EntitySet="BudgetDetails" />
           </AssociationSet>
-          <EntitySet Name="BudgetTreatments" EntityType="MyDentDBModel.BudgetTreatment" />
           <EntitySet Name="AmericanExpressPaids" EntityType="MyDentDBModel.AmericanExpressPaid" />
           <EntitySet Name="Authorizations" EntityType="MyDentDBModel.Authorization" />
           <AssociationSet Name="FK_Authorizations_PatientId" Association="MyDentDBModel.FK_Authorizations_PatientId">
@@ -1957,14 +1947,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BudgetTreatment">
-          <Key>
-            <PropertyRef Name="BudgetTreatmenttId" />
-          </Key>
-          <Property Name="BudgetTreatmenttId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="AmericanExpressPaid">
           <Key>
             <PropertyRef Name="AmericanExpressPaidId" />
@@ -2689,15 +2671,6 @@
                 <ScalarProperty Name="Concept" ColumnName="Concept" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="BudgetDetailId" ColumnName="BudgetDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BudgetTreatments">
-            <EntityTypeMapping TypeName="MyDentDBModel.BudgetTreatment">
-              <MappingFragment StoreEntitySet="BudgetTreatments">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="BudgetTreatmenttId" ColumnName="BudgetTreatmenttId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

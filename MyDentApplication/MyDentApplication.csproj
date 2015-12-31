@@ -38,8 +38,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>app_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -312,9 +311,6 @@
     </Compile>
     <Compile Include="Technicals\ManageTechnicalsWindow.xaml.cs">
       <DependentUpon>ManageTechnicalsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Treatments\AddEditBudgetTreatmentsModal.xaml.cs">
-      <DependentUpon>AddEditBudgetTreatmentsModal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Treatments\AddEditTreatmentPricesModal.xaml.cs">
       <DependentUpon>AddEditTreatmentPricesModal.xaml</DependentUpon>
@@ -648,10 +644,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Treatments\AddEditBudgetTreatmentsModal.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Treatments\AddEditTreatmentPricesModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -816,6 +808,8 @@
     <Resource Include="Images\MedicalProofDocument_1.PNG" />
     <Resource Include="Images\MedicalProofDocument_2.PNG" />
     <Resource Include="Images\medicine_icon.png" />
+    <Resource Include="Images\mydent_logo_1.jpg" />
+    <Resource Include="Images\mydent_logo_2.jpg" />
     <Resource Include="Images\outgoing_invoice_icon.png" />
     <Resource Include="Images\patient_icon.png" />
     <Resource Include="Images\payments_icon.png" />
@@ -835,6 +829,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\app_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="app_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

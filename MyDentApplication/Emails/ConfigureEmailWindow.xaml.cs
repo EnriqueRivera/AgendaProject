@@ -68,7 +68,7 @@ namespace MyDentApplication
         private void btnHotmailDefaultInfo_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             txtHost.Text = "smtp.live.com";
-            txtPort.Text = "25";
+            txtPort.Text = "587";
             chkSsl.IsChecked = true;
         }
 
