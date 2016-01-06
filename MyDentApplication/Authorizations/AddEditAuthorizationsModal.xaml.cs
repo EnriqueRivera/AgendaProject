@@ -31,7 +31,7 @@ namespace MyDentApplication
             _selectedAuthorization = selectedAuthorization;
             _isUpdateAuthorization = selectedAuthorization != null;
 
-            lblExpNumber.ToolTip = lblExpNumber.Content = selectedPatient.PatientId;
+            lblExpNumber.ToolTip = lblExpNumber.Content = selectedPatient.AssignedId;
             lblPatientName.ToolTip = lblPatientName.Content = selectedPatient.FirstName + " " + selectedPatient.LastName;
 
             if (_isUpdateAuthorization)

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq;
 
 namespace MyDentApplication
 {
@@ -40,6 +41,10 @@ namespace MyDentApplication
             {
                 PrepareWindowForUpdates();
             }
+            else
+            {
+                txtExpNumber.Text = GetNextExpNumber().ToString();
+            }
         }
         #endregion
 
@@ -51,19 +56,22 @@ namespace MyDentApplication
 
         private void btnAddUpdatePatient_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            int expNumber;
+            string expNumberText = txtExpNumber.Text.Trim();
             string patientFirstName = txtPatientFirstName.Text.Trim();
             string patientLastName = txtPatientLastName.Text.Trim();
             string homePhone = txtHomePhone.Text.Trim();
             string cellPhone = txtCellPhone.Text.Trim();
             string email = txtEmail.Text.Trim();
 
-            if (AreValidFields(patientFirstName, patientLastName, homePhone, cellPhone, email) == false)
+            if (AreValidFields(patientFirstName, patientLastName, homePhone, cellPhone, email, expNumberText, out expNumber) == false)
             {
                 return;
             }
 
             if (_isUpdatePatientInfo)
             {
+                _patientToUpdate.AssignedId = expNumber;
                 _patientToUpdate.FirstName = patientFirstName;
                 _patientToUpdate.LastName = patientLastName;
                 _patientToUpdate.HomePhone = homePhone;
@@ -76,6 +84,7 @@ namespace MyDentApplication
             {
                 Model.Patient patientToAdd = new Model.Patient()
                 {
+                    AssignedId = expNumber,
                     FirstName = patientFirstName,
                     LastName = patientLastName,
                     HomePhone = homePhone,
@@ -94,11 +103,37 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
+        private int GetNextExpNumber()
+        {
+            int x = 0;
+            List<Model.Patient> patients = Controllers.BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
+                                                    .OrderBy(p => p.AssignedId)
+                                                    .ToList();
+
+            for (int i = 0; i < patients.Count; i++)
+            {
+                if (i == 0)
+                {
+                    if (patients[i].AssignedId > 1)
+                        return x;
+                    else
+                        x = patients[i].AssignedId;
+                }
+                else if (patients[i].AssignedId > (x + 1))
+                    break;
+                else
+                    x = patients[i].AssignedId;
+            }
+
+            return x + 1;
+        }
+
         private void PrepareWindowForUpdates()
         {
             this.Title = "Actualizar información del paciente";
             btnAddUpdatePatient.Content = "Actualizar";
 
+            txtExpNumber.Text = _patientToUpdate.AssignedId.ToString();
             txtPatientFirstName.Text = _patientToUpdate.FirstName;
             txtPatientLastName.Text = _patientToUpdate.LastName;
             txtHomePhone.Text = _patientToUpdate.HomePhone;
@@ -106,8 +141,14 @@ namespace MyDentApplication
             txtEmail.Text = _patientToUpdate.Email;
         }
 
-        private bool AreValidFields(string patientFirstName, string patientLastName, string homePhone, string cellPhone, string email)
+        private bool AreValidFields(string patientFirstName, string patientLastName, string homePhone, string cellPhone, string email, string expNumberText, out int expNumber)
         {
+            if (int.TryParse(expNumberText, out expNumber) == false || expNumber < 1)
+            {
+                MessageBox.Show("No. de expediente inválido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+
             if (string.IsNullOrEmpty(patientFirstName))
             {
                 MessageBox.Show("Ingrese un nombre", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -132,7 +173,19 @@ namespace MyDentApplication
                 return false;
             }
 
+            if ((_isUpdatePatientInfo && _patientToUpdate.AssignedId != expNumber && PatientExpNumberExists(expNumber))
+                || (_isUpdatePatientInfo == false && PatientExpNumberExists(expNumber)))
+            {
+                MessageBox.Show("No se puede " + (_isUpdatePatientInfo ? "actualizar" : "agregar") + " el paciente porque ya existe otro paciente con el mismo No. de expediente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+
             return true;
+        }
+
+        private bool PatientExpNumberExists(int assignedId)
+        {
+            return Controllers.BusinessController.Instance.FindBy<Model.Patient>(p => p.AssignedId == assignedId).Count() != 0;
         }
 
         private void AddUser(Model.Patient patientToAdd)

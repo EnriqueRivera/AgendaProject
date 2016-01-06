@@ -231,7 +231,7 @@ namespace MyDentApplication
 			}
 			else
 			{
-                lblExpNo.ToolTip = lblExpNo.Text = selectedPatient.PatientId.ToString();
+                lblExpNo.ToolTip = lblExpNo.Text = selectedPatient.AssignedId.ToString();
                 lblCellphone.ToolTip = lblCellphone.Text = selectedPatient.CellPhone;
                 lblHomePhone.ToolTip = lblHomePhone.Text = selectedPatient.HomePhone;
                 lblEmail.ToolTip = lblEmail.Text = selectedPatient.Email;

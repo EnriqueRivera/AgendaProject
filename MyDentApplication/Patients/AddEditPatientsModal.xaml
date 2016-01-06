@@ -4,20 +4,22 @@
 	x:Class="MyDentApplication.AddEditPatientsModal"
 	x:Name="Window"
 	Title="Agregar paciente"
-	Width="334" Height="267" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+	Width="334" Height="296" Icon="/MyDentApplication;component/Images/app_icon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
 	<Grid x:Name="LayoutRoot">
-		<Label x:Name="lblPatientFirstName" Content="Nombre(s):" HorizontalAlignment="Left" Height="27" Margin="44,10,0,0" VerticalAlignment="Top" Width="69.333"/>
-		<Label x:Name="lblPatientLastName" Content="Apellido(s):" HorizontalAlignment="Left" Height="27" Margin="44,42,0,0" VerticalAlignment="Top" Width="69.333"/>
-		<Label x:Name="lblHomePhone" Content="Teléfono de casa:" HorizontalAlignment="Left" Height="27" Margin="10,74,0,0" VerticalAlignment="Top" Width="103.333"/>
-		<TextBox x:Name="txtPatientFirstName" HorizontalAlignment="Left" Height="27" Margin="118.333,8,0,0" VerticalAlignment="Top" Width="180" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
-		<TextBox x:Name="txtPatientLastName" HorizontalAlignment="Left" Height="27" Margin="118.333,40,0,0" VerticalAlignment="Top" Width="180" TabIndex="2" BorderBrush="Black"/>
-		<TextBox x:Name="txtHomePhone" HorizontalAlignment="Left" Height="27" Margin="118.333,72,0,0" VerticalAlignment="Top" Width="180" TabIndex="3" BorderBrush="Black"/>
-		<Button x:Name="btnAddUpdatePatient" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="66.5,185.667,0,0" VerticalAlignment="Top" Width="91" Cursor="Hand" TabIndex="7" Click="btnAddUpdatePatient_Click"/>
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="174.67,185.667,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="8"/>
-		<Label x:Name="lblCellPhone" Content="Teléfono celular:" HorizontalAlignment="Left" Height="27" Margin="15.5,106,0,0" VerticalAlignment="Top" Width="97.833"/>
-		<Label x:Name="lblEmail" Content="Email:" HorizontalAlignment="Left" Height="27" Margin="71.5,138,0,0" VerticalAlignment="Top" Width="41.833"/>
-		<TextBox x:Name="txtCellPhone" HorizontalAlignment="Left" Height="27" Margin="118.333,104,0,0" VerticalAlignment="Top" Width="180" TabIndex="4" BorderThickness="1" BorderBrush="Black"/>
-		<TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="27" Margin="118.333,136,0,0" VerticalAlignment="Top" Width="180" TabIndex="5" BorderBrush="Black"/>
+		<Label x:Name="lblPatientFirstName" Content="Nombre(s):" HorizontalAlignment="Left" Height="27" Margin="49,44,0,0" VerticalAlignment="Top" Width="69.333"/>
+		<Label x:Name="lblPatientLastName" Content="Apellido(s):" HorizontalAlignment="Left" Height="27" Margin="49,76,0,0" VerticalAlignment="Top" Width="69.333"/>
+		<Label x:Name="lblHomePhone" Content="Teléfono de casa:" HorizontalAlignment="Left" Height="27" Margin="15,108,0,0" VerticalAlignment="Top" Width="103.333"/>
+		<TextBox x:Name="txtPatientFirstName" HorizontalAlignment="Left" Height="27" Margin="123.333,42,0,0" VerticalAlignment="Top" Width="180" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtPatientLastName" HorizontalAlignment="Left" Height="27" Margin="123.333,74,0,0" VerticalAlignment="Top" Width="180" TabIndex="2" BorderBrush="Black"/>
+		<TextBox x:Name="txtHomePhone" HorizontalAlignment="Left" Height="27" Margin="123.333,106,0,0" VerticalAlignment="Top" Width="180" TabIndex="3" BorderBrush="Black"/>
+		<Button x:Name="btnAddUpdatePatient" Content="Agregar" HorizontalAlignment="Left" Height="29" Margin="71.5,216.667,0,0" VerticalAlignment="Top" Width="91" Cursor="Hand" TabIndex="7" Click="btnAddUpdatePatient_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="29" Margin="179.67,216.667,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" Cursor="Hand" TabIndex="8"/>
+		<Label x:Name="lblCellPhone" Content="Teléfono celular:" HorizontalAlignment="Left" Height="27" Margin="20.5,140,0,0" VerticalAlignment="Top" Width="97.833"/>
+		<Label x:Name="lblEmail" Content="Email:" HorizontalAlignment="Left" Height="27" Margin="76.5,172,0,0" VerticalAlignment="Top" Width="41.833"/>
+		<TextBox x:Name="txtCellPhone" HorizontalAlignment="Left" Height="27" Margin="123.333,138,0,0" VerticalAlignment="Top" Width="180" TabIndex="4" BorderThickness="1" BorderBrush="Black"/>
+		<TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="27" Margin="123.333,170,0,0" VerticalAlignment="Top" Width="180" TabIndex="5" BorderBrush="Black"/>
+		<Label x:Name="lblPatientFirstName_Copy" Content="Exp. No." HorizontalAlignment="Left" Height="27" Margin="60,12,0,0" VerticalAlignment="Top" Width="58.333"/>
+		<TextBox x:Name="txtExpNumber" HorizontalAlignment="Left" Height="27" Margin="123.333,10,0,0" VerticalAlignment="Top" Width="180" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
 	</Grid>
 </Window>

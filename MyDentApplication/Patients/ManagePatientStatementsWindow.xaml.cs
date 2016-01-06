@@ -33,7 +33,7 @@ namespace MyDentApplication
             _selectedPatient = selectedPatient;
             _patientStatements = patientStatements;
 
-            lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName);
+            lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.AssignedId, _selectedPatient.FirstName, _selectedPatient.LastName);
 
             UpdateGrid();
         }

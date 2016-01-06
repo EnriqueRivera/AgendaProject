@@ -91,13 +91,14 @@ namespace MyDentApplication
             }
             else if (MessageBox.Show
                                 (string.Format("¿Está seguro(a) que desea eliminar el paciente con el Exp. No. {0}?",
-                                        selectedPatient.PatientId),
+                                        selectedPatient.AssignedId),
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
                                     MessageBoxImage.Warning
                                 ) == MessageBoxResult.Yes)
             {
                 selectedPatient.IsDeleted = true;
+                selectedPatient.AssignedId = -1;
 
                 if (Controllers.BusinessController.Instance.Update<Model.Patient>(selectedPatient))
                 {
@@ -211,16 +212,16 @@ namespace MyDentApplication
                 switch (cbFilter.SelectedIndex)
                 {
                     case 0:
-                        _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "AssignedId", "asc");
                         break;
                     case 1:
-                        _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false && u.LastName.Contains(searchTerm), "AssignedId", "asc");
                         break;
                     case 2:
                         int patientId;
                         int.TryParse(searchTerm, out patientId);
 
-                        _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false && u.PatientId == patientId, "PatientId", "asc");
+                        _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false && u.AssignedId == patientId, "AssignedId", "asc");
                         break;
                     default:
                         break;
@@ -233,16 +234,16 @@ namespace MyDentApplication
                 switch (cbFilter.SelectedIndex)
                 {
                     case 0:
-                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "AssignedId", "asc");
                         break;
                     case 1:
-                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.LastName.Contains(searchTerm), "AssignedId", "asc");
                         break;
                     case 2:
                         int patientId;
                         int.TryParse(searchTerm, out patientId);
 
-                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.PatientId == patientId, "PatientId", "asc");
+                        _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false && u.AssignedId == patientId, "AssignedId", "asc");
                         break;
                     default:
                         break;
@@ -255,16 +256,16 @@ namespace MyDentApplication
                 switch (cbFilter.SelectedIndex)
                 {
                     case 0:
-                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.FirstName.Contains(searchTerm), "AssignedId", "asc");
                         break;
                     case 1:
-                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
+                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.LastName.Contains(searchTerm), "AssignedId", "asc");
                         break;
                     case 2:
                         int patientId;
                         int.TryParse(searchTerm, out patientId);
 
-                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.PatientId == patientId, "PatientId", "asc");
+                        _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false && u.AssignedId == patientId, "AssignedId", "asc");
                         break;
                     default:
                         break;
@@ -278,16 +279,16 @@ namespace MyDentApplication
         {
             switch (tcPatients.SelectedIndex)
             {
-                case 0: 
-                    _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false, "PatientId", "asc");
+                case 0:
+                    _patientsNoHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance == false && u.IsDeleted == false, "AssignedId", "asc");
                     dgPatientsNoHI.DataContext = _patientsNoHIViewModel;
                     break;
                 case 1:
-                    _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false, "PatientId", "asc");
+                    _patientsWithHIViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse == false && u.IsDeleted == false, "AssignedId", "asc");
                     dgPatientsWithHI.DataContext = _patientsWithHIViewModel;
                     break;
                 case 2:
-                    _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false, "PatientId", "asc");
+                    _patientsDiverseViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.HasHealthInsurance && u.IsDiverse && u.IsDeleted == false, "AssignedId", "asc");
                     dgPatientsDiverse.DataContext = _patientsDiverseViewModel;
                     break;
                 default:

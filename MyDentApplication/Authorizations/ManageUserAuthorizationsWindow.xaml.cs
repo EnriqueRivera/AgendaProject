@@ -27,7 +27,7 @@ namespace MyDentApplication
 			this.InitializeComponent();
 
             _selectedPatient = selectedPatient;
-            lblExpNumber.ToolTip = lblExpNumber.Content = selectedPatient.PatientId;
+            lblExpNumber.ToolTip = lblExpNumber.Content = selectedPatient.AssignedId;
             lblPatientName.ToolTip = lblPatientName.Content = selectedPatient.FirstName + " " + selectedPatient.LastName;
 
             UpdateGrid();

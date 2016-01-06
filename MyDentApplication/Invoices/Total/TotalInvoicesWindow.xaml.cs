@@ -152,7 +152,7 @@ namespace MyDentApplication
                 DataGridRow row = (DataGridRow)dgOutgoingInvoices.ItemContainerGenerator.ContainerFromIndex(i);
                 Model.OutgoingInvoice invoice = row.Item as Model.OutgoingInvoice;
 
-                MainWindow.AddCell(outgoingInvoicesTable, bf, string.Format("(Exp. No. {0}) {1} {2}", invoice.PatientId, invoice.Patient.FirstName, invoice.Patient.LastName));
+                MainWindow.AddCell(outgoingInvoicesTable, bf, string.Format("(Exp. No. {0}) {1} {2}", invoice.Patient.AssignedId, invoice.Patient.FirstName, invoice.Patient.LastName));
                 MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));
                 MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.PaidDate.ToString("dd/MM/yyyy"));
                 MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.Folio);

@@ -153,7 +153,7 @@ namespace MyDentApplication
             //Select provider
             for (int i = 0; i < cbPatients.Items.Count; i++)
             {
-                if ((cbPatients.Items[i] as Controllers.ComboBoxItem).Text == (string.Format("(Exp. No. {0}) {1} {2}", _invoiceToUpdate.Patient.PatientId, _invoiceToUpdate.Patient.FirstName, _invoiceToUpdate.Patient.LastName)))
+                if ((cbPatients.Items[i] as Controllers.ComboBoxItem).Text == (string.Format("(Exp. No. {0}) {1} {2}", _invoiceToUpdate.Patient.AssignedId, _invoiceToUpdate.Patient.FirstName, _invoiceToUpdate.Patient.LastName)))
                 {
                     cbPatients.SelectedIndex = i;
                     break;
@@ -170,7 +170,7 @@ namespace MyDentApplication
 
             foreach (Model.Patient patient in patients)
             {
-                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.PatientId, patient.FirstName, patient.LastName), Value = patient });
+                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient });
             }
         }
 

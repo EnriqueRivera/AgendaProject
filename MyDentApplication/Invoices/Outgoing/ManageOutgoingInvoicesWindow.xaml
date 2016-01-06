@@ -17,7 +17,7 @@
 				<DataGridTextColumn Header="Paciente" Width="0.15*" >
 					<DataGridTextColumn.Binding>
 						<MultiBinding StringFormat="{}(Exp. No. {0}) {1} {2}">
-							<Binding Path="Patient.PatientId" />
+                            <Binding Path="Patient.AssignedId" />
 							<Binding Path="Patient.FirstName" />
 							<Binding Path="Patient.LastName" />
 						</MultiBinding>

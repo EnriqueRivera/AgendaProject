@@ -330,7 +330,7 @@ namespace MyDentApplication
             string treatmentsTable = Utils.BuildTreatmentPricesTable(_paymentFolioGenerated.TreatmentPayments.ToList(), out totalAmountTreatmentPayments);
             string paymentsTable = Utils.BuildPaymentsTable(_paymentFolioGenerated.Payments.ToList(), out totalAmountPayments);
 
-            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.PatientId, _selectedPatient.FirstName, _selectedPatient.LastName));
+            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _selectedPatient.AssignedId, _selectedPatient.FirstName, _selectedPatient.LastName));
             body.AppendFormat("<div><strong>Número de folio de la transacción:</strong> {0}</div>", _paymentFolioGenerated.FolioNumber);
             body.AppendFormat("<div><strong>Fecha y hora de la transacción:</strong> {0}</div>", Utils.FirstCharToUpper(today.ToString("D")) + " a las " + today.ToString("HH:mm") + " hrs.");
             body.AppendFormat("<div><strong>Asistente:</strong> {0}</div>", _userLoggedIn.FirstName + " " + _userLoggedIn.LastName);
@@ -661,7 +661,7 @@ namespace MyDentApplication
             }
             else
             {
-                lblExpNo.ToolTip = lblExpNo.Text = _selectedPatient.PatientId.ToString();
+                lblExpNo.ToolTip = lblExpNo.Text = _selectedPatient.AssignedId.ToString();
                 lblPacientName.ToolTip = lblPacientName.Text = _selectedPatient.FirstName + " " + _selectedPatient.LastName;
                 lblCellPhone.ToolTip = lblCellPhone.Text = _selectedPatient.CellPhone;
                 lblHomePhone.ToolTip = lblHomePhone.Text = _selectedPatient.HomePhone;
@@ -672,7 +672,7 @@ namespace MyDentApplication
         private void FillPatients()
         {
             List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
-                                            .OrderBy(p => p.PatientId)
+                                            .OrderBy(p => p.AssignedId)
                                             .ThenBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
                                             .ToList();
@@ -681,7 +681,7 @@ namespace MyDentApplication
 
             foreach (Model.Patient patient in patients)
             {
-                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.PatientId, patient.FirstName, patient.LastName), Value = patient });
+                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient });
             }
 
             //cbPatients.SelectedIndex = 0;

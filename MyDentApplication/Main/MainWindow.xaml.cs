@@ -491,7 +491,7 @@ namespace MyDentApplication
                                                         + "\nFavor de informar al paciente para que pase a liquidar su saldo pendiente, "
                                                         + "ya que si no lo hace no se le podrán agendar más citas."
                                                         , item.StatementId
-                                                        , item.Patient.PatientId
+                                                        , item.Patient.AssignedId
                                                         , item.Patient.FirstName
                                                         , item.Patient.LastName);
 

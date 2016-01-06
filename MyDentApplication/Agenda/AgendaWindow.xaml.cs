@@ -54,7 +54,7 @@ namespace MyDentApplication
             lblEventId.ToolTip = lblEventId.Text = e.EventInfo.EventId.ToString();
             lblEventStartTime.ToolTip = lblEventStartTime.Text = e.EventInfo.StartEvent.ToString("HH:mm") + " hrs";
             lblEventEndTime.ToolTip = lblEventEndTime.Text = e.EventInfo.EndEvent.ToString("HH:mm") + " hrs";
-            lblExpNo.ToolTip = lblExpNo.Text = e.EventInfo.Patient.PatientId.ToString();
+            lblExpNo.ToolTip = lblExpNo.Text = e.EventInfo.Patient.AssignedId.ToString();
             lblPacientName.ToolTip = lblPacientName.Text = e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;
             lblCellPhone.ToolTip = lblCellPhone.Text = e.EventInfo.Patient.CellPhone;
             lblHomePhone.ToolTip = lblHomePhone.Text = e.EventInfo.Patient.HomePhone;
@@ -335,7 +335,7 @@ namespace MyDentApplication
             if (es == EventStatus.COMPLETED && e.EventInfo.Treatment.Recurrent != null)
             {
                 string reminderMessage = "El paciente '" + e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName + "'"
-                                        + " con Exp. No. " + e.EventInfo.Patient.PatientId + " tomó el tratamiento de '" + e.EventInfo.Treatment.Name + "' el día "
+                                        + " con Exp. No. " + e.EventInfo.Patient.AssignedId + " tomó el tratamiento de '" + e.EventInfo.Treatment.Name + "' el día "
                                         + e.EventInfo.StartEvent.ToString("D") + " a las " + e.EventInfo.StartEvent.ToString("HH:mm") + " hrs. "
                                         + "\nDado que este tratamiento es recurrente es necesario que llame al paciente para agendar de nuevo una cita.";
 

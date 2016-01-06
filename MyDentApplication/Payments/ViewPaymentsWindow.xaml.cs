@@ -66,7 +66,7 @@ namespace MyDentApplication
         private void FillPatients()
         {
             List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
-                                            .OrderBy(p => p.PatientId)
+                                            .OrderBy(p => p.AssignedId)
                                             .ThenBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
                                             .ToList();
@@ -75,7 +75,7 @@ namespace MyDentApplication
 
             foreach (Model.Patient patient in patients)
             {
-                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.PatientId, patient.FirstName, patient.LastName), Value = patient });
+                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient });
             }
 
             cbPatients.SelectedIndex = 0;

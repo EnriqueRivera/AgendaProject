@@ -69,13 +69,13 @@ namespace MyDentApplication
             switch (cbFilter.SelectedIndex)
             {
                 case 0:
-                    _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false && u.FirstName.Contains(searchTerm), "PatientId", "asc");
+                    _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false && u.FirstName.Contains(searchTerm), "AssignedId", "asc");
                     break;
                 case 1:
-                    _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false && u.LastName.Contains(searchTerm), "PatientId", "asc");
+                    _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false && u.LastName.Contains(searchTerm), "AssignedId", "asc");
                     break;
                 case 2:
-                    _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false && u.Email.Contains(searchTerm), "PatientId", "asc");
+                    _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false && u.Email.Contains(searchTerm), "AssignedId", "asc");
                     break;
                 default:
                     break;
@@ -86,7 +86,7 @@ namespace MyDentApplication
 
         private void UpdateGridAllPatients()
         {
-            _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false, "PatientId", "asc");
+            _patientsViewModel = new Controllers.CustomViewModel<Model.Patient>(u => u.IsDeleted == false, "AssignedId", "asc");
             this.DataContext = _patientsViewModel;
         }
         #endregion

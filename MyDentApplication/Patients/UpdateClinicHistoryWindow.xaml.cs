@@ -201,7 +201,7 @@ namespace MyDentApplication
 
         private void FillGeneralInfo()
         {
-            txtExpNo.ToolTip = txtExpNo.Text = _patient.PatientId.ToString();
+            txtExpNo.ToolTip = txtExpNo.Text = _patient.AssignedId.ToString();
             txtFullName.ToolTip = txtFullName.Text = _patient.FirstName + " " + _patient.LastName;
             txtHomePhone.ToolTip = txtHomePhone.Text = _patient.HomePhone;
             txtCellPhone.ToolTip = txtCellPhone.Text = _patient.CellPhone;

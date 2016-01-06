@@ -53,7 +53,7 @@ namespace MyDentApplication
             _statement = statement;
             _userLoggedIn = userLoggedIn;
 
-            lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName);
+            lblPatientName.ToolTip = lblPatientName.Content = string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.AssignedId, _statement.Patient.FirstName, _statement.Patient.LastName);
             lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = _statement.StatementId.ToString();
 
             UpdateStatementInfo();
@@ -150,7 +150,7 @@ namespace MyDentApplication
 
                         paragraph = new iTextSharp.text.Paragraph("");
                         paragraph.Add(new Chunk("Paciente: ", boldFont));
-                        paragraph.Add(string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName));
+                        paragraph.Add(string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.AssignedId, _statement.Patient.FirstName, _statement.Patient.LastName));
                         paragraph.Alignment = Element.ALIGN_LEFT;
                         pdfDoc.Add(paragraph);
 
@@ -372,7 +372,7 @@ namespace MyDentApplication
             string treatmentsTable = Utils.BuildTreatmentPricesTable(_treatments, out _totalAmountOfTreatments);
             string paymentsTable = Utils.BuildPaymentsTable(_payments.ToList(), out _totalAmountOfPayments);
 
-            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.PatientId, _statement.Patient.FirstName, _statement.Patient.LastName));
+            body.AppendFormat("<div><strong>Paciente:</strong> {0}</div>", string.Format("(Exp. No. {0}) {1} {2}", _statement.Patient.AssignedId, _statement.Patient.FirstName, _statement.Patient.LastName));
             body.AppendFormat("<div><strong>Estado de cuenta número:</strong> {0}</div>", _statement.StatementId);
             body.AppendFormat("<div><strong>Fecha de expiración del estado de cuenta:</strong> {0}</div>", Utils.FirstCharToUpper(_statement.ExpirationDate.ToString("D")));
             body.AppendFormat("<div><strong>Asistente:</strong> {0}</div>", _userLoggedIn.FirstName + " " + _userLoggedIn.LastName);

@@ -12,7 +12,7 @@
 			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False" CanUserAddRows="False" 
 			CanUserDeleteRows="False" TabIndex="4">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Exp. No." Binding="{Binding PatientId}" Width="0.07*"/>
+                <DataGridTextColumn Header="Exp. No." Binding="{Binding AssignedId}" Width="0.07*"/>
 				<DataGridTextColumn Header="Nombre(s)" Binding="{Binding FirstName}" Width="0.15*" />
 				<DataGridTextColumn Header="Apellido(s)" Binding="{Binding LastName}" Width="0.15*" />
 				<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.15*" />

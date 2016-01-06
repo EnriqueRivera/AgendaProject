@@ -18,7 +18,8 @@
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Paciente" Width="0.15*" >
 					<DataGridTextColumn.Binding>
-						<MultiBinding StringFormat="{}{0} {1}">
+						<MultiBinding StringFormat="{}(Exp. No. {0}) {1} {2}">
+							<Binding Path="Patient.AssignedId" />
 							<Binding Path="Patient.FirstName" />
 							<Binding Path="Patient.LastName" />
 						</MultiBinding>

@@ -57,7 +57,7 @@ namespace MyDentApplication
 
             if (selectedPatients.Count > 0)
             {
-                txtPatientName.Text = string.Format("(Exp. No. {0}) {1} {2}", selectedPatients[0].PatientId, selectedPatients[0].FirstName, selectedPatients[0].LastName);
+                txtPatientName.Text = string.Format("(Exp. No. {0}) {1} {2}", selectedPatients[0].AssignedId, selectedPatients[0].FirstName, selectedPatients[0].LastName);
                 txtPatientName.Tag = selectedPatients[0];
             }
 		}
@@ -309,7 +309,7 @@ namespace MyDentApplication
                         paragraph = new iTextSharp.text.Paragraph("Paciente: ");
                         paragraph.Add(new Chunk(patient.FirstName + " " + patient.LastName, boldFont));
                         paragraph.Add(" Expediente: ");
-                        paragraph.Add(new Chunk(patient.PatientId.ToString(), boldFont));
+                        paragraph.Add(new Chunk(patient.AssignedId.ToString(), boldFont));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
@@ -452,7 +452,7 @@ namespace MyDentApplication
             this.Title = "Actualizar información del presupuesto";
             btnAddUpdateBudget.Content = "Actualizar presupuesto";
             txtBudgetName.Text = _budgetToUpdate.Name;
-            txtPatientName.ToolTip = txtPatientName.Text = string.Format("(Exp. No. {0}) {1} {2}", _budgetToUpdate.Patient.PatientId, _budgetToUpdate.Patient.FirstName, _budgetToUpdate.Patient.LastName);
+            txtPatientName.ToolTip = txtPatientName.Text = string.Format("(Exp. No. {0}) {1} {2}", _budgetToUpdate.Patient.AssignedId, _budgetToUpdate.Patient.FirstName, _budgetToUpdate.Patient.LastName);
             txtPatientName.Tag = _budgetToUpdate.Patient;
             txtNotes.Text = _budgetToUpdate.Notes;
             dtpExpDate.SelectedDate = _budgetToUpdate.ExpiredDate;

@@ -48,7 +48,7 @@ namespace MyDentApplication
             string userIdText = txtUserId.Text.Trim();
             string password = pbPassword.Password;
 
-            if (string.IsNullOrEmpty(userIdText) || int.TryParse(userIdText, out userId) == false)
+            if (int.TryParse(userIdText, out userId) == false || userId < 1)
             {
                 MessageBox.Show("Introduzca un número de usuario válido", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;

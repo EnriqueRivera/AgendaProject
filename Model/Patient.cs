@@ -38,6 +38,7 @@ namespace Model
         public int DataCapturerId { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsDiverse { get; set; }
+        public int AssignedId { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }

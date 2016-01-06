@@ -62,7 +62,7 @@ namespace MyDentApplication
 
             foreach (Model.Patient patient in patients)
             {
-                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.PatientId, patient.FirstName, patient.LastName), Value = patient.PatientId });
+                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient.PatientId });
             }
         }
         #endregion

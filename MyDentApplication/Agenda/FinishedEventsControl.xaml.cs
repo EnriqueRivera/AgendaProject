@@ -67,7 +67,7 @@ namespace MyDentApplication
                 lblEventCapturer.ToolTip = lblEventCapturer.Text = _eventToRender.User.FirstName + " " + _eventToRender.User.LastName;
 
                 //Pacient Info
-                lblExpNo.ToolTip = lblExpNo.Text = _eventToRender.Patient.PatientId.ToString();
+                lblExpNo.ToolTip = lblExpNo.Text = _eventToRender.Patient.AssignedId.ToString();
                 lblPacientName.ToolTip = lblPacientName.Text = _eventToRender.Patient.FirstName + " " + _eventToRender.Patient.LastName;
                 lblCellPhone.ToolTip = lblCellPhone.Text = _eventToRender.Patient.CellPhone;
                 lblHomePhone.ToolTip = lblHomePhone.Text = _eventToRender.Patient.HomePhone;
