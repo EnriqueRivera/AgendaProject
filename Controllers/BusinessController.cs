@@ -83,5 +83,10 @@ namespace Controllers
         {
             return Model.Provider.Instance.GetInventoryAvailability(drawerId, year, month);
         }
+
+        public int GetNextPatientAssignedId()
+        {
+            return Model.Provider.Instance.GetNextPatientAssignedId();
+        }
     }
 }

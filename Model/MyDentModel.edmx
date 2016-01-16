@@ -931,6 +931,7 @@
           <Parameter Name="year" Type="int" Mode="In" />
           <Parameter Name="month" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetNextPatientAssignedId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MyDentDBModelStoreContainer">
           <EntitySet Name="AmericanExpressPaids" EntityType="Self.AmericanExpressPaids" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Authorizations" EntityType="Self.Authorizations" Schema="dbo" store:Type="Tables" />
@@ -1353,6 +1354,7 @@
             <End Role="TreatmentPrice" EntitySet="TreatmentPrices" />
             <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
           </AssociationSet>
+          <FunctionImport Name="GetNextPatientAssignedId" ReturnType="Collection(Int32)" />
           </EntityContainer>
         <EntityType Name="Configuration">
           <Key>
@@ -2847,6 +2849,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetNextPatientAssignedId" FunctionName="MyDentDBModel.Store.sp_GetNextPatientAssignedId" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

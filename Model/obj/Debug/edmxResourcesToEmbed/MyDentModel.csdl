@@ -113,7 +113,6 @@
       <End Role="Budget" EntitySet="Budgets" />
       <End Role="BudgetDetail" EntitySet="BudgetDetails" />
     </AssociationSet>
-    <EntitySet Name="BudgetTreatments" EntityType="MyDentDBModel.BudgetTreatment" />
     <EntitySet Name="AmericanExpressPaids" EntityType="MyDentDBModel.AmericanExpressPaid" />
     <EntitySet Name="Authorizations" EntityType="MyDentDBModel.Authorization" />
     <AssociationSet Name="FK_Authorizations_PatientId" Association="MyDentDBModel.FK_Authorizations_PatientId">
@@ -212,6 +211,7 @@
       <End Role="TreatmentPrice" EntitySet="TreatmentPrices" />
       <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
     </AssociationSet>
+    <FunctionImport Name="GetNextPatientAssignedId" ReturnType="Collection(Int32)" />
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -366,6 +366,7 @@
     <Property Name="IsDiverse" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
     <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
+    <Property Name="AssignedId" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="ReceivedInvoice">
     <Key>
@@ -807,14 +808,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="BudgetTreatment">
-    <Key>
-      <PropertyRef Name="BudgetTreatmenttId" />
-    </Key>
-    <Property Name="BudgetTreatmenttId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-  </EntityType>
   <EntityType Name="AmericanExpressPaid">
     <Key>
       <PropertyRef Name="AmericanExpressPaidId" />

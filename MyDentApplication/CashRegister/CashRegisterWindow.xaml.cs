@@ -672,19 +672,15 @@ namespace MyDentApplication
         private void FillPatients()
         {
             List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
-                                            .OrderBy(p => p.AssignedId)
-                                            .ThenBy(p => p.FirstName)
+                                            .OrderBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
+                                            .ThenBy(p => p.AssignedId)
                                             .ToList();
-
-            //cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = "", Value = null });
-
+            
             foreach (Model.Patient patient in patients)
             {
-                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("(Exp. No. {0}) {1} {2}", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient });
+                cbPatients.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("{1} {2} (Exp. No. {0})", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient });
             }
-
-            //cbPatients.SelectedIndex = 0;
         }
 
         private void FillTreatments()

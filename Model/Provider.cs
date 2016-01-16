@@ -211,5 +211,18 @@ namespace Model
                 return new List<InventoryAvailability>();
             }
         }
+
+        public int GetNextPatientAssignedId()
+        {
+            try
+            {
+                return _db.GetNextPatientAssignedId().First().Value;
+            }
+            catch (Exception e)
+            {
+                AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                return 0;
+            }
+        }
     }
 }

@@ -82,5 +82,10 @@ namespace Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryAvailability>("GetInventoryAvailability", drawerIdParameter, yearParameter, monthParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> GetNextPatientAssignedId()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetNextPatientAssignedId");
+        }
     }
 }

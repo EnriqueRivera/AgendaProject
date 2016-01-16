@@ -164,9 +164,10 @@ namespace MyDentApplication
         private void FillPatients()
         {
             List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
-                                                        .OrderBy(p => p.FirstName)
-                                                        .ThenBy(p => p.LastName)
-                                                        .ToList();
+                                                .OrderBy(p => p.FirstName)
+                                                .ThenBy(p => p.LastName)
+                                                .ThenBy(p => p.AssignedId)
+                                                .ToList();
 
             foreach (Model.Patient patient in patients)
             {

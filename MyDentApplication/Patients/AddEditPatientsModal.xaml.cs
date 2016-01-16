@@ -43,7 +43,7 @@ namespace MyDentApplication
             }
             else
             {
-                txtExpNumber.Text = GetNextExpNumber().ToString();
+                txtExpNumber.Text = Controllers.BusinessController.Instance.GetNextPatientAssignedId().ToString();
             }
         }
         #endregion
@@ -103,31 +103,6 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        private int GetNextExpNumber()
-        {
-            int x = 0;
-            List<Model.Patient> patients = Controllers.BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
-                                                    .OrderBy(p => p.AssignedId)
-                                                    .ToList();
-
-            for (int i = 0; i < patients.Count; i++)
-            {
-                if (i == 0)
-                {
-                    if (patients[i].AssignedId > 1)
-                        return x;
-                    else
-                        x = patients[i].AssignedId;
-                }
-                else if (patients[i].AssignedId > (x + 1))
-                    break;
-                else
-                    x = patients[i].AssignedId;
-            }
-
-            return x + 1;
-        }
-
         private void PrepareWindowForUpdates()
         {
             this.Title = "Actualizar información del paciente";

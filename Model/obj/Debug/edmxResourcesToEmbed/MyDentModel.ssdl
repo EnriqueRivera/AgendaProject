@@ -56,14 +56,6 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="PatientId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="BudgetTreatments">
-    <Key>
-      <PropertyRef Name="BudgetTreatmenttId" />
-    </Key>
-    <Property Name="BudgetTreatmenttId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar(max)" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
-  </EntityType>
   <EntityType Name="CleanedActions">
     <Key>
       <PropertyRef Name="CleanedActionId" />
@@ -285,6 +277,7 @@
     <Property Name="DataCapturerId" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="IsDiverse" Type="bit" Nullable="false" />
+    <Property Name="AssignedId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PaymentFolios">
     <Key>
@@ -933,13 +926,13 @@
     <Parameter Name="year" Type="int" Mode="In" />
     <Parameter Name="month" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_GetNextPatientAssignedId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="AmericanExpressPaids" EntityType="Self.AmericanExpressPaids" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Authorizations" EntityType="Self.Authorizations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BudgetDetails" EntityType="Self.BudgetDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="BudgetTreatments" EntityType="Self.BudgetTreatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CleanedActions" EntityType="Self.CleanedActions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CleanedMaterials" EntityType="Self.CleanedMaterials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ClinicHistories" EntityType="Self.ClinicHistories" Schema="dbo" store:Type="Tables" />

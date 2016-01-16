@@ -926,6 +926,7 @@
     <Parameter Name="year" Type="int" Mode="In" />
     <Parameter Name="month" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_GetNextPatientAssignedId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="MyDentDBModelStoreContainer">
     <EntitySet Name="AmericanExpressPaids" EntityType="Self.AmericanExpressPaids" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Authorizations" EntityType="Self.Authorizations" Schema="dbo" store:Type="Tables" />

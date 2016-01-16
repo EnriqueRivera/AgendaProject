@@ -125,14 +125,15 @@ namespace MyDentApplication
 
                 if (authorizations.Count == 0 || IsValidAuthorization(authorizations[0]) == false)
                 {
-                    MessageBox.Show("El paciente seleccionado tiene seguro médico pero no cuenta con un número de " + 
-                                    "autorización vigente. Es necesario introducir un nuevo número de autorización " + 
-                                    "para poderle agendar una cita.",
+                    if (MessageBox.Show("El paciente seleccionado tiene seguro médico pero no cuenta con un número de " + 
+                                    "autorización vigente.\n¿Desea agendar la cita?",
                                     "Advertencia",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Warning);
-
-                    return;
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning
+                                ) == MessageBoxResult.No || MainWindow.IsValidAdminPassword(_userLoggedIn) == false)
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -341,11 +342,12 @@ namespace MyDentApplication
             List<Model.Patient> patients = BusinessController.Instance.FindBy<Model.Patient>(p => p.IsDeleted == false)
                                             .OrderBy(p => p.FirstName)
                                             .ThenBy(p => p.LastName)
+                                            .ThenBy(p => p.AssignedId)
                                             .ToList();
 
             foreach (Model.Patient patient in patients)
             {
-                cbPatientName.Items.Add(new Controllers.ComboBoxItem() { Text = patient.FirstName + " " + patient.LastName, Value = patient });
+                cbPatientName.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("{1} {2} (Exp. No. {0})", patient.AssignedId, patient.FirstName, patient.LastName), Value = patient });
             }
         }
         #endregion

@@ -211,6 +211,7 @@
       <End Role="TreatmentPrice" EntitySet="TreatmentPrices" />
       <End Role="TreatmentPayment" EntitySet="TreatmentPayments" />
     </AssociationSet>
+    <FunctionImport Name="GetNextPatientAssignedId" ReturnType="Collection(Int32)" />
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
