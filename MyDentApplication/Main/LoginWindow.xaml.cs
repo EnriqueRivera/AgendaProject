@@ -19,7 +19,7 @@ namespace MyDentApplication
 	/// </summary>
 	public partial class LoginWindow : Window
     {
-        #region Instance variables       
+        #region Instance variables
         private Thread _loginThread;
         #endregion
 

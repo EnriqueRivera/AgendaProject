@@ -357,7 +357,6 @@ namespace MyDentApplication
                 }
             }
         }
-
         #endregion
 
         #region Logic used in another window

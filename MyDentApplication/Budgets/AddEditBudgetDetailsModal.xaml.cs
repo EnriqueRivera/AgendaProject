@@ -162,7 +162,7 @@ namespace MyDentApplication
 
             foreach (Model.TreatmentPrice treatment in treatments)
             {
-                cbConcepts.Items.Add(new Controllers.ComboBoxItem() { Text = treatment.Name, Value = treatment });
+                cbConcepts.Items.Add(new Controllers.ComboBoxItem() { Text = string.Format("{0} ({1})", treatment.Name, treatment.TreatmentKey), Value = treatment });
             }
         }
         #endregion

@@ -237,8 +237,7 @@ namespace MyDentApplication
             catch (Exception)
             {
                 MessageBox.Show("Error al cargar la foto del paciente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            
+            }            
         }
 
         private void FillGridControlsInfo(Grid grid)
