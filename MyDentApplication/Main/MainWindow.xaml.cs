@@ -18,6 +18,7 @@ using System.Data.Objects;
 using System.Web;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Reflection;
 
 namespace MyDentApplication
 {
@@ -149,9 +150,16 @@ namespace MyDentApplication
         {
             while (_stopCheckEventStatusThread == false)
             {
-                OpenFinishedEventsReminderModalFromAnotherThread();
+                try
+                {
+                    OpenFinishedEventsReminderModalFromAnotherThread();
 
-                Thread.Sleep(_timeToWaitForFinishedEvents);
+                    Thread.Sleep(_timeToWaitForFinishedEvents);
+                }
+                catch(Exception e)
+                {
+                    Controllers.BusinessController.Instance.AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                }
             }
         }
 
@@ -159,9 +167,16 @@ namespace MyDentApplication
         {
             while (_stopCheckRemindersThread == false)
             {
-                RefreshRemindersFromAnotherThread();
+                try
+                {
+                    RefreshRemindersFromAnotherThread();
 
-                Thread.Sleep(_timeToWaitForReminders);
+                    Thread.Sleep(_timeToWaitForReminders);
+                }
+                catch(Exception e)
+                {
+                    Controllers.BusinessController.Instance.AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                }
             }
         }
 
@@ -169,9 +184,16 @@ namespace MyDentApplication
         {
             while (_stopCheckExpiredStatementsThread == false)
             {
-                CreateReminderForExpiredStatements();
+                try
+                {
+                    CreateReminderForExpiredStatements();
 
-                Thread.Sleep(_timeToWaitForExpiredEvents);
+                    Thread.Sleep(_timeToWaitForExpiredEvents);
+                }
+                catch(Exception e)
+                {
+                    Controllers.BusinessController.Instance.AddLog("ERROR", DateTime.Now, e, this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                }
             }
         }
         #endregion

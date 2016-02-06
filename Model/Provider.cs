@@ -168,7 +168,7 @@ namespace Model
             {
                 Type = type,
                 LogDate = logDate,
-                ErrorDetail = e.Message + ". Inner exception" + (e.InnerException == null ? string.Empty : e.InnerException.Message),
+                ErrorDetail = e.Message + ". Inner exception: " + (e.InnerException == null ? string.Empty : e.InnerException.Message),
                 MethodName = "Class: " + className + ". Method: " + methodName
             };
 
