@@ -65,6 +65,8 @@ namespace MyDentApplication
             lblUpdateClinicHistoryMessage.Visibility = MainWindow.HasPatientToUpdateClinicHistory(e.EventInfo.Patient)
                                                                 ? System.Windows.Visibility.Visible
                                                                 : System.Windows.Visibility.Hidden;
+
+            lblNextEvent.ToolTip = lblNextEvent.Text = GetNextPendingEvent(e);
         }
 
         private void scheduler_OnScheduleAddEvent(object sender, System.DateTime e)
@@ -417,6 +419,31 @@ namespace MyDentApplication
             }
 
             return null;
+        }
+
+        private string GetNextPendingEvent(WpfScheduler.Event e)
+        {
+            string nextEventDate = string.Empty;
+
+            if (e.EventStatus == EventStatus.CANCELED)
+            {
+                Model.Event nextPendingEvent = BusinessController.Instance.FindBy<Model.Event>(
+                                                            ev =>
+                                                                ev.PatientId == e.EventInfo.PatientId
+                                                                && !ev.IsCanceled
+                                                                && !ev.PatientSkips
+                                                                && !ev.IsCompleted
+                                                                && e.EventInfo.StartEvent < ev.StartEvent
+                                                            )
+                                                            .OrderBy(ev => ev.StartEvent)
+                                                            .FirstOrDefault();
+
+                nextEventDate = nextPendingEvent == null
+                                ? nextEventDate
+                                : nextPendingEvent.StartEvent.ToString("dd/MMMM/yyyy");
+            }
+
+            return nextEventDate;
         }
         #endregion
     }

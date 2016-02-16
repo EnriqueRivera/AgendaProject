@@ -43,14 +43,14 @@ namespace WpfScheduler
                     return (EventInfo.PatientSkips) ? Controllers.EventStatus.PATIENT_SKIPS : Controllers.EventStatus.COMPLETED;
                 }
 
-                if (EventInfo.IsException)
-                {
-                    return Controllers.EventStatus.EXCEPTION;
-                }
-
                 if (EventInfo.IsConfirmed)
                 {
                     return Controllers.EventStatus.CONFIRMED;
+                }
+
+                if (EventInfo.IsException)
+                {
+                    return Controllers.EventStatus.EXCEPTION;
                 }
 
                 return Controllers.EventStatus.PENDING;

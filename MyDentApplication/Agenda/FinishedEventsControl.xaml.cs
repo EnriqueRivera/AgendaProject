@@ -57,7 +57,6 @@ namespace MyDentApplication
         {
             if (_eventToRender != null)
             {
-
                 //Event Info
                 lblEventId.ToolTip = lblEventId.Text = _eventToRender.EventId.ToString();
                 lblEventDate.ToolTip = lblEventDate.Text = _eventToRender.StartEvent.ToString("D");
