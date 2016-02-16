@@ -25,6 +25,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="MyDentDBModel.Event">
         <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
           <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
           <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />

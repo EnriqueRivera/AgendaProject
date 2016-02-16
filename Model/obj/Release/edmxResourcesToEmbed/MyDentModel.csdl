@@ -252,6 +252,7 @@
     <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="Event" ToRole="EventStatusChanx" />
     <Property Name="InstrumentId" Type="Int32" />
     <NavigationProperty Name="Instrument" Relationship="MyDentDBModel.PK_Events_InstrumentId" FromRole="Event" ToRole="Instrument" />
+    <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="EventStatusChanx">
     <Key>

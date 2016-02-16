@@ -59,6 +59,7 @@ namespace Controllers
                 case EventStatus.EXCEPTION: return "Excepción";
                 case EventStatus.PATIENT_SKIPS: return "Paciente no asisitó";
                 case EventStatus.PENDING: return "Sin concretar";
+                case EventStatus.CONFIRMED: return "Confirmada";
                 default: return string.Empty;
             }
         }
@@ -239,7 +240,8 @@ namespace Controllers
         COMPLETED = 2,
         EXCEPTION = 3,
         PATIENT_SKIPS = 4,
-        PENDING = 5
+        PENDING = 5,
+        CONFIRMED = 6
     }
 
     public enum CleaningType

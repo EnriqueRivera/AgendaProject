@@ -16,6 +16,13 @@
 						Height="25" />
                 </MenuItem.Icon>
 			</MenuItem>
+			<MenuItem Header="Confirmar cita" Tag="CONFIRMED" Click="ContextMenuItem_Click">
+				<MenuItem.Icon>
+                    <Image Source="pack://application:,,,/WpfScheduler;component/Images/confirmed_event.png"
+						Width="25"
+						Height="25" />
+                </MenuItem.Icon>
+			</MenuItem>
             <Separator />
             <MenuItem Header="Cita completada" Tag="COMPLETED" Click="ContextMenuItem_Click">
 				<MenuItem.Icon>

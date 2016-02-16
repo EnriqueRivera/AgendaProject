@@ -33,13 +33,11 @@ namespace MyDentApplication
 
             _userLoggedIn = userLoggedIn;
 
-            tcPatients.SelectedIndex = 1;
-            UpdateGrid();
-            tcPatients.SelectedIndex = 2;
-            UpdateGrid();
-            tcPatients.SelectedIndex = 0;
-            UpdateGrid();
-            
+            for (int i = tcPatients.Items.Count - 1; i >= 0; i--)
+            {
+                tcPatients.SelectedIndex = i;
+                UpdateGrid();    
+            }            
 		}
         #endregion
 

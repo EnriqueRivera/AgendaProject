@@ -41,6 +41,7 @@ namespace WpfScheduler
         public bool CompletedEventsVisible { get; set; }
         public bool PatientSkipsEventsVisible { get; set; }
         public bool PendingEventsVisible { get; set; }
+        public bool ConfirmedEventsVisible { get; set; }
         #endregion
 
         #region Getters
@@ -78,6 +79,11 @@ namespace WpfScheduler
                 if (PatientSkipsEventsVisible == false)
                 {
                     result = result.Where(e => e.EventStatus != Controllers.EventStatus.PATIENT_SKIPS);
+                }
+
+                if (ConfirmedEventsVisible == false)
+                {
+                    result = result.Where(e => e.EventStatus != Controllers.EventStatus.CONFIRMED);
                 }
 
                 if (PendingEventsVisible == false)

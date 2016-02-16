@@ -30,6 +30,7 @@ namespace Model
         public int TreatmentId { get; set; }
         public int EventCapturerId { get; set; }
         public Nullable<int> InstrumentId { get; set; }
+        public bool IsConfirmed { get; set; }
     
         public virtual User User { get; set; }
         public virtual Patient Patient { get; set; }

@@ -263,6 +263,7 @@ namespace MyDentApplication
             eventToAdd.IsCanceled = false;
             eventToAdd.IsCompleted = false;
             eventToAdd.PatientSkips = false;
+            eventToAdd.IsConfirmed = false;
             eventToAdd.PatientId = _selectedPatient.PatientId;
             eventToAdd.TreatmentId = _selectedTreatment.TreatmentId;
             eventToAdd.EventCapturerId = _userLoggedIn.UserId;

@@ -145,6 +145,13 @@ namespace MyDentApplication
                         scheduler.RepaintEvents();
                     }
                     break;
+                case "6":
+                    if (scheduler.ConfirmedEventsVisible != chk.IsChecked.Value)
+                    {
+                        scheduler.ConfirmedEventsVisible = chk.IsChecked.Value;
+                        scheduler.RepaintEvents();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -175,6 +182,7 @@ namespace MyDentApplication
             scheduler.PatientSkipsEventsVisible = chkPatientSkipsEvents.IsChecked.Value;
             scheduler.PendingEventsVisible = chkPendingEvents.IsChecked.Value;
             scheduler.CompletedEventsVisible = chkCompletedEvents.IsChecked.Value;
+            scheduler.ConfirmedEventsVisible = chkConfirmedEvents.IsChecked.Value;
         }
 
         private void SetSchedulerColors()
@@ -185,12 +193,14 @@ namespace MyDentApplication
             Model.Configuration patientSkipsEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PATIENT_SKIPS.ToString()).FirstOrDefault();
             Model.Configuration completedEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.COMPLETED.ToString()).FirstOrDefault();
             Model.Configuration pendingEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.PENDING.ToString()).FirstOrDefault();
+            Model.Configuration confirmedEventColor = scheduleColors.Where(c => c.Name == Utils.SCHEDULER_COLOR_CONFIGURATION_PREFIX + EventStatus.CONFIRMED.ToString()).FirstOrDefault();
 
             FillRectangleColor(cpCanceledEvents, canceledEventColor);
             FillRectangleColor(cpExceptionEvents, exceptionEventColor);
             FillRectangleColor(cpPatientSkipsEvents, patientSkipsEventColor);
             FillRectangleColor(cpCompletedEvents, completedEventColor);
             FillRectangleColor(cpPendingEvents, pendingEventColor);
+            FillRectangleColor(cpConfirmedEvents, confirmedEventColor);
         }
 
         private void FillRectangleColor(Xceed.Wpf.Toolkit.ColorPicker cpEvents, Model.Configuration eventColor)
@@ -267,7 +277,8 @@ namespace MyDentApplication
             switch (es)
             {
                 case EventStatus.CANCELED:
-                    if (e.EventInfo.IsCanceled && e.EventInfo.IsCompleted == false && e.EventInfo.PatientSkips == false)
+                    if (e.EventInfo.IsCanceled && e.EventInfo.IsCompleted == false 
+                        && e.EventInfo.PatientSkips == false && e.EventInfo.IsConfirmed == false)
                     {
                         return null;
                     }
@@ -275,9 +286,11 @@ namespace MyDentApplication
                     e.EventInfo.IsCanceled = true;
                     e.EventInfo.IsCompleted = false;
                     e.EventInfo.PatientSkips = false;
+                    e.EventInfo.IsConfirmed = false;
                     break;
                 case EventStatus.COMPLETED:
-                    if (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted && e.EventInfo.PatientSkips == false)
+                    if (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted
+                        && e.EventInfo.PatientSkips == false && e.EventInfo.IsConfirmed == false)
                     {
                         return null;
                     }
@@ -285,9 +298,11 @@ namespace MyDentApplication
                     e.EventInfo.IsCanceled = false;
                     e.EventInfo.IsCompleted = true;
                     e.EventInfo.PatientSkips = false;
+                    e.EventInfo.IsConfirmed = false;
                     break;
                 case EventStatus.PATIENT_SKIPS:
-                    if (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted && e.EventInfo.PatientSkips)
+                    if (e.EventInfo.IsCanceled == false && e.EventInfo.IsCompleted
+                        && e.EventInfo.PatientSkips && e.EventInfo.IsConfirmed == false)
                     {
                         return null;
                     }
@@ -295,6 +310,20 @@ namespace MyDentApplication
                     e.EventInfo.IsCanceled = false;
                     e.EventInfo.IsCompleted = true;
                     e.EventInfo.PatientSkips = true;
+                    e.EventInfo.IsConfirmed = false;
+                    break;
+
+                case EventStatus.CONFIRMED:
+                    if (e.EventInfo.IsCanceled == false && e.EventInfo.PatientSkips == false
+                        && e.EventInfo.IsCompleted == false && e.EventInfo.IsConfirmed)
+                    {
+                        return null;
+                    }
+
+                    e.EventInfo.IsCanceled = false;
+                    e.EventInfo.IsCompleted = false;
+                    e.EventInfo.PatientSkips = false;
+                    e.EventInfo.IsConfirmed = true;
                     break;
                 default:
                     return null;
@@ -326,6 +355,7 @@ namespace MyDentApplication
                     e.EventInfo.IsCanceled = false;
                     e.EventInfo.IsCompleted = false;
                     e.EventInfo.PatientSkips = false;
+                    e.EventInfo.IsConfirmed = false;
 
                     return false;
                 }

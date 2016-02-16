@@ -71,6 +71,12 @@ namespace WpfScheduler
             get { return DayScheduler.PendingEventsVisible; }
             set { DayScheduler.PendingEventsVisible = value; }
         }
+
+        public bool ConfirmedEventsVisible
+        {
+            get { return DayScheduler.ConfirmedEventsVisible; }
+            set { DayScheduler.ConfirmedEventsVisible = value; }
+        }
         #endregion
 
         #region SelectedDate

@@ -48,6 +48,11 @@ namespace WpfScheduler
                     return Controllers.EventStatus.EXCEPTION;
                 }
 
+                if (EventInfo.IsConfirmed)
+                {
+                    return Controllers.EventStatus.CONFIRMED;
+                }
+
                 return Controllers.EventStatus.PENDING;
             }
         }

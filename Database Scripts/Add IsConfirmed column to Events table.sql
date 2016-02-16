@@ -1,0 +1,14 @@
+BEGIN TRAN;
+
+ALTER TABLE Events ADD IsConfirmed BIT NULL;
+GO
+
+UPDATE Events 
+SET IsConfirmed = 0;
+GO
+
+ALTER TABLE Events 
+ALTER COLUMN IsConfirmed BIT NOT NULL;
+GO
+
+COMMIT TRAN;
