@@ -104,11 +104,11 @@ namespace MyDentApplication
                 }
 
                 MessageBox.Show(string.Format("El paciente seleccionado no puede agendar cita, ya que cuenta con {0} {1} y el máximo permitido es de {2} {3}\n{4}",
-                                                skippedEvents.Count,
-                                                skippedEvents.Count == 1 ? "falta" : "faltas",
-                                                maxSkippedEvents,
-                                                maxSkippedEvents == 1 ? "falta" : "faltas",
-                                                skippedEventsMessage
+                                                    skippedEvents.Count,
+                                                    skippedEvents.Count == 1 ? "falta" : "faltas",
+                                                    maxSkippedEvents,
+                                                    maxSkippedEvents == 1 ? "falta" : "faltas",
+                                                    skippedEventsMessage
                                                 ),
                                                 "Advertencia",
                                                 MessageBoxButton.OK,
@@ -147,6 +147,38 @@ namespace MyDentApplication
                 MessageBox.Show("Este paciente posee un estado de cuenta que ha expirado (Estado de cuenta número: " + currentStatement.StatementId + ")" +
                                 "\nEs necesario que el paciente liquide el estado de cuenta para poder agendarle una cita.",
                                 "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                return;
+            }
+
+            //Check for restricted hours if user has recurrent canceled events
+            List<Model.Event> canceledEventsInARow = AgendaWindow.GetPatientCanceledEventsInARow(_selectedPatient.PatientId, 3);
+            if (canceledEventsInARow != null && IsRestrictedHour(_eventStart))
+            {
+                string canceledEventsMessage = string.Empty;
+                for (int i = 0; i < canceledEventsInARow.Count; i++)
+                {
+                    canceledEventsMessage += string.Format(
+                                                "\nCita cancelada #{0}:" +
+                                                "\n -Tratamiento: {1}" +
+                                                "\n -Día de la cita: {2}" +
+                                                "\n -Hora de inicio de la cita: {3}" +
+                                                "\n -Hora de fin de la cita: {4}",
+                                                i + 1,
+                                                canceledEventsInARow[i].Treatment.Name,
+                                                canceledEventsInARow[i].StartEvent.ToString("D"),
+                                                canceledEventsInARow[i].StartEvent.ToString("HH:mm") + " hrs",
+                                                canceledEventsInARow[i].EndEvent.ToString("HH:mm") + " hrs" + (i == canceledEventsInARow.Count - 1 ? "" : "\n"));
+                }
+
+                MessageBox.Show(string.Format("El paciente seleccionado no puede agendar cita en un horario fuera de " + 
+                                                "13 hrs. a 15 hrs. y 19 hrs. en delante, dado que se le ha penalizado " +
+                                                "por 3 citas canceladas consecutivamente.\n\nUltimas 3 citas canceladas:\n{0}",
+                                                    canceledEventsMessage
+                                                ),
+                                                "Advertencia",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Warning);
 
                 return;
             }
@@ -192,6 +224,15 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
+        private bool IsRestrictedHour(DateTime eventStart)
+        {
+            DateTime range1 = eventStart.Date + new TimeSpan(13, 0, 0); //1pm
+            DateTime range2 = eventStart.Date + new TimeSpan(15, 0, 0); //3pm
+            DateTime range3 = eventStart.Date + new TimeSpan(19, 0, 0); //7pm
+
+            return !((eventStart >= range1 && eventStart < range2) || eventStart >= range3);
+        }
+
         private bool IsValidTreatmentInstrumentRelation(Model.Event eventToAdd)
         {
             List<Model.Instrument> instrumentsWithTreatment = BusinessController.Instance.FindBy<Model.Instrument>(i => i.Drawer.IsDeleted == false && i.IsDeleted == false && i.TreatmentId == eventToAdd.TreatmentId).ToList();
@@ -255,6 +296,11 @@ namespace MyDentApplication
 
         }
 
+        /// <summary>
+        /// Check for overlapping events
+        /// </summary>
+        /// <param name="eventToAdd"></param>
+        /// <returns></returns>
         private bool IsValidEvent(Model.Event eventToAdd)
         {
             eventToAdd.StartEvent = _eventStart;

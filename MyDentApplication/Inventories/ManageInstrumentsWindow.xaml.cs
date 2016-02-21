@@ -191,12 +191,7 @@ namespace MyDentApplication
             lblSelectedMonth.ToolTip = lblSelectedMonth.Content = _selectedDate.ToString("MMMM/yyyy");
                         
             List<Model.InventoryAvailability> inventoryAvailability = Controllers.BusinessController.Instance.GetInventoryAvailability(_selectedDrawer.DrawerId, _selectedDate.Year, _selectedDate.Month);
-
-            //if (btnSignature.IsEnabled == false)
-            //{
-            //    inventoryAvailability = inventoryAvailability.Where(i => i.IsChecked.Value).ToList();
-            //}
-
+            
             _inventoryViewModel = new Controllers.CustomViewModel<Model.InventoryAvailability>(inventoryAvailability);
             this.DataContext = _inventoryViewModel;
         }

@@ -63,6 +63,10 @@ namespace MyDentApplication
 
                 SelectPatient();
             }
+            else
+            {
+                gbAccountStatusNumber.Header = "Estado de cuenta activo";
+            }
 
             UpdateTotals();
         }
@@ -164,6 +168,7 @@ namespace MyDentApplication
             _selectedPatient = cbPatients.SelectedValue == null ? null : (cbPatients.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient;
 
             FillPatientFields();
+            ShowActiveStatement();
             UpdatePositiveBalances();
             UpdateTotals();
         }
@@ -647,6 +652,24 @@ namespace MyDentApplication
             lblTreatmentsCount.ToolTip = lblTreatmentsCount.Content = "No. de tratamientos: " + quantity;
 
             return totalAmountOfTreatments;
+        }
+
+        private void ShowActiveStatement()
+        {
+            gbAccountStatusNumber.Visibility = System.Windows.Visibility.Hidden;
+
+            if (_selectedPatient != null)
+            {
+                Model.Statement currentStatement = _selectedPatient.Statements
+                                                        .Where(s => s.IsPaid == false)
+                                                        .FirstOrDefault();
+
+                if (currentStatement != null)
+	            {
+                    gbAccountStatusNumber.Visibility = System.Windows.Visibility.Visible;
+                    lblAccountStatusNumber.ToolTip = lblAccountStatusNumber.Content = currentStatement.StatementId.ToString();
+	            }
+            }
         }
 
         private void FillPatientFields()

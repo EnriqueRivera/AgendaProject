@@ -245,7 +245,7 @@
 						<Button x:Name="btnManageMedicines" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageMedicines_Click" Margin="0,0,0,5" > 
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/medicine_icon.png" Width="50" Height="50"  />
-        						<TextBlock Text="Medicamentos" TextAlignment="Center" />
+        						<TextBlock TextAlignment="Center" ><Run Text="Materiales y"/><LineBreak/><Run Text="m"/><Run Text="edicamentos"/></TextBlock>
         					</StackPanel>
         				</Button>
 						<Button x:Name="btnManageInventory" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageInventory_Click" > 

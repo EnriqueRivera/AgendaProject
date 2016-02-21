@@ -331,16 +331,6 @@ namespace MyDentApplication
                     return null;
             }
 
-            //If the event is canceled, then increment UsesLeft to the selected instrument
-            if (es == EventStatus.CANCELED && e.EventInfo.Instrument != null)
-            {
-                e.EventInfo.Instrument.UsesLeft = e.EventInfo.Instrument.UsesLeft.Value + 1;
-                if (BusinessController.Instance.Update<Model.Instrument>(e.EventInfo.Instrument) == false)
-                {
-                    MessageBox.Show("No se pudo incrementar la cantidad de usos al instrumento que iba a ser utilizado en esta cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
             if (es == EventStatus.PATIENT_SKIPS)
             {
                 if (MessageBox.Show
@@ -363,6 +353,26 @@ namespace MyDentApplication
                 }
             }
 
+            if (BusinessController.Instance.Update<Model.Event>(e.EventInfo))
+            {
+                bool eventStatusChangeRegistered = Utils.AddEventStatusChanges(oldEventStatus, e.EventStatus.ToString(), e.EventInfo.EventId, userLoggedInId);
+                if (eventStatusChangeRegistered == false)
+                {
+                    MessageBox.Show("No se pudo guardar el cambio registrado en el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+
+                CreateFunctionalityBasedOnEventStatus(e, es);
+
+                return true;
+            }
+
+            MessageBox.Show("No pudo ser modificado el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
+        }
+
+        private static void CreateFunctionalityBasedOnEventStatus(WpfScheduler.Event e, EventStatus es)
+        {   
             //Creating reminder for recurrent treatments
             if (es == EventStatus.COMPLETED && e.EventInfo.Treatment.Recurrent != null)
             {
@@ -388,20 +398,54 @@ namespace MyDentApplication
                 }
             }
 
-            if (BusinessController.Instance.Update<Model.Event>(e.EventInfo))
+
+            if (es == EventStatus.CANCELED)
             {
-                bool eventStatusChangeRegistered = Utils.AddEventStatusChanges(oldEventStatus, e.EventStatus.ToString(), e.EventInfo.EventId, userLoggedInId);
-                if (eventStatusChangeRegistered == false)
+                //If the event is canceled, then increment UsesLeft to the selected instrument
+                if (e.EventInfo.Instrument != null)
                 {
-                    MessageBox.Show("No se pudo guardar el cambio registrado en el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
+                    e.EventInfo.Instrument.UsesLeft = e.EventInfo.Instrument.UsesLeft.Value + 1;
+                    if (BusinessController.Instance.Update<Model.Instrument>(e.EventInfo.Instrument) == false)
+                    {
+                        MessageBox.Show("No se pudo incrementar la cantidad de usos al instrumento que iba a ser utilizado en esta cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }   
                 }
 
-                return true;
-            }
+                //Send email to patient for recurrent canceled events
+                List<Model.Event> canceledEventsInARow = GetPatientCanceledEventsInARow(e.EventInfo.Patient.PatientId, 3);
+                List<Model.Event> canceledEventsOfSameTreatment = GetPatientCanceledEventsOfSameTreatment(e.EventInfo.Patient.PatientId, e.EventInfo.TreatmentId, 3);
 
-            MessageBox.Show("No pudo ser modificado el estado de la cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            return false;
+                if (canceledEventsInARow != null || canceledEventsOfSameTreatment != null)
+                {
+                    //TODO: Call window to send emails
+                }
+            }   
+        }
+
+        public static List<Model.Event> GetPatientCanceledEventsInARow(int patientId, int consecutiveEvents)
+        {
+            List<Model.Event> canceledEventsInARow = BusinessController.Instance.FindBy<Model.Event>(e => e.PatientId == patientId && !(!e.IsCanceled && !e.IsCanceled && !e.PatientSkips))
+                                                                                .OrderByDescending(e => e.StartEvent)
+                                                                                .Take(consecutiveEvents)
+                                                                                .ToList();
+
+            if (canceledEventsInARow.All(e => e.IsCanceled))
+                return canceledEventsInARow;
+            else
+                return null;
+        }
+
+        private static List<Model.Event> GetPatientCanceledEventsOfSameTreatment(int patientId, int treatmentId, int consecutiveEvents)
+        {
+            List<Model.Event> canceledEventsOfSameTreatment = BusinessController.Instance.FindBy<Model.Event>(e => e.PatientId == patientId && e.TreatmentId == treatmentId && e.IsCanceled)
+                                                                                            .ToList();
+
+            if (canceledEventsOfSameTreatment.Count % consecutiveEvents == 0)
+                return canceledEventsOfSameTreatment.OrderByDescending(e => e.StartEvent)
+                                                    .Take(consecutiveEvents)
+                                                    .ToList();
+            else
+                return null;
         }
 
         public static Model.Event OverlappedWithExistingEvent(Model.Event eventToAdd, List<WpfScheduler.Event> events)
