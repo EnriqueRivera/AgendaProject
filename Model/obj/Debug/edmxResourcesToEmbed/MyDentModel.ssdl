@@ -148,6 +148,7 @@
     <Property Name="TreatmentId" Type="int" Nullable="false" />
     <Property Name="EventCapturerId" Type="int" Nullable="false" />
     <Property Name="InstrumentId" Type="int" />
+    <Property Name="IsConfirmed" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="EventStatusChanges">
     <Key>
@@ -404,6 +405,7 @@
     <Property Name="Duration" Type="int" Nullable="false" />
     <Property Name="Recurrent" Type="int" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AbsenceMessage" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

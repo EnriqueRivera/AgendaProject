@@ -1,0 +1,6 @@
+BEGIN TRAN;
+
+ALTER TABLE Treatments ADD AbsenceMessage VARCHAR(MAX) NULL;
+GO
+
+COMMIT TRAN;

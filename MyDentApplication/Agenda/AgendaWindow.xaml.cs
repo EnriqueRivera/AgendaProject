@@ -417,14 +417,14 @@ namespace MyDentApplication
 
                 if (canceledEventsInARow != null || canceledEventsOfSameTreatment != null)
                 {
-                    //TODO: Call window to send emails
+                    new CanceledEventsSendEmailModal(canceledEventsInARow, canceledEventsOfSameTreatment, e.EventInfo.Patient, e.EventInfo.Treatment).ShowDialog();
                 }
             }   
         }
 
         public static List<Model.Event> GetPatientCanceledEventsInARow(int patientId, int consecutiveEvents)
         {
-            List<Model.Event> canceledEventsInARow = BusinessController.Instance.FindBy<Model.Event>(e => e.PatientId == patientId && !(!e.IsCanceled && !e.IsCanceled && !e.PatientSkips))
+            List<Model.Event> canceledEventsInARow = BusinessController.Instance.FindBy<Model.Event>(e => e.PatientId == patientId && !(!e.IsCanceled && !e.IsCompleted && !e.PatientSkips))
                                                                                 .OrderByDescending(e => e.StartEvent)
                                                                                 .Take(consecutiveEvents)
                                                                                 .ToList();

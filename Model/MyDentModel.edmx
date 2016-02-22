@@ -410,6 +410,7 @@
           <Property Name="Duration" Type="int" Nullable="false" />
           <Property Name="Recurrent" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="AbsenceMessage" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -1573,6 +1574,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
           <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.FK_Instruments_TreatmentId" FromRole="Treatment" ToRole="Instrument" />
+          <Property Name="AbsenceMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -2577,6 +2579,7 @@
           <EntitySetMapping Name="Treatments">
             <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
               <MappingFragment StoreEntitySet="Treatments">
+                <ScalarProperty Name="AbsenceMessage" ColumnName="AbsenceMessage" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Recurrent" ColumnName="Recurrent" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />

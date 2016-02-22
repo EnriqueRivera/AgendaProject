@@ -44,9 +44,10 @@ namespace MyDentApplication
         private void btnAddUpdateTreatment_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string treatmentName = txtTreatmentName.Text.Trim();
+            string absenceMessage = txtAbsenceMessage.Text.Trim();
             int? recurrentDays;
 
-            if (AreValidFields(treatmentName, out recurrentDays) == false)
+            if (AreValidFields(treatmentName, absenceMessage, out recurrentDays) == false)
             {
                 return;
             }
@@ -58,6 +59,7 @@ namespace MyDentApplication
                 _treatmentToUpdate.Name = treatmentName;
                 _treatmentToUpdate.Duration = duration;
                 _treatmentToUpdate.Recurrent = recurrentDays;
+                _treatmentToUpdate.AbsenceMessage = absenceMessage;
 
                 UpdateTreatment(_treatmentToUpdate);
             }
@@ -68,7 +70,8 @@ namespace MyDentApplication
                     Name = treatmentName,
                     Duration = duration,
                     IsDeleted = false,
-                    Recurrent = recurrentDays
+                    Recurrent = recurrentDays,
+                    AbsenceMessage = absenceMessage
                 };
 
                 AddTreatment(treatmentToAdd);
@@ -95,6 +98,22 @@ namespace MyDentApplication
                 txtRecurrentDays.ToolTip = txtRecurrentDays.Text = string.Empty;
             }
         }
+
+        private void chkIsAbsence_CheckedUnchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (chkIsAbsence.IsChecked.Value)
+            {
+                txtAbsenceMessage.IsEnabled = true;
+                txtAbsenceMessage.Text = _isUpdateTreatmentInfo
+                                            ? _treatmentToUpdate.AbsenceMessage
+                                            : string.Empty;
+            }
+            else
+            {
+                txtAbsenceMessage.IsEnabled = false;
+                txtAbsenceMessage.Text = string.Empty;
+            }
+        }
         #endregion
 
         #region Window's logic
@@ -106,6 +125,8 @@ namespace MyDentApplication
             cbTreatmentDuration.SelectedIndex = (_treatmentToUpdate.Duration / _treatmentIntervalDuration) - 1;
             chkIsRecurrent.IsChecked = txtRecurrentDays.IsEnabled = _treatmentToUpdate.Recurrent != null;
             txtRecurrentDays.ToolTip = txtRecurrentDays.Text = _treatmentToUpdate.Recurrent == null ? string.Empty : _treatmentToUpdate.Recurrent.Value.ToString();
+            chkIsAbsence.IsChecked = txtAbsenceMessage.IsEnabled = !string.IsNullOrEmpty(_treatmentToUpdate.AbsenceMessage);
+            txtAbsenceMessage.Text = _treatmentToUpdate.AbsenceMessage;
         }
 
         private void FillComboBoxDuration()
@@ -120,7 +141,7 @@ namespace MyDentApplication
             }
         }
 
-        private bool AreValidFields(string treatmentName, out int? recurrentDays)
+        private bool AreValidFields(string treatmentName, string absenceMessage, out int? recurrentDays)
         {
             int auxRecurrentDays;
             int.TryParse(txtRecurrentDays.Text.Trim(), out auxRecurrentDays);
@@ -149,6 +170,15 @@ namespace MyDentApplication
             else
             {
                 recurrentDays = null;
+            }
+
+            if (chkIsAbsence.IsChecked.Value)
+            {
+                if (string.IsNullOrEmpty(absenceMessage))
+                {
+                    MessageBox.Show("Introduzca un mensaje de inasistencia", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return false;
+                }
             }
 
             return true;

@@ -25,6 +25,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="MyDentDBModel.Event">
         <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
           <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
           <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
           <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
@@ -196,6 +197,7 @@
     <EntitySetMapping Name="Treatments">
       <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
         <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="AbsenceMessage" ColumnName="AbsenceMessage" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Recurrent" ColumnName="Recurrent" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />

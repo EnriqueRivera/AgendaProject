@@ -99,8 +99,14 @@
     <ApplicationDefinition Include="Configuration\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Agenda\CanceledEventsSendEmailModal.xaml.cs">
+      <DependentUpon>CanceledEventsSendEmailModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Agenda\InstrumentTreatmentRelationModal.xaml.cs">
       <DependentUpon>InstrumentTreatmentRelationModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\ViewEventsWindow.xaml.cs">
+      <DependentUpon>ViewEventsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AmericanExpressPaids\AddEditAmericanExpressPaidsModal.xaml.cs">
       <DependentUpon>AddEditAmericanExpressPaidsModal.xaml</DependentUpon>
@@ -360,7 +366,15 @@
     <Compile Include="Reminders\ViewReminderModal.xaml.cs">
       <DependentUpon>ViewReminderModal.xaml</DependentUpon>
     </Compile>
+    <Page Include="Agenda\CanceledEventsSendEmailModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Agenda\InstrumentTreatmentRelationModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Agenda\ViewEventsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -824,6 +838,7 @@
     <Resource Include="Images\treatment_icon.png" />
     <Resource Include="Images\treatment_prices_icon.png" />
     <Resource Include="Images\users_icon.png" />
+    <Resource Include="Images\view_event_history_icon.png" />
     <Resource Include="Images\view_folios_icon.png" />
     <Resource Include="Images\warning_icon.png" />
   </ItemGroup>

@@ -252,6 +252,7 @@
     <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="Event" ToRole="EventStatusChanx" />
     <Property Name="InstrumentId" Type="Int32" />
     <NavigationProperty Name="Instrument" Relationship="MyDentDBModel.PK_Events_InstrumentId" FromRole="Event" ToRole="Instrument" />
+    <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="EventStatusChanx">
     <Key>
@@ -428,6 +429,7 @@
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
     <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.FK_Instruments_TreatmentId" FromRole="Treatment" ToRole="Instrument" />
+    <Property Name="AbsenceMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>

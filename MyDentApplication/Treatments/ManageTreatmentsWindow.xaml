@@ -18,9 +18,10 @@
 						SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 						TabIndex="1">
 						<DataGrid.Columns>
-							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.6*"/>
-							<DataGridTextColumn Header="Duración (minutos)" Binding="{Binding Duration}" Width="0.2*" />
-							<DataGridTextColumn Header="Recurrencia (días)" Binding="{Binding Recurrent}" Width="0.2*" />
+							<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.33*"/>
+							<DataGridTextColumn Header="Duración (minutos)" Binding="{Binding Duration}" Width="0.19*" />
+							<DataGridTextColumn Header="Recurrencia (días)" Binding="{Binding Recurrent}" Width="0.18*" />
+							<DataGridTextColumn Header="Correo de inasistencia" Binding="{Binding AbsenceMessage}" Width="0.2*" />
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>

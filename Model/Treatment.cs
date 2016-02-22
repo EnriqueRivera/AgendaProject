@@ -25,6 +25,7 @@ namespace Model
         public int Duration { get; set; }
         public Nullable<int> Recurrent { get; set; }
         public bool IsDeleted { get; set; }
+        public string AbsenceMessage { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<Instrument> Instruments { get; set; }

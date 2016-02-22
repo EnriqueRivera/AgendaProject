@@ -1,0 +1,15 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="MyDentApplication.CanceledEventsSendEmailModal"
+	x:Name="Window"
+	Title="Correo por cancelación de citas"
+	Width="417.612" Height="231.747" Closing="Window_Closing" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" ResizeMode="CanMinimize">
+
+	<Grid x:Name="LayoutRoot">
+		<ScrollViewer Margin="0,0,0,44" HorizontalScrollBarVisibility="Auto">
+			<Label x:Name="lblEmailLogMessage" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Normal"/>
+		</ScrollViewer>
+		<Label x:Name="lblStatus" Content="Enviando correo..." HorizontalAlignment="Left" Margin="10,0,0,10" Width="123.168" Foreground="Red" FontWeight="Bold" FontStyle="Italic" FontSize="13.333" Height="29" VerticalAlignment="Bottom" Visibility="Hidden"/>
+	</Grid>
+</Window>

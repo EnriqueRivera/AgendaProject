@@ -405,6 +405,7 @@
     <Property Name="Duration" Type="int" Nullable="false" />
     <Property Name="Recurrent" Type="int" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AbsenceMessage" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

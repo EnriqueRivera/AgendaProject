@@ -197,6 +197,7 @@
     <EntitySetMapping Name="Treatments">
       <EntityTypeMapping TypeName="MyDentDBModel.Treatment">
         <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="AbsenceMessage" ColumnName="AbsenceMessage" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Recurrent" ColumnName="Recurrent" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />

@@ -218,6 +218,12 @@
         				</Button>
 					</StackPanel>
 					<StackPanel>
+						<Button x:Name="btnViewEvents" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnViewEvents_Click" > 
+        					<StackPanel Orientation="Vertical">
+        						<Image Source="/MyDentApplication;component/Images/view_event_history_icon.png" Width="50" Height="50"  />
+        						<TextBlock TextAlignment="Center" ><Run Text="Historial de"/><LineBreak/><Run Text="citas"/></TextBlock>
+        					</StackPanel>
+        				</Button>
 						<Button x:Name="btnViewPayments" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnViewPayments_Click" > 
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/payments_icon.png" Width="50" Height="50"  />

@@ -65,6 +65,7 @@ namespace MyDentApplication
         private ManageBanksWindow _manageBanksWindow;
         private ViewPaymentsWindow _viewPaymentsWindow;
         private ViewPaymentFoliosWindow _viewPaymentFoliosWindow;
+        private ViewEventsWindow _viewEventsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -234,10 +235,12 @@ namespace MyDentApplication
             CloseWindow(_manageBanksWindow);
             CloseWindow(_viewPaymentsWindow);
             CloseWindow(_viewPaymentFoliosWindow);
+            CloseWindow(_viewEventsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
             _stopCheckRemindersThread = true;
+            _stopCheckExpiredStatementsThread = true;
         }
 
         private void CloseWindow(Window windowToClose)
@@ -364,6 +367,10 @@ namespace MyDentApplication
             else if (sender is ViewPaymentFoliosWindow)
             {
                 _viewPaymentFoliosWindow = null;
+            }
+            else if (sender is ViewEventsWindow)
+            {
+                _viewEventsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -1099,6 +1106,18 @@ namespace MyDentApplication
 
             _viewPaymentFoliosWindow.Show();
             _viewPaymentFoliosWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnViewEvents_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_viewEventsWindow == null)
+            {
+                _viewEventsWindow = new ViewEventsWindow();
+                _viewEventsWindow.Closed += Window_Closed;
+            }
+
+            _viewEventsWindow.Show();
+            _viewEventsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

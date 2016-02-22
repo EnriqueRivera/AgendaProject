@@ -11,7 +11,6 @@ namespace WpfScheduler
     {
         public Guid Id { get; set; }
         public Model.Event EventInfo { get; set; }
-        public Brush _color;
 
         public Event()
         {
