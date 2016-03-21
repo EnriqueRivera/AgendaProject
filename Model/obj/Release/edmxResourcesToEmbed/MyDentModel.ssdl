@@ -189,10 +189,17 @@
     <Property Name="Name" Type="varchar(max)" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
     <Property Name="DrawerId" Type="int" Nullable="false" />
-    <Property Name="TreatmentId" Type="int" />
     <Property Name="UsesLeft" Type="int" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="MaxUses" Type="int" />
+  </EntityType>
+  <EntityType Name="InstrumentTreatments">
+    <Key>
+      <PropertyRef Name="InstrumentId" />
+      <PropertyRef Name="TreatmentId" />
+    </Key>
+    <Property Name="InstrumentId" Type="int" Nullable="false" />
+    <Property Name="TreatmentId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="InventorySignatures">
     <Key>
@@ -611,14 +618,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Instruments_TreatmentId">
-    <End Role="Treatments" Type="Self.Treatments" Multiplicity="0..1" />
-    <End Role="Instruments" Type="Self.Instruments" Multiplicity="*" />
+  <Association Name="FK_InstrumentTreatments_InstrumentId">
+    <End Role="Instruments" Type="Self.Instruments" Multiplicity="1" />
+    <End Role="InstrumentTreatments" Type="Self.InstrumentTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instruments">
+        <PropertyRef Name="InstrumentId" />
+      </Principal>
+      <Dependent Role="InstrumentTreatments">
+        <PropertyRef Name="InstrumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstrumentTreatments_TreatmentId">
+    <End Role="Treatments" Type="Self.Treatments" Multiplicity="1" />
+    <End Role="InstrumentTreatments" Type="Self.InstrumentTreatments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Treatments">
         <PropertyRef Name="TreatmentId" />
       </Principal>
-      <Dependent Role="Instruments">
+      <Dependent Role="InstrumentTreatments">
         <PropertyRef Name="TreatmentId" />
       </Dependent>
     </ReferentialConstraint>
@@ -948,6 +967,7 @@
     <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InstrumentComments" EntityType="Self.InstrumentComments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Instruments" EntityType="Self.Instruments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstrumentTreatments" EntityType="Self.InstrumentTreatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventorySignatures" EntityType="Self.InventorySignatures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LaboratoryWorks" EntityType="Self.LaboratoryWorks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
@@ -1031,9 +1051,13 @@
       <End Role="Drawers" EntitySet="Drawers" />
       <End Role="Instruments" EntitySet="Instruments" />
     </AssociationSet>
-    <AssociationSet Name="FK_Instruments_TreatmentId" Association="Self.FK_Instruments_TreatmentId">
-      <End Role="Treatments" EntitySet="Treatments" />
+    <AssociationSet Name="FK_InstrumentTreatments_InstrumentId" Association="Self.FK_InstrumentTreatments_InstrumentId">
       <End Role="Instruments" EntitySet="Instruments" />
+      <End Role="InstrumentTreatments" EntitySet="InstrumentTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstrumentTreatments_TreatmentId" Association="Self.FK_InstrumentTreatments_TreatmentId">
+      <End Role="Treatments" EntitySet="Treatments" />
+      <End Role="InstrumentTreatments" EntitySet="InstrumentTreatments" />
     </AssociationSet>
     <AssociationSet Name="FK_InventorySignatures_DrawerId" Association="Self.FK_InventorySignatures_DrawerId">
       <End Role="Drawers" EntitySet="Drawers" />

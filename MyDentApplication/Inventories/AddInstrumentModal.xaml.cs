@@ -20,6 +20,7 @@ namespace MyDentApplication
 	{
         #region Instance variables
         private Model.Drawer _selectedDrawer;
+        private Model.Instrument _instrumentToAdd;
         #endregion
 
         #region Constructors
@@ -28,7 +29,9 @@ namespace MyDentApplication
 			this.InitializeComponent();
 
             _selectedDrawer = selectedDrawer;
-            FillTreatments();
+            _instrumentToAdd = new Model.Instrument();
+
+            UpdateNumberOfTreatments();
 		}
         #endregion
 
@@ -51,23 +54,21 @@ namespace MyDentApplication
                 return;
             }
 
-            Model.Instrument instrumentToAdd = new Model.Instrument()
-            {
-                Name = instrumentName,
-                Quantity = quantity,
-                DrawerId = _selectedDrawer.DrawerId,
-                TreatmentId = txtMaxUses.IsEnabled ? ((cbTreatments.SelectedItem as Controllers.ComboBoxItem).Value as Model.Treatment).TreatmentId : new Nullable<int>(),
-                UsesLeft = txtMaxUses.IsEnabled ? maxUses : new Nullable<int>(),
-                MaxUses = txtMaxUses.IsEnabled ? maxUses : new Nullable<int>(),
-                IsDeleted = false
-            };
+            _instrumentToAdd.Name = instrumentName;
+            _instrumentToAdd.Quantity = quantity;
+            _instrumentToAdd.DrawerId = _selectedDrawer.DrawerId;
+            _instrumentToAdd.UsesLeft = txtMaxUses.IsEnabled ? maxUses : new Nullable<int>();
+            _instrumentToAdd.MaxUses = txtMaxUses.IsEnabled ? maxUses : new Nullable<int>();
+            _instrumentToAdd.IsDeleted = false;
 
-            AddInstrument(instrumentToAdd);
+            AddInstrument(_instrumentToAdd);
         }
 
-        private void cbPaidMethod_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void viewTreatments_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            txtMaxUses.IsEnabled = (cbTreatments.SelectedItem as Controllers.ComboBoxItem).Value is Model.Treatment;
+            new ManageInstrumentTreatmentsModal(_instrumentToAdd).ShowDialog();
+            UpdateNumberOfTreatments();
+
         }
         #endregion
 
@@ -82,22 +83,6 @@ namespace MyDentApplication
             {
                 MessageBox.Show("No se pudo agregar el instrumento", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void FillTreatments()
-        {
-            List<Model.Treatment> treatments = Controllers.BusinessController.Instance.FindBy<Model.Treatment>(t => t.IsDeleted == false)
-                                                .OrderBy(t => t.Name)
-                                                .ToList();
-
-            cbTreatments.Items.Add(new Controllers.ComboBoxItem() { Text = string.Empty, Value = string.Empty });
-
-            foreach (Model.Treatment treatment in treatments)
-            {
-                cbTreatments.Items.Add(new Controllers.ComboBoxItem() { Text = treatment.Name, Value = treatment });
-            }
-
-            cbTreatments.SelectedIndex = 0;
         }
 
         private bool AreValidFields(string instrumentName, string quantityText, string maxUsesText, out int quantity, out int maxUses)
@@ -133,6 +118,13 @@ namespace MyDentApplication
             }
 
             return true;
+        }
+
+        private void UpdateNumberOfTreatments()
+        {
+            int usedOn = _instrumentToAdd.Treatments.Count;
+            lblNumberOfTreatments.Content = lblNumberOfTreatments.ToolTip = usedOn + " Tratamiento(s)";
+            txtMaxUses.IsEnabled = usedOn > 0;
         }
         #endregion
     }

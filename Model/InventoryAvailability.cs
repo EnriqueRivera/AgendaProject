@@ -14,14 +14,13 @@ namespace Model
     public partial class InventoryAvailability
     {
         public int InstrumentId { get; set; }
-        public int Quantity { get; set; }
-        public string TreatmentName { get; set; }
-        public Nullable<int> UsesLeft { get; set; }
-        public Nullable<int> InstrumentCommentId { get; set; }
-        public Nullable<bool> IsChecked { get; set; }
         public string InstrumentName { get; set; }
-        public string Comment { get; set; }
+        public int Quantity { get; set; }
+        public Nullable<int> UsesLeft { get; set; }
+        public Nullable<int> UsedOn { get; set; }
         public Nullable<int> MaxUses { get; set; }
-        public Nullable<int> TreatmentId { get; set; }
+        public Nullable<int> InstrumentCommentId { get; set; }
+        public string Comment { get; set; }
+        public Nullable<bool> IsChecked { get; set; }
     }
 }

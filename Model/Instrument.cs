@@ -16,22 +16,22 @@ namespace Model
     {
         public Instrument()
         {
-            this.InstrumentComments = new HashSet<InstrumentComment>();
             this.Events = new HashSet<Event>();
+            this.InstrumentComments = new HashSet<InstrumentComment>();
+            this.Treatments = new HashSet<Treatment>();
         }
     
         public int InstrumentId { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
         public int DrawerId { get; set; }
-        public Nullable<int> TreatmentId { get; set; }
         public Nullable<int> UsesLeft { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<int> MaxUses { get; set; }
     
         public virtual Drawer Drawer { get; set; }
-        public virtual ICollection<InstrumentComment> InstrumentComments { get; set; }
-        public virtual Treatment Treatment { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<InstrumentComment> InstrumentComments { get; set; }
+        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

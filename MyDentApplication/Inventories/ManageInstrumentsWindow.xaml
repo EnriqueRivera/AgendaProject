@@ -13,7 +13,7 @@
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding InstrumentName}" Header="Instrumento" Width="0.07*"/>
 				<DataGridTextColumn Binding="{Binding Quantity}" Header="Cantidad actual" Width="0.07*"/>
-				<DataGridTextColumn Binding="{Binding TreatmentName}" Header="Usado en" Width="0.07*"/>
+				<DataGridTextColumn Binding="{Binding UsedOn}" Header="Usado en (Tratamientos)" Width="0.07*"/>
 				<DataGridTextColumn Binding="{Binding UsesLeft}" Header="Usos restantes" Width="0.07*"/>
 				<DataGridTextColumn Binding="{Binding Comment}" Header="Comentario" Width="0.07*"/>
 				<DataGridCheckBoxColumn Binding="{Binding IsChecked}" Header="Revisado" Width="0.03*"/>
@@ -35,5 +35,6 @@
 		<Label Width="53.5" Margin="10,0,0,10" HorizontalAlignment="Left" Content="Firma 2:" Height="27" VerticalAlignment="Bottom"/>
 		<Label x:Name="lblSignature" VerticalAlignment="Bottom" Margin="68.5,0,424.216,37" Height="27" Content=""/>
 		<Label x:Name="lblSignature1" Margin="68.5,0,424.216,10" Content="" Height="27" VerticalAlignment="Bottom"/>
+		<Button x:Name="btnViewTreatments" Width="104.216" VerticalAlignment="Bottom" TabIndex="4" Margin="0,0,418,69" Height="29" HorizontalAlignment="Right" Content="Ver tratamientos" Cursor="Hand" Click="btnViewTreatments_Click" />
 	</Grid>
 </Window>

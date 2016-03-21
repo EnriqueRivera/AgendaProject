@@ -235,7 +235,9 @@ namespace MyDentApplication
 
         private bool IsValidTreatmentInstrumentRelation(Model.Event eventToAdd)
         {
-            List<Model.Instrument> instrumentsWithTreatment = BusinessController.Instance.FindBy<Model.Instrument>(i => i.Drawer.IsDeleted == false && i.IsDeleted == false && i.TreatmentId == eventToAdd.TreatmentId).ToList();
+            List<Model.Instrument> instrumentsWithTreatment = BusinessController.Instance.FindBy<Model.Instrument>(i => i.Drawer.IsDeleted == false && i.IsDeleted == false)
+                                                                                            .Where(i => i.Treatments.Any(j => j.TreatmentId == eventToAdd.TreatmentId))
+                                                                                            .ToList();
 
             if (instrumentsWithTreatment.Count == 0)
             {

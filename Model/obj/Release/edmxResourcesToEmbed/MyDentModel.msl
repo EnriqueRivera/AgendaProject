@@ -353,15 +353,14 @@
       <ResultMapping>
         <ComplexTypeMapping TypeName="MyDentDBModel.InventoryAvailability">
           <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="TreatmentName" ColumnName="TreatmentName" />
-          <ScalarProperty Name="UsesLeft" ColumnName="UsesLeft" />
-          <ScalarProperty Name="InstrumentCommentId" ColumnName="InstrumentCommentId" />
-          <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
           <ScalarProperty Name="InstrumentName" ColumnName="InstrumentName" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UsesLeft" ColumnName="UsesLeft" />
+          <ScalarProperty Name="UsedOn" ColumnName="UsedOn" />
           <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
-          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+          <ScalarProperty Name="InstrumentCommentId" ColumnName="InstrumentCommentId" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -372,20 +371,6 @@
           <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
           <ScalarProperty Name="Comment" ColumnName="Comment" />
           <ScalarProperty Name="InstrumentCommentId" ColumnName="InstrumentCommentId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Instruments">
-      <EntityTypeMapping TypeName="MyDentDBModel.Instrument">
-        <MappingFragment StoreEntitySet="Instruments">
-          <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="UsesLeft" ColumnName="UsesLeft" />
-          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
-          <ScalarProperty Name="DrawerId" ColumnName="DrawerId" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -474,5 +459,26 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GetNextPatientAssignedId" FunctionName="MyDentDBModel.Store.sp_GetNextPatientAssignedId" />
+    <EntitySetMapping Name="Instruments">
+      <EntityTypeMapping TypeName="MyDentDBModel.Instrument">
+        <MappingFragment StoreEntitySet="Instruments">
+          <ScalarProperty Name="MaxUses" ColumnName="MaxUses" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="UsesLeft" ColumnName="UsesLeft" />
+          <ScalarProperty Name="DrawerId" ColumnName="DrawerId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="InstrumentTreatments" TypeName="MyDentDBModel.InstrumentTreatments" StoreEntitySet="InstrumentTreatments">
+      <EndProperty Name="Treatment">
+        <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+      </EndProperty>
+      <EndProperty Name="Instrument">
+        <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

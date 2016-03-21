@@ -38,7 +38,7 @@ namespace MyDentApplication
 
             txtQuantity.Text = _selectedInstrument.Quantity.ToString();
 
-            if (_selectedInstrument.TreatmentId == null)
+            if (_selectedInstrument.UsedOn == 0)
             {
                 lblUses.Visibility = System.Windows.Visibility.Hidden;
                 lblMaxUses.Visibility = System.Windows.Visibility.Hidden;
@@ -179,7 +179,7 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (_selectedInstrument.TreatmentId != null)
+            if (_selectedInstrument.UsedOn > 0)
             {
                 if (int.TryParse(usesLeftText, out usesLeft) == false)
                 {

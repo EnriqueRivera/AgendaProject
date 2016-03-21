@@ -222,6 +222,9 @@
     <Compile Include="Inventories\AddInstrumentModal.xaml.cs">
       <DependentUpon>AddInstrumentModal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inventories\AddInstrumentTreatmentsModal.xaml.cs">
+      <DependentUpon>AddInstrumentTreatmentsModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Inventories\DrawerControl.xaml.cs">
       <DependentUpon>DrawerControl.xaml</DependentUpon>
     </Compile>
@@ -233,6 +236,9 @@
     </Compile>
     <Compile Include="Inventories\ManageInstrumentsWindow.xaml.cs">
       <DependentUpon>ManageInstrumentsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories\ManageInstrumentTreatmentsModal.xaml.cs">
+      <DependentUpon>ManageInstrumentTreatmentsModal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Invoices\Outgoing\AddEditOutgoingInvoicesModal.xaml.cs">
       <DependentUpon>AddEditOutgoingInvoicesModal.xaml</DependentUpon>
@@ -530,6 +536,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Inventories\AddInstrumentTreatmentsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Inventories\DrawerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -543,6 +553,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Inventories\ManageInstrumentsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Inventories\ManageInstrumentTreatmentsModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

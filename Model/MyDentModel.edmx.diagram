@@ -57,14 +57,9 @@
         <EntityTypeShape EntityType="MyDentDBModel.TreatmentPrice" Width="1.5" PointX="10.375" PointY="14.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Drawer" Width="1.5" PointX="13.375" PointY="8.75" />
         <EntityTypeShape EntityType="MyDentDBModel.InstrumentComment" Width="1.5" PointX="18.875" PointY="7.625" />
-        <EntityTypeShape EntityType="MyDentDBModel.Instrument" Width="1.5" PointX="16.625" PointY="7.125" />
-        <AssociationConnector Association="MyDentDBModel.FK_Instruments_DrawerId" />
-        <AssociationConnector Association="MyDentDBModel.FK_InstrumentComments_InstrumentId" />
-        <AssociationConnector Association="MyDentDBModel.FK_Instruments_TreatmentId" />
         <EntityTypeShape EntityType="MyDentDBModel.InventorySignature" Width="1.5" PointX="3" PointY="28.375" />
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_Signature1" />
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_Signature2" />
-        <AssociationConnector Association="MyDentDBModel.PK_Events_InstrumentId" />
         <AssociationConnector Association="MyDentDBModel.FK_InventorySignatures_DrawerId" />
         <EntityTypeShape EntityType="MyDentDBModel.Bank" Width="1.5" PointX="8.375" PointY="25.5" />
         <EntityTypeShape EntityType="MyDentDBModel.PositiveBalance" Width="1.5" PointX="5.25" PointY="25.375" />
@@ -84,6 +79,11 @@
         <AssociationConnector Association="MyDentDBModel.FK_Statements_UserId" />
         <AssociationConnector Association="MyDentDBModel.FK_TreatmentPayment_StatementId" />
         <AssociationConnector Association="MyDentDBModel.FK_TreatmentPayment_TreatmentPriceId" />
+        <EntityTypeShape EntityType="MyDentDBModel.Instrument" Width="1.5" PointX="16.125" PointY="7.875" />
+        <AssociationConnector Association="MyDentDBModel.FK_Instruments_DrawerId" />
+        <AssociationConnector Association="MyDentDBModel.PK_Events_InstrumentId" />
+        <AssociationConnector Association="MyDentDBModel.FK_InstrumentComments_InstrumentId" />
+        <AssociationConnector Association="MyDentDBModel.InstrumentTreatments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

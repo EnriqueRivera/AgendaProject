@@ -83,7 +83,6 @@ namespace MyDentApplication
         private void btnEditInstrument_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Model.InventoryAvailability selectedInstrument = dgInstruments.SelectedItem == null ? null : dgInstruments.SelectedItem as Model.InventoryAvailability;
-            DateTime currentDate = DateTime.Now;
 
             if (selectedInstrument == null)
             {
@@ -172,6 +171,43 @@ namespace MyDentApplication
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private void btnViewTreatments_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Model.InventoryAvailability selectedInstrument = dgInstruments.SelectedItem == null ? null : dgInstruments.SelectedItem as Model.InventoryAvailability;
+
+            if (selectedInstrument == null)
+            {
+                MessageBox.Show("Seleccione un instrumento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (selectedInstrument.UsedOn == 0)
+            {
+                MessageBox.Show(string.Format("El instrumento '{0}' no es utilizado en algún tratamiento", selectedInstrument.InstrumentName), "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Model.Instrument instrument = Controllers.BusinessController.Instance.FindBy<Model.Instrument>(i => i.InstrumentId == selectedInstrument.InstrumentId).FirstOrDefault();
+                if (instrument == null)
+                {
+                    MessageBox.Show("No se encontró el instrumento", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (instrument.Treatments.Count == 0)
+                {
+                    MessageBox.Show(string.Format("El instrumento '{0}' no es utilizado en algún tratamiento", selectedInstrument.InstrumentName), "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+
+                    string treatments = string.Format("El instrumento '{0}' es utilizado en los siguientes tratamientos:", selectedInstrument.InstrumentName);
+                    foreach (var item in instrument.Treatments)
+                    {
+                        treatments += "\n- " + item.Name;
+                    }
+
+                    MessageBox.Show(treatments, "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }

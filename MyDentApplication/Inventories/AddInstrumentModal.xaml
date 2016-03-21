@@ -14,8 +14,9 @@
 		<Label x:Name="lblTotalAmount" Content="No. de usos:" HorizontalAlignment="Left" Height="27" Margin="75.833,106,0,0" VerticalAlignment="Top" Width="77.667"/>
 		<TextBox x:Name="txtMaxUses" Height="27" Margin="158.5,105,14.5,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="5" BorderThickness="1" BorderBrush="Black"/>
 		<Label x:Name="lblPaidMethod" Content="Usado en:" HorizontalAlignment="Left" Height="27" Margin="86.67,74,0,0" VerticalAlignment="Top" Width="66.83"/>
-		<ComboBox x:Name="cbTreatments" Height="26" Margin="158.5,74,14.5,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="4" SelectionChanged="cbPaidMethod_SelectionChanged" />
 		<TextBox x:Name="txtInstrumentName" Height="27" Margin="158.5,10,14.5,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
 		<TextBox x:Name="txtQuantity" Height="27" Margin="158.5,42,14.5,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="1" BorderThickness="1" BorderBrush="Black"/>
+		<Label x:Name="lblNumberOfTreatments" Content="0 tratamientos" HorizontalAlignment="Left" Height="27" Margin="158.5,74,0,0" VerticalAlignment="Top" Width="171"/>
+		<Button x:Name="viewTreatments" Content="Ver" HorizontalAlignment="Right" Height="29" Margin="0,72.48,14.5,0" VerticalAlignment="Top" Width="39" Cursor="Hand" TabIndex="6" Click="viewTreatments_Click" />
 	</Grid>
 </Window>

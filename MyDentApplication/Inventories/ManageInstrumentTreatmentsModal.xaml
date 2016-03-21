@@ -1,0 +1,21 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+	x:Class="MyDentApplication.ManageInstrumentTreatmentsModal"
+	x:Name="Window"
+	Title="Administrar tratamientos para un instrumento"
+	Width="441.216" Height="275.5" Icon="/MyDentApplication;component/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+	<Grid x:Name="LayoutRoot">
+		<DataGrid x:Name="dgTreatments" TabIndex="3" SelectionMode="Single" Margin="10,10,10,44" 
+			ItemsSource="{Binding ObservableData}" IsReadOnly="True" CanUserAddRows="False" 
+			CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Nombre del tratamiento" Binding="{Binding Name}" Width="0.33*"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button x:Name="btnAddTreatment" Width="85" VerticalAlignment="Bottom" TabIndex="5" Margin="0,0,190,10" Height="29" HorizontalAlignment="Right" Content="Agregar" Cursor="Hand" Click="btnAddTreatment_Click" />
+		<Button x:Name="btnRemoveTreatment" Width="85" VerticalAlignment="Bottom" TabIndex="5" Margin="0,0,100,10" Height="29" HorizontalAlignment="Right" Content="Eliminar" Cursor="Hand" Click="btnRemoveTreatment_Click" />
+		<Button x:Name="btnClose" Width="85" VerticalAlignment="Bottom" TabIndex="5" Margin="0,0,10,10" Height="29" HorizontalAlignment="Right" Content="Cerrar" Cursor="Hand" Click="btnClose_Click" />
+	</Grid>
+</Window>
