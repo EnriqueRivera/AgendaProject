@@ -429,7 +429,7 @@ namespace MyDentApplication
                                                                                 .Take(consecutiveEvents)
                                                                                 .ToList();
 
-            if (canceledEventsInARow.All(e => e.IsCanceled))
+            if (canceledEventsInARow.Count(e => e.IsCanceled) == consecutiveEvents)
                 return canceledEventsInARow;
             else
                 return null;
