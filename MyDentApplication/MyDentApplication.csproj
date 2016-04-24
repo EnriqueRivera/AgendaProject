@@ -117,11 +117,20 @@
     <Compile Include="Authorizations\AddEditAuthorizationsModal.xaml.cs">
       <DependentUpon>AddEditAuthorizationsModal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authorizations\AddEditDentegraAuthorizationsModal.xaml.cs">
+      <DependentUpon>AddEditDentegraAuthorizationsModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Authorizations\ManageAuthorizationsWindow.xaml.cs">
       <DependentUpon>ManageAuthorizationsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authorizations\ManageDentegraAuthorizationsWindow.xaml.cs">
+      <DependentUpon>ManageDentegraAuthorizationsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Authorizations\ManageUserAuthorizationsWindow.xaml.cs">
       <DependentUpon>ManageUserAuthorizationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authorizations\ManageUserDentegraAuthorizationsWindow.xaml.cs">
+      <DependentUpon>ManageUserDentegraAuthorizationsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Banks\AddEditBanksModal.xaml.cs">
       <DependentUpon>AddEditBanksModal.xaml</DependentUpon>
@@ -396,11 +405,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Authorizations\AddEditDentegraAuthorizationsModal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Authorizations\ManageAuthorizationsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Authorizations\ManageDentegraAuthorizationsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Authorizations\ManageUserAuthorizationsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authorizations\ManageUserDentegraAuthorizationsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -825,6 +846,7 @@
     <Resource Include="Images\credit_card_icon.png" />
     <Resource Include="Images\dotation_icon.png" />
     <Resource Include="Images\edit_icon.png" />
+    <Resource Include="Images\elegibility_icon.png" />
     <Resource Include="Images\findEmail_icon.png" />
     <Resource Include="Images\findFile_icon.png" />
     <Resource Include="Images\find_treatment_icon.png" />

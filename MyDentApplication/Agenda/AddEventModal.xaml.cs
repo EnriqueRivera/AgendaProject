@@ -116,25 +116,49 @@ namespace MyDentApplication
                 return;
             }
 
-            if (_selectedPatient.HasHealthInsurance && _selectedPatient.IsDiverse == false)
+            //Health Insurance
+            if (_selectedPatient.HasHealthInsurance)
             {
-                List<Model.Authorization> authorizations = _selectedPatient.Authorizations
-                                                            .OrderByDescending(a => a.AuthorizationDate)
-                                                            .Take(1)
-                                                            .ToList();
-
-                if (authorizations.Count == 0 || IsValidAuthorization(authorizations[0]) == false)
+                if (_selectedPatient.IsDentegra)
                 {
-                    if (MessageBox.Show("El paciente seleccionado tiene seguro médico pero no cuenta con un número de " + 
-                                    "autorización vigente.\n¿Desea agendar la cita?",
-                                    "Advertencia",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Warning
-                                ) == MessageBoxResult.No || MainWindow.IsValidAdminPassword(_userLoggedIn) == false)
+                    List<Model.DentegraAuthorization> elegibilities = _selectedPatient.DentegraAuthorizations
+                                                                       .OrderByDescending(a => a.AuthorizationDate)
+                                                                       .Take(1)
+                                                                       .ToList();
+
+                    if (elegibilities.Count == 0 || IsValidElegibility(elegibilities[0]) == false)
                     {
-                        return;
+                        if (MessageBox.Show("El paciente seleccionado tiene seguro médico pero no cuenta con un número de " +
+                                        "elegibilidad vigente.\n¿Desea agendar la cita?",
+                                        "Advertencia",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning
+                                    ) == MessageBoxResult.No || MainWindow.IsValidAdminPassword(_userLoggedIn) == false)
+                        {
+                            return;
+                        }
                     }
                 }
+                else if (_selectedPatient.IsDiverse == false)
+	            {
+                    List<Model.Authorization> authorizations = _selectedPatient.Authorizations
+                                                                       .OrderByDescending(a => a.AuthorizationDate)
+                                                                       .Take(1)
+                                                                       .ToList();
+
+                    if (authorizations.Count == 0 || IsValidAuthorization(authorizations[0]) == false)
+                    {
+                        if (MessageBox.Show("El paciente seleccionado tiene seguro médico pero no cuenta con un número de " +
+                                        "autorización vigente.\n¿Desea agendar la cita?",
+                                        "Advertencia",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning
+                                    ) == MessageBoxResult.No || MainWindow.IsValidAdminPassword(_userLoggedIn) == false)
+                        {
+                            return;
+                        }
+                    }
+	            }
             }
 
             //Statements
@@ -262,6 +286,14 @@ namespace MyDentApplication
             }
 
             return true;
+        }
+
+        private bool IsValidElegibility(Model.DentegraAuthorization elegibility)
+        {
+            DateTime today = DateTime.Now.Date;
+            DateTime elegibilityDate = elegibility.AuthorizationDate.AddDays(3.0);
+
+            return elegibilityDate >= today;
         }
 
         private void FillPatientFields(Model.Patient selectedPatient) 

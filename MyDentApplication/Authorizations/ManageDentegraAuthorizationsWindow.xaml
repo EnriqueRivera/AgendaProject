@@ -1,0 +1,41 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:MyDentApplication"
+	x:Class="MyDentApplication.ManageDentegraAuthorizationsWindow"
+	x:Name="Window"
+	Title="Ver elegibilidades"
+	Width="528.06" Height="439.701" Icon="/MyDentApplication;component/app_icon.ico" WindowStartupLocation="CenterScreen">
+
+	<Window.Resources>
+		<local:DateValueConverter x:Key="DateValueConverter" />
+	</Window.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid x:Name="LayoutRoot_Copy">
+			<DataGrid x:Name="dgAuthorization" TabIndex="1" SelectionMode="Single" Margin="10,49.909,10,10" ItemsSource="{Binding ObservableData}" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Paciente" Width="0.4*">
+						<DataGridTextColumn.Binding>
+							<MultiBinding StringFormat="(Exp. No. {0}) {1} {2}">
+								<Binding Path="Patient.AssignedId"/>
+								<Binding Path="Patient.FirstName"/>
+								<Binding Path="Patient.LastName"/>
+							</MultiBinding>
+						</DataGridTextColumn.Binding>
+					</DataGridTextColumn>
+					<DataGridTextColumn Header="Fecha de elegibilidad" Width="0.3*">
+						<DataGridTextColumn.Binding>
+							<MultiBinding Converter="{StaticResource DateValueConverter}">
+								<Binding Path="AuthorizationDate"/>
+							</MultiBinding>
+						</DataGridTextColumn.Binding>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding ElegibilityNumber}" Header="No. de elegibilidad" Width="0.2*"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<Label x:Name="lblProvider" Width="63" VerticalAlignment="Top" Margin="10,10,0,0" Height="27" HorizontalAlignment="Left" Content="Paciente:"/>
+			<ComboBox x:Name="cbPatients" VerticalAlignment="Top" TabIndex="1" Margin="78,10,10,0" Height="26" FontWeight="Normal" SelectionChanged="cbPatients_SelectionChanged"/>
+		</Grid>
+	</Grid>
+</Window>

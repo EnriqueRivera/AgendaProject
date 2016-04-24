@@ -65,6 +65,7 @@ namespace Model
         public DbSet<Statement> Statements { get; set; }
         public DbSet<TreatmentPayment> TreatmentPayments { get; set; }
         public DbSet<Instrument> Instruments { get; set; }
+        public DbSet<DentegraAuthorization> DentegraAuthorizations { get; set; }
     
         public virtual ObjectResult<InventoryAvailability> GetInventoryAvailability(Nullable<int> drawerId, Nullable<int> year, Nullable<int> month)
         {

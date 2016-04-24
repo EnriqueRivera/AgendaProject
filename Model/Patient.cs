@@ -24,6 +24,7 @@ namespace Model
             this.PositiveBalances = new HashSet<PositiveBalance>();
             this.PaymentFolios = new HashSet<PaymentFolio>();
             this.Statements = new HashSet<Statement>();
+            this.DentegraAuthorizations = new HashSet<DentegraAuthorization>();
         }
     
         public int PatientId { get; set; }
@@ -39,6 +40,7 @@ namespace Model
         public bool IsDeleted { get; set; }
         public bool IsDiverse { get; set; }
         public int AssignedId { get; set; }
+        public bool IsDentegra { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }
@@ -50,5 +52,6 @@ namespace Model
         public virtual ICollection<PositiveBalance> PositiveBalances { get; set; }
         public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
         public virtual ICollection<Statement> Statements { get; set; }
+        public virtual ICollection<DentegraAuthorization> DentegraAuthorizations { get; set; }
     }
 }

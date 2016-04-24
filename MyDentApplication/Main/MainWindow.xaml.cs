@@ -66,6 +66,7 @@ namespace MyDentApplication
         private ViewPaymentsWindow _viewPaymentsWindow;
         private ViewPaymentFoliosWindow _viewPaymentFoliosWindow;
         private ViewEventsWindow _viewEventsWindow;
+        private ManageDentegraAuthorizationsWindow _manageElegibilitiesWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -236,6 +237,7 @@ namespace MyDentApplication
             CloseWindow(_viewPaymentsWindow);
             CloseWindow(_viewPaymentFoliosWindow);
             CloseWindow(_viewEventsWindow);
+            CloseWindow(_manageElegibilitiesWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -347,6 +349,10 @@ namespace MyDentApplication
             else if (sender is ManageAuthorizationsWindow)
             {
                 _manageAuthorizationsWindow = null;
+            }
+            else if (sender is ManageDentegraAuthorizationsWindow)
+            {
+                _manageElegibilitiesWindow = null;
             }
             else if (sender is ManageDrawersWindow)
             {
@@ -1046,6 +1052,18 @@ namespace MyDentApplication
 
             _manageAuthorizationsWindow.Show();
             _manageAuthorizationsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnManageElegibilities_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_manageElegibilitiesWindow == null)
+            {
+                _manageElegibilitiesWindow = new ManageDentegraAuthorizationsWindow();
+                _manageElegibilitiesWindow.Closed += Window_Closed;
+            }
+
+            _manageElegibilitiesWindow.Show();
+            _manageElegibilitiesWindow.WindowState = WindowState.Normal;
         }
 
         private void btnManageInventory_Click(object sender, System.Windows.RoutedEventArgs e)

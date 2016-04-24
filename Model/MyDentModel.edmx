@@ -119,6 +119,15 @@
           <Property Name="HomePhone" Type="varchar(max)" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="DentegraAuthorizations">
+          <Key>
+            <PropertyRef Name="AuthorizationId" />
+          </Key>
+          <Property Name="AuthorizationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuthorizationDate" Type="date" Nullable="false" />
+          <Property Name="ElegibilityNumber" Type="varchar(max)" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Dotations">
           <Key>
             <PropertyRef Name="DotationId" />
@@ -291,6 +300,7 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="IsDiverse" Type="bit" Nullable="false" />
           <Property Name="AssignedId" Type="int" Nullable="false" />
+          <Property Name="IsDentegra" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentFolios">
           <Key>
@@ -524,6 +534,18 @@
             </Principal>
             <Dependent Role="ClinicHistoryAttributes">
               <PropertyRef Name="ClinicHistoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DentegraAuthorizations_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="DentegraAuthorizations" Type="Self.DentegraAuthorizations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="DentegraAuthorizations">
+              <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -965,6 +987,7 @@
           <EntitySet Name="ClinicHistoryAttributes" EntityType="Self.ClinicHistoryAttributes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DentegraAuthorizations" EntityType="Self.DentegraAuthorizations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Drawers" EntityType="Self.Drawers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -1023,6 +1046,10 @@
           <AssociationSet Name="FK_ClinicHistoryAttributes_ClinicHistoryId" Association="Self.FK_ClinicHistoryAttributes_ClinicHistoryId">
             <End Role="ClinicHistories" EntitySet="ClinicHistories" />
             <End Role="ClinicHistoryAttributes" EntitySet="ClinicHistoryAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DentegraAuthorizations_PatientId" Association="Self.FK_DentegraAuthorizations_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="DentegraAuthorizations" EntitySet="DentegraAuthorizations" />
           </AssociationSet>
           <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
             <End Role="Users" EntitySet="Users" />
@@ -1381,6 +1408,11 @@
             <End Role="Instrument" EntitySet="Instruments" />
             <End Role="Treatment" EntitySet="Treatments" />
           </AssociationSet>
+          <EntitySet Name="DentegraAuthorizations" EntityType="MyDentDBModel.DentegraAuthorization" />
+          <AssociationSet Name="FK_DentegraAuthorizations_PatientId" Association="MyDentDBModel.FK_DentegraAuthorizations_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="DentegraAuthorization" EntitySet="DentegraAuthorizations" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
           <Key>
@@ -1537,6 +1569,8 @@
           <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
           <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
           <Property Name="AssignedId" Type="Int32" Nullable="false" />
+          <Property Name="IsDentegra" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DentegraAuthorizations" Relationship="MyDentDBModel.FK_DentegraAuthorizations_PatientId" FromRole="Patient" ToRole="DentegraAuthorization" />
           </EntityType>
         <EntityType Name="ReceivedInvoice">
           <Key>
@@ -2391,6 +2425,28 @@
           <Property Type="String" Name="Comment" Nullable="true" />
           <Property Type="Boolean" Name="IsChecked" Nullable="true" />
         </ComplexType>
+        <EntityType Name="DentegraAuthorization">
+          <Key>
+            <PropertyRef Name="AuthorizationId" />
+          </Key>
+          <Property Name="AuthorizationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuthorizationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ElegibilityNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_DentegraAuthorizations_PatientId" FromRole="DentegraAuthorization" ToRole="Patient" />
+        </EntityType>
+        <Association Name="FK_DentegraAuthorizations_PatientId">
+          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="MyDentDBModel.DentegraAuthorization" Role="DentegraAuthorization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="DentegraAuthorization">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2526,6 +2582,7 @@
           <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="MyDentDBModel.Patient">
               <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="IsDentegra" ColumnName="IsDentegra" />
                 <ScalarProperty Name="AssignedId" ColumnName="AssignedId" />
                 <ScalarProperty Name="IsDiverse" ColumnName="IsDiverse" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -2876,6 +2933,16 @@
               <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="DentegraAuthorizations">
+            <EntityTypeMapping TypeName="MyDentDBModel.DentegraAuthorization">
+              <MappingFragment StoreEntitySet="DentegraAuthorizations">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="ElegibilityNumber" ColumnName="ElegibilityNumber" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="AuthorizationId" ColumnName="AuthorizationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

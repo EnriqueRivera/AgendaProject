@@ -13,19 +13,19 @@ using System.Windows.Shapes;
 namespace MyDentApplication
 {
 	/// <summary>
-	/// Interaction logic for ManageUserAuthorizationsWindow.xaml
+	/// Interaction logic for ManageUserDentegraAuthorizationsWindow.xaml
 	/// </summary>
-	public partial class ManageUserAuthorizationsWindow : Window
+	public partial class ManageUserDentegraAuthorizationsWindow : Window
 	{
         #region Instance variables
-        private Controllers.CustomViewModel<Model.Authorization> _authorizationsViewModel;
+        private Controllers.CustomViewModel<Model.DentegraAuthorization> _authorizationsViewModel;
         private Model.Patient _selectedPatient;
         #endregion
 
         #region Constructors
-        public ManageUserAuthorizationsWindow(Model.Patient selectedPatient)
+        public ManageUserDentegraAuthorizationsWindow(Model.Patient selectedPatient)
 		{
-			this.InitializeComponent();
+            this.InitializeComponent();
 
             _selectedPatient = selectedPatient;
             lblExpNumber.ToolTip = lblExpNumber.Content = selectedPatient.AssignedId;
@@ -38,47 +38,47 @@ namespace MyDentApplication
         #region Window event handlers
         private void btnAddAuthorization_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            new AddEditAuthorizationsModal(_selectedPatient, null).ShowDialog();
+            new AddEditDentegraAuthorizationsModal(_selectedPatient, null).ShowDialog();
             UpdateGrid();
 		}
 
 		private void btnEditAuthorization_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            Model.Authorization authorizationSelected = dgAuthorization.SelectedItem == null ? null : dgAuthorization.SelectedItem as Model.Authorization;
+            Model.DentegraAuthorization elegibilitySelected = dgDentegraAuthorization.SelectedItem == null ? null : dgDentegraAuthorization.SelectedItem as Model.DentegraAuthorization;
 
-            if (authorizationSelected == null)
+            if (elegibilitySelected == null)
             {
-                MessageBox.Show("Seleccione una autorización", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Seleccione una elegibilidad", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                new AddEditAuthorizationsModal(_selectedPatient, authorizationSelected).ShowDialog();
+                new AddEditDentegraAuthorizationsModal(_selectedPatient, elegibilitySelected).ShowDialog();
                 UpdateGrid();
             }
 		}
 
 		private void btnDeleteAuthorization_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            Model.Authorization authorizationSelected = dgAuthorization.SelectedItem == null ? null : dgAuthorization.SelectedItem as Model.Authorization;
+            Model.DentegraAuthorization elegibilitySelected = dgDentegraAuthorization.SelectedItem == null ? null : dgDentegraAuthorization.SelectedItem as Model.DentegraAuthorization;
 
-            if (authorizationSelected == null)
+            if (elegibilitySelected == null)
             {
-                MessageBox.Show("Seleccione un autorización", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Seleccione un elegibilidad", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else if (MessageBox.Show
-                                ("¿Está seguro(a) que desea eliminar la autorizacón seleccionada?",
+                                ("¿Está seguro(a) que desea eliminar la elegibilidad seleccionada?",
                                     "Advertencia",
                                     MessageBoxButton.YesNo,
                                     MessageBoxImage.Warning
                                 ) == MessageBoxResult.Yes)
             {
-                if (Controllers.BusinessController.Instance.Update<Model.Authorization>(authorizationSelected))
+                if (Controllers.BusinessController.Instance.Update<Model.DentegraAuthorization>(elegibilitySelected))
                 {
                     UpdateGrid();
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo eliminar la autorización", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("No se pudo eliminar la elegibilidad", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace MyDentApplication
         #region Window's logic
         private void UpdateGrid()
         {
-            _authorizationsViewModel = new Controllers.CustomViewModel<Model.Authorization>(t => t.PatientId == _selectedPatient.PatientId, "AuthorizationDate", "desc");
+            _authorizationsViewModel = new Controllers.CustomViewModel<Model.DentegraAuthorization>(t => t.PatientId == _selectedPatient.PatientId, "AuthorizationDate", "desc");
             this.DataContext = _authorizationsViewModel;
         }
         #endregion

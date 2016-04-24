@@ -14,16 +14,16 @@ using System.Linq;
 namespace MyDentApplication
 {
 	/// <summary>
-	/// Interaction logic for ManageAuthorizationsWindow.xaml
+	/// Interaction logic for ManageDentegraAuthorizationsWindow.xaml
 	/// </summary>
-	public partial class ManageAuthorizationsWindow : Window
+	public partial class ManageDentegraAuthorizationsWindow : Window
 	{
         #region Instance variables
-        private Controllers.CustomViewModel<Model.Authorization> _authorizationsViewModel;
+        private Controllers.CustomViewModel<Model.DentegraAuthorization> _elegibilitiesViewModel;
         #endregion
 
         #region Constructors
-        public ManageAuthorizationsWindow()
+        public ManageDentegraAuthorizationsWindow()
 		{
 			this.InitializeComponent();
 
@@ -35,7 +35,7 @@ namespace MyDentApplication
         private void cbPatients_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
             UpdateGrid();
-		}
+        }
         #endregion
 
         #region Window's logic
@@ -43,12 +43,12 @@ namespace MyDentApplication
         {
             int selectedPatientId = Convert.ToInt32((cbPatients.SelectedItem as Controllers.ComboBoxItem).Value);
 
-            _authorizationsViewModel = selectedPatientId == -1
-                                ? new Controllers.CustomViewModel<Model.Authorization>(a => true, "AuthorizationDate", "desc")
-                                : new Controllers.CustomViewModel<Model.Authorization>(a => a.PatientId == selectedPatientId, "AuthorizationDate", "desc");
+            _elegibilitiesViewModel = selectedPatientId == -1
+                                ? new Controllers.CustomViewModel<Model.DentegraAuthorization>(a => true, "AuthorizationDate", "desc")
+                                : new Controllers.CustomViewModel<Model.DentegraAuthorization>(a => a.PatientId == selectedPatientId, "AuthorizationDate", "desc");
 
 
-            this.DataContext = _authorizationsViewModel;
+            this.DataContext = _elegibilitiesViewModel;
         }
 
         private void FillAllPatients()

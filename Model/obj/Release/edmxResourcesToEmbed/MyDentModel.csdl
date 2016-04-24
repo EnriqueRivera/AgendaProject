@@ -212,6 +212,11 @@
       <End Role="Instrument" EntitySet="Instruments" />
       <End Role="Treatment" EntitySet="Treatments" />
     </AssociationSet>
+    <EntitySet Name="DentegraAuthorizations" EntityType="MyDentDBModel.DentegraAuthorization" />
+    <AssociationSet Name="FK_DentegraAuthorizations_PatientId" Association="MyDentDBModel.FK_DentegraAuthorizations_PatientId">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="DentegraAuthorization" EntitySet="DentegraAuthorizations" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Configuration">
     <Key>
@@ -368,6 +373,8 @@
     <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_PatientId" FromRole="Patient" ToRole="PaymentFolio" />
     <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_StatementId_PatientId" FromRole="Patient" ToRole="Statement" />
     <Property Name="AssignedId" Type="Int32" Nullable="false" />
+    <Property Name="IsDentegra" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DentegraAuthorizations" Relationship="MyDentDBModel.FK_DentegraAuthorizations_PatientId" FromRole="Patient" ToRole="DentegraAuthorization" />
   </EntityType>
   <EntityType Name="ReceivedInvoice">
     <Key>
@@ -1222,4 +1229,26 @@
     <Property Type="String" Name="Comment" Nullable="true" />
     <Property Type="Boolean" Name="IsChecked" Nullable="true" />
   </ComplexType>
+  <EntityType Name="DentegraAuthorization">
+    <Key>
+      <PropertyRef Name="AuthorizationId" />
+    </Key>
+    <Property Name="AuthorizationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthorizationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ElegibilityNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_DentegraAuthorizations_PatientId" FromRole="DentegraAuthorization" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK_DentegraAuthorizations_PatientId">
+    <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="MyDentDBModel.DentegraAuthorization" Role="DentegraAuthorization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="DentegraAuthorization">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

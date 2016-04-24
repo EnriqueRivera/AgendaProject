@@ -23,7 +23,8 @@ namespace MyDentApplication
         private bool _isUpdateAuthorization;
         #endregion
 
-		public AddEditAuthorizationsModal(Model.Patient selectedPatient, Model.Authorization selectedAuthorization)
+        #region Constructors
+        public AddEditAuthorizationsModal(Model.Patient selectedPatient, Model.Authorization selectedAuthorization)
 		{
 			this.InitializeComponent();
 
@@ -39,6 +40,7 @@ namespace MyDentApplication
                 PrepareWindowForUpdates();
             }
 		}
+        #endregion
 
         #region Window event handlers
         private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)

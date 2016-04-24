@@ -114,6 +114,15 @@
     <Property Name="HomePhone" Type="varchar(max)" />
     <Property Name="Address" Type="varchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="DentegraAuthorizations">
+    <Key>
+      <PropertyRef Name="AuthorizationId" />
+    </Key>
+    <Property Name="AuthorizationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthorizationDate" Type="date" Nullable="false" />
+    <Property Name="ElegibilityNumber" Type="varchar(max)" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Dotations">
     <Key>
       <PropertyRef Name="DotationId" />
@@ -286,6 +295,7 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="IsDiverse" Type="bit" Nullable="false" />
     <Property Name="AssignedId" Type="int" Nullable="false" />
+    <Property Name="IsDentegra" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="PaymentFolios">
     <Key>
@@ -519,6 +529,18 @@
       </Principal>
       <Dependent Role="ClinicHistoryAttributes">
         <PropertyRef Name="ClinicHistoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DentegraAuthorizations_PatientId">
+    <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+    <End Role="DentegraAuthorizations" Type="Self.DentegraAuthorizations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="DentegraAuthorizations">
+        <PropertyRef Name="PatientId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -960,6 +982,7 @@
     <EntitySet Name="ClinicHistoryAttributes" EntityType="Self.ClinicHistoryAttributes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DentegraAuthorizations" EntityType="Self.DentegraAuthorizations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Drawers" EntityType="Self.Drawers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -1018,6 +1041,10 @@
     <AssociationSet Name="FK_ClinicHistoryAttributes_ClinicHistoryId" Association="Self.FK_ClinicHistoryAttributes_ClinicHistoryId">
       <End Role="ClinicHistories" EntitySet="ClinicHistories" />
       <End Role="ClinicHistoryAttributes" EntitySet="ClinicHistoryAttributes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DentegraAuthorizations_PatientId" Association="Self.FK_DentegraAuthorizations_PatientId">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="DentegraAuthorizations" EntitySet="DentegraAuthorizations" />
     </AssociationSet>
     <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
       <End Role="Users" EntitySet="Users" />

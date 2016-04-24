@@ -1,0 +1,11 @@
+ALTER TABLE Patients
+ADD IsDentegra BIT NULL;
+GO
+
+UPDATE Patients
+SET IsDentegra = 0;
+GO
+
+ALTER TABLE Patients
+ALTER COLUMN IsDentegra BIT NOT NULL;
+GO
