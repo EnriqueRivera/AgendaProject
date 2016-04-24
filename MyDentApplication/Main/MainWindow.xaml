@@ -89,6 +89,12 @@
 							<TextBlock TextAlignment="Center" Text="Dotaciones" />
 						</StackPanel>
 					</Button>
+					<Button x:Name="btnManageInventory" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageInventory_Click" > 
+        				<StackPanel Orientation="Vertical">
+        					<Image Source="/MyDentApplication;component/Images/inventory_icon.png" Width="50" Height="50"  />
+        					<TextBlock Text="Inventario" TextAlignment="Center" />
+        				</StackPanel>
+        			</Button>
 					<Button x:Name="btnManageReceivedInvoices" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageReceivedInvoices_Click" Margin="0,0,0,5" > 
         				<StackPanel Orientation="Vertical">
         					<Image Source="/MyDentApplication;component/Images/received_invoice_icon.png" Width="50" Height="50"  />
@@ -264,12 +270,6 @@
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/medicine_icon.png" Width="50" Height="50"  />
         						<TextBlock TextAlignment="Center" ><Run Text="Materiales y"/><LineBreak/><Run Text="m"/><Run Text="edicamentos"/></TextBlock>
-        					</StackPanel>
-        				</Button>
-						<Button x:Name="btnManageInventory" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnManageInventory_Click" > 
-        					<StackPanel Orientation="Vertical">
-        						<Image Source="/MyDentApplication;component/Images/inventory_icon.png" Width="50" Height="50"  />
-        						<TextBlock Text="Inventario" TextAlignment="Center" />
         					</StackPanel>
         				</Button>
 						<Button x:Name="btnManageCleanedMaterials" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManageCleanedMaterials_Click" Margin="0,0,0,5" >
