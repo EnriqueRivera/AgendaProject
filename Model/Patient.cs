@@ -16,7 +16,6 @@ namespace Model
     {
         public Patient()
         {
-            this.Events = new HashSet<Event>();
             this.LaboratoryWorks = new HashSet<LaboratoryWork>();
             this.OutgoingInvoices = new HashSet<OutgoingInvoice>();
             this.Budgets = new HashSet<Budget>();
@@ -25,6 +24,7 @@ namespace Model
             this.PaymentFolios = new HashSet<PaymentFolio>();
             this.Statements = new HashSet<Statement>();
             this.DentegraAuthorizations = new HashSet<DentegraAuthorization>();
+            this.Events = new HashSet<Event>();
         }
     
         public int PatientId { get; set; }
@@ -42,7 +42,6 @@ namespace Model
         public int AssignedId { get; set; }
         public bool IsDentegra { get; set; }
     
-        public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<LaboratoryWork> LaboratoryWorks { get; set; }
         public virtual ICollection<OutgoingInvoice> OutgoingInvoices { get; set; }
         public virtual User User { get; set; }
@@ -53,5 +52,6 @@ namespace Model
         public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
         public virtual ICollection<Statement> Statements { get; set; }
         public virtual ICollection<DentegraAuthorization> DentegraAuthorizations { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

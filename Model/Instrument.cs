@@ -16,9 +16,9 @@ namespace Model
     {
         public Instrument()
         {
-            this.Events = new HashSet<Event>();
             this.InstrumentComments = new HashSet<InstrumentComment>();
             this.Treatments = new HashSet<Treatment>();
+            this.Events = new HashSet<Event>();
         }
     
         public int InstrumentId { get; set; }
@@ -30,8 +30,8 @@ namespace Model
         public Nullable<int> MaxUses { get; set; }
     
         public virtual Drawer Drawer { get; set; }
-        public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<InstrumentComment> InstrumentComments { get; set; }
         public virtual ICollection<Treatment> Treatments { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

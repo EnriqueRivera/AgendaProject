@@ -16,7 +16,6 @@ namespace Model
     {
         public User()
         {
-            this.Events = new HashSet<Event>();
             this.EventStatusChanges = new HashSet<EventStatusChanx>();
             this.Logins = new HashSet<Login>();
             this.Medicines = new HashSet<Medicine>();
@@ -28,6 +27,7 @@ namespace Model
             this.InventorySignatures1 = new HashSet<InventorySignature>();
             this.PaymentFolios = new HashSet<PaymentFolio>();
             this.Statements = new HashSet<Statement>();
+            this.Events = new HashSet<Event>();
         }
     
         public int UserId { get; set; }
@@ -38,7 +38,6 @@ namespace Model
         public bool IsAdmin { get; set; }
         public bool IsDeleted { get; set; }
     
-        public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
         public virtual ICollection<Medicine> Medicines { get; set; }
@@ -50,5 +49,6 @@ namespace Model
         public virtual ICollection<InventorySignature> InventorySignatures1 { get; set; }
         public virtual ICollection<PaymentFolio> PaymentFolios { get; set; }
         public virtual ICollection<Statement> Statements { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

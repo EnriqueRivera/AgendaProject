@@ -31,7 +31,7 @@ namespace WpfScheduler
             this.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             this.BorderElement.Background = e.Color;
 
-            string instrumentInfo = e.EventInfo.Instrument != null ? (" - Instrumento a utilizar: " + e.EventInfo.Instrument.Name) : string.Empty;
+            string instrumentInfo = e.EventInfo.Instruments.Count > 0 ? (" - Instrumentos a utilizar: " + string.Join(", ", e.EventInfo.Instruments.Select(i => i.Name))) : string.Empty;
 
             this.txbEventIdDateAndTreatment.Text = String.Format("Cita #{0} - {1} ({2} - {3}){4}", e.EventInfo.EventId, e.EventInfo.Treatment.Name, e.EventInfo.StartEvent.ToString("HH:mm"), e.EventInfo.EndEvent.ToString("HH:mm"), instrumentInfo);
             this.txbPatientName.Text = "Paciente: " + e.EventInfo.Patient.FirstName + " " + e.EventInfo.Patient.LastName;

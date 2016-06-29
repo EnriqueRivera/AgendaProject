@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq;
 
 namespace MyDentApplication
 {
@@ -42,20 +43,48 @@ namespace MyDentApplication
 
 		private void btnAccept_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            Model.Instrument selectedInstrument = (cbInstruments.SelectedItem as Controllers.ComboBoxItem).Value as Model.Instrument;
-            
-            if (selectedInstrument == null)
+            List<Model.Instrument> selectedInstruments = lstInstruments.Items
+                                                            .Cast<Controllers.ComboBoxItem>()
+                                                            .Select(i => i.Value as Model.Instrument)
+                                                            .ToList();
+
+            if (selectedInstruments.Count == 0)
             {
                 MessageBox.Show("Seleccione un instrumento", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else if (selectedInstrument.UsesLeft == 0)
-            {
-                MessageBox.Show("Al instrumento seleccionado ya no le quedan usos", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
             else
             {
-                _eventToAdd.InstrumentId = selectedInstrument.InstrumentId;
+                _eventToAdd.Instruments = selectedInstruments;
                 this.Close();
+            }
+        }
+
+        private void btnAdd_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            foreach (Controllers.ComboBoxItem item in lstOptions.SelectedItems)
+            {
+                bool instrumentExists = false;
+                foreach (Controllers.ComboBoxItem instrument in lstInstruments.Items)
+                {
+                    if ((item.Value as Model.Instrument).InstrumentId == (instrument.Value as Model.Instrument).InstrumentId)
+                    {
+                        instrumentExists = true;
+                        break;
+                    }
+                }
+
+                if (!instrumentExists)
+                {
+                    lstInstruments.Items.Add(item);
+                }
+            }
+        }
+
+        private void btnRemove_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            for (int i = lstInstruments.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                lstInstruments.Items.RemoveAt(i);
             }
         }
         #endregion
@@ -65,10 +94,8 @@ namespace MyDentApplication
         {
             foreach (Model.Instrument instrument in _instrumentsWithTreatment)
             {
-                cbInstruments.Items.Add(new Controllers.ComboBoxItem() { Text = instrument.Name + " (Usos restantes: " + instrument.UsesLeft + ")", Value = instrument });
+                lstOptions.Items.Add(new Controllers.ComboBoxItem() { Text = instrument.Name + " (Usos restantes: " + instrument.UsesLeft + ")", Value = instrument });
             }
-
-            cbInstruments.SelectedIndex = 0;
         }
         #endregion
     }

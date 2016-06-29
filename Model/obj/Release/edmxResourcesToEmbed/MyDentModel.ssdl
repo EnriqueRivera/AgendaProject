@@ -142,6 +142,14 @@
     <Property Name="CreatedDate" Type="date" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="EventInstruments">
+    <Key>
+      <PropertyRef Name="EventId" />
+      <PropertyRef Name="InstrumentId" />
+    </Key>
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="InstrumentId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Events">
     <Key>
       <PropertyRef Name="EventId" />
@@ -156,7 +164,6 @@
     <Property Name="PatientId" Type="int" Nullable="false" />
     <Property Name="TreatmentId" Type="int" Nullable="false" />
     <Property Name="EventCapturerId" Type="int" Nullable="false" />
-    <Property Name="InstrumentId" Type="int" />
     <Property Name="IsConfirmed" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="EventStatusChanges">
@@ -556,6 +563,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_EventInstruments_EventId">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="EventInstruments" Type="Self.EventInstruments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventInstruments">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventInstruments_InstrumentId">
+    <End Role="Instruments" Type="Self.Instruments" Multiplicity="1" />
+    <End Role="EventInstruments" Type="Self.EventInstruments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instruments">
+        <PropertyRef Name="InstrumentId" />
+      </Principal>
+      <Dependent Role="EventInstruments">
+        <PropertyRef Name="InstrumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Events_EventCapturerId">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Events" Type="Self.Events" Multiplicity="*" />
@@ -952,18 +983,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="PK_Events_InstrumentId">
-    <End Role="Instruments" Type="Self.Instruments" Multiplicity="0..1" />
-    <End Role="Events" Type="Self.Events" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Instruments">
-        <PropertyRef Name="InstrumentId" />
-      </Principal>
-      <Dependent Role="Events">
-        <PropertyRef Name="InstrumentId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Function Name="sp_GetInventoryAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="drawerId" Type="int" Mode="In" />
     <Parameter Name="year" Type="int" Mode="In" />
@@ -985,6 +1004,7 @@
     <EntitySet Name="DentegraAuthorizations" EntityType="Self.DentegraAuthorizations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Drawers" EntityType="Self.Drawers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventInstruments" EntityType="Self.EventInstruments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
@@ -1049,6 +1069,14 @@
     <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
       <End Role="Users" EntitySet="Users" />
       <End Role="Dotations" EntitySet="Dotations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventInstruments_EventId" Association="Self.FK_EventInstruments_EventId">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="EventInstruments" EntitySet="EventInstruments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventInstruments_InstrumentId" Association="Self.FK_EventInstruments_InstrumentId">
+      <End Role="Instruments" EntitySet="Instruments" />
+      <End Role="EventInstruments" EntitySet="EventInstruments" />
     </AssociationSet>
     <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
       <End Role="Users" EntitySet="Users" />
@@ -1181,10 +1209,6 @@
     <AssociationSet Name="FK_TreatmentPayment_TreatmentPriceId" Association="Self.FK_TreatmentPayment_TreatmentPriceId">
       <End Role="TreatmentPrices" EntitySet="TreatmentPrices" />
       <End Role="TreatmentPayment" EntitySet="TreatmentPayment" />
-    </AssociationSet>
-    <AssociationSet Name="PK_Events_InstrumentId" Association="Self.PK_Events_InstrumentId">
-      <End Role="Instruments" EntitySet="Instruments" />
-      <End Role="Events" EntitySet="Events" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -228,13 +228,32 @@ namespace MyDentApplication
                     }
 
                     //Discount UsesLeft to the selected instrument
-                    if (eventToAdd.Instrument != null)
+                    List<Model.Instrument> missingInstruments = new List<Model.Instrument>();
+                    if (eventToAdd.Instruments.Count > 0)
                     {
-                        eventToAdd.Instrument.UsesLeft = eventToAdd.Instrument.UsesLeft.Value - 1;
-                        if (BusinessController.Instance.Update<Model.Instrument>(eventToAdd.Instrument) == false)
+                        bool discountError = false;
+                        foreach (var instrument in eventToAdd.Instruments)
                         {
-                            MessageBox.Show("No se pudo descontar la cantidad de usos al instrumento seleccionado", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            if (instrument.UsesLeft > 0)
+                            {
+                                instrument.UsesLeft--;
+                                discountError &= !BusinessController.Instance.Update<Model.Instrument>(instrument);
+                            }
+                            else
+                            {
+                                missingInstruments.Add(instrument);
+                            }
                         }
+                        
+                        if (discountError)
+                        {
+                            MessageBox.Show("No se pudo descontar la cantidad de usos a algún instrumento seleccionado", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                    if (missingInstruments.Count > 0)
+                    {
+                        MessageBox.Show("La cita se ha agendado, pero debe tomar en cuenta que faltan los siguientes instrumentos:\n-" + string.Join("\n-", missingInstruments.Select(i => i.Name)), "Información", MessageBoxButton.OK, MessageBoxImage.Information);   
                     }
 
                     this.Close();
@@ -271,7 +290,7 @@ namespace MyDentApplication
             {
                 new InstrumentTreatmentRelationModal(instrumentsWithTreatment, eventToAdd).ShowDialog();
 
-                return eventToAdd.InstrumentId.HasValue;
+                return eventToAdd.Instruments.Count > 0;
             }
         }
 

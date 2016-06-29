@@ -30,7 +30,6 @@ namespace Model
     
         public DbSet<Configuration> Configurations { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Event> Events { get; set; }
         public DbSet<EventStatusChanx> EventStatusChanges { get; set; }
         public DbSet<GeneralPaid> GeneralPaids { get; set; }
         public DbSet<LaboratoryWork> LaboratoryWorks { get; set; }
@@ -66,6 +65,7 @@ namespace Model
         public DbSet<TreatmentPayment> TreatmentPayments { get; set; }
         public DbSet<Instrument> Instruments { get; set; }
         public DbSet<DentegraAuthorization> DentegraAuthorizations { get; set; }
+        public DbSet<Event> Events { get; set; }
     
         public virtual ObjectResult<InventoryAvailability> GetInventoryAvailability(Nullable<int> drawerId, Nullable<int> year, Nullable<int> month)
         {

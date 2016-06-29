@@ -147,6 +147,14 @@
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="EventInstruments">
+          <Key>
+            <PropertyRef Name="EventId" />
+            <PropertyRef Name="InstrumentId" />
+          </Key>
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="InstrumentId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Events">
           <Key>
             <PropertyRef Name="EventId" />
@@ -161,7 +169,6 @@
           <Property Name="PatientId" Type="int" Nullable="false" />
           <Property Name="TreatmentId" Type="int" Nullable="false" />
           <Property Name="EventCapturerId" Type="int" Nullable="false" />
-          <Property Name="InstrumentId" Type="int" />
           <Property Name="IsConfirmed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EventStatusChanges">
@@ -561,6 +568,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EventInstruments_EventId">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="EventInstruments" Type="Self.EventInstruments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="EventInstruments">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventInstruments_InstrumentId">
+          <End Role="Instruments" Type="Self.Instruments" Multiplicity="1" />
+          <End Role="EventInstruments" Type="Self.EventInstruments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instruments">
+              <PropertyRef Name="InstrumentId" />
+            </Principal>
+            <Dependent Role="EventInstruments">
+              <PropertyRef Name="InstrumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Events_EventCapturerId">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Events" Type="Self.Events" Multiplicity="*" />
@@ -957,18 +988,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PK_Events_InstrumentId">
-          <End Role="Instruments" Type="Self.Instruments" Multiplicity="0..1" />
-          <End Role="Events" Type="Self.Events" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Instruments">
-              <PropertyRef Name="InstrumentId" />
-            </Principal>
-            <Dependent Role="Events">
-              <PropertyRef Name="InstrumentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="sp_GetInventoryAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="drawerId" Type="int" Mode="In" />
           <Parameter Name="year" Type="int" Mode="In" />
@@ -990,6 +1009,7 @@
           <EntitySet Name="DentegraAuthorizations" EntityType="Self.DentegraAuthorizations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dotations" EntityType="Self.Dotations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Drawers" EntityType="Self.Drawers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventInstruments" EntityType="Self.EventInstruments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventStatusChanges" EntityType="Self.EventStatusChanges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GeneralPaids" EntityType="Self.GeneralPaids" Schema="dbo" store:Type="Tables" />
@@ -1054,6 +1074,14 @@
           <AssociationSet Name="FK_Dotations_UserId" Association="Self.FK_Dotations_UserId">
             <End Role="Users" EntitySet="Users" />
             <End Role="Dotations" EntitySet="Dotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventInstruments_EventId" Association="Self.FK_EventInstruments_EventId">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="EventInstruments" EntitySet="EventInstruments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventInstruments_InstrumentId" Association="Self.FK_EventInstruments_InstrumentId">
+            <End Role="Instruments" EntitySet="Instruments" />
+            <End Role="EventInstruments" EntitySet="EventInstruments" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_EventCapturerId" Association="Self.FK_Events_EventCapturerId">
             <End Role="Users" EntitySet="Users" />
@@ -1187,10 +1215,6 @@
             <End Role="TreatmentPrices" EntitySet="TreatmentPrices" />
             <End Role="TreatmentPayment" EntitySet="TreatmentPayment" />
           </AssociationSet>
-          <AssociationSet Name="PK_Events_InstrumentId" Association="Self.PK_Events_InstrumentId">
-            <End Role="Instruments" EntitySet="Instruments" />
-            <End Role="Events" EntitySet="Events" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1199,7 +1223,6 @@
         <EntityContainer Name="MyDentDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="MyDentDBModel.Configuration" />
           <EntitySet Name="Contacts" EntityType="MyDentDBModel.Contact" />
-          <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
           <EntitySet Name="EventStatusChanges" EntityType="MyDentDBModel.EventStatusChanx" />
           <EntitySet Name="GeneralPaids" EntityType="MyDentDBModel.GeneralPaid" />
           <EntitySet Name="LaboratoryWorks" EntityType="MyDentDBModel.LaboratoryWork" />
@@ -1214,22 +1237,6 @@
           <EntitySet Name="Technicals" EntityType="MyDentDBModel.Technical" />
           <EntitySet Name="Treatments" EntityType="MyDentDBModel.Treatment" />
           <EntitySet Name="Users" EntityType="MyDentDBModel.User" />
-          <AssociationSet Name="FK_Events_EventCapturerId" Association="MyDentDBModel.FK_Events_EventCapturerId">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Events_PatientId" Association="MyDentDBModel.FK_Events_PatientId">
-            <End Role="Patient" EntitySet="Patients" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Events_TreatmentId" Association="MyDentDBModel.FK_Events_TreatmentId">
-            <End Role="Treatment" EntitySet="Treatments" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EventStatusChanges_EventId" Association="MyDentDBModel.FK_EventStatusChanges_EventId">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
-          </AssociationSet>
           <AssociationSet Name="FK_EventStatusChanges_StatusChangerId" Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId">
             <End Role="User" EntitySet="Users" />
             <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
@@ -1396,10 +1403,6 @@
             <End Role="Drawer" EntitySet="Drawers" />
             <End Role="Instrument" EntitySet="Instruments" />
           </AssociationSet>
-          <AssociationSet Name="PK_Events_InstrumentId" Association="MyDentDBModel.PK_Events_InstrumentId">
-            <End Role="Instrument" EntitySet="Instruments" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
           <AssociationSet Name="FK_InstrumentComments_InstrumentId" Association="MyDentDBModel.FK_InstrumentComments_InstrumentId">
             <End Role="Instrument" EntitySet="Instruments" />
             <End Role="InstrumentComment" EntitySet="InstrumentComments" />
@@ -1412,6 +1415,27 @@
           <AssociationSet Name="FK_DentegraAuthorizations_PatientId" Association="MyDentDBModel.FK_DentegraAuthorizations_PatientId">
             <End Role="Patient" EntitySet="Patients" />
             <End Role="DentegraAuthorization" EntitySet="DentegraAuthorizations" />
+          </AssociationSet>
+          <EntitySet Name="Events" EntityType="MyDentDBModel.Event" />
+          <AssociationSet Name="FK_Events_EventCapturerId" Association="MyDentDBModel.FK_Events_EventCapturerId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_PatientId" Association="MyDentDBModel.FK_Events_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_TreatmentId" Association="MyDentDBModel.FK_Events_TreatmentId">
+            <End Role="Treatment" EntitySet="Treatments" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventStatusChanges_EventId" Association="MyDentDBModel.FK_EventStatusChanges_EventId">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventStatusChanx" EntitySet="EventStatusChanges" />
+          </AssociationSet>
+          <AssociationSet Name="EventInstruments" Association="MyDentDBModel.EventInstruments">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Instrument" EntitySet="Instruments" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Configuration">
@@ -1433,28 +1457,6 @@
           <Property Name="HomePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Event">
-          <Key>
-            <PropertyRef Name="EventId" />
-          </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartEvent" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndEvent" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsException" Type="Boolean" Nullable="false" />
-          <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
-          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
-          <Property Name="PatientSkips" Type="Boolean" Nullable="false" />
-          <Property Name="PatientId" Type="Int32" Nullable="false" />
-          <Property Name="TreatmentId" Type="Int32" Nullable="false" />
-          <Property Name="EventCapturerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="Event" ToRole="User" />
-          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
-          <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
-          <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="Event" ToRole="EventStatusChanx" />
-          <Property Name="InstrumentId" Type="Int32" />
-          <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Instrument" Relationship="MyDentDBModel.PK_Events_InstrumentId" FromRole="Event" ToRole="Instrument" />
-        </EntityType>
         <EntityType Name="EventStatusChanx">
           <Key>
             <PropertyRef Name="EventStatusChangeId" />
@@ -1465,8 +1467,8 @@
           <Property Name="ChangeDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EventId" Type="Int32" Nullable="false" />
           <Property Name="StatusChangerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="EventStatusChanx" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="EventStatusChanx" ToRole="User" />
+          <NavigationProperty Name="Event" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="EventStatusChanx" ToRole="Event" />
         </EntityType>
         <EntityType Name="GeneralPaid">
           <Key>
@@ -1557,7 +1559,6 @@
           <Property Name="ClinicHistoryId" Type="Int32" />
           <Property Name="DataCapturerId" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
           <NavigationProperty Name="LaboratoryWorks" Relationship="MyDentDBModel.FK_LaboratoryWorks_PatientId" FromRole="Patient" ToRole="LaboratoryWork" />
           <NavigationProperty Name="OutgoingInvoices" Relationship="MyDentDBModel.FK_OutgoingInvoices_PatientId" FromRole="Patient" ToRole="OutgoingInvoice" />
           <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Patients_DataCapturerId" FromRole="Patient" ToRole="User" />
@@ -1571,6 +1572,7 @@
           <Property Name="AssignedId" Type="Int32" Nullable="false" />
           <Property Name="IsDentegra" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DentegraAuthorizations" Relationship="MyDentDBModel.FK_DentegraAuthorizations_PatientId" FromRole="Patient" ToRole="DentegraAuthorization" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Patient" ToRole="Event" />
           </EntityType>
         <EntityType Name="ReceivedInvoice">
           <Key>
@@ -1630,9 +1632,9 @@
           <Property Name="Duration" Type="Int32" Nullable="false" />
           <Property Name="Recurrent" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
           <Property Name="AbsenceMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.InstrumentTreatments" FromRole="Treatment" ToRole="Instrument" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Treatment" ToRole="Event" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1645,7 +1647,6 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" FromRole="User" ToRole="EventStatusChanx" />
           <NavigationProperty Name="Logins" Relationship="MyDentDBModel.FK_Logins_UserId" FromRole="User" ToRole="Login" />
           <NavigationProperty Name="Medicines" Relationship="MyDentDBModel.FK_Medicines_DataCapturerId" FromRole="User" ToRole="Medicine" />
@@ -1657,55 +1658,8 @@
           <NavigationProperty Name="InventorySignatures1" Relationship="MyDentDBModel.FK_InventorySignatures_Signature2" FromRole="User" ToRole="InventorySignature" />
           <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_UserId" FromRole="User" ToRole="PaymentFolio" />
           <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_Statements_UserId" FromRole="User" ToRole="Statement" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
         </EntityType>
-        <Association Name="FK_Events_EventCapturerId">
-          <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
-          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="EventCapturerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Events_PatientId">
-          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
-          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="PatientId" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Events_TreatmentId">
-          <End Type="MyDentDBModel.Treatment" Role="Treatment" Multiplicity="1" />
-          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Treatment">
-              <PropertyRef Name="TreatmentId" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="TreatmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EventStatusChanges_EventId">
-          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="1" />
-          <End Type="MyDentDBModel.EventStatusChanx" Role="EventStatusChanx" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventId" />
-            </Principal>
-            <Dependent Role="EventStatusChanx">
-              <PropertyRef Name="EventId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EventStatusChanges_StatusChangerId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
           <End Type="MyDentDBModel.EventStatusChanx" Role="EventStatusChanx" Multiplicity="*" />
@@ -2370,9 +2324,9 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="MaxUses" Type="Int32" />
           <NavigationProperty Name="Drawer" Relationship="MyDentDBModel.FK_Instruments_DrawerId" FromRole="Instrument" ToRole="Drawer" />
-          <NavigationProperty Name="Events" Relationship="MyDentDBModel.PK_Events_InstrumentId" FromRole="Instrument" ToRole="Event" />
           <NavigationProperty Name="InstrumentComments" Relationship="MyDentDBModel.FK_InstrumentComments_InstrumentId" FromRole="Instrument" ToRole="InstrumentComment" />
           <NavigationProperty Name="Treatments" Relationship="MyDentDBModel.InstrumentTreatments" FromRole="Instrument" ToRole="Treatment" />
+          <NavigationProperty Name="Events" Relationship="MyDentDBModel.EventInstruments" FromRole="Instrument" ToRole="Event" />
         </EntityType>
         <Association Name="FK_Instruments_DrawerId">
           <End Type="MyDentDBModel.Drawer" Role="Drawer" Multiplicity="1" />
@@ -2383,18 +2337,6 @@
             </Principal>
             <Dependent Role="Instrument">
               <PropertyRef Name="DrawerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PK_Events_InstrumentId">
-          <End Type="MyDentDBModel.Instrument" Role="Instrument" Multiplicity="0..1" />
-          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Instrument">
-              <PropertyRef Name="InstrumentId" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="InstrumentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2447,6 +2389,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartEvent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndEvent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsException" Type="Boolean" Nullable="false" />
+          <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="PatientSkips" Type="Boolean" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="TreatmentId" Type="Int32" Nullable="false" />
+          <Property Name="EventCapturerId" Type="Int32" Nullable="false" />
+          <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="Event" ToRole="User" />
+          <NavigationProperty Name="Patient" Relationship="MyDentDBModel.FK_Events_PatientId" FromRole="Event" ToRole="Patient" />
+          <NavigationProperty Name="Treatment" Relationship="MyDentDBModel.FK_Events_TreatmentId" FromRole="Event" ToRole="Treatment" />
+          <NavigationProperty Name="EventStatusChanges" Relationship="MyDentDBModel.FK_EventStatusChanges_EventId" FromRole="Event" ToRole="EventStatusChanx" />
+          <NavigationProperty Name="Instruments" Relationship="MyDentDBModel.EventInstruments" FromRole="Event" ToRole="Instrument" />
+        </EntityType>
+        <Association Name="FK_Events_EventCapturerId">
+          <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventCapturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_PatientId">
+          <End Type="MyDentDBModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_TreatmentId">
+          <End Type="MyDentDBModel.Treatment" Role="Treatment" Multiplicity="1" />
+          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treatment">
+              <PropertyRef Name="TreatmentId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="TreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventStatusChanges_EventId">
+          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="MyDentDBModel.EventStatusChanx" Role="EventStatusChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="EventStatusChanx">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventInstruments">
+          <End Type="MyDentDBModel.Event" Role="Event" Multiplicity="*" />
+          <End Type="MyDentDBModel.Instrument" Role="Instrument" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2471,24 +2486,6 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ContactId" ColumnName="ContactId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="MyDentDBModel.Event">
-              <MappingFragment StoreEntitySet="Events">
-                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
-                <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
-                <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
-                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
-                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-                <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
-                <ScalarProperty Name="IsException" ColumnName="IsException" />
-                <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
-                <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2943,6 +2940,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="MyDentDBModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
+                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+                <ScalarProperty Name="IsException" ColumnName="IsException" />
+                <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
+                <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EventInstruments" TypeName="MyDentDBModel.EventInstruments" StoreEntitySet="EventInstruments">
+            <EndProperty Name="Instrument">
+              <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+            </EndProperty>
+            <EndProperty Name="Event">
+              <ScalarProperty Name="EventId" ColumnName="EventId" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

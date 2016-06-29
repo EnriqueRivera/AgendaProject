@@ -4,10 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="9d2d9baabee741a786d80d38220a030b" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="MyDentDBModel.Configuration" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Contact" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="8.25" PointY="9.625" />
         <EntityTypeShape EntityType="MyDentDBModel.EventStatusChanx" Width="1.5" PointX="10.5" PointY="10.5" />
         <EntityTypeShape EntityType="MyDentDBModel.GeneralPaid" Width="1.5" PointX="8.75" PointY="3.75" />
         <EntityTypeShape EntityType="MyDentDBModel.LaboratoryWork" Width="1.5" PointX="5.25" PointY="9.5" />
@@ -22,10 +21,6 @@
         <EntityTypeShape EntityType="MyDentDBModel.Technical" Width="1.5" PointX="3" PointY="14.75" />
         <EntityTypeShape EntityType="MyDentDBModel.Treatment" Width="1.5" PointX="6" PointY="6.375" />
         <EntityTypeShape EntityType="MyDentDBModel.User" Width="1.5" PointX="0.75" PointY="10.375" />
-        <AssociationConnector Association="MyDentDBModel.FK_Events_EventCapturerId" />
-        <AssociationConnector Association="MyDentDBModel.FK_Events_PatientId" />
-        <AssociationConnector Association="MyDentDBModel.FK_Events_TreatmentId" />
-        <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_EventId" />
         <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_StatusChangerId" />
         <AssociationConnector Association="MyDentDBModel.FK_LaboratoryWorks_PatientId" />
         <AssociationConnector Association="MyDentDBModel.FK_LaboratoryWorks_TechnicalId" />
@@ -81,11 +76,16 @@
         <AssociationConnector Association="MyDentDBModel.FK_TreatmentPayment_TreatmentPriceId" />
         <EntityTypeShape EntityType="MyDentDBModel.Instrument" Width="1.5" PointX="16.125" PointY="7.875" />
         <AssociationConnector Association="MyDentDBModel.FK_Instruments_DrawerId" />
-        <AssociationConnector Association="MyDentDBModel.PK_Events_InstrumentId" />
         <AssociationConnector Association="MyDentDBModel.FK_InstrumentComments_InstrumentId" />
         <AssociationConnector Association="MyDentDBModel.InstrumentTreatments" />
         <EntityTypeShape EntityType="MyDentDBModel.DentegraAuthorization" Width="1.5" PointX="5.25" PointY="28.875" />
         <AssociationConnector Association="MyDentDBModel.FK_DentegraAuthorizations_PatientId" />
+        <EntityTypeShape EntityType="MyDentDBModel.Event" Width="1.5" PointX="8.25" PointY="9.625" />
+        <AssociationConnector Association="MyDentDBModel.FK_Events_EventCapturerId" />
+        <AssociationConnector Association="MyDentDBModel.FK_Events_PatientId" />
+        <AssociationConnector Association="MyDentDBModel.FK_Events_TreatmentId" />
+        <AssociationConnector Association="MyDentDBModel.FK_EventStatusChanges_EventId" />
+        <AssociationConnector Association="MyDentDBModel.EventInstruments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -22,24 +22,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Events">
-      <EntityTypeMapping TypeName="MyDentDBModel.Event">
-        <MappingFragment StoreEntitySet="Events">
-          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
-          <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
-          <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
-          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
-          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-          <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
-          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-          <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
-          <ScalarProperty Name="IsException" ColumnName="IsException" />
-          <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
-          <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
-          <ScalarProperty Name="EventId" ColumnName="EventId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="EventStatusChanges">
       <EntityTypeMapping TypeName="MyDentDBModel.EventStatusChanx">
         <MappingFragment StoreEntitySet="EventStatusChanges">
@@ -491,5 +473,30 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="MyDentDBModel.Event">
+        <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+          <ScalarProperty Name="EventCapturerId" ColumnName="EventCapturerId" />
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="PatientSkips" ColumnName="PatientSkips" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+          <ScalarProperty Name="IsException" ColumnName="IsException" />
+          <ScalarProperty Name="EndEvent" ColumnName="EndEvent" />
+          <ScalarProperty Name="StartEvent" ColumnName="StartEvent" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EventInstruments" TypeName="MyDentDBModel.EventInstruments" StoreEntitySet="EventInstruments">
+      <EndProperty Name="Instrument">
+        <ScalarProperty Name="InstrumentId" ColumnName="InstrumentId" />
+      </EndProperty>
+      <EndProperty Name="Event">
+        <ScalarProperty Name="EventId" ColumnName="EventId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

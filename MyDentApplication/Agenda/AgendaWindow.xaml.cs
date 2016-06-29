@@ -402,14 +402,16 @@ namespace MyDentApplication
             if (es == EventStatus.CANCELED)
             {
                 //If the event is canceled, then increment UsesLeft to the selected instrument
-                if (e.EventInfo.Instrument != null)
-                {
-                    e.EventInfo.Instrument.UsesLeft = e.EventInfo.Instrument.UsesLeft.Value + 1;
-                    if (BusinessController.Instance.Update<Model.Instrument>(e.EventInfo.Instrument) == false)
-                    {
-                        MessageBox.Show("No se pudo incrementar la cantidad de usos al instrumento que iba a ser utilizado en esta cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }   
-                }
+                //TODO: Now the user is able to make an event regardless if there is instruments available.
+                //      So, we can't increment the UsesLeft followint the old logic.
+                //if (e.EventInfo.Instrument != null)
+                //{
+                //    e.EventInfo.Instrument.UsesLeft = e.EventInfo.Instrument.UsesLeft.Value + 1;
+                //    if (BusinessController.Instance.Update<Model.Instrument>(e.EventInfo.Instrument) == false)
+                //    {
+                //        MessageBox.Show("No se pudo incrementar la cantidad de usos al instrumento que iba a ser utilizado en esta cita", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    }   
+                //}
 
                 //Send email to patient for recurrent canceled events
                 List<Model.Event> canceledEventsInARow = GetPatientCanceledEventsInARow(e.EventInfo.Patient.PatientId, 3);

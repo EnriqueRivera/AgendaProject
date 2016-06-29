@@ -4,12 +4,15 @@
 	x:Class="MyDentApplication.InstrumentTreatmentRelationModal"
 	x:Name="Window"
 	Title="Instrumentos usados en tratamientos"
-	Width="390.746" Height="155.716" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+	Width="390.746" Height="279.716" Icon="/MyDentApplication;component/Images/app_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
 	<Grid x:Name="LayoutRoot">
-		<Label Content="Seleccione el instrumento que se utilizará en la cita:" Height="27" Margin="10,10,10,0" VerticalAlignment="Top"/>
-		<ComboBox x:Name="cbInstruments" Height="26" Margin="10,41.96,10,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1"/>
-		<Button x:Name="btnAccept" Content="Aceptar" HorizontalAlignment="Left" Height="25" Margin="117,85,0,0" VerticalAlignment="Top" Width="70" Cursor="Hand" TabIndex="3" Click="btnAccept_Click"/>
-		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="25" Margin="192,85,0,0" VerticalAlignment="Top" Width="70" Cursor="Hand" TabIndex="4" Click="btnCancel_Click"/>
+		<Label Content="Seleccione los instrumentos que se utilizará en la cita:" Height="27" Margin="10,10,10,0" VerticalAlignment="Top"/>
+		<Button x:Name="btnAccept" Content="Aceptar" HorizontalAlignment="Left" Height="25" Margin="117,210,0,0" VerticalAlignment="Top" Width="70" Cursor="Hand" TabIndex="3" Click="btnAccept_Click"/>
+		<Button x:Name="btnCancel" Content="Cancelar" HorizontalAlignment="Left" Height="25" Margin="192,210,0,0" VerticalAlignment="Top" Width="70" Cursor="Hand" TabIndex="4" Click="btnCancel_Click"/>
+		<ListBox x:Name="lstOptions" HorizontalAlignment="Left" Height="149" Margin="10,42,0,0" VerticalAlignment="Top" Width="148" SelectionMode="Multiple"/>
+		<ListBox x:Name="lstInstruments" Height="149" Margin="0,42,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="148" SelectionMode="Multiple"/>
+		<Button x:Name="btnAdd" Content="&gt;" HorizontalAlignment="Left" Height="30" Margin="177,79,0,0" VerticalAlignment="Top" Width="32" Cursor="Hand" Click="btnAdd_Click"/>
+		<Button x:Name="btnRemove" Content="&lt;" HorizontalAlignment="Left" Height="30" Margin="177,114,0,0" VerticalAlignment="Top" Width="32" Cursor="Hand" Click="btnRemove_Click"/>
 	</Grid>
 </Window>

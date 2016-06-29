@@ -17,6 +17,7 @@ namespace Model
         public Event()
         {
             this.EventStatusChanges = new HashSet<EventStatusChanx>();
+            this.Instruments = new HashSet<Instrument>();
         }
     
         public int EventId { get; set; }
@@ -29,13 +30,12 @@ namespace Model
         public int PatientId { get; set; }
         public int TreatmentId { get; set; }
         public int EventCapturerId { get; set; }
-        public Nullable<int> InstrumentId { get; set; }
         public bool IsConfirmed { get; set; }
     
         public virtual User User { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Treatment Treatment { get; set; }
         public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
-        public virtual Instrument Instrument { get; set; }
+        public virtual ICollection<Instrument> Instruments { get; set; }
     }
 }
