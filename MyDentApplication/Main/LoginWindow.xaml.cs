@@ -24,7 +24,7 @@ namespace MyDentApplication
         #endregion
 
         #region Delegates
-        delegate void CheckLoginDelegate(Model.User userResult);
+        delegate void CheckLoginDelegate(Model.User userResult, bool exception);
         #endregion
 
         #region Constructors
@@ -96,23 +96,24 @@ namespace MyDentApplication
             try
             {
                 Model.User userResult = Controllers.BusinessController.Instance.FindBy<Model.User>(u => u.AssignedUserId == userId && u.Password == password && u.IsDeleted == false).FirstOrDefault();
-                DispatcherCheckLogin(userResult);
+                DispatcherCheckLogin(userResult, false);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                DispatcherCheckLogin(null, true);
             }
         }
 
-        void DispatcherCheckLogin(Model.User userResult)
+        void DispatcherCheckLogin(Model.User userResult, bool exception)
         {
             if (!Dispatcher.CheckAccess()) // CheckAccess returns true if you're on the dispatcher thread
             {
-                Dispatcher.Invoke(new CheckLoginDelegate(DispatcherCheckLogin), userResult);
+                Dispatcher.Invoke(new CheckLoginDelegate(DispatcherCheckLogin), userResult, exception);
                 return;
             }
 
-            CheckLogin(userResult);
+            CheckLogin(userResult, exception);
         }
 
         private void EnableLoginControls(bool enable)
@@ -123,13 +124,17 @@ namespace MyDentApplication
             pbPassword.IsEnabled = enable;
         }
 
-        private void CheckLogin(Model.User userResult)
+        private void CheckLogin(Model.User userResult, bool exception)
         {
             _loginThread = null;
             lblLoginStatus.Visibility = System.Windows.Visibility.Hidden;
             EnableLoginControls(true);
 
-            if (userResult == null)
+            if (exception)
+            {
+                return;
+            }
+            else if (userResult == null)
             {
                 MessageBox.Show("Número de usuario y/o contraseña incorrectos", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             }

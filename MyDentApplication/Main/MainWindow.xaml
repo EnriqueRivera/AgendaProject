@@ -260,6 +260,12 @@
         						<TextBlock TextAlignment="Center" ><Run Text="Historial de "/><LineBreak/><Run Text="folios"/></TextBlock>
         					</StackPanel>
         				</Button>
+						<Button x:Name="btnPendingPayments" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5" Click="btnPendingPayments_Click"  > 
+        					<StackPanel Orientation="Vertical">
+        						<Image Source="/MyDentApplication;component/Images/pendingPayment_icon.png" Width="50" Height="50"  />
+        						<TextBlock TextAlignment="Center" ><Run Text="Saldos "/><LineBreak/><Run Text="pendientes"/></TextBlock>
+        					</StackPanel>
+        				</Button>
 						<Button x:Name="btnManagePatients" Width="90" Height="90" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnManagePatients_Click" Margin="0,0,0,5" > 
         					<StackPanel Orientation="Vertical">
         						<Image Source="/MyDentApplication;component/Images/patient_icon.png" Width="50" Height="50"  />

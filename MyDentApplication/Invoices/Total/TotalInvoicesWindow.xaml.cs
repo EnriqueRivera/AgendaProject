@@ -132,8 +132,7 @@ namespace MyDentApplication
         {
             for (int i = 0; i < dgReceivedInvoices.Items.Count; i++)
             {
-                DataGridRow row = (DataGridRow)dgReceivedInvoices.ItemContainerGenerator.ContainerFromIndex(i);
-                Model.ReceivedInvoice invoice = row.Item as Model.ReceivedInvoice;
+                Model.ReceivedInvoice invoice = dgReceivedInvoices.Items[i] as Model.ReceivedInvoice;
 
                 MainWindow.AddCell(receivedInvoicesTable, bf, invoice.ResourceProvider.Name);
                 MainWindow.AddCell(receivedInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));
@@ -149,8 +148,7 @@ namespace MyDentApplication
         {
             for (int i = 0; i < dgOutgoingInvoices.Items.Count; i++)
             {
-                DataGridRow row = (DataGridRow)dgOutgoingInvoices.ItemContainerGenerator.ContainerFromIndex(i);
-                Model.OutgoingInvoice invoice = row.Item as Model.OutgoingInvoice;
+                Model.OutgoingInvoice invoice = dgOutgoingInvoices.Items[i] as Model.OutgoingInvoice;
 
                 MainWindow.AddCell(outgoingInvoicesTable, bf, string.Format("(Exp. No. {0}) {1} {2}", invoice.Patient.AssignedId, invoice.Patient.FirstName, invoice.Patient.LastName));
                 MainWindow.AddCell(outgoingInvoicesTable, bf, invoice.InvoiceDate.Value.ToString("dd/MM/yyyy"));

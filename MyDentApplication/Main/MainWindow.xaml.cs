@@ -67,6 +67,7 @@ namespace MyDentApplication
         private ViewPaymentFoliosWindow _viewPaymentFoliosWindow;
         private ViewEventsWindow _viewEventsWindow;
         private ManageDentegraAuthorizationsWindow _manageElegibilitiesWindow;
+        private ViewPendingPaymentsWindow _viewPendingPaymentsWindow;
         //Threads
         private Thread _checkFinishedEventsThread;
         private Thread _checkRemindersThread;
@@ -238,6 +239,7 @@ namespace MyDentApplication
             CloseWindow(_viewPaymentFoliosWindow);
             CloseWindow(_viewEventsWindow);
             CloseWindow(_manageElegibilitiesWindow);
+            CloseWindow(_viewPendingPaymentsWindow);
 
             //Flags for threads
             _stopCheckEventStatusThread = true;
@@ -377,6 +379,10 @@ namespace MyDentApplication
             else if (sender is ViewEventsWindow)
             {
                 _viewEventsWindow = null;
+            }
+            else if (sender is ViewPendingPaymentsWindow)
+            {
+                _viewPendingPaymentsWindow = null;
             }
             else if (sender is FinishedEventsReminderModal)
             {
@@ -1136,6 +1142,18 @@ namespace MyDentApplication
 
             _viewEventsWindow.Show();
             _viewEventsWindow.WindowState = WindowState.Normal;
+        }
+
+        private void btnPendingPayments_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_viewPendingPaymentsWindow == null)
+            {
+                _viewPendingPaymentsWindow = new ViewPendingPaymentsWindow();
+                _viewPendingPaymentsWindow.Closed += Window_Closed;
+            }
+
+            _viewPendingPaymentsWindow.Show();
+            _viewPendingPaymentsWindow.WindowState = WindowState.Normal;
         }
         #endregion
     }

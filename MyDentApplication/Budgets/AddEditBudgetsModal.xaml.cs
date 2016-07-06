@@ -383,8 +383,7 @@ namespace MyDentApplication
         {
             for (int i = 0; i < dgBudgetDetails.Items.Count; i++)
             {
-                DataGridRow row = (DataGridRow)dgBudgetDetails.ItemContainerGenerator.ContainerFromIndex(i);
-                Model.BudgetDetail budgetDetail = row.Item as Model.BudgetDetail;
+                Model.BudgetDetail budgetDetail = dgBudgetDetails.Items[i] as Model.BudgetDetail;
 
                 MainWindow.AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
                 MainWindow.AddCell(budgetTable, bf, budgetDetail.Concept);
