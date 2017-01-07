@@ -7,3 +7,12 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Release\Controllers.csprojResolveAssemblyReference.cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Release\Controllers.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Release\Controllers.pdb
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Release\Controllers.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Release\Controllers.pdb
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Release\Model.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Release\EntityFramework.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Release\Model.pdb
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\bin\Release\EntityFramework.xml
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Release\Controllers.csprojResolveAssemblyReference.cache
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Release\Controllers.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Controllers\obj\Release\Controllers.pdb

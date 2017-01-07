@@ -89,7 +89,7 @@ namespace MyDentApplication
         #region Window's logic
         private void UpdateGridTreatments()
         {
-            _agendaTratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "TreatmentId", "asc");
+            _agendaTratmentsViewModel = new Controllers.CustomViewModel<Model.Treatment>(u => u.IsDeleted == false, "Name", "asc");
             dgAgendaTreatments.DataContext = _agendaTratmentsViewModel;
         }
         #endregion

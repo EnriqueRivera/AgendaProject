@@ -156,7 +156,7 @@ namespace MyDentApplication
 
         private void FillTreatments()
         {
-            List<Model.TreatmentPrice> treatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(t => t.IsDeleted == false)
+            List<Model.TreatmentPrice> treatments = BusinessController.Instance.FindBy<Model.TreatmentPrice>(t => t.IsDeleted == false && t.CreatedDate.Year == DateTime.Now.Year)
                                                         .OrderBy(t => t.Name)
                                                         .ToList();
 

@@ -6,3 +6,11 @@ C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Release\Model.csprojResolveAssemblyReference.cache
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Release\Model.dll
 C:\Users\Enrique Rivera\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Release\Model.pdb
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Release\Model.dll.config
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Release\Model.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Release\Model.pdb
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Release\EntityFramework.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\bin\Release\EntityFramework.xml
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Release\Model.csprojResolveAssemblyReference.cache
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Release\Model.dll
+C:\Users\Jose Luis\Documents\Visual Studio 2013\Projects\MyDentApplication\Model\obj\Release\Model.pdb

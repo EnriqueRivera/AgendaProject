@@ -70,7 +70,7 @@ namespace MyDentApplication
         #region Window's logic
         private void UpdateGridTermPrevWindow()
         {
-            _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && (u.TreatmentKey.Contains(_searchTermPrevWindow) || u.Name.Contains(_searchTermPrevWindow) || u.Type.Contains(_searchTermPrevWindow)), "TreatmentKey", "asc");
+            _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.CreatedDate.Year == DateTime.Now.Year && (u.TreatmentKey.Contains(_searchTermPrevWindow) || u.Name.Contains(_searchTermPrevWindow) || u.Type.Contains(_searchTermPrevWindow)), "TreatmentKey", "asc");
             this.DataContext = _treatmentsViewModel;
         }
 
@@ -81,13 +81,13 @@ namespace MyDentApplication
             switch (cbFilter.SelectedIndex)
             {
                 case 0:
-                    _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.TreatmentKey.Contains(searchTerm), "TreatmentKey", "asc");
+                    _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.CreatedDate.Year == DateTime.Now.Year && u.TreatmentKey.Contains(searchTerm), "TreatmentKey", "asc");
                     break;
                 case 1:
-                    _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.Name.Contains(searchTerm), "TreatmentKey", "asc");
+                    _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.CreatedDate.Year == DateTime.Now.Year && u.Name.Contains(searchTerm), "TreatmentKey", "asc");
                     break;
                 case 2:
-                    _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.Type.Contains(searchTerm), "TreatmentKey", "asc");
+                    _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.CreatedDate.Year == DateTime.Now.Year && u.Type.Contains(searchTerm), "TreatmentKey", "asc");
                     break;
                 default:
                     break;
@@ -98,7 +98,7 @@ namespace MyDentApplication
 
         private void UpdateGridAllTreatments()
         {
-            _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false, "TreatmentKey", "asc");
+            _treatmentsViewModel = new Controllers.CustomViewModel<Model.TreatmentPrice>(u => u.IsDeleted == false && u.CreatedDate.Year == DateTime.Now.Year, "TreatmentKey", "asc");
             this.DataContext = _treatmentsViewModel;
         }
         #endregion
