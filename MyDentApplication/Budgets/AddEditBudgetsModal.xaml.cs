@@ -266,7 +266,7 @@ namespace MyDentApplication
         {
             Model.Patient patient = (txtPatientName.Tag as Model.Patient);
 
-            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIAL.TTF", BaseFont.IDENTITY_H, true);
             var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
 
             iTextSharp.text.pdf.PdfPTable budgetTable = MainWindow.GetTableWithHeaders(dgBudgetDetails, bf);
@@ -362,7 +362,7 @@ namespace MyDentApplication
 
                         pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_3.PNG");
                         pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
-                        pngImage.ScalePercent(90f);
+                        pngImage.ScalePercent(60f);
                         pngImage.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(pngImage);
 

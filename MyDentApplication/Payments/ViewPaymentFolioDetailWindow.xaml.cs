@@ -105,7 +105,7 @@ namespace MyDentApplication
         #region Window's logic
         private void ExportToPdf(string path)
         {
-            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIAL.TTF", BaseFont.IDENTITY_H, true);
             var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
             var boldFontTitle = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 20);
             var boldFontMessage = FontFactory.GetFont(FontFactory.HELVETICA_OBLIQUE, 10);

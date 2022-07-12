@@ -118,7 +118,7 @@ namespace MyDentApplication
 
         private void ExportToPdf(string path)
         {
-            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIAL.TTF", BaseFont.IDENTITY_H, true);
 
             iTextSharp.text.pdf.PdfPTable pendingPaymentsTable = MainWindow.GetTableWithHeaders(dgPendingPayments, bf);
 
