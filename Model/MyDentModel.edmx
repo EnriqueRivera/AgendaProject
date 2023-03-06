@@ -448,6 +448,7 @@
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ProfessionalLicense" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Authorizations_PatientId">
           <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
@@ -1660,6 +1661,7 @@
           <NavigationProperty Name="PaymentFolios" Relationship="MyDentDBModel.FK_PaymentFolios_UserId" FromRole="User" ToRole="PaymentFolio" />
           <NavigationProperty Name="Statements" Relationship="MyDentDBModel.FK_Statements_UserId" FromRole="User" ToRole="Statement" />
           <NavigationProperty Name="Events" Relationship="MyDentDBModel.FK_Events_EventCapturerId" FromRole="User" ToRole="Event" />
+          <Property Name="ProfessionalLicense" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_EventStatusChanges_StatusChangerId">
           <End Type="MyDentDBModel.User" Role="User" Multiplicity="1" />
@@ -2661,6 +2663,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MyDentDBModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ProfessionalLicense" ColumnName="ProfessionalLicense" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

@@ -19,13 +19,15 @@ namespace MyDentApplication
 	{
         #region Instance variables
         private Controllers.CustomViewModel<Model.Budget> _budgetsViewModel;
+        private Model.User _userLoggedIn;
         #endregion
 
         #region Constructors
-        public ManageBudgetsWindow()
+        public ManageBudgetsWindow(Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
+            _userLoggedIn = userLoggedIn;
             UpdateGrid();
 		}
         #endregion
@@ -41,13 +43,13 @@ namespace MyDentApplication
             }
             else
             {
-                new AddEditBudgetsModal(budgetSelected, true).ShowDialog();
+                new AddEditBudgetsModal(budgetSelected, true, _userLoggedIn).ShowDialog();
             }
 		}
 
 		private void btnAddBudget_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            new AddEditBudgetsModal(null, false).ShowDialog();
+            new AddEditBudgetsModal(null, false, _userLoggedIn).ShowDialog();
             UpdateGrid();
 		}
 
@@ -61,7 +63,7 @@ namespace MyDentApplication
             }
             else
             {
-                new AddEditBudgetsModal(budgetSelected, false).ShowDialog();
+                new AddEditBudgetsModal(budgetSelected, false, _userLoggedIn).ShowDialog();
                 UpdateGrid();
             }
 		}

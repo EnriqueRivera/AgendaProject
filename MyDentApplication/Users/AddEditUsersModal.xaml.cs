@@ -52,6 +52,7 @@ namespace MyDentApplication
             string userLastName = txtUserLastName.Text.Trim();
             string userPassword = pbPassword.Password;
             string userRepeatPassword = pbRepeatPassword.Password;
+            string userProfessionalLicense = txtProfessionalLicense.Text.Trim();
 
             if (AreValidFields(userIdText, userFirstName, userLastName, userPassword, userRepeatPassword, out userId) == false)
             {
@@ -64,6 +65,7 @@ namespace MyDentApplication
                 _userToUpdate.FirstName = userFirstName;
                 _userToUpdate.LastName = userLastName;
                 _userToUpdate.Password = userPassword;
+                _userToUpdate.ProfessionalLicense = userProfessionalLicense;
 
                 UpdateUser(_userToUpdate);
             }
@@ -76,7 +78,8 @@ namespace MyDentApplication
                     LastName = userLastName,
                     Password = userPassword,
                     IsAdmin = false,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    ProfessionalLicense = userProfessionalLicense
                 };
 
                 AddUser(userToAdd);
@@ -93,6 +96,7 @@ namespace MyDentApplication
             txtUserFirstName.Text = _userToUpdate.FirstName;
             txtUserLastName.Text = _userToUpdate.LastName;
             pbRepeatPassword.Password = pbPassword.Password = _userToUpdate.Password;
+            txtProfessionalLicense.Text = _userToUpdate.ProfessionalLicense;
         }
 
         private bool AreValidFields(string userIdText, string userFirstName, string userLastName, string userPassword, string userRepeatPassword, out int userId)

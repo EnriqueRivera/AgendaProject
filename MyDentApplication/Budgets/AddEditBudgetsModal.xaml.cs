@@ -29,13 +29,15 @@ namespace MyDentApplication
         private bool _isUpdateBudget;
         private bool _dataSaved = false;
         private bool _isReadOnly;
+        private Model.User _userLoggedIn;
         #endregion
 
         #region Constructors
-        public AddEditBudgetsModal(Model.Budget budgetToUpdate, bool isReadOnly)
+        public AddEditBudgetsModal(Model.Budget budgetToUpdate, bool isReadOnly, Model.User userLoggedIn)
 		{
 			this.InitializeComponent();
 
+            _userLoggedIn = userLoggedIn;
             _budgetToUpdate = budgetToUpdate;
             _isUpdateBudget = _budgetToUpdate != null;
             _isReadOnly = isReadOnly;
@@ -298,11 +300,11 @@ namespace MyDentApplication
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
-                        paragraph = new iTextSharp.text.Paragraph("Médico tratante: " + "Dr. Gustavo Antonio Barajas Aguirre");
+                        paragraph = new iTextSharp.text.Paragraph(string.Format("Médico tratante: {0} {1}", _userLoggedIn.FirstName, _userLoggedIn.LastName));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
-                        paragraph = new iTextSharp.text.Paragraph("Céd. Prof. " + "7944969");
+                        paragraph = new iTextSharp.text.Paragraph(string.Format("Céd. Prof. {0}", _userLoggedIn.ProfessionalLicense));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 

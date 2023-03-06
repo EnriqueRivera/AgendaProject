@@ -1028,7 +1028,7 @@ namespace MyDentApplication
         {
             if (_manageBudgetsWindow == null)
             {
-                _manageBudgetsWindow = new ManageBudgetsWindow();
+                _manageBudgetsWindow = new ManageBudgetsWindow(_userLoggedIn);
                 _manageBudgetsWindow.Closed += Window_Closed;
             }
 

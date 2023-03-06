@@ -37,6 +37,7 @@ namespace Model
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsDeleted { get; set; }
+        public string ProfessionalLicense { get; set; }
     
         public virtual ICollection<EventStatusChanx> EventStatusChanges { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
