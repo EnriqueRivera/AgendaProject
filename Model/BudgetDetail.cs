@@ -25,6 +25,7 @@ namespace Model
         public decimal TotalDiscount { get; set; }
         public decimal TotalPerEvent { get; set; }
         public int BudgetId { get; set; }
+        public string Tooth { get; set; }
     
         public virtual Budget Budget { get; set; }
     }

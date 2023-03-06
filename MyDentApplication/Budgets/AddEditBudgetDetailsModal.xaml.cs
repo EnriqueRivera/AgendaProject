@@ -58,6 +58,7 @@ namespace MyDentApplication
             _budgetDetailToUpdate.NumberOfEvents = numberOfEvents;
             _budgetDetailToUpdate.UnitCost = unitCost;
             _budgetDetailToUpdate.Discount = discount;
+            _budgetDetailToUpdate.Tooth = txtTooth.Text.ToString().Trim();
             _budgetDetailToUpdate.UnitCostDiscount = ((100 - discount) / 100m) * unitCost;
             _budgetDetailToUpdate.NetTotal = unitCost * quantity;
             _budgetDetailToUpdate.TotalDiscount = ((100 - discount) / 100m) * _budgetDetailToUpdate.NetTotal;
@@ -143,6 +144,7 @@ namespace MyDentApplication
             txtNumberOfEvents.ToolTip = txtNumberOfEvents.Text = _budgetDetailToUpdate.NumberOfEvents.ToString();
             txtCost.ToolTip = txtCost.Text = _budgetDetailToUpdate.UnitCost.ToString();
             cbDiscount.SelectedValue = _budgetDetailToUpdate.Discount;
+            txtTooth.ToolTip = txtTooth.Text = _budgetDetailToUpdate.Tooth;
 
             for (int i = 0; i < cbConcepts.Items.Count; i++)
             {

@@ -298,11 +298,11 @@ namespace MyDentApplication
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
-                        paragraph = new iTextSharp.text.Paragraph("Dr. Gustavo Antonio Barajas Aguirre");
+                        paragraph = new iTextSharp.text.Paragraph("Médico tratante: " + "Dr. Gustavo Antonio Barajas Aguirre");
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
-                        paragraph = new iTextSharp.text.Paragraph("Céd. Prof. 7944969");
+                        paragraph = new iTextSharp.text.Paragraph("Céd. Prof. " + "7944969");
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
 
@@ -387,6 +387,7 @@ namespace MyDentApplication
 
                 MainWindow.AddCell(budgetTable, bf, budgetDetail.Quantity.ToString());
                 MainWindow.AddCell(budgetTable, bf, budgetDetail.Concept);
+                MainWindow.AddCell(budgetTable, bf, budgetDetail.Tooth);
                 MainWindow.AddCell(budgetTable, bf, budgetDetail.NumberOfEvents.ToString());
                 MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.UnitCost.ToString("0.00"));
                 MainWindow.AddCell(budgetTable, bf, "$" + budgetDetail.UnitCostDiscount.ToString("0.00"));

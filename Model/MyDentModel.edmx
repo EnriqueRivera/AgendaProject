@@ -48,6 +48,7 @@
           <Property Name="TotalDiscount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalPerEvent" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BudgetId" Type="int" Nullable="false" />
+          <Property Name="Tooth" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Budgets">
           <Key>
@@ -1954,6 +1955,7 @@
           <Property Name="TotalPerEvent" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="BudgetId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Budget" Relationship="MyDentDBModel.FK_BudgetDetails_BudgetId" FromRole="BudgetDetail" ToRole="Budget" />
+          <Property Name="Tooth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_BudgetDetails_BudgetId">
           <End Type="MyDentDBModel.Budget" Role="Budget" Multiplicity="1" />
@@ -2739,6 +2741,7 @@
           <EntitySetMapping Name="BudgetDetails">
             <EntityTypeMapping TypeName="MyDentDBModel.BudgetDetail">
               <MappingFragment StoreEntitySet="BudgetDetails">
+                <ScalarProperty Name="Tooth" ColumnName="Tooth" />
                 <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
                 <ScalarProperty Name="TotalPerEvent" ColumnName="TotalPerEvent" />
                 <ScalarProperty Name="TotalDiscount" ColumnName="TotalDiscount" />

@@ -26,6 +26,7 @@
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Quantity}" Header="Cantidad" Width="0.15*"/>
 				<DataGridTextColumn Binding="{Binding Concept}" Header="Concepto" Width="0.2*"/>
+                <DataGridTextColumn Binding="{Binding Tooth}" Header="Diente" Width="0.15*"/>
 				<DataGridTextColumn Binding="{Binding NumberOfEvents}" Header="No. citas" Width="0.15*"/>
                 <DataGridTextColumn Binding="{Binding UnitCost, StringFormat=$\{0:n\}}" Header="Costo u. normal" Width="0.2*"/>
                 <DataGridTextColumn Binding="{Binding UnitCostDiscount, StringFormat=$\{0:n\}}" Header="Costo u. desc." Width="0.2*"/>
