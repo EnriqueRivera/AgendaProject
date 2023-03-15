@@ -284,10 +284,10 @@ namespace MyDentApplication
                         pdfDoc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
                         pdfDoc.Open();
 
-                        byte[] pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_1.PNG");
+                        byte[] pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/mydent_logo.PNG");
                         iTextSharp.text.Image pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
-                        pngImage.ScalePercent(80f);
-                        pngImage.SetAbsolutePosition(10f, pdfDoc.PageSize.Height - 90f);
+                        pngImage.ScalePercent(20f);
+                        pngImage.SetAbsolutePosition(30f, pdfDoc.PageSize.Height - 100f);
                         pdfDoc.Add(pngImage);
 
                         pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_2.PNG");

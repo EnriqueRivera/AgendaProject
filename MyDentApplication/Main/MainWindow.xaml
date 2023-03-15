@@ -307,6 +307,6 @@
         	</ScrollViewer>
         </GroupBox>
         <Image Margin="404.5,372.999,409.5,26.001" Source="/MyDentApplication;component/Images/mydent_logo_1.jpg" Stretch="Fill" Panel.ZIndex="-1" Opacity="0.6"/>
-        <Image Margin="387,91,399,293" Source="/MyDentApplication;component/Images/mydent_logo_2.jpg" Stretch="Fill" Panel.ZIndex="-1" Opacity="0.595"/>
+        <Image Margin="387,91,399,293" Source="/MyDentApplication;component/Images/mydent_logo.PNG" Stretch="Fill" Panel.ZIndex="-1" Opacity="0.595"/>
     </Grid>
 </Window>

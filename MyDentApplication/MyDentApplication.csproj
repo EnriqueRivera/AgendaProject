@@ -838,7 +838,6 @@
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\bank_icon.png" />
     <Resource Include="Images\budget_icon.png" />
-    <Resource Include="Images\Budget_image_1.PNG" />
     <Resource Include="Images\Budget_image_2.PNG" />
     <Resource Include="Images\Budget_image_3.PNG" />
     <Resource Include="Images\CancelIcon.png" />
@@ -865,7 +864,6 @@
     <Resource Include="Images\MedicalProofDocument_2.PNG" />
     <Resource Include="Images\medicine_icon.png" />
     <Resource Include="Images\mydent_logo_1.jpg" />
-    <Resource Include="Images\mydent_logo_2.jpg" />
     <Resource Include="Images\outgoing_invoice_icon.png" />
     <Resource Include="Images\patient_icon.png" />
     <Resource Include="Images\payments_icon.png" />
@@ -884,6 +882,7 @@
     <Resource Include="Images\view_event_history_icon.png" />
     <Resource Include="Images\view_folios_icon.png" />
     <Resource Include="Images\warning_icon.png" />
+    <Resource Include="Images\mydent_logo.PNG" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\app_icon.ico" />
