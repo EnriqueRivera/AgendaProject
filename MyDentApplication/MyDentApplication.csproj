@@ -838,7 +838,6 @@
     <Resource Include="Images\background_money_icon.png" />
     <Resource Include="Images\bank_icon.png" />
     <Resource Include="Images\budget_icon.png" />
-    <Resource Include="Images\Budget_image_2.PNG" />
     <Resource Include="Images\Budget_image_3.PNG" />
     <Resource Include="Images\CancelIcon.png" />
     <Resource Include="Images\cash_icon.png" />

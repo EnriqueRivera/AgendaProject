@@ -290,12 +290,6 @@ namespace MyDentApplication
                         pngImage.SetAbsolutePosition(30f, pdfDoc.PageSize.Height - 100f);
                         pdfDoc.Add(pngImage);
 
-                        pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/Budget_image_2.PNG");
-                        pngImage = iTextSharp.text.Image.GetInstance(pngByteArrayImage);
-                        pngImage.ScalePercent(75f);
-                        pngImage.SetAbsolutePosition(pdfDoc.PageSize.Width - 200f, pdfDoc.PageSize.Height - 90f);
-                        pdfDoc.Add(pngImage);
-
                         var paragraph = new iTextSharp.text.Paragraph(new Chunk("PRESUPUESTO TENTATIVO DE TRATAMIENTO ODONTOLÓGICO INTEGRAL", boldFont));
                         paragraph.Alignment = Element.ALIGN_CENTER;
                         pdfDoc.Add(paragraph);
