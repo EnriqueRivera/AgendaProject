@@ -1,24 +1,17 @@
 ﻿using Controllers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Linq;
 using System.Data.Objects;
+using System.Collections.ObjectModel;
 
 namespace MyDentApplication
 {
-	/// <summary>
-	/// Interaction logic for ViewPaymentsWindow.xaml
-	/// </summary>
-	public partial class ViewPaymentsWindow : Window
+    /// <summary>
+    /// Interaction logic for ViewPaymentsWindow.xaml
+    /// </summary>
+    public partial class ViewPaymentsWindow : Window
 	{
         #region Instance variables
         private Controllers.CustomViewModel<Model.Payment> _paymentsViewModel;
@@ -34,7 +27,8 @@ namespace MyDentApplication
             lblTotal.ToolTip = lblTotal.Content = "Total: $0.00";
 
             FillPatients();
-		}
+            FillPaymentTypes();
+        }
         #endregion
 
         #region Window event handlers
@@ -50,17 +44,29 @@ namespace MyDentApplication
             DateTime startDate = dpStartDate.SelectedDate.Value;
             DateTime endDate = dpEndDate.SelectedDate.Value;
             Model.Patient selectedPatient = (cbPatients.SelectedValue as Controllers.ComboBoxItem).Value as Model.Patient;
+            string selectedPaymentType = (cbPaymentTypes.SelectedValue as Controllers.ComboBoxItem).Value as string;
 
-            if (selectedPatient == null)
-                _paymentsViewModel = new Controllers.CustomViewModel<Model.Payment>(p => EntityFunctions.TruncateTime(p.PaymentDate) >= EntityFunctions.TruncateTime(startDate) && EntityFunctions.TruncateTime(p.PaymentDate) <= EntityFunctions.TruncateTime(endDate), "PaymentDate", "asc");
-            else
-                _paymentsViewModel = new Controllers.CustomViewModel<Model.Payment>(p => EntityFunctions.TruncateTime(p.PaymentDate) >= EntityFunctions.TruncateTime(startDate) && EntityFunctions.TruncateTime(p.PaymentDate) <= EntityFunctions.TruncateTime(endDate) && p.PaymentFolio.PatientId == selectedPatient.PatientId, "PaymentDate", "asc");
-            
+            _paymentsViewModel = new Controllers.CustomViewModel<Model.Payment>(
+                p => EntityFunctions.TruncateTime(p.PaymentDate) >= EntityFunctions.TruncateTime(startDate) 
+                    && EntityFunctions.TruncateTime(p.PaymentDate) <= EntityFunctions.TruncateTime(endDate)
+                    , "PaymentDate", "asc");
+
+            if (selectedPatient != null)
+            {
+                List<Model.Payment> paymentsFilteredByPatient = _paymentsViewModel.ObservableData.Where(p => p.PaymentFolio.PatientId == selectedPatient.PatientId).ToList();
+                _paymentsViewModel.ObservableData = new ObservableCollection<Model.Payment>(paymentsFilteredByPatient);
+            }
+
+            if (selectedPaymentType != null)
+            {
+                List<Model.Payment> paymentsFilteredBypaymentType = _paymentsViewModel.ObservableData.Where(p => p.Type == selectedPaymentType).ToList();
+                _paymentsViewModel.ObservableData = new ObservableCollection<Model.Payment>(paymentsFilteredBypaymentType);
+            }
 
             this.DataContext = _paymentsViewModel;
 
             decimal total = _paymentsViewModel.ObservableData.Sum(p => p.Amount);
-            lblTotal.ToolTip = lblTotal.Content = "Total: $" + total.ToString("0.00");
+            lblTotal.ToolTip = lblTotal.Content = "Total: $" + total.ToString("n");
         }
 
         private void FillPatients()
@@ -79,6 +85,18 @@ namespace MyDentApplication
             }
 
             cbPatients.SelectedIndex = 0;
+        }
+
+        private void FillPaymentTypes()
+        {
+            cbPaymentTypes.Items.Add(new Controllers.ComboBoxItem() { Text = "", Value = null });
+
+            foreach (PaymentType type in Enum.GetValues(typeof(PaymentType)))
+            {
+                cbPaymentTypes.Items.Add(new Controllers.ComboBoxItem() { Text = type.ToString(), Value = type.ToString() });
+            }
+
+            cbPaymentTypes.SelectedIndex = 0;
         }
         #endregion
     }

@@ -200,7 +200,7 @@ namespace Controllers
 
     public class CustomViewModel<T> where T : class
     {
-        private ObservableCollection<T> _allData = new ObservableCollection<T>();
+        public ObservableCollection<T> ObservableData { get; set; }
 
         public CustomViewModel(System.Linq.Expressions.Expression<Func<T, bool>> findBy, string sortBy, string sortDirection)
         {
@@ -220,17 +220,12 @@ namespace Controllers
                     break;
             }
 
-            _allData = new ObservableCollection<T>(allData.ToList());
+            ObservableData = new ObservableCollection<T>(allData.ToList());
         }
 
         public CustomViewModel(List<T> data)
         {
-            _allData = new ObservableCollection<T>(data);
-        }
-
-        public ObservableCollection<T> ObservableData
-        {
-            get { return _allData; }
+            ObservableData = new ObservableCollection<T>(data);
         }
     }
 

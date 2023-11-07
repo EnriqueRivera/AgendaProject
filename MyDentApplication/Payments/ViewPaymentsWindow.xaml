@@ -6,45 +6,47 @@
 	x:Name="Window"
 	Title="Ver pagos"
 	Width="703" Height="496" Icon="/MyDentApplication;component/Configuration/app_icon.ico" WindowStartupLocation="CenterScreen">
-	<Window.Resources>
-		<local:DateValueConverter x:Key="DateValueConverter" />
-	</Window.Resources>
-	<Grid x:Name="LayoutRoot">
-		<Label x:Name="lblTotal" Content="" Margin="10,0,10,10" HorizontalContentAlignment="Right" Height="29" VerticalAlignment="Bottom"/>
-		<DatePicker x:Name="dpStartDate" HorizontalAlignment="Left" Margin="109,43,0,0" VerticalAlignment="Top" Width="212.64"/>
-		<DatePicker x:Name="dpEndDate" HorizontalAlignment="Left" Margin="109,73,0,0" VerticalAlignment="Top" Width="212.64"/>
-		<Label Content="Fecha de inicio:" HorizontalAlignment="Left" Height="24" Margin="11,43,0,0" VerticalAlignment="Top" Width="93"/>
-		<Label Content="Fecha de fin:" HorizontalAlignment="Left" Height="24" Margin="26.333,72,0,0" VerticalAlignment="Top" Width="77.667"/>
-		<Label x:Name="lblPatient" Content="Paciente:" HorizontalAlignment="Left" Height="27" Margin="42.419,12,0,0" VerticalAlignment="Top" Width="61.581"/>
-		<ComboBox x:Name="cbPatients" Height="26" Margin="109,12,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="212.64" />
-		<Button x:Name="btnFilter" Content="Filtrar" Margin="346.14,41.48,0,0" Cursor="Hand" TabIndex="7" HorizontalAlignment="Left" Width="68.5" Click="btnFilter_Click" Height="29" VerticalAlignment="Top"/>
-		<DataGrid x:Name="dgPayments" Margin="10,105.75,10,44" IsReadOnly="True" CanUserSortColumns="True"
+    <Window.Resources>
+        <local:DateValueConverter x:Key="DateValueConverter" />
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Label x:Name="lblTotal" Content="" Margin="10,0,10,10" HorizontalContentAlignment="Right" Height="29" VerticalAlignment="Bottom"/>
+        <DatePicker x:Name="dpStartDate" HorizontalAlignment="Left" Margin="109,43,0,0" VerticalAlignment="Top" Width="212.64"/>
+        <DatePicker x:Name="dpEndDate" HorizontalAlignment="Left" Margin="109,73,0,0" VerticalAlignment="Top" Width="212.64"/>
+        <Label Content="Fecha de inicio:" HorizontalAlignment="Left" Height="24" Margin="11,43,0,0" VerticalAlignment="Top" Width="93"/>
+        <Label Content="Fecha de fin:" HorizontalAlignment="Left" Height="24" Margin="26.333,72,0,0" VerticalAlignment="Top" Width="77.667"/>
+        <Label x:Name="lblPatient" Content="Paciente:" HorizontalAlignment="Left" Height="27" Margin="42.419,12,0,0" VerticalAlignment="Top" Width="61.581"/>
+        <ComboBox x:Name="cbPatients" Height="26" Margin="109,12,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="212.64" />
+        <Button x:Name="btnFilter" Content="Filtrar" Margin="0,70,10,0" Cursor="Hand" TabIndex="7" Click="btnFilter_Click" Height="28" VerticalAlignment="Top" HorizontalAlignment="Right" Width="69"/>
+        <DataGrid x:Name="dgPayments" Margin="10,105.75,10,44" IsReadOnly="True" CanUserSortColumns="True"
 			ItemsSource="{Binding ObservableData}" AutoGenerateColumns="False"
 			SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" 
 			TabIndex="1">
-			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding Type}" Header="Tipo de pago" Width="0.19*"/>
-				<DataGridTextColumn Binding="{Binding Bank.Name}" Header="Banco" Width="0.1*"/>
-				<DataGridTextColumn Binding="{Binding Amount, StringFormat=$\{0:n\}}" Header="Cantidad" Width="0.17*"/>
-				<DataGridTextColumn Binding="{Binding VoucherCheckNumber}" Header="No. de voucher o cheque" Width="0.3*"/>
-				<DataGridTextColumn Header="Fecha de pago" Width="0.19*">
-					<DataGridTextColumn.Binding>
-						<MultiBinding Converter="{StaticResource DateValueConverter}">
-							<Binding Path="PaymentDate"/>
-						</MultiBinding>
-					</DataGridTextColumn.Binding>
-				</DataGridTextColumn>
-				<DataGridTextColumn Binding="{Binding Observation}" Header="Observaciones" Width="0.19*"/>
-				<DataGridTextColumn Header="Paciente" Width="0.25*" >
-					<DataGridTextColumn.Binding>
-						<MultiBinding StringFormat="{}(Exp. No. {0}) {1} {2}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Type}" Header="Tipo de pago" Width="0.19*"/>
+                <DataGridTextColumn Binding="{Binding Bank.Name}" Header="Banco" Width="0.1*"/>
+                <DataGridTextColumn Binding="{Binding Amount, StringFormat=$\{0:n\}}" Header="Cantidad" Width="0.17*"/>
+                <DataGridTextColumn Binding="{Binding VoucherCheckNumber}" Header="No. de voucher o cheque" Width="0.3*"/>
+                <DataGridTextColumn Header="Fecha de pago" Width="0.19*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource DateValueConverter}">
+                            <Binding Path="PaymentDate"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Observation}" Header="Observaciones" Width="0.19*"/>
+                <DataGridTextColumn Header="Paciente" Width="0.25*" >
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="(Exp. No. {0}) {1} {2}">
                             <Binding Path="PaymentFolio.Patient.AssignedId" />
-							<Binding Path="PaymentFolio.Patient.FirstName" />
-							<Binding Path="PaymentFolio.Patient.LastName" />
-						</MultiBinding>
-					</DataGridTextColumn.Binding>
-				</DataGridTextColumn>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+                            <Binding Path="PaymentFolio.Patient.FirstName" />
+                            <Binding Path="PaymentFolio.Patient.LastName" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="lblPaymentType" Content="Tipo de Pago:" HorizontalAlignment="Left" Height="27" Margin="352,12,0,0" VerticalAlignment="Top" Width="84"/>
+        <ComboBox x:Name="cbPaymentTypes" Height="26" Margin="441,12,0,0" VerticalAlignment="Top" FontWeight="Normal" TabIndex="1" HorizontalAlignment="Left" Width="110" />
+    </Grid>
 </Window>
