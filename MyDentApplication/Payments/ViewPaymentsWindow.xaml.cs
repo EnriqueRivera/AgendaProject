@@ -51,18 +51,15 @@ namespace MyDentApplication
                     && EntityFunctions.TruncateTime(p.PaymentDate) <= EntityFunctions.TruncateTime(endDate)
                     , "PaymentDate", "asc");
 
+            List<Model.Payment> paymentsFiltered = _paymentsViewModel.ObservableData.ToList();
+
             if (selectedPatient != null)
-            {
-                List<Model.Payment> paymentsFilteredByPatient = _paymentsViewModel.ObservableData.Where(p => p.PaymentFolio.PatientId == selectedPatient.PatientId).ToList();
-                _paymentsViewModel.ObservableData = new ObservableCollection<Model.Payment>(paymentsFilteredByPatient);
-            }
+                paymentsFiltered = paymentsFiltered.Where(p => p.PaymentFolio.PatientId == selectedPatient.PatientId).ToList();
 
             if (selectedPaymentType != null)
-            {
-                List<Model.Payment> paymentsFilteredBypaymentType = _paymentsViewModel.ObservableData.Where(p => p.Type == selectedPaymentType).ToList();
-                _paymentsViewModel.ObservableData = new ObservableCollection<Model.Payment>(paymentsFilteredBypaymentType);
-            }
+                paymentsFiltered = paymentsFiltered.Where(p => p.Type == selectedPaymentType).ToList();
 
+            _paymentsViewModel.ObservableData = new ObservableCollection<Model.Payment>(paymentsFiltered);
             this.DataContext = _paymentsViewModel;
 
             decimal total = _paymentsViewModel.ObservableData.Sum(p => p.Amount);
