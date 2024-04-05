@@ -281,7 +281,7 @@ namespace MyDentApplication
                 {
                     using (var writer = PdfWriter.GetInstance(pdfDoc, fs))
                     {
-                        pdfDoc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
+                        pdfDoc.SetPageSize(iTextSharp.text.PageSize.LETTER.Rotate());
                         pdfDoc.Open();
 
                         byte[] pngByteArrayImage = MainWindow.ImageToByteArray("pack://application:,,,/MyDentApplication;component/Images/mydent_logo.PNG");
