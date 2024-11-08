@@ -34,11 +34,11 @@ namespace MyDentApplication
             string host = txtHost.Text.Trim();
             string portText = txtPort.Text.Trim();
             string username = txtUsername.Text.Trim();
-            string password = pbPassword.Password;
-            string repeatPassword = pbRepeatPassword.Password;
+            string clientId = pbClientId.Password;
+            string clientSecret = pbClientSecret.Password;
             int port;
 
-            if (AreValidFields(host, portText, username, password, repeatPassword, out port) == false)
+            if (AreValidFields(host, portText, username, clientId, clientSecret, out port) == false)
             {
                 return;
             }
@@ -47,8 +47,8 @@ namespace MyDentApplication
                 BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.HOST, host)
                 & BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PORT, port.ToString())
                 & BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.ENABLE_SSL, chkSsl.IsChecked.ToString())
-                & BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.USERNAME, username)
-                & BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PASSWORD, password);
+                & BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_ID, clientId)
+                & BusinessController.Instance.AddUpdateConfiguration(Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_SECRET, clientSecret);
 
             if (emailConfigurationUpdated == false)
             {
@@ -88,16 +88,18 @@ namespace MyDentApplication
             Model.Configuration port = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PORT).FirstOrDefault();
             Model.Configuration ssl = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.ENABLE_SSL).FirstOrDefault();
             Model.Configuration username = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.USERNAME).FirstOrDefault();
-            Model.Configuration password = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PASSWORD).FirstOrDefault();
+            Model.Configuration clientId = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_ID).FirstOrDefault();
+            Model.Configuration clientSecret = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_SECRET).FirstOrDefault();
 
             txtHost.Text = host == null ? string.Empty : host.Value;
             txtPort.Text = port == null ? string.Empty : port.Value;
             chkSsl.IsChecked = ssl == null ? false : Convert.ToBoolean(ssl.Value);
             txtUsername.Text = username == null ? string.Empty : username.Value;
-            pbPassword.Password = pbRepeatPassword.Password = password == null ? string.Empty : password.Value;
+            pbClientId.Password = clientId == null ? string.Empty : clientId.Value;
+            pbClientSecret.Password = clientSecret == null ? string.Empty : clientSecret.Value;
         }
 
-        private bool AreValidFields(string host, string portText, string username, string password, string repeatPassword, out int port)
+        private bool AreValidFields(string host, string portText, string username, string clientId, string clientSecret, out int port)
         {
             port = 0;
 
@@ -119,15 +121,15 @@ namespace MyDentApplication
                 return false;
             }
 
-            if (string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(clientId))
             {
-                MessageBox.Show("Ingrese una contraseña", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Ingrese una Client Id", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 
-            if (password != repeatPassword)
+            if (string.IsNullOrEmpty(clientSecret))
             {
-                MessageBox.Show("Las contraseñas no coinciden", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Ingrese una Client Secret", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
 

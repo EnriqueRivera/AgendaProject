@@ -1,37 +1,24 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Linq;
 using Controllers;
-using System.Net.Mail;
-using System.Net;
-using System.Net.Mime;
 using System.Threading;
 
 namespace MyDentApplication
 {
-	/// <summary>
-	/// Interaction logic for SendEmailWindow.xaml
-	/// </summary>
-	public partial class SendEmailWindow : Window
+    /// <summary>
+    /// Interaction logic for SendEmailWindow.xaml
+    /// </summary>
+    public partial class SendEmailWindow : Window
     {
         #region Instance variables
         private string _host;
         private int _port;
-        private bool _enableSsl;
         private string _username;
-        private string _password;
+        private string _clientId;
+        private string _clientSecret;
         private Thread _sendEmailThread;
-        private const double _mailMaxFileSize = 25 * (1024 * 1024.0);
         #endregion
 
         #region Delegates
@@ -42,8 +29,6 @@ namespace MyDentApplication
         public SendEmailWindow()
 		{
 			this.InitializeComponent();
-
-            UpdateFileSizeStatus();
 
             if (LoadEmailConfiguration() == false)
             {
@@ -72,54 +57,22 @@ namespace MyDentApplication
                     return;
                 }
 
-                SmtpClient client = new SmtpClient
-                {
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Port = _port,
-                    Host = _host,
-                    EnableSsl = _enableSsl,
-                    Credentials = new NetworkCredential(_username, _password)
-                };
-
-                MailMessage mail = new MailMessage
-                {
-                    From = new MailAddress(_username),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-
-                AddEmailsTo(mail, allPatientEmails);
-                AddAttachments(mail);
-
                 lblStatus.Visibility = System.Windows.Visibility.Visible;
                 btnSendEmail.IsEnabled = false;
 
-                _sendEmailThread = new Thread(() => SendEmailThread(client, mail));
+                List<string> toEmails = allPatientEmails.Select(patient => patient.Email).ToList();
+                foreach (EmailContactControl emailControl in spEmailTo.Children)
+                {
+                    toEmails.Add((emailControl.EmailElement as Controllers.EmailContact).Email);
+                }
+
+                int intPort = Convert.ToInt32(_port);
+                _sendEmailThread = new Thread(() => SendEmailThread(_host, intPort, _username, toEmails.ToArray(), subject, body, _clientId, _clientSecret));
                 _sendEmailThread.Start();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("No se pudo enviar el correo.\n\nDetalle del error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-		}
-
-		private void btnSearchFiles_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Filter = "All Files (*.*)|*.*";
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.Multiselect = true;
-
-            bool? userClickedOK = openFileDialog.ShowDialog();
-
-            if (userClickedOK == true)
-            {
-                string[] selectedFiles = openFileDialog.FileNames;
-                AttachSelectedFiles(selectedFiles);
             }
 		}
 
@@ -141,12 +94,6 @@ namespace MyDentApplication
         void emailControl_OnRemoveEmail(object sender, bool e)
         {
             spEmailTo.Children.Remove(sender as EmailContactControl);
-        }
-
-        void emailControl_OnRemoveAttachFile(object sender, bool e)
-        {
-            spAttachedFiles.Children.Remove(sender as EmailContactControl);
-            UpdateFileSizeStatus();
         }
 
         private void btnFindEmail_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -197,27 +144,14 @@ namespace MyDentApplication
         #endregion
 
         #region Window's logic
-        private void UpdateFileSizeStatus()
-        {
-            long totalFileSize = 0;
-
-            foreach (EmailContactControl emailControl in spAttachedFiles.Children)
-            {
-                totalFileSize += (emailControl.EmailElement as Controllers.EmailAttachment).FileSize;
-            }
-
-            lblFileSizeStatus.Content = "Lleva " + Controllers.Utils.SizeSuffix(totalFileSize) + " de los 25 MB disponibles";
-            lblFileSizeStatus.Foreground = totalFileSize > _mailMaxFileSize ? Brushes.Red : Brushes.Black;
-        }
-
-        private void SendEmailThread(SmtpClient client, MailMessage mail)
+        private async void SendEmailThread(string host, int port, string fromEmail, string[] toEmails, string subject, string body, string clientId, string clientSecret)
         {
             try
             {
-                client.Send(mail);
+                await Utils.SendMail(host, port, fromEmail, toEmails, subject, body, clientId, clientSecret);
                 EmailSentNotify(string.Empty);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 EmailSentNotify(ex.Message);
             }
@@ -252,28 +186,6 @@ namespace MyDentApplication
             btnSendEmail.IsEnabled = true;            
         }
 
-        private void AddEmailsTo(MailMessage mail, List<Model.Patient> allPatientEmails)
-        {
-            foreach (Model.Patient patient in allPatientEmails)
-            {
-                mail.To.Add(patient.Email);
-            }
-
-            foreach (EmailContactControl emailControl in spEmailTo.Children)
-            {
-                mail.To.Add((emailControl.EmailElement as Controllers.EmailContact).Email);
-            }
-        }
-
-        private void AddAttachments(MailMessage mail)
-        {
-            foreach (EmailContactControl emailControl in spAttachedFiles.Children)
-            {
-                Attachment attachment = new Attachment((emailControl.EmailElement as Controllers.EmailAttachment).Path, MediaTypeNames.Application.Octet);
-                mail.Attachments.Add(attachment);
-            }
-        }
-
         private bool AreValidFields(string subject, List<Model.Patient> allPatientEmails)
         {
             if (spEmailTo.Children.Count == 0)
@@ -290,15 +202,8 @@ namespace MyDentApplication
                 }
             }
 
-            if (lblFileSizeStatus.Foreground == Brushes.Red)
-            {
-                MessageBox.Show("No se puede enviar el correo porque los archivos adjuntos superan el límite de 25 MB", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
-                return false;
-            }
-
             string warningMessage = string.Empty;
             warningMessage += string.IsNullOrEmpty(subject) ? "\n-Asunto" : string.Empty;
-            warningMessage += spAttachedFiles.Children.Count == 0 ? "\n-Archivos adjuntos" : string.Empty;
 
             if (string.IsNullOrEmpty(warningMessage))
             {
@@ -324,7 +229,6 @@ namespace MyDentApplication
             spEmailTo.Children.Clear();
             txtSubject.Text = string.Empty;
             rteBody.Text = string.Empty;
-            spAttachedFiles.Children.Clear();
             chkAllPatients.IsChecked = false;
         }
 
@@ -335,47 +239,29 @@ namespace MyDentApplication
             Model.Configuration port = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PORT).FirstOrDefault();
             Model.Configuration ssl = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.ENABLE_SSL).FirstOrDefault();
             Model.Configuration username = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.USERNAME).FirstOrDefault();
-            Model.Configuration password = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PASSWORD).FirstOrDefault();
+            Model.Configuration clientId = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_ID).FirstOrDefault();
+            Model.Configuration clientSecret = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_SECRET).FirstOrDefault();
 
-            if (host == null || port == null || ssl == null || username == null || password == null)
+            if (host == null || port == null || ssl == null || username == null || clientId == null || clientSecret == null)
             {
                 return false;
             }
 
-            if (int.TryParse(port.Value, out _port) == false || bool.TryParse(ssl.Value, out _enableSsl) == false)
+            if (int.TryParse(port.Value, out _port) == false)
             {
                 return false;
             }
 
             _host = host.Value;
             _username = username.Value;
-            _password = password.Value;
+            _clientId = clientId.Value;
+            _clientSecret = clientSecret.Value;
 
             txtFrom.Text = _username;
 
             return true;
         }
 
-        private void AttachSelectedFiles(string[] selectedFiles)
-        {
-            foreach (string path in selectedFiles)
-            {
-                Controllers.EmailAttachment file = new Controllers.EmailAttachment()
-                {
-                    Path = path,
-                    FileName = System.IO.Path.GetFileName(path),
-                    FileSize = new System.IO.FileInfo(path).Length
-                };
-
-                EmailContactControl emailControl = new EmailContactControl(file);
-                emailControl.Margin = new Thickness(5, 0, 0, 0);
-                emailControl.OnRemove += emailControl_OnRemoveAttachFile;
-
-                spAttachedFiles.Children.Add(emailControl);
-            }
-
-            UpdateFileSizeStatus();
-        }
         #endregion
     }
 }

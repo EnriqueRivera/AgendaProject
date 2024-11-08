@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Google.Apis.Auth;
+using Google.Apis.Auth.OAuth2;
+using MailKit.Security;
+using MimeKit;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Controllers
@@ -17,7 +22,6 @@ namespace Controllers
         public const string HOST = "HOST";
         public const string ENABLE_SSL = "ENABLE_SSL";
         public const string USERNAME = "USERNAME";
-        public const string PASSWORD = "PASSWORD";
         public const string TREATMENT_DENTISTRY = "Odontología";
         public const string TREATMENT_PAIN_CLINIC = "Clínica del dolor";
         public const string TREATMENT_ENDODONTICS = "Endodoncia";
@@ -27,6 +31,8 @@ namespace Controllers
         public const string TREATMENT_PEDIATRIC_DENTAL = "Odontopediatría";
         public const string TREATMENT_HEALTH_INSURANCE = " - Con seguro médico";
         public const string PATIENT_PICTURE = "FOTO_DEL_PACIENTE";
+        public const string EMAIL_CLIENT_ID = "CLIENT_ID";
+        public const string EMAIL_CLIENT_SECRET = "CLIENT_SECRET";
         //public const string PATIENT_MAX_SKIPPED_EVENTS_CONFIGURATION = "PATIENT_MAX_SKIPPED_EVENTS";
         private static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
@@ -118,7 +124,7 @@ namespace Controllers
                                     </tr>
                                     {0}
                                 </table>";
-            
+
             foreach (var item in treatmentPayments)
             {
                 treatments.Append("<tr>");
@@ -167,6 +173,45 @@ namespace Controllers
             }
 
             return string.Format(paymentsTable, payments.ToString());
+        }
+
+        public static async Task SendMail(string host, int port, string fromEmail, string[] toEmails, string subject, string body, string clientId, string clientSecret)
+        {
+            var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                new ClientSecrets
+                {
+                    ClientId = clientId,
+                    ClientSecret = clientSecret 
+                },
+                new[] { "email", "profile", "https://mail.google.com/" },
+                "user",
+                CancellationToken.None
+            );
+
+            await credential.RefreshTokenAsync(CancellationToken.None);
+            var jwtPayload = GoogleJsonWebSignature.ValidateAsync(credential.Token.IdToken).Result;
+            var username = jwtPayload.Email;
+
+            var oauth2 = new SaslMechanismOAuth2(username, credential.Token.AccessToken);
+
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = body;
+
+            var message = new MimeMessage();
+            message.From.Add(MailboxAddress.Parse(fromEmail));
+            toEmails.ToList().ForEach(toEmail =>
+                message.To.Add(MailboxAddress.Parse(toEmail))
+            );
+            message.Subject = subject;
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                await client.ConnectAsync(host, port, SecureSocketOptions.Auto);
+                await client.AuthenticateAsync(oauth2);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
+            }
         }
     }
 

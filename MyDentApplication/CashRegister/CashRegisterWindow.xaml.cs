@@ -14,6 +14,8 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net;
 using System.Threading;
+using System.Xml.Linq;
+using System.Threading.Tasks;
 
 namespace MyDentApplication
 {
@@ -228,11 +230,11 @@ namespace MyDentApplication
             List<Model.Configuration> emailConfigurations = BusinessController.Instance.FindBy<Model.Configuration>(c => c.Name.Contains(Utils.EMAIL_CONFIGURATION_PREFIX)).ToList();
             Model.Configuration host = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.HOST).FirstOrDefault();
             Model.Configuration port = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PORT).FirstOrDefault();
-            Model.Configuration ssl = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.ENABLE_SSL).FirstOrDefault();
             Model.Configuration username = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.USERNAME).FirstOrDefault();
-            Model.Configuration password = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.PASSWORD).FirstOrDefault();
+            Model.Configuration clientId = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_ID).FirstOrDefault();
+            Model.Configuration clientSecret = emailConfigurations.Where(c => c.Name == Utils.EMAIL_CONFIGURATION_PREFIX + Utils.EMAIL_CLIENT_SECRET).FirstOrDefault();
 
-            if (host == null || port == null || ssl == null || username == null || password == null)
+            if (host == null || port == null || username == null || clientId == null || clientSecret == null)
             {
                 MessageBox.Show("No se pudo cargar la información de la cuenta de correo configurada," +
                                 "\ndirijase al módulo de 'Configurar correo' para actualizar los datos correctamente de la cuenta de correo."
@@ -283,10 +285,10 @@ namespace MyDentApplication
                 return;
             }
 
-            SendMail(host.Value, port.Value, ssl.Value, username.Value, password.Value, email);
+            SendMail(host.Value, port.Value, username.Value, email, clientId.Value, clientSecret.Value);
         }
 
-        private void SendMail(string host, string port, string ssl, string username, string password, string email)
+        private void SendMail(string host, string port, string username, string email, string clientId, string clientSecret)
         {
             try
             {
@@ -295,27 +297,11 @@ namespace MyDentApplication
                 btnClearForm.IsEnabled = false;
                 btnCancel.IsEnabled = false;
 
-                SmtpClient client = new SmtpClient
-                {
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Port = Convert.ToInt32(port),
-                    Host = host,
-                    EnableSsl = Convert.ToBoolean(ssl),
-                    Credentials = new NetworkCredential(username, password)
-                };
+                int intPort = Convert.ToInt32(port);
+                string subject = "MyDent - Folio de transacción #" + _paymentFolioGenerated.FolioNumber;
+                string body = GenerateEmailBody();
 
-                MailMessage mail = new MailMessage
-                {
-                    From = new MailAddress(username),
-                    Subject = "MyDent - Folio de transacción #" + _paymentFolioGenerated.FolioNumber,
-                    Body = GenerateEmailBody(),
-                    IsBodyHtml = true
-                };
-
-                mail.To.Add(email);
-
-                _sendEmailThread = new Thread(() => SendEmailThread(client, mail));
+                _sendEmailThread = new Thread(() => SendEmailThread(host, intPort, username, email, subject, body, clientId, clientSecret));
                 _sendEmailThread.Start();
             }
             catch (Exception ex)
@@ -388,11 +374,11 @@ namespace MyDentApplication
             return body.ToString();
         }
 
-        private void SendEmailThread(SmtpClient client, MailMessage mail)
+        private async void SendEmailThread(string host, int port, string fromEmail, string toEmail, string subject, string body, string clientId, string clientSecret)
         {
             try
             {
-                client.Send(mail);
+                await Utils.SendMail(host, port, fromEmail, new[] { toEmail }, subject, body, clientId, clientSecret);
                 EmailSentNotify(string.Empty);
             }
             catch (Exception ex)
